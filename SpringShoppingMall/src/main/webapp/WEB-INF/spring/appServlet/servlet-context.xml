@@ -23,6 +23,31 @@
 	
 	<context:component-scan base-package="com.codi.app" />
 	
+	<beans:bean id="testDAO" class="com.codi.dao.TestDAO">
+		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
+	</beans:bean>
 	
+	<beans:bean id="sessionTemplate"
+	class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg ref="sessionFactory"/>
+	</beans:bean>
+	
+	<beans:bean id="sessionFactory"
+	class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource"/>
+		<!-- MyBatis 환경설정파일 -->
+		<beans:property name="configLocation" value="classpath:/myBatis-config.xml"/>
+	</beans:bean>
+	
+	<beans:bean id="dataSource"
+	class="org.apache.commons.dbcp.BasicDataSource"
+	destroy-method="close">
+		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<beans:property name="url" value="jdbc:oracle:thin:@192.168.16.22:1521:TestDB"/>
+		<beans:property name="username" value="SHOPADMIN"/>
+		<beans:property name="password" value="A123"/>	
+	</beans:bean>
+	
+	<beans:bean id="myUtil" class="com.codi.util.MyUtil"/>
 	
 </beans:beans>
