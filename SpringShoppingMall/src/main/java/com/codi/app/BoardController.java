@@ -29,6 +29,13 @@ public class BoardController {
 	@Autowired
 	MyUtil myUtil;//Bean °´Ã¼ »ý¼º
 	
+	
+	@RequestMapping(value = "/footer.action", method = RequestMethod.GET)
+	public String footer() {
+		return "layout/footer";
+	}
+	
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		return "index";
