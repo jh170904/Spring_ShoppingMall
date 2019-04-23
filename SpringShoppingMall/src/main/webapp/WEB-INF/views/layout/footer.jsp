@@ -1,29 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
-%>
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/font.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/common.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/ui.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/board.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/layout.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/layer.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/member.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/cs.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/mypage.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/search.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/product.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/cart.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/brand.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/event.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/beautylife.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/policy.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/modify-my-info.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/coupon.css">
-
 </div>
-	
 	
 	<footer id="footer" class="ap_footer">
 
