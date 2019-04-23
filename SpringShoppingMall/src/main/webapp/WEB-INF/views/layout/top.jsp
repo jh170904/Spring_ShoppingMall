@@ -14,24 +14,24 @@
 
 <link rel="shortcut icon" href="/kr/ko/favicon.ico">
 
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/font.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/common.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/ui.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/board.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/layout.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/layer.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/member.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/cs.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/mypage.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/search.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/product.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/cart.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/brand.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/event.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/beautylife.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/policy.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/modify-my-info.css">
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/coupon.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/font.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/common.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/ui.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/board.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/layout.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/layer.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/member.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/cs.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/mypage.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/search.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/product.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/cart.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/brand.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/event.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/beautylife.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/policy.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/modify-my-info.css">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/coupon.css">
 
 <link href="<%=cp %>/project/member/css/layout.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<%=cp %>/project/member/js/jquery-1.9.1.min.js"></script>
