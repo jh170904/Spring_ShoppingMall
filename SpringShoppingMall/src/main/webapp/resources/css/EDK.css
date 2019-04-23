@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+
+.pace .pace-progress, 
+.btn-type1.on,
+.complete-wrap:after {background:#f54a7e; border-color:#f54a7e}
+.all-agree .ipt-chk label,
+.chk .ipt:before,
+.center_spot a,
+.header .right_spot .next {color:#f54a7e}
+.radio-area .radioChk,
+.radio-area .radioChk:after,
+.tab-area ul li a.on,
+.tab-area ul li a.on:after {border-color:#f54a7e; color:#f54a7e}
+.ipt-chk input:checked + label:before,
+.radio-area :checked + label,
+.radio-area :checked + label:after,
+.center_spot .arr:after,
+.ipt-radio input:checked + label:before,
+.all-agree .btn-view:after {border-color:#f54a7e; color:#f54a7e}
+.ipt-radio input:checked + label,
+.brand{color:#f54a7e;}
