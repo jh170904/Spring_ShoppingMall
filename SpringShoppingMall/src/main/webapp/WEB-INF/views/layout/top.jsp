@@ -107,7 +107,7 @@
 			</ul>
 			<h1 class="logo">
 				<a href="../product/main.do">
-					<img alt="ETUDEHOUSE" src="<%=cp %>/project/image/img_logo.png"/>
+					<img style="padding: 20px;" alt="" src="<%=cp %>/resources/image/logo.PNG"/>
 				</a>
 			</h1>
 		</div>
