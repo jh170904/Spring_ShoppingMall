@@ -18,7 +18,7 @@ html{min-width:1200px;}
 .banner_wrap .banner_cont a:after {content:''; float:right; width:16px; height:16px; margin:0 0 0 7px; border:1px solid #4b221c; border-radius:20px; background:url('../images/common/arr_right12.png') 50% 50% no-repeat;}
 
 .ap_header{height:160px;background:#fff; border-bottom:1px solid #ebebeb;}
-	.inner_wrap{position:relative; width:1200px; margin:0 auto;}
+	.inner_wrap{position:relative; width:1200px; margin: auto;}
 	.inner_wrap:after{content:''; display: block; clear: both;}
 .ap_header h1.logo{float:left; height:110px; padding-top:20px; margin-right:70px;}
 /* 寃���*/
@@ -154,9 +154,9 @@ html{min-width:1200px;}
 .ap_contents{width:1200px; margin:0 auto; padding-bottom:80px;}
 .ap_contents.wide{width:100%;}
 
-.ap_footer{padding-bottom:30px; background:#f5f5f5; border-top:1px solid #d2d2d2; font-size:13px; color:#666;}
+.ap_footer{padding-bottom:30px; background:#ffffff ; border-top:1px solid #d2d2d2; font-size:13px; color:#666;}
 .ap_footer>div:first-child{border-bottom:1px solid #d2d2d2;}
-.ap_footer .footer_menu{padding-top:21px; }
+.ap_footer .footer_menu{padding:21px 0px; }
 .ap_footer .footer_menu>li{float:left;}
 .ap_footer .footer_menu>li + li{padding-left:15px; margin-left:15px; border-left:1px solid #d2d2d2;}
 .ap_footer .footer_menu + .select_wrap{position:relative !important; width:270px; max-height: inherit; margin:9px 0;}
@@ -169,6 +169,7 @@ html{min-width:1200px;}
 .ap_footer .sns_list a.youtube{background-position:-52px 0;}
 .ap_footer .sns_list a.instagram{background-position:-78px 0;}
 .ap_footer .sns_list a.naver{background-position:-104px 0;}
+.ap_footer .company_info_wrap {padding-top: 21px;}
 .ap_footer .company_info_wrap .text{line-height:1.8;}
 .ap_footer .company_info_wrap>div:first-child{width:450px;}
 .ap_footer .company_info_wrap>div + div{width:580px;}
