@@ -61,7 +61,7 @@ span.ui_spinner{display:inline-block; vertical-align: middle;}
 .pagination{margin-top:30px; text-align:center;}
 .pagination>*{display:inline-block; width:30px; height:30px; line-height: 30px; vertical-align: top;font-size: 16px;font-family: 'Arial';}
 .pagination>*:not(.navi):hover{text-decoration: underline;}
-.pagination .current{color:#f54a7e;text-decoration: underline;}
+.pagination .current{color:#8080ff;text-decoration: underline;}
 .pagination .navi{overflow:hidden; height:0; padding-top:28px; background:url(../images/common/btn_pagination.gif) no-repeat -1px 0; border-color:#999; opacity:.5;}
 .pagination .navi:not(.disabled):hover{opacity:1; border-color:#333;}
 .pagination .prev{background-position:-31px 0;}
@@ -117,8 +117,8 @@ span.ui_spinner{display:inline-block; vertical-align: middle;}
 .ui_step li:first-child:before{display:none;}
 .ui_step li:last-child:after{display:none;}
 .ui_step .ico{position:absolute; top:0; left:50%; z-index: 1; margin-left:-30px; width:60px; height:60px; border-radius: 50%;background:#f2f2f2;border: 1px solid #d6d6d6;}
-.ui_step .current{color:#f54a7e;}
-.ui_step .current .ico{background:#f54a7e;border: 1px solid #f54a7e}
+.ui_step .current{color:#8080ff;}
+.ui_step .current .ico{background:#8080ff;border: 1px solid #8080ff}
 .ui_step .num {position:absolute;top:0;left:50%;display:block;text-align:center;width:60px;height:60px;color:#333;font-size:22px;font-weight:500;z-index:1;vertical-align:middle;margin-left:-30px;line-height:60px;}
 .ui_step .current .num {color:#fff;}
 
@@ -206,9 +206,9 @@ span.ui_spinner{display:inline-block; vertical-align: middle;}
 .date_picker_layer td button{position:relative; width:100%; height:34px;}
 .date_picker_layer td button span{display:inline-block; width:50%; height:17px; margin:0 50% 17px 0; line-height:17px; vertical-align: top;}
 .date_picker_layer td button:disabled{color:#ccc; background:#f5f5f5;}
-.date_picker_layer td.selected{background:#f54a7e; color:#fff;}
+.date_picker_layer td.selected{background:#8080ff; color:#fff;}
 .date_picker_layer td.other{background:#f6f3f2;}
-.date_picker_layer td.other.selected{background:#f54a7e; color:#666;}
+.date_picker_layer td.other.selected{background:#8080ff; color:#666;}
 .date_picker_layer td.today .txt{position:absolute; bottom:0; left:0; width:100%; height:1.5em; margin:0; color:#000; font-size:12px;}
 .date_picker_layer [class^="ico_"]{width:30px; height:30px; background:url(../images/common/bg_btn_navi.png) no-repeat;}
 .date_picker_layer [class^="ico_"][class*="prev"]{}
@@ -222,7 +222,7 @@ span.ui_spinner{display:inline-block; vertical-align: middle;}
 .date_list_layer li{width:100%; height:25px;}
 .date_list_layer li button{width:100%; height:100%; padding-left:1em; text-align: left; font-family:'HeadMedium'; color:#000;}
 .date_list_layer button:disabled{background:transparent; color:#ccc;}
-.date_list_layer .selected{text-decoration: underline; color:#f54a7e;}
+.date_list_layer .selected{text-decoration: underline; color:#8080ff;}
 .date_list_layer .ui_close{top:15px; right:15px; width:14px; padding-top:14px;}
 
 /* ui close */
@@ -256,9 +256,9 @@ span.ui_spinner{display:inline-block; vertical-align: middle;}
 /* Progress Bar (TouchEvent Area) */
 [class*="_slider"] .ix-slider-bar{position:relative; height:20px; margin:0 10px;}
 [class*="_slider"] .ix-slider-bar:before{content:''; position:absolute; top:50%; left:0; width:100%; height:4px; margin:-2px 0 0 -10px; padding-right:20px; background:#999; border-radius:4px; box-sizing:content-box;}
-[class*="_slider"] .ix-progress{position:absolute; z-index:1; top:50%; left:0; width:100%; height:4px; margin:-2px 0 0 -10px; border-radius:4px; background:#f54a7e;}
+[class*="_slider"] .ix-progress{position:absolute; z-index:1; top:50%; left:0; width:100%; height:4px; margin:-2px 0 0 -10px; border-radius:4px; background:#8080ff;}
 /* Icon */
-[class*="_slider"] [class*="icon"]{position:absolute; top:50%; z-index: 2; margin:-10px 0 0 -10px; width:20px; height:20px; cursor:pointer; border:#f54a7e solid 6px; border-radius:50%; background:#fff;}
+[class*="_slider"] [class*="icon"]{position:absolute; top:50%; z-index: 2; margin:-10px 0 0 -10px; width:20px; height:20px; cursor:pointer; border:#8080ff solid 6px; border-radius:50%; background:#fff;}
 
 /* map/video  */
 .map_area{height:500px;}
@@ -285,7 +285,7 @@ span.ui_spinner{display:inline-block; vertical-align: middle;}
 .ui_accordion>dl>dd{display:none; border-bottom:1px solid #e5e5e5;}
 
  /* tabmenu */
-.tab_menu>ul{position:relative; width:100%; border-bottom:1px solid #f54a7e;}
+.tab_menu>ul{position:relative; width:100%; border-bottom:1px solid #8080ff;}
 .tab_menu:not(.equally)>ul:after{content:''; display: block; clear: both;}
 .tab_menu>ul>li{position:relative; z-index:1; float:left; text-align: center;}
 .tab_menu>ul>li>*{display:inline-block; width:100%; height:60px; padding:0 20px; color:#666; font-size:16px; border:1px solid #fff;}
@@ -293,7 +293,7 @@ span.ui_spinner{display:inline-block; vertical-align: middle;}
 .tab_menu.equally>ul{width:100%; display:table; table-layout:fixed;}
 .tab_menu.equally>ul>li{display:table-cell; float:none;}
 .tab_menu.equally>ul>li>*{padding:0; text-align:center;}
-.tab_menu:not(.bg) .on>*:not(span){color:#333; font-weight:500; border-color:#f54a7e; border-bottom-color:#fff}
+.tab_menu:not(.bg) .on>*:not(span){color:#333; font-weight:500; border-color:#8080ff; border-bottom-color:#fff}
 .tab_menu:not(.bg) .on>*:not(span):after{content:''; position:absolute; bottom:-1px; left:0; right:1px; height:1px; background:#fff}
 .tab_menu.bg>ul{background:#f2f2f2; border:0;}
 .tab_menu.bg>ul>li>*{border:0;}
@@ -305,8 +305,8 @@ span.ui_spinner{display:inline-block; vertical-align: middle;}
 .tab_menu.box>ul{border:0;}
 .tab_menu.box>ul>li>*:not(span){border-color:#d2d2d2;}
 .tab_menu.box>ul>li:not(:first-child)>*{border-left:0;}
-.tab_menu.box>ul>li.on>*:not(span){border-bottom-color:#f54a7e; color:#f54a7e;}
-.tab_menu.box>ul>li:not(:first-child).on:before{content:''; position:absolute; top:0; left:-1px; width:1px; bottom:0; background:#f54a7e;}
+.tab_menu.box>ul>li.on>*:not(span){border-bottom-color:#8080ff; color:#8080ff;}
+.tab_menu.box>ul>li:not(:first-child).on:before{content:''; position:absolute; top:0; left:-1px; width:1px; bottom:0; background:#8080ff;}
 .tab_menu.box .on>*:after{display:none;}
 
 .ui_tab .tab_cont{width:100%; padding:1em;}
