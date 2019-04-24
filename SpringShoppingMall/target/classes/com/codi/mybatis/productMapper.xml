@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="productMapper">
+
+
+
+<select id="getDataCount" resultType="int">
+	select nvl(count(*),0) from product
+	where fileCategory='list'
+</select>
+
+<select id="getLists" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select productid,productname,price,savefilename,storeName,storeUrl,originalName
+	from product where fileCategory='list' order by productdate desc)data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<select id="getAdminLists" resultType="com.codi.dto.ProductDTO">
+	select productId,productCategory,productName,productSize,price,
+	productDate,amount,color,state,fileCategory,originalName,saveFileName,superProduct,storeName,storeUrl
+	from product
+</select>
+
+<insert id="insertData" parameterType="com.codi.dto.ProductDTO">
+	insert into product(productId,productCategory,productName,productSize,price,
+	productDate,amount,color,state,fileCategory,originalName,saveFileName,superProduct,storeName,storeUrl)
+	values (#{productId},#{productCategory},#{productName},#{productSize},#{price},
+	sysdate,0,#{color},#{state},#{fileCategory},#{originalName},#{saveFileName},#{productId},#{storeName},#{storeUrl})
+</insert>
+
+<delete id="productAdminDelete" parameterType="string">
+	delete product where productId=#{productId}
+</delete>
+
+</mapper>
