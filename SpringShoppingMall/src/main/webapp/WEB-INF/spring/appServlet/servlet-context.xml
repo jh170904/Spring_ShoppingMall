@@ -22,10 +22,7 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.codi.app" />
-	
-	<beans:bean id="testDAO" class="com.codi.dao.TestDAO">
-		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
-	</beans:bean>
+	<context:component-scan base-package="com.codi.dao" />
 	
 	<beans:bean id="sessionTemplate"
 	class="org.mybatis.spring.SqlSessionTemplate">
@@ -37,6 +34,8 @@
 		<beans:property name="dataSource" ref="dataSource"/>
 		<!-- MyBatis 환경설정파일 -->
 		<beans:property name="configLocation" value="classpath:/myBatis-config.xml"/>
+		<!-- 런타임 시 SqlSessionFactory에 MyBatis mapper 파일들의 경로가 설정된다. -->
+        <beans:property name="mapperLocations" value="classpath:/com/codi/mybatis/**/*.xml" />
 	</beans:bean>
 	
 	<beans:bean id="dataSource"
@@ -49,5 +48,12 @@
 	</beans:bean>
 	
 	<beans:bean id="myUtil" class="com.codi.util.MyUtil"/>
+	
+	<beans:bean id="multipartResolver"
+	class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10240000"/>
+		<beans:property name="maxInMemorySize" value="1024000"/>
+		<beans:property name="defaultEncoding" value="UTF-8"/>
+	</beans:bean>
 	
 </beans:beans>

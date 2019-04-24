@@ -27,8 +27,8 @@
 .product .prd_thm_wrap .prd_btn_thm.on{border:0}
 .product .prd_thm_wrap .prd_btn_thm.on:before {content:''; border:3px solid #333;position:absolute;top:0;left:0;right:0;bottom:0}
 .item_state {position:absolute;bottom:142px;left:0;width:100%;margin-top:-15px;text-align:center;font-weight:300;z-index:3;}
-.item_state>*{display:inline-block;padding-right: 20px;border:1px solid #f54a7e;background:rgba(255, 255, 255, 0.7);line-height: 48px;font-size: 16px;color:#000;border-radius: 25px; vertical-align:top;}
-.item_state>*>span:first-child {float:left;display:inline-block;background:#f54a7e;color:#fff;padding: 0 20px;margin-right:5px;border-radius: 24px;}
+.item_state>*{display:inline-block;padding-right: 20px;border:1px solid #8080ff;background:rgba(255, 255, 255, 0.7);line-height: 48px;font-size: 16px;color:#000;border-radius: 25px; vertical-align:top;}
+.item_state>*>span:first-child {float:left;display:inline-block;background:#8080ff;color:#fff;padding: 0 20px;margin-right:5px;border-radius: 24px;}
 .item_state>*.off {border-color:#666;}
 .item_state>*.off>span {background-color:#666;}
 .item_state .ico_hot {width:28px;height:28px; margin:-5px -9px 0 -10px; background: url(../images/product/ico_product.png) no-repeat 0 94%;background-size: 100%;}
@@ -83,8 +83,8 @@
 	.prd_info_wrap .price_area .price{display:inline-block;}
 	.prd_info_wrap .price_area strong{font-family:Arial;}
 	.prd_info_wrap .price_area .discount{font-size:32px; padding-right:20px;}
-	.prd_info_wrap .price_area .discount *{color:#f54a7e;}
-	.prd_info_wrap .price_area .discount strong{color:#f54a7e;}
+	.prd_info_wrap .price_area .discount *{color:#8080ff;}
+	.prd_info_wrap .price_area .discount strong{color:#8080ff;}
 	.prd_info_wrap .price_area .discount .from{font-weight:bold; vertical-align: top;}
 	.prd_info_wrap .price_area .discount .from small{font-weight:normal; font-size:20px;}
 	.prd_info_wrap .price_area .discount .to{font-size:30px;}
@@ -115,7 +115,7 @@
 .prd_etc_info dl + dl {margin-top:10px}
 .prd_etc_info dl dt {display:table-cell;width:60px;line-height:30px}
 .prd_etc_info dl dd {display:table-cell;color:#333;line-height:30px}
-.product.detail .btn_request {border:1px solid #f54a7e !important;text-align:center;color:#f54a7e !important;font-size:14px;min-width:90px;height:30px;padding:0 12px;margin-left:5px;position:relative;top:-2px;}
+.product.detail .btn_request {border:1px solid #8080ff !important;text-align:center;color:#8080ff !important;font-size:14px;min-width:90px;height:30px;padding:0 12px;margin-left:5px;position:relative;top:-2px;}
 .product.detail .btn_tooltip {left:-159px;background: url(../images/common/ico_question.png) no-repeat 1px 0;width:18px;padding:18px 0 0 0 !important;margin-top:-7px}
 .product.detail .ui_tooltip {margin-left:7px}
 .product.detail .layer_tooltip {left:-318px;width:400px;color:#666}
@@ -174,13 +174,13 @@
 .product.detail .prd_total_num .prd_total_right {float:right;padding:25px 0}
 .product.detail .prd_total_num .prd_total_right * {display:inline-block}
 .product.detail .prd_total_num .prd_total_right em{font-size:20px; font-weight:400;}
-.product.detail .prd_total_num .prd_total_right strong {font-size:28px;color:#f54a7e;}
+.product.detail .prd_total_num .prd_total_right strong {font-size:28px;color:#8080ff;}
 .product.detail .prd_total_num .prd_total_right>span {margin-left:9px;color:#333;margin-top: -7px; vertical-align: middle;}
 .product.detail .purchase_button_set{margin-top:20px; display:table; width:590px; margin-left: -10px; table-layout: fixed;}
 .purchase_button_set>*{display:table-cell; padding-left:10px}
 .purchase_button_set [class^="btn_"]{width: 100%; min-width: inherit; padding: 0; font-weight: 300;}
-.purchase_button_set .btn_lg_bordered{border-color:#d9d9d9;}
-.purchase_button_set .btn_lg_bordered.emp{color:#f54a7e; border-color:#f54a7e;}
+.purchase_button_set .btn_lg_bordered {border-color:#8080ff;}
+.purchase_button_set .btn_lg_bordered.emp {color:#8080ff; border-color:#8080ff;}
 .purchase_button_set .takeout{width: 100px;}
 .purchase_button_set .takeout button{font-size: 15px; color:#999}
 .product.detail .tab_detail_info {position:relative}
@@ -227,19 +227,19 @@
 	.order_layer .order_total_price:after {content:'';display:block;clear:both;}
 	.order_layer .order_total_price>span {display:block;float:left;margin-top:9px}
 	.order_layer .order_total_price em {font-size:20px; font-weight:400;}
-	.order_layer .order_total_price strong {font-size:28px; color:#f54a7e}
+	.order_layer .order_total_price strong {font-size:28px; color:#8080ff}
 	.order_layer .order_button_wrap {text-align:center}
 	.order_layer .order_button_wrap button {width:100%; margin-left: 0; font-weight:400; font-size:18px}
 	.order_layer .order_button_wrap .takeout {padding:0 10px;color:#999;border:1px solid #999}
-	.order_layer .order_button_wrap .purchase {border:1px solid #f54a7e;color:#f54a7e;vertical-align:top;}
+	.order_layer .order_button_wrap .purchase {border:1px solid #8080ff;color:#8080ff;vertical-align:top;}
 	.order_layer .order_button_wrap .basket {margin-top:6px; width:100%;}
 	.order_layer .order_button_wrap.full_type .takeout {min-width:auto;width:71px;font-size:14px;padding:0 10px;color:#999;border:1px solid #999}
 	.order_layer .order_button_wrap.full_type .takeout:before {display:none}
 	.order_layer .order_button_wrap.full_type .purchase{min-width:auto;width:150px;margin-left:5px}
-	.order_layer .order_button_wrap.full_type .purchase_full{border:1px solid #f54a7e;color:#f54a7e;vertical-align:top;}	
+	.order_layer .order_button_wrap.full_type .purchase_full{border:1px solid #8080ff;color:#8080ff;vertical-align:top;}	
 	.order_layer .order_button_wrap .reservation {height:124px;font-size:20px;line-height:22px;display:table-cell;text-align:center;vertical-align:middle;width:268px;padding-top:6px;}
 	.order_layer .order_bottom .order_text {text-align:center;font-size:20px;font-weight:300;line-height:22px;padding:20px 0 0}
-	.order_layer .order_bottom .order_text span:nth-of-type(1) {color:#f54a7e}
+	.order_layer .order_bottom .order_text span:nth-of-type(1) {color:#8080ff}
 
 @media screen and (max-width:1200px){
 	.order_layer.fixed{left: 930px; margin-left:0; right:auto;}
@@ -359,9 +359,9 @@ dl.review>dd>dd img{display:none !important;} /* 20180806:由щ럭 �대�吏�
 	/*margin-top:-20px;*/
 /*}*/
 .ch_etude_list .img_ch_etude .flag_set {position:absolute; top:5px; left:5px; text-align:left; font-style:normal; z-index:2;}
-.ch_etude_list .img_ch_etude .flag_set i {display:inline-block; margin:0 3px 0 0; padding:0 7px; font-size:11px; line-height:18px; font-style:normal; border:1px solid #f54a7e; border-radius:10px;}
-.ch_etude_list .img_ch_etude .flag_set i.coupon {color:#f54a7e; background:#fff;}
-.ch_etude_list .img_ch_etude .flag_set i.live {color:#fff; background:#f54a7e;}
+.ch_etude_list .img_ch_etude .flag_set i {display:inline-block; margin:0 3px 0 0; padding:0 7px; font-size:11px; line-height:18px; font-style:normal; border:1px solid #8080ff; border-radius:10px;}
+.ch_etude_list .img_ch_etude .flag_set i.coupon {color:#8080ff; background:#fff;}
+.ch_etude_list .img_ch_etude .flag_set i.live {color:#fff; background:#8080ff;}
 .ch_etude_list .img_ch_etude img {width:100%;}
 .ch_etude_list .ch_etude_date {display:block;margin-top:10px;letter-spacing:0}
 .ch_etude_list + .pagination {margin-top:0}
@@ -417,8 +417,8 @@ dl.review>dd>dd img{display:none !important;} /* 20180806:由щ럭 �대�吏�
 .ch_etude_top_wrap .etude_right_wrap .btn_comment_reg {min-width:64px;width:64px;padding:0;margin-left:-3px;margin-top:1px}
 .ch_etude_top_wrap .etude_right_wrap .input_wrap {white-space:nowrap}
 .etu_top_flag_wrap {text-align:center;padding-top:30px}
-.etu_top_flag_wrap span {display:inline-block;border-radius:25px;text-align:center;border:1px solid #f54a7e;color:#f54a7e;font-size:16px;padding:0 20px;line-height:25px}
-.etu_top_flag_wrap span.pink {background:#f54a7e;color:#fff}
+.etu_top_flag_wrap span {display:inline-block;border-radius:25px;text-align:center;border:1px solid #8080ff;color:#8080ff;font-size:16px;padding:0 20px;line-height:25px}
+.etu_top_flag_wrap span.pink {background:#8080ff;color:#fff}
 .etu_top_flag_wrap span + span {margin-left:5px}
 .title_top_01 {font-weight:300 !important;margin-top:30px;font-size:34px !important;text-align:center}
 .etu_top_sub_wrap {text-align:center;margin-top:30px}
@@ -428,7 +428,7 @@ dl.review>dd>dd img{display:none !important;} /* 20180806:由щ럭 �대�吏�
 .etu_top_sub_wrap .btn_share:before {content:'';width:19px; height:20px; background:url(../images/common/ico_sns_01.png) no-repeat;display:inline-block;vertical-align:middle;margin:-2px 7px 0 0;}
 .etu_top_sub_wrap .vline {width:1px;height:20px;background:#d2d2d2;margin-left:10px}
 .layer .layer_etu_coupon_tit_01 {display:block;font-size:24px;text-align:center;color:#333}
-.layer .layer_etu_coupon_tit_01 em {color:#f54a7e}
+.layer .layer_etu_coupon_tit_01 em {color:#8080ff}
 .layer .down_load_list {margin-top:30px;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9}
 .layer .down_load_list li {overflow:hidden;padding:10px 0}
 .layer .down_load_list li span {display:block;float:left;font-size:16px;color:#666;margin-top:7px}
@@ -586,11 +586,11 @@ dl.review>dd>dd img{display:none !important;} /* 20180806:由щ럭 �대�吏�
 
 .item .info_box .title_area{}
 .item .info_box .title_area .s_title{color: #999; height:15px; overflow:hidden; word-break:break-all; margin-bottom:8px;}
-.item .info_box .title_area .s_title .tag{padding-right: 5px;color: #f54a7e;}
+.item .info_box .title_area .s_title .tag{padding-right: 5px;color: #8080ff;}
 .item .info_box .title_area .h_title{height:56px; font-size:20px; color: #000; font-weight: 300; line-height: 28px; overflow:hidden; word-break:break-all;}
 .item .info_box_freebie .title_area .h_title{font-size: 18px; font-weight:300; line-height: 26px; height:52px; overflow:hidden; word-break:break-all;}
 /* �밴��먮ℓ�곹뭹 以� �먮ℓ�덉젙 �곹뭹 �곹깭臾멸뎄 �섏젙 - 異붽� */
-.item .info_box .title_area .text_highlight{color:#f54a7e;font-size:20px;}
+.item .info_box .title_area .text_highlight{color:#8080ff;font-size:20px;}
 .item .info_box .title_area .s_title_v2{height:auto;}
 
 
@@ -676,9 +676,9 @@ dl.review>dd>dd img{display:none !important;} /* 20180806:由щ럭 �대�吏�
 
 .item .info_box .price_area .btn_cart {width: 26px;height: 26px;background: url('../images/common/ico.png') -18px -90px no-repeat;}
 .item .info_box .price_area .btn_review {position: relative;padding: 0;width: 26px;height: 26px;background: url('../images/common/ico.png') 6px -204px no-repeat;}
-.item .info_box .price_area .btn_review .bubble {position: absolute;top: -5px;right: 45%;background: #f54a7e;color: #fff;font-size: 11px;padding: 3px 5px;border-radius: 17px;white-space: nowrap; letter-spacing:0;}
-.item .info_box .price_area .discount *{color: #f54a7e;}
-.item .info_box_freebie .price_area .discount *{color: #f54a7e;}
+.item .info_box .price_area .btn_review .bubble {position: absolute;top: -5px;right: 45%;background: #8080ff;color: #fff;font-size: 11px;padding: 3px 5px;border-radius: 17px;white-space: nowrap; letter-spacing:0;}
+.item .info_box .price_area .discount *{color: #8080ff;}
+.item .info_box_freebie .price_area .discount *{color: #8080ff;}
 .item .info_box .price_area .discount .from{font-size: 18px;vertical-align: top;}
 .item .info_box .price_area .discount .from em{font-size: 14px;font-weight: 400;vertical-align: top;}
 .item .info_box .price_area .discount .to{font-size: 20px;}
@@ -731,7 +731,7 @@ dl.review>dd>dd img{display:none !important;} /* 20180806:由щ럭 �대�吏�
 .time_count{position: relative;margin: -20px 0 60px;text-align: center;}
 .time_count:after{content: '';position: absolute;bottom: -55px;left: 50%;width: 1px;height: 40px;background-color: #d2d2d2;}
 .time_count .title{padding-bottom: 15px;font-size: 16px;font-weight: 500;color: #999;letter-spacing: 0;}
-.time_count .ui_remain_timer{color: #f54a7e;font-size: 36px;font-weight: 700;font-family: 'Arial';}
+.time_count .ui_remain_timer{color: #8080ff;font-size: 36px;font-weight: 700;font-family: 'Arial';}
 
 /*beauty select shop*/
 .select_shop.slide{margin-bottom: 30px;}
@@ -766,10 +766,10 @@ dl.review>dd>dd img{display:none !important;} /* 20180806:由щ럭 �대�吏�
 /* hot deal */
 .hot_deal .tab_menu > ul {border-bottom: 0;}
 .hot_deal .tab_menu > ul > li:first-child:after {content: '';position: absolute;top: 50%;right: 0;margin-top: -14px;width: 2px;height: 20px;background-color: #e8e8e8;}
-.hot_deal .tab_menu .on a {border: 0; color: #f54a7e;}
+.hot_deal .tab_menu .on a {border: 0; color: #8080ff;}
 .hot_deal .tab_menu .on a:after {left: 50%;bottom: -10px;margin-left: -10px;width: 20px;height: 10px;background: url('../images/common/ico.png') -96px -90px no-repeat;}
 .hot_deal .ui_tab .tab_cont {padding: 50px 155px;}
-.hot_deal .ui_tab.today .tab_cont {background-color: #f54a7e;}
+.hot_deal .ui_tab.today .tab_cont {background-color: #8080ff;}
 .hot_deal .ui_tab .tab_cont .title {text-align: center;font-size: 40px;font-weight: 300;color: #fff;}
 .hot_deal .ui_tab .tab_cont .title + .item_list {margin-top: 50px;}
 .hot_deal .time_count{margin-top: 50px;}
@@ -796,7 +796,7 @@ dl.review>dd>dd img{display:none !important;} /* 20180806:由щ럭 �대�吏�
 /*best*/
 .item_list li > .ranking{position: absolute;top: 15px;left: 15px;z-index: 1;}
 .item_list li > .ranking span{position: relative;display: inline-block;width: 30px;font-size: 20px;color: #000;font-family: 'Arial';text-align: center;}
-.item_list li > .ranking span:after{content: ''; position: absolute;bottom:-5px;left: 0;width: 30px;height: 2px;background-color: #f54a7e;}
+.item_list li > .ranking span:after{content: ''; position: absolute;bottom:-5px;left: 0;width: 30px;height: 2px;background-color: #8080ff;}
 .item_list li > .ranking.large{left: 15px;z-index: 2;}
 .item_list li > .ranking.large span{font-size: 26px;}
 
