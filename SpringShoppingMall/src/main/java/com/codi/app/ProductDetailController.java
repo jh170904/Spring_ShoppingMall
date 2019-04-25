@@ -82,12 +82,6 @@ public class ProductDetailController {
 		 	int rate[] = {reviewDAO.getProductDataCountHeart(superProduct, 5),reviewDAO.getProductDataCountHeart(superProduct, 4),
 		 			reviewDAO.getProductDataCountHeart(superProduct, 3),reviewDAO.getProductDataCountHeart(superProduct, 2),reviewDAO.getProductDataCountHeart(superProduct, 1)}; 
 		 	
-		 	System.out.println("5 " + reviewDAO.getProductDataCountHeart(superProduct, 5));
-		 	System.out.println("4 " + reviewDAO.getProductDataCountHeart(superProduct, 4));
-		 	System.out.println("3 " + reviewDAO.getProductDataCountHeart(superProduct, 3));
-		 	System.out.println("2 " + reviewDAO.getProductDataCountHeart(superProduct, 2));
-		 	System.out.println("1 " + reviewDAO.getProductDataCountHeart(superProduct, 1));
-		 	
 			//∆Ú¡° ∆Ú±’ 
 			int avgReviewRate = totalReviewRate/dataCount_yes;
 			String listUrl = cp + "detail.action";
