@@ -72,7 +72,7 @@ public class ProductController {
 		  String listUrl = cp + "/listNew.action"; 
 		  String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		  
-		  
+
 		  req.setAttribute("imagePath", imagePath); 
 		  req.setAttribute("lists", lists);
 		  req.setAttribute("pageIndexList", pageIndexList);
