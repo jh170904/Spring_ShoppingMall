@@ -456,11 +456,11 @@ tr{
 									<td style="width: 400px; text-align: center;">전체상품평<br />
 										<span class="ui_rating"> <c:forEach var="i" begin="1"
 												end="${avgReviewRate }" step="1">
-												<img alt="" src="<%=cp%>/project/image/review_heart_on.PNG"
+												<img alt="" src="<%=cp%>/resources/image/heart_on.png"
 													height="25px;">
 											</c:forEach> <c:forEach var="j" begin="${avgReviewRate+1 }" end="5"
 												step="1">
-												<img alt="" src="<%=cp%>/project/image/review_heart_off.PNG"
+												<img alt="" src="<%=cp%>/resources/image/heart_off.png"
 													height="25px;">
 											</c:forEach>
 									</span><br /> <small>(${dataCount_yes })</small>
@@ -471,11 +471,11 @@ tr{
 												<li><span> <c:forEach var="on" begin="${heart}"
 															end="5" step="1">
 															<img alt=""
-																src="<%=cp%>/project/image/review_heart_on.PNG"
+																src="<%=cp%>/resources/image/heart_on.png"
 																height="25px;">
 														</c:forEach> <c:forEach var="on" begin="1" end="${heart-1}" step="1">
 															<img alt=""
-																src="<%=cp%>/project/image/review_heart_off.PNG"
+																src="<%=cp%>/resources/image/heart_off.png"
 																height="25px;">
 														</c:forEach> <small>&nbsp;&nbsp;&nbsp;&nbsp;(${rate[heart-1] })</small>
 												</span> <span class="graph" style="margin-left: 20px;"> <span
@@ -509,11 +509,11 @@ tr{
 												<span class="ui_rating"> <c:forEach var="i" begin="1"
 														end="${dto.rate }" step="1">
 														<img alt=""
-															src="<%=cp%>/project/image/review_heart_on.PNG"
+															src="<%=cp%>/resources/image/heart_on.png"
 															height="15px;">
 													</c:forEach> <c:forEach var="j" begin="${dto.rate+1 }" end="5" step="1">
 														<img alt=""
-															src="<%=cp%>/project/image/review_heart_off.PNG"
+															src="<%=cp%>/resources/image/heart_off.png"
 															height="15px;">
 													</c:forEach>
 											</span> <span class="user_id">${dto.userId }</span> <small>${dto.reviewDate }</small>
