@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="destMapper">
+
+<insert id="insertData" parameterType="com.codi.dto.DestinationDTO">
+	insert into destination (userId,destNickname,destName,destPhone,destTel,zip,addr1,addr2,addrKey)
+	values (#{userId},#{destNickname},#{destName},#{destPhone},#{destTel},#{zip},#{addr1},#{addr2},#{addrKey})
+</insert>
+
+<select id="getDataCount" parameterType="String" resultType="int">
+	select nvl(count(*),0) from destination where userId=#{userId}
+</select>
+
+<select id="getList" parameterType="String" resultType="com.codi.dto.DestinationDTO">
+	select addrKey,destNickname,destName,zip,addr1,addr2,destPhone
+	from destination where userId=#{userId}
+</select>
+
+<select id="getReadData" parameterType="hashMap" resultType="com.codi.dto.DestinationDTO" >
+	select addrKey,destNickname,destName,zip,addr1,addr2,destPhone,destTel
+	from destination where userId=#{userId} and destNickname=#{destNickname}
+</select>
+
+<select id="selectDescNickname" parameterType="hashMap" resultType="com.codi.dto.DestinationDTO">
+	select destNickname from destination where userId=#{userId} and destNickname not in(#{destNickname})
+</select>
+
+<update id="changeAddrkeyNo" parameterType="String">
+	update destination set addrKey='no' where addrKey='yes' and userId=#{userId}
+</update>
+
+<update id="changeAddrkeyYes" parameterType="hashMap">
+	update destination set addrKey='yes' where userId=#{userId} and destNickname=#{destNickname}
+</update>
+
+<update id="updateData" parameterType="com.codi.dto.DestinationDTO">
+	update destination set destNickname=#{destNickname},destName=#{destName},destPhone=#{destPhone},destTel=#{destTel},zip=#{zip},addr1=#{addr1},addr2=#{addr2}
+	where userId=#{userId} and destNickname=#{ex_destNickname}
+</update>
+
+<delete id="deleteData" parameterType="hashMap">
+	delete destination where userId=#{userId} and destNickname=#{destNickname}
+</delete>
+
+</mapper>
