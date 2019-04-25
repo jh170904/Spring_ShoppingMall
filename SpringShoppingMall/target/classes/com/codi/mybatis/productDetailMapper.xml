@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="productDetailMapper">
+
+<!-- 상세상품읽어오기 -->
+<select id="getReadData" parameterType="String" resultType="com.codi.dto.ProductDetailDTO" >
+	select productId,productCategory,productName,productSize,state,price,
+	to_char(productDate,'yyyy-mm-dd') productDate,amount,color,
+	originalName,saveFileName,filecategory,superProduct,
+	storeName,storeUrl 
+	from product where productId=#{productId} and filecategory='list'
+</select>
+
+<!-- 상세상품 색상옵션 -->
+<select id="getColorList" parameterType="String" resultType="String" >
+	select DISTINCT color from product where superProduct=#{superProduct}
+</select>
+
+<!-- 상세상품 사이즈옵션 -->
+<select id="getProductSizeList" parameterType="String" resultType="String" >
+	select DISTINCT productSize from product where superProduct=#{superProduct}
+</select>
+
+</mapper>

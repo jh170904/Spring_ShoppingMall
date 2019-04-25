@@ -44,7 +44,9 @@
 					
 						<table width="400">
 							<tr>
-								<img style="background-color: #f5f5f5; width: 268px; height: 268px; margin-left : 10px; margin-right: 10px" alt="" src="./upload/list/${dto.originalName}" } />
+								<a href="<%=cp%>/detail.action?superProduct=${dto.superProduct}">
+								<img style="background-color: #f5f5f5; width: 268px; height: 268px; margin-left : 10px; margin-right: 10px" alt="" src="./upload/list/${dto.originalName}" />
+								</a>
 							</tr>
 							<tr>
 								<a href="${dto.storeUrl }" >

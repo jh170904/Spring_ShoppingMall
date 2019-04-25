@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="getLists" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
 	select * from (
 	select rownum rnum, data.* from(
-	select productid,productname,price,savefilename,storeName,storeUrl,originalName
+	select productid,productname,price,savefilename,storeName,storeUrl,originalName,superProduct 
 	from product where fileCategory='list' order by productdate desc)data)
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}

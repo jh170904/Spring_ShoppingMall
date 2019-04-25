@@ -2,45 +2,27 @@ package com.codi.dto;
 
 import java.util.List;
 
-public class ProductDTO {
+public class ProductDetailDTO {
 
 	private String productId;
 	private String productCategory;
 	private String productName;
-
 	private String productSize;
 	private int price;
 	private String productDate;
 	private int amount;
 	private String color;
 	private String state;
+	private String fileCategory;
 	private String originalName;
 	private String saveFileName;
+	private String superProduct;
 	private String storeName;
 	private String storeUrl;
-	private String superProduct;
-	
-	//실제 옵션 값이 저장되 있는 컬럼
-	private String productOption;
-	
-	//리스트 용도 인지 아닌지 확인하기 위한 컬럼
-	private String fileCategory;
-	public String getFileCategory() {
-		return fileCategory;
-	}
-	public void setFileCategory(String fileCategory) {
-		this.fileCategory = fileCategory;
-	}
-	
-	//옵션들을 넣어놀 리스트변수(컬럼x)
-	private List<String> optionList;
-	public List<String> getOptionList() {
-		return optionList;
-	}
-	public void setOptionList(List<String> optionList) {
-		this.optionList = optionList;
-	}
-	
+
+	//페이지 출력용
+	private List<String> sizeList;
+	private List<String> colorList;
 	
 	public String getProductId() {
 		return productId;
@@ -96,6 +78,12 @@ public class ProductDTO {
 	public void setState(String state) {
 		this.state = state;
 	}
+	public String getFileCategory() {
+		return fileCategory;
+	}
+	public void setFileCategory(String fileCategory) {
+		this.fileCategory = fileCategory;
+	}
 	public String getOriginalName() {
 		return originalName;
 	}
@@ -107,6 +95,12 @@ public class ProductDTO {
 	}
 	public void setSaveFileName(String saveFileName) {
 		this.saveFileName = saveFileName;
+	}
+	public String getSuperProduct() {
+		return superProduct;
+	}
+	public void setSuperProduct(String superProduct) {
+		this.superProduct = superProduct;
 	}
 	public String getStoreName() {
 		return storeName;
@@ -120,17 +114,16 @@ public class ProductDTO {
 	public void setStoreUrl(String storeUrl) {
 		this.storeUrl = storeUrl;
 	}
-	public String getProductOption() {
-		return productOption;
+	public List<String> getSizeList() {
+		return sizeList;
 	}
-	public void setProductOption(String productOption) {
-		this.productOption = productOption;
+	public void setSizeList(List<String> sizeList) {
+		this.sizeList = sizeList;
 	}
-	public String getSuperProduct() {
-		return superProduct;
+	public List<String> getColorList() {
+		return colorList;
 	}
-	public void setSuperProduct(String superProduct) {
-		this.superProduct = superProduct;
+	public void setColorList(List<String> colorList) {
+		this.colorList = colorList;
 	}
-	
 }
