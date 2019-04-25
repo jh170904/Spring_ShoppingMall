@@ -33,7 +33,7 @@ public class ReviewController {
 	@Qualifier("reviewDAO")//Bean 梓端 持失 
 	ReviewDAO dao;
 	
-	@Autowired()
+	@Autowired
 	MyUtil myUtil;//Bean 梓端 持失
 	
 	@RequestMapping(value = "/reviewList.action", method = {RequestMethod.GET, RequestMethod.POST})
@@ -82,7 +82,7 @@ public class ReviewController {
 			reviewDTO.setReviewDate_view(reviewDTO.getReviewDate().substring(0,10));
 		}
 		
-		String listUrl = cp + "/reviewList.action";
+		String listUrl = cp + "/reviewList.action?order="+order;
 		
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		

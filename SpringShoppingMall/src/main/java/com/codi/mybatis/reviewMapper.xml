@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select * from (
 	select rownum rnum, data.* from (
 	select review.productId productId,productName,rate,subject,content,review.originalName originalName, review.saveFileName saveFileName,
-	to_char(reviewDate,'yyyy-mm-dd hh24:mi:ss') reviewDate
+	to_char(reviewDate,'yyyy-mm-dd hh24:mi:ss') reviewDate, superProduct
 	from review,product where review.productId=product.productId and userId=#{userId} and writed=#{writed}
 	order by ${orderBy}) data) 
 <![CDATA[
@@ -64,18 +64,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	from review where writed='yes'  
 	and productId in (
 	select product.productId from review,product 
-	where review.productId = product.productId 
-	and product.productName=#{productName})
+	where review.productId = product.superProduct 
+	and superProduct=#{superProduct})
 </select>
 
 <!-- 특정 상품 리뷰 데이터 -->
 <select id="productGetList" parameterType="hashMap" resultType="com.codi.dto.ReviewDTO">
 	select * from (
 	select rownum rnum, data.* from (
-	select userId,review.productId productId,productSize,color,rate,subject,content,to_char(reviewDate,'yyyy-mm-dd hh24:mi:ss') reviewDate,review.originalName originalName,review.saveFileName saveFileName
-	from (select * from review where writed='yes' and productId in (
-	select product.productId from review,product where review.productId = product.productId and product.productName=#{productName})) review, product product 
-	where review.productId=product.productId 
+	select userId,review.productId productId,superProduct,productSize,color,rate,subject,content,to_char(reviewDate,'yyyy-mm-dd hh24:mi:ss') reviewDate,review.originalName originalName,review.saveFileName saveFileName
+	from review,product where review.productId = product.productId and superProduct=#{superProduct} and writed='yes'
 	order by reviewDate) data) 
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
@@ -88,8 +86,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	from review where writed='yes' 
 	and productId in (
 	select product.productId from review,product 
-	where review.productId = product.productId 
-	and product.productName=#{productName} and rate=#{rate})
+	where review.productId = product.superProduct 
+	and superProduct=#{superProduct}) and rate=#{rate}
 </select>
 
 </mapper>
