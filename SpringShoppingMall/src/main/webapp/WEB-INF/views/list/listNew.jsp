@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@include file="../layout/top.jsp"  %>
+<%@include file="../layout/storeNav.jsp"  %>
 
 <div id="ap_container" class="ap_container">
 
 	<div class="page_title_area">
-		<div class="page_title">
-			<h2 class="h_title page">신상품</h2>
+		<div class="page_title" style="border-top-color: black;">
+			<h2 class="h_title page">카테고리</h2>
 			<p class="text font_lg"></p>
 		</div>
 	</div>
@@ -44,7 +44,7 @@
 					
 						<table width="400">
 							<tr>
-								<img style="background-color: #f5f5f5; width: 268px; height: 268px; margin-left : 10px; margin-right: 10px" alt="" src="./upload/${dto.originalName}" } />
+								<img style="background-color: #f5f5f5; width: 268px; height: 268px; margin-left : 10px; margin-right: 10px" alt="" src="./upload/list/${dto.originalName}" } />
 							</tr>
 							<tr>
 								<a href="${dto.storeUrl }" >

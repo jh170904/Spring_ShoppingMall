@@ -29,6 +29,17 @@ public class ProductController {
 	@Autowired
 	MyUtil myUtil;// Bean 객체 생성
 
+
+	@RequestMapping(value = "/commuMain.action", method = RequestMethod.GET)
+	public String commuMain(HttpServletRequest req) {
+		return "commuMain";
+	}
+	
+	@RequestMapping(value = "/storeMain.action", method = RequestMethod.GET)
+	public String storeMain(HttpServletRequest req) {
+		return "storeMain";
+	}
+
 	@RequestMapping(value = "/listNew.action", method = RequestMethod.GET)
 	public String listNew(HttpServletRequest req) {
 		
@@ -86,7 +97,7 @@ public class ProductController {
 		//1. 리스트 파일을 서버에 올리는 작업
 	
 		//Spring3.0에서 경로가 바뀜 : WEB-INF에 files라는 폴더를 생성해서 저장해라
-		String path = request.getSession().getServletContext().getRealPath("/upload");
+		String path = request.getSession().getServletContext().getRealPath("/upload/list");
 		//D:\sts-bundle\work\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringShoppingMall\
 		
 		//이름으로 file을 받아옴
@@ -148,7 +159,7 @@ public class ProductController {
 		String productId = req.getParameter("productId");
 		String originalName = req.getParameter("originalName");
 		
-		String path = req.getSession().getServletContext().getRealPath("/upload"+ "/" + originalName);
+		String path = req.getSession().getServletContext().getRealPath("/upload/list/"+ originalName);
 		
 		//DB파일 삭제
 		dao.productAdminDelete(productId);
