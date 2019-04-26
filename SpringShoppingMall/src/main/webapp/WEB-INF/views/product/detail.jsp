@@ -138,6 +138,7 @@ tr{
 }
 
 </style>
+
 <script type="text/javascript" src="<%=cp%>/resources/js/httpRequest.js"></script>
 <script type="text/javascript">
 
@@ -227,7 +228,6 @@ tr{
 				
 	}
 	
-	
 	$(document).ready(function(){
 		   
 		  $('ul.tabs li').click(function(){
@@ -241,7 +241,66 @@ tr{
 		  })
 		 
 		})
-
+	
+	
+	$(function(){
+		
+		$("#reviewOn").click(function(){
+			
+			listPage(1);
+			
+			var superProduct = "<c:out value="${superProduct}" />";
+			var order = "<c:out value="${order}" />";
+			
+			var params = "superProduct=" + superProduct+ "&order=" + order;
+			
+			$.ajax({
+			
+				type:"POST",
+				url:"detailReview.action",
+				data:params,
+				success:function(args){
+					$("#tab-2").html(args);			
+				},
+				error:function(e){
+					alert(e.responseText);
+				}
+				
+			});
+			
+		});
+		
+	});
+		
+	function listPage(page,order){
+		
+		var url = "detailReview.action";
+		var superProduct = "<c:out value="${superProduct}" />";
+		
+		$.post(url,{pageNum:page,superProduct:superProduct,order:order},function(args){
+			
+			$("#tab-2").html(args);
+			
+		});
+		
+		$("#tab-2").show(); //display:block의 역할 - 보여지는거(none의 반대)
+		
+	}
+	
+	function changeReviewOption(order){
+		
+		var url = "detailReview.action";
+		var superProduct = "<c:out value="${superProduct}" />";
+		
+		$.post(url,{superProduct:superProduct,order:order},function(args){
+			
+			$("#tab-2").html(args);
+			
+		});
+		
+		$("#tab-2").show(); //display:block의 역할 - 보여지는거(none의 반대)
+		
+	}
 
 </script>
 <div class="ap_contents product detail" >
@@ -418,7 +477,7 @@ tr{
 			<div class="tab_menu">
 				<ul class="tabs">
 					<li class="on current" data-tab="tab-1"><button type="button">상세정보</button></li>
-					<li class="" data-tab="tab-2">
+					<li class="" data-tab="tab-2" id="reviewOn">
 						<button type="button">리뷰/후기 (${dataCount_yes })</button>
 					</li>
 					<li class="" data-tab="tab-3"><button type="button">배송/교환/반품</button></li>
@@ -442,99 +501,7 @@ tr{
 		</div>
 
 		<div id="tab-2" class="tab-content">
-			<c:if test="${dataCount_yes==0 }">
-				<div class="prd_detail_wrap">
-					<div class="contenteditor-root">작성된 리뷰가 없습니다.</div>
-				</div>
-			</c:if>
-			<c:if test="${dataCount_yes!=0 }">
-				<div class="prd_detail_wrap">
-					<div class="contenteditor-root">
-						<div class="review_list">
-							<table class="review_summary" style="margin-bottom: 50px;">
-								<tr>
-									<td style="width: 400px; text-align: center;">전체상품평<br />
-										<span class="ui_rating"> 
-											<c:forEach var="i" begin="1" end="${avgReviewRate }" step="1">
-												<img alt="" src="<%=cp%>/resources/image/heart_on.png" height="25px;">
-											</c:forEach> 
-											<c:forEach var="j" begin="${avgReviewRate+1 }" end="5" step="1">
-												<img alt="" src="<%=cp%>/resources/image/heart_off.png" height="25px;">
-											</c:forEach>
-										</span><br/><small>(${dataCount_yes })</small>
-									</td>
-									<td>
-										<ul class="rating_list">
-											<c:forEach var="heart" begin="1" end="5" step="1"> 
-												<li>
-													<span> 
-														<c:forEach var="on" begin="${heart}" end="5" step="1">
-															<img alt="" src="<%=cp%>/resources/image/heart_on.png" height="25px;">
-														</c:forEach> 
-														<c:forEach var="on" begin="1" end="${heart-1}" step="1">
-															<img alt="" src="<%=cp%>/resources/image/heart_off.png" height="25px;">
-														</c:forEach> 
-														<small>&nbsp;&nbsp;&nbsp;&nbsp;(${rate[heart-1] })</small>
-													</span> 
-													<span class="graph" style="margin-left: 20px;"> 
-														<span style="width: ${rate[heart-1]/dataCount_yes * 100}%"></span>
-													</span> 
-													<span class="num">
-														<small>&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${(rate[heart-1])/(dataCount_yes) }" type="percent" /></small>
-													</span>
-												</li>
-											</c:forEach>
-										</ul>
-
-									</td>
-								</tr>
-
-							</table>
-
-							<table class="ui_table_striped data_table thead_colored align_center @table-striped-apply" id="shpiTable">
-
-								<colgroup>
-									<col>
-									<col>
-								</colgroup>
-
-								<tbody id="paging">
-									<c:forEach var="dto" items="${lists }">
-										<tr>
-											<td style="text-align: left; width: 150px; vertical-align: top; padding-left: 50px;">
-												<span class="ui_rating"> 
-													<c:forEach var="i" begin="1" end="${dto.rate }" step="1">
-														<img alt="" src="<%=cp%>/resources/image/heart_on.png" height="15px;">
-													</c:forEach> 
-													<c:forEach var="j" begin="${dto.rate+1 }" end="5" step="1">
-														<img alt="" src="<%=cp%>/resources/image/heart_off.png" height="15px;">
-													</c:forEach>
-												</span> 
-												<span class="user_id">${dto.userId }</span> <small>${dto.reviewDate }</small>
-											</td>
-
-											<td style="text-align: left; width: 600px;">
-												<small class="opt">사이즈: #${dto.productSize }</small>&nbsp;&nbsp;&nbsp;&nbsp;<small class="opt">컬러: #${dto.color }</small><br/>
-												<span class="flag">구매자 후기</span> 
-												<span class="title">${dto.subject }</span><br />
-												<span class="text reduce">${dto.content }</span><br /> 
-												<c:if test="${!empty dto.savefileName }">
-													<a href="${imagePath_review }/${dto.savefileName}"> 
-														<img alt="" src="${imagePath_review }/${dto.savefileName}" width="70" height="70">
-													</a>
-												</c:if>
-											</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<div align="center">
-					<font style="font-size: 20px">${pageIndexList}</font>
-				</div>
-			</c:if>
+			
 		</div>
 		
 		<br /> <br /> <br />

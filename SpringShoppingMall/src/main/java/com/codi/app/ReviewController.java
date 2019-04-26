@@ -42,8 +42,7 @@ public class ReviewController {
 		String cp = request.getContextPath();
 		
 		String pageNum = request.getParameter("pageNum");
-		String order = request.getParameter("order");
-		
+		String order = request.getParameter("order");	
 		
 		if(order!=null)
 			dto.setOrder(order);
@@ -178,7 +177,6 @@ public class ReviewController {
 				File saveFile = new File(path,saveName); 
 				file.transferTo(saveFile);
 				
-				//2. DB에 넣기
 				dto.setOriginalName(saveName);
 				dto.setSavefileName(saveName);
 
@@ -187,7 +185,8 @@ public class ReviewController {
 			}
 			
 		}
-
+		
+		//2. DB에 넣기
 		dao.insertData(dto);
 		
 		return "redirect:/reviewList.action";

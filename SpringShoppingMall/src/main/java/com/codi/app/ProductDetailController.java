@@ -46,6 +46,48 @@ public class ProductDetailController {
 		//List<ProductDetailImageDTO> detailImagelists = dao.getDetailImageList("productName",productName);
 		//List<String> optionList = dao.getOptionList(productName);
 		
+		String order = request.getParameter("order");	
+		
+		if(order==null)
+			order="recent";		
+
+		int dataCount_yes = reviewDAO.getProductDataCount(superProduct);
+		
+		request.setAttribute("dataCount_yes", dataCount_yes);
+		
+		request.setAttribute("dto", dto);
+		request.setAttribute("order", order);
+		request.setAttribute("superProduct", superProduct);
+		request.setAttribute("colorList", colorList);
+		request.setAttribute("sizeList", sizeList);
+		
+		return "product/detail";
+	}
+	
+	@RequestMapping(value = "/detailReview.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String detailReview(HttpServletRequest request, HttpServletResponse response) {
+		
+		String cp = request.getContextPath();
+		String superProduct = request.getParameter("superProduct");
+		ProductDetailDTO dto = dao.getReadData(superProduct);
+		
+		String order = request.getParameter("order");	
+		
+		if(order==null)
+			order="recent";
+		
+		String orderBy;
+		if(order.equals("recent"))
+			orderBy = "reviewDate desc";
+		else if(order.equals("worst"))
+			orderBy = "rate";
+		else
+			orderBy = "rate desc";
+		
+		// 이미지파일경로
+		String imagePath = cp + "/pds/productImageFile";
+		request.setAttribute("imagePath", imagePath);
+		
 		//상세페이지 / 리뷰
 		String pageNum = request.getParameter("pageNum");
 		
@@ -57,6 +99,7 @@ public class ProductDetailController {
 		int dataCount_yes = reviewDAO.getProductDataCount(superProduct);
 		
 		if(dataCount_yes!=0){
+			
 			int numPerPage = 7;
 			int totalPage = myUtil.getPageCount(numPerPage, dataCount_yes);
 
@@ -65,31 +108,24 @@ public class ProductDetailController {
 
 			int start = (currentPage-1)*numPerPage+1;
 			int end = currentPage*numPerPage;
-
-			List<ReviewDTO> lists = reviewDAO.productGetList(superProduct,start, end);
-
-			Iterator<ReviewDTO> it = lists.iterator();
-
-			//평점 합계
-			int totalReviewRate=0;
-
-			while(it.hasNext()){
-				ReviewDTO reviewDto = it.next();
-				totalReviewRate += reviewDto.getRate();
-			}
+			
+			List<ReviewDTO> lists = reviewDAO.productGetList(superProduct, start, end,orderBy);
+			
 
 			//평점 별 리뷰 개수
 		 	int rate[] = {reviewDAO.getProductDataCountHeart(superProduct, 5),reviewDAO.getProductDataCountHeart(superProduct, 4),
 		 			reviewDAO.getProductDataCountHeart(superProduct, 3),reviewDAO.getProductDataCountHeart(superProduct, 2),reviewDAO.getProductDataCountHeart(superProduct, 1)}; 
 		 	
 			//평점 평균 
-			int avgReviewRate = totalReviewRate/dataCount_yes;
-			String listUrl = cp + "detail.action";
-			String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		 	float avgReviewRate = reviewDAO.productGetList_heart(superProduct);
+		 	
+			String pageIndexList = myUtil.reviewPageIndexList(currentPage, totalPage,order);
 			String imagePath_review = "./upload/review";
 
 			//포워딩 데이터
 			request.setAttribute("lists", lists);
+			request.setAttribute("order", order);
+			request.setAttribute("pageNum", pageNum);	
 			request.setAttribute("pageIndexList", pageIndexList);
 			request.setAttribute("imagePath_review", imagePath_review);
 			request.setAttribute("avgReviewRate", avgReviewRate);
@@ -98,10 +134,8 @@ public class ProductDetailController {
 		request.setAttribute("dataCount_yes", dataCount_yes);
 		
 		request.setAttribute("dto", dto);
-		request.setAttribute("colorList", colorList);
-		request.setAttribute("sizeList", sizeList);
 		
-		return "product/detail";
+		return "product/productReview";
 	}
 	
 }

@@ -77,14 +77,20 @@ public class ReviewDAO {
 		return result;
 	}
 	
-	public List<ReviewDTO> productGetList(String superProduct, int start, int end){
+	public List<ReviewDTO> productGetList(String superProduct, int start, int end,String orderBy){
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("superProduct", superProduct);
 		params.put("start", start);
 		params.put("end", end);
+		params.put("orderBy", orderBy);
 		
 		List<ReviewDTO> lists = sessionTemplate.selectList("reviewMapper.productGetList",params);
 		return lists;
+	}
+	
+	public float productGetList_heart(String superProduct){
+		float result = sessionTemplate.selectOne("reviewMapper.productGetList_heart",superProduct);
+		return result;
 	}
 	
 	public int getProductDataCountHeart(String superProduct, int rate) {

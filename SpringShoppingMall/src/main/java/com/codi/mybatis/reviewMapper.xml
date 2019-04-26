@@ -38,12 +38,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	update review set rate=#{rate},subject=#{subject},content=#{content},reviewDate=sysdate,
 	originalName=#{originalName},savefileName=#{savefileName},writed='yes'
 	where userId=#{userId} and productId=#{productId} and reviewDate=to_date(#{reviewDate},'yyyy-mm-dd hh24:mi:ss')
-<!-- 
-	update review set rate=#{rate},subject=#{subject},content=#{content},reviewDate=sysdate,
-	originalName=to_char(sysdate,'yyyymmddhh24miss') || #{originalName},savefileName=to_char(sysdate,'yyyymmddhh24miss') || #{savefileName},writed='yes'
-	where userId=#{userId} and productId=#{productId} and reviewDate=to_date(#{reviewDate},'yyyy-mm-dd hh24:mi:ss')
-
- -->
 </update>
 
 <!-- 삭제할 리뷰의 데이터 파일 정보 -->
@@ -74,10 +68,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select rownum rnum, data.* from (
 	select userId,review.productId productId,superProduct,productSize,color,rate,subject,content,to_char(reviewDate,'yyyy-mm-dd hh24:mi:ss') reviewDate,review.originalName originalName,review.saveFileName saveFileName
 	from review,product where review.productId = product.productId and superProduct=#{superProduct} and writed='yes'
-	order by reviewDate) data) 
+	order by ${orderBy}) data) 
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
+</select>
+
+<!-- 특정 상품 리뷰 데이터(평점용) -->
+<select id="productGetList_heart" parameterType="String" resultType="float">
+	select avg(rate) 
+	from review,product 
+	where review.productId = product.productId 
+	and superProduct=#{superProduct} and writed='yes'
 </select>
 
 <!-- 특정 상품 리뷰 상품평별 데이터 갯수 -->
