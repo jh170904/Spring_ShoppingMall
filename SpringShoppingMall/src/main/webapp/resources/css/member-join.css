@@ -270,7 +270,7 @@ p[class*="bullet_dash"]:before{content:''; position:absolute; top:9px; left:0; d
 /* 페이지 타이틀 영역 */
 .page_title_area{position:relative; background:#f3f3f3; border-bottom:1px solid #d1d1d1;}
 .page_title_area:after{content:''; display: block; clear: both;}
-.page_title_area h1{max-width:450px; height:50px; margin: 0 auto; padding:13px 0 0 12px; font-size:18px;}
+.page_title_area h1{max-width:450px; width:450px; height:50px; margin: 0 auto; padding:13px 0 0 12px; font-size:18px;}
 
 /* 레이어 팝업 */
 /* // 20181205 수정 */
