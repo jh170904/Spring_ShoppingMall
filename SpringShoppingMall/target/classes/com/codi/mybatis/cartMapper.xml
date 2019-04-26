@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cartMapper">
+
+<select id="getReadData" parameterType="String" resultType="com.codi.dto.CartDTO" >
+	select a.color color,a.productSize productSize,a.userId userId,a.productId productId,productName,a.amount amount,a.price price,originalName, saveFileName,orderSelect
+	from cart a,product b 
+	where a.productId=b.productId
+	and userId=#{userId} 
+	order by productName
+</select>
+
+<select id="getTotalItemCount" parameterType="String" resultType="Int" >
+	select sum(amount) from cart where userId=#{userId} 
+</select>
+
+<select id="getTotalItemPrice" parameterType="String" resultType="Int" >
+	select sum(amount*price) from cart where userId=#{userId} 
+</select>
+
+<select id="getTotalItemCountYes" parameterType="String" resultType="Int" >
+	select sum(amount) from cart where userId=#{userId} 
+</select>
+
+</mapper>

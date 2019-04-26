@@ -24,6 +24,9 @@ public class ReviewDTO {
 	private String savefileName;
 	private String writed;
 	
+	//상품 이동시 필요
+	private String superProduct;
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -135,6 +138,15 @@ public class ReviewDTO {
 	public void setWrited(String writed) {
 		this.writed = writed;
 	}
+	
+	public String getSuperProduct() {
+		return superProduct;
+	}
+	public void setSuperProduct(String superProduct) {
+		this.superProduct = superProduct;
+	}
+	
+	
 	
 
 }

@@ -454,36 +454,35 @@ tr{
 							<table class="review_summary" style="margin-bottom: 50px;">
 								<tr>
 									<td style="width: 400px; text-align: center;">전체상품평<br />
-										<span class="ui_rating"> <c:forEach var="i" begin="1"
-												end="${avgReviewRate }" step="1">
-												<img alt="" src="<%=cp%>/project/image/review_heart_on.PNG"
-													height="25px;">
-											</c:forEach> <c:forEach var="j" begin="${avgReviewRate+1 }" end="5"
-												step="1">
-												<img alt="" src="<%=cp%>/project/image/review_heart_off.PNG"
-													height="25px;">
+										<span class="ui_rating"> 
+											<c:forEach var="i" begin="1" end="${avgReviewRate }" step="1">
+												<img alt="" src="<%=cp%>/resources/image/heart_on.png" height="25px;">
+											</c:forEach> 
+											<c:forEach var="j" begin="${avgReviewRate+1 }" end="5" step="1">
+												<img alt="" src="<%=cp%>/resources/image/heart_off.png" height="25px;">
 											</c:forEach>
-									</span><br /> <small>(${dataCount_yes })</small>
+										</span><br/><small>(${dataCount_yes })</small>
 									</td>
 									<td>
 										<ul class="rating_list">
-											<c:forEach var="heart" begin="1" end="5" step="1">
-												<li><span> <c:forEach var="on" begin="${heart}"
-															end="5" step="1">
-															<img alt=""
-																src="<%=cp%>/project/image/review_heart_on.PNG"
-																height="25px;">
-														</c:forEach> <c:forEach var="on" begin="1" end="${heart-1}" step="1">
-															<img alt=""
-																src="<%=cp%>/project/image/review_heart_off.PNG"
-																height="25px;">
-														</c:forEach> <small>&nbsp;&nbsp;&nbsp;&nbsp;(${rate[heart-1] })</small>
-												</span> <span class="graph" style="margin-left: 20px;"> <span
-														style="width: ${rate[heart-1]/dataCount_yes * 100}%"></span>
-												</span> <span class="num"><small>&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatNumber
-																value="${(rate[heart-1])/(dataCount_yes) }"
-																type="percent" />
-													</small></span></li>
+											<c:forEach var="heart" begin="1" end="5" step="1"> 
+												<li>
+													<span> 
+														<c:forEach var="on" begin="${heart}" end="5" step="1">
+															<img alt="" src="<%=cp%>/resources/image/heart_on.png" height="25px;">
+														</c:forEach> 
+														<c:forEach var="on" begin="1" end="${heart-1}" step="1">
+															<img alt="" src="<%=cp%>/resources/image/heart_off.png" height="25px;">
+														</c:forEach> 
+														<small>&nbsp;&nbsp;&nbsp;&nbsp;(${rate[heart-1] })</small>
+													</span> 
+													<span class="graph" style="margin-left: 20px;"> 
+														<span style="width: ${rate[heart-1]/dataCount_yes * 100}%"></span>
+													</span> 
+													<span class="num">
+														<small>&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${(rate[heart-1])/(dataCount_yes) }" type="percent" /></small>
+													</span>
+												</li>
 											</c:forEach>
 										</ul>
 
@@ -492,9 +491,7 @@ tr{
 
 							</table>
 
-							<table
-								class="ui_table_striped data_table thead_colored align_center @table-striped-apply"
-								id="shpiTable">
+							<table class="ui_table_striped data_table thead_colored align_center @table-striped-apply" id="shpiTable">
 
 								<colgroup>
 									<col>
@@ -504,31 +501,29 @@ tr{
 								<tbody id="paging">
 									<c:forEach var="dto" items="${lists }">
 										<tr>
-											<td
-												style="text-align: left; width: 150px; vertical-align: top; padding-left: 50px;">
-												<span class="ui_rating"> <c:forEach var="i" begin="1"
-														end="${dto.rate }" step="1">
-														<img alt=""
-															src="<%=cp%>/project/image/review_heart_on.PNG"
-															height="15px;">
-													</c:forEach> <c:forEach var="j" begin="${dto.rate+1 }" end="5" step="1">
-														<img alt=""
-															src="<%=cp%>/project/image/review_heart_off.PNG"
-															height="15px;">
+											<td style="text-align: left; width: 150px; vertical-align: top; padding-left: 50px;">
+												<span class="ui_rating"> 
+													<c:forEach var="i" begin="1" end="${dto.rate }" step="1">
+														<img alt="" src="<%=cp%>/resources/image/heart_on.png" height="15px;">
+													</c:forEach> 
+													<c:forEach var="j" begin="${dto.rate+1 }" end="5" step="1">
+														<img alt="" src="<%=cp%>/resources/image/heart_off.png" height="15px;">
 													</c:forEach>
-											</span> <span class="user_id">${dto.userId }</span> <small>${dto.reviewDate }</small>
+												</span> 
+												<span class="user_id">${dto.userId }</span> <small>${dto.reviewDate }</small>
 											</td>
 
-											<td style="text-align: left; width: 600px;"><small
-												class="opt">옵션: #${dto.productOption }</small> <span
-												class="flag">구매자 후기</span> <span class="title">${dto.subject }</span><br />
-												<span class="text reduce">${dto.content }</span><br /> <c:if
-													test="${!empty dto.savefileName }">
-													<a href="${imagePath_review }/${dto.savefileName}"> <img
-														alt="" src="${imagePath_review }/${dto.savefileName}"
-														width="70" height="70">
+											<td style="text-align: left; width: 600px;">
+												<small class="opt">사이즈: #${dto.productSize }</small>&nbsp;&nbsp;&nbsp;&nbsp;<small class="opt">컬러: #${dto.color }</small><br/>
+												<span class="flag">구매자 후기</span> 
+												<span class="title">${dto.subject }</span><br />
+												<span class="text reduce">${dto.content }</span><br /> 
+												<c:if test="${!empty dto.savefileName }">
+													<a href="${imagePath_review }/${dto.savefileName}"> 
+														<img alt="" src="${imagePath_review }/${dto.savefileName}" width="70" height="70">
 													</a>
-												</c:if></td>
+												</c:if>
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>

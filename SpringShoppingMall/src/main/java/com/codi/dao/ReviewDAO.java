@@ -72,14 +72,14 @@ public class ReviewDAO {
 		sessionTemplate.delete("reviewMapper.deleteData",params);
 	}
 	
-	public int getProductDataCount(String productName) {
-		int result = sessionTemplate.selectOne("reviewMapper.getProductDataCount",productName);
+	public int getProductDataCount(String superProduct) {
+		int result = sessionTemplate.selectOne("reviewMapper.getProductDataCount",superProduct);
 		return result;
 	}
 	
-	public List<ReviewDTO> productGetList(String productName, String start, String end){
+	public List<ReviewDTO> productGetList(String superProduct, int start, int end){
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("productName", productName);
+		params.put("superProduct", superProduct);
 		params.put("start", start);
 		params.put("end", end);
 		
@@ -87,9 +87,9 @@ public class ReviewDAO {
 		return lists;
 	}
 	
-	public int getProductDataCountHeart(String productName, int rate) {
+	public int getProductDataCountHeart(String superProduct, int rate) {
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("productName", productName);
+		params.put("superProduct", superProduct);
 		params.put("rate", rate);
 		
 		int result = sessionTemplate.selectOne("reviewMapper.getProductDataCountHeart",params);
