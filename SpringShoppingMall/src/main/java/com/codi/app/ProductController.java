@@ -2,7 +2,11 @@ package com.codi.app;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +45,10 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/listNew.action", method = RequestMethod.GET)
-	public String listNew(HttpServletRequest req) {
+	public String listNew(HttpServletRequest req) throws IOException {
+		
+
+		  String order = req.getParameter("order");
 		
 		  String cp = req.getContextPath(); 
 		  
@@ -60,8 +67,13 @@ public class ProductController {
 		  
 		  int start = (currentPage-1)*numPerPage + 1; int end = currentPage*numPerPage;
 		  
-		  List<ProductDTO> lists = dao.getList(start, end);
+		  List<ProductDTO> lists;
 		  
+		  if(order!=null&&!order.equals("")) {
+			  lists= dao.getListOrder(start,end,order);
+		  }else {
+			  lists = dao.getList(start, end);
+		  }
 		  
 		  //이미지저장 경로 보내주기 
 		  String imagePath = req.getSession().getServletContext().getRealPath("/upload");
@@ -70,9 +82,10 @@ public class ProductController {
 		  
 		  //페이징을 위한 값들 보내주기 
 		  String listUrl = cp + "/listNew.action"; 
-		  String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		  
-
+		  String pageIndexList = myUtil.listPageIndexList(currentPage, totalPage, listUrl,order);
+		  
+		  req.setAttribute("listUrl",listUrl);
 		  req.setAttribute("imagePath", imagePath); 
 		  req.setAttribute("lists", lists);
 		  req.setAttribute("pageIndexList", pageIndexList);
@@ -82,6 +95,79 @@ public class ProductController {
 		  
 		 
 		return "list/listNew";
+	}
+	
+	
+	@RequestMapping(value = "/listCategory.action", method = RequestMethod.GET)
+	public String listCategory(HttpServletRequest req) throws IOException {
+		
+
+		  String order = req.getParameter("order");
+		  if (order != null) {
+			  order = URLDecoder.decode(req.getParameter("order"), "UTF-8");
+		  }
+
+		  String productCategory = req.getParameter("productCategory");
+		  if (productCategory != null) {
+			  productCategory = URLDecoder.decode(req.getParameter("productCategory"), "UTF-8");
+		  }
+		
+		
+		  String cp = req.getContextPath(); 
+		  
+		  String pageNum = req.getParameter("pageNum");
+		  
+		  int currentPage=1;
+		  
+		  if(pageNum!=null) currentPage = Integer.parseInt(pageNum);
+		  
+		  
+		  int dataCount = dao.getDataCountCategory(productCategory);
+		  
+		  int numPerPage = 3; 
+		  int totalPage = myUtil.getPageCount(numPerPage,dataCount);
+		  
+		  if(currentPage>totalPage) currentPage = totalPage;
+		  
+		  int start = (currentPage-1)*numPerPage + 1; 
+		  int end = currentPage*numPerPage;
+		  
+		  List<ProductDTO> lists;
+		  
+		  if(order!=null&&!order.equals("")) {
+			  lists= dao.getListsCategoryOrder(start,end,productCategory,order);
+		  }else {
+			  lists = dao.getListsCategory(start, end,productCategory);
+		  }
+		  
+		  
+		  //이미지저장 경로 보내주기 
+		  String imagePath = req.getSession().getServletContext().getRealPath("/upload");
+		  
+		  //String imagePath = req.getSession().getServletContext().getRealPath("/WEB-INF/files");
+		  
+		  //페이징을 위한 값들 보내주기 
+		  String listUrl = cp + "/listCategory.action?productCategory="+productCategory; 
+
+		  String pageIndexList = myUtil.listPageIndexList(currentPage, totalPage, listUrl,order);
+		  
+		  if (productCategory != null) {
+			  productCategory = URLEncoder.encode(productCategory, "UTF-8");
+		  }
+		 
+
+
+		  req.setAttribute("listUrl",listUrl);
+		  req.setAttribute("productCategory", productCategory); 
+		  req.setAttribute("imagePath", imagePath); 
+		  req.setAttribute("lists", lists);
+		  req.setAttribute("pageIndexList", pageIndexList);
+		  req.setAttribute("dataCount", dataCount); 
+		  req.setAttribute("totalPage",totalPage); 
+		  req.setAttribute("pageNum", pageNum);
+		  
+		 
+		return "list/listCategory";
 	}
 
 	

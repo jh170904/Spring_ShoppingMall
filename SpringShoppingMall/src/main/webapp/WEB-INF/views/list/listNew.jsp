@@ -1,18 +1,64 @@
+<%@page import="java.net.URLEncoder"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@include file="../layout/storeNav.jsp"  %>
+
+<style>
+#order{
+    color: #757575;
+    width:150px;
+    border: solid 1px #ededed;
+    background-color: #fafafa;
+    cursor: pointer;
+    padding: 0 4px 0 8px;
+    height: 30px;
+    font-size: 14px;
+    line-height: 1;
+    border-radius: 0;
+}
+</style>
 
 <div id="ap_container" class="ap_container">
 
 	<div class="page_title_area">
 		<div class="page_title" style="border-top-color: black;">
-			<h2 class="h_title page">카테고리</h2>
+			<h3 class="h_title page">ALL</h3>
 			<p class="text font_lg"></p>
 		</div>
 	</div>
 	
 	
 	<div class="ap_contents prd_list">
-		<div class="prd_category" style="height: 1px; padding:0px; border-top: none; border-bottom-color: #888;">
+		<div class="prd_category">
+			<ul>
+				<li><a href="<%=cp %>/listNew.action" class="on">ALL</a></li>
+					<% 
+						String arrCategory3[] = {"OUTER","TOP","BOTTOM","DRESS","SHOES","BAG","ACC"};
+					
+						for(String s:arrCategory3 ){
+							
+							String category = URLEncoder.encode(s, "UTF-8");
+							out.println("<li><a href="+cp+"/listCategory.action?productCategory="+category+">");
+							out.println(s+"</a></li>");
+						}
+					%>
+			</ul>
+		</div>
+		
+		
+		<div class="item_list column2" style="height: 70px;">
+			<div style="padding: 20px; float: right;">
+				<select id="order" name="order">
+					<option onclick="javascript:location.href='${listUrl}';">신제품순</option>
+					<!-- amount -->
+					<option onclick="javascript:location.href='${listUrl}&order=amount desc';">판매량순</option>
+					<option onclick="javascript:location.href='${listUrl}&order=price desc';">가격이 높은 순</option>
+					<option onclick="javascript:location.href='${listUrl}&order=price asc';">가격이 낮은 순</option>
+					<!-- 하트 많이 받은 순 -->
+					<option>인기순</option>
+					<option>리뷰 순</option>
+					<option>평점 순</option>
+				</select>
+			</div>
 		</div>
 		
 		
@@ -24,8 +70,6 @@
 					<span class="tit_1">상품이 존재하지 않습니다.</span>
 				</p>
 			</div>
-			
-			<div class="pagination"></div>
 			
 			<table style="width: 1200">
 				<c:set var="i" value="0" />

@@ -51,7 +51,7 @@
 		}
 		f.color.value = str;
 		
-		//size
+		/*size
 		str = f.productSize.value;
 		str = str.trim();
 		if(!str){
@@ -60,6 +60,7 @@
 			return;
 		}
 		f.productSize.value = str;
+		*/
 		
 		//storeName
 		str = f.storeName.value;

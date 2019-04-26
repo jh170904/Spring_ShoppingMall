@@ -6,12 +6,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="productMapper">
 
 
-
+<!-- listNew dataCount -->
 <select id="getDataCount" resultType="int">
 	select nvl(count(*),0) from product
 	where fileCategory='list'
 </select>
 
+<!-- listCategory dataCount  --> 
+<select id="getDataCountCategory" parameterType="string" resultType="int">
+	select nvl(count(*),0) from product
+	where fileCategory='list' and productCategory=#{productCategory}
+</select>
+
+ 
+<!-- listNew list -->
 <select id="getLists" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
 	select * from (
 	select rownum rnum, data.* from(
@@ -22,12 +30,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>
 </select>
 
+<!-- listNew list -->
+<select id="getListsOrder" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select productid,productname,price,savefilename,storeName,storeUrl,originalName,superProduct 
+	from product where fileCategory='list' order by ${order})data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- listCategory list -->
+<select id="getListsCategory" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select productid,productname,price,savefilename,storeName,storeUrl,originalName,superProduct 
+	from product where fileCategory='list' and productCategory=#{productCategory} order by productDate desc)data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- listCategoryOrder list -->
+<select id="getListsCategoryOrder" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select productid,productname,price,savefilename,storeName,storeUrl,originalName,superProduct 
+	from product where fileCategory='list' and productCategory=#{productCategory} order by ${order})data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- productAdminList -->
 <select id="getAdminLists" resultType="com.codi.dto.ProductDTO">
 	select productId,productCategory,productName,productSize,price,
 	productDate,amount,color,state,fileCategory,originalName,saveFileName,superProduct,storeName,storeUrl
-	from product
+	from product order by productdate desc
 </select>
 
+<!-- productAdminCreate -->
 <insert id="insertData" parameterType="com.codi.dto.ProductDTO">
 	insert into product(productId,productCategory,productName,productSize,price,
 	productDate,amount,color,state,fileCategory,originalName,saveFileName,superProduct,storeName,storeUrl)
