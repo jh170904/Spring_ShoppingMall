@@ -68,20 +68,20 @@
 				<li>
 					<c:choose>
 						<c:when test="${empty sessionScope.customInfo.userId }">
-						<a href="<%=cp %>/login.action"  class="log">로그인</a>
+						<a href="<%=cp %>/mem/login.action"  class="log">로그인</a>
 						</c:when>
 						<c:otherwise>
-						<a href="<%=cp %>/logout.action"  class="log">로그아웃</a>
+						<a href="<%=cp %>/mem/logout.action"  class="log">로그아웃</a>
 						</c:otherwise>
 					</c:choose>
 				</li>
 				<li>
 				<c:choose>
 						<c:when test="${empty sessionScope.customInfo.userId }">
-						<a href="<%=cp %>/signup.action" class="join">회원가입</a>
+						<a href="<%=cp %>/mem/signup.action" class="join">회원가입</a>
 						</c:when>
 						<c:otherwise>
-						<a href="<%=cp %>/mypage.action" class="join">마이페이지</a>
+						<a href="<%=cp %>/con/mypage.action" class="join">마이페이지</a>
 						</c:otherwise>
 				</c:choose>
 				</li>
