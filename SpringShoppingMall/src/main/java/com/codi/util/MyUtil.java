@@ -269,5 +269,71 @@ public class MyUtil {
 		
 	}
 	
+	public String myOrderPageIndexList(int currentPage, int totalPage, String listUrl,String period){
+		
+		int numPerBlock = 5; //1◀이전 6 7 8 9 10 다음▶11(6-10까지 표시되는 페이지 갯수)
+		int currentPageSetup; //표시할 첫 페이지(6)의 – 1 해준 값(5,10,15,20...)
+		int page;
+		
+		StringBuffer sb = new StringBuffer();
+		
+		if(currentPage==0 || totalPage==0)	//데이터가 없을 경우
+			return "";
+		
+		//abc.jsp?a=1
+		if(listUrl.indexOf("?") != -1)  //주소줄에 ?표가 있다면
+			listUrl = listUrl + "&";
+		else
+			listUrl = listUrl + "?";
+		
+		//표시할 첫 페이지의 – 1 해준 값
+		currentPageSetup = (currentPage/numPerBlock)*numPerBlock;
+		
+		if(currentPage % numPerBlock == 0)
+			currentPageSetup = currentPageSetup - numPerBlock;
+		
+		//◀이전
+		if(totalPage > numPerBlock && currentPageSetup > 0){
+						
+			sb.append("<a href=\"" + listUrl + "period=" 
+					+ period + "&pageNum=" 
+					+ currentPageSetup + "\">◀이전</a>&nbsp;");
+			
+		}
+		
+		//바로가기 페이지
+		page = currentPageSetup + 1;
+		
+		while(page <= totalPage && page <= (currentPageSetup + numPerBlock)){
+			
+			if(page == currentPage){				
+				
+				sb.append("<font color=#400080>" + page + "</font>&nbsp;");				
+			
+			}else{
+				
+				sb.append("<a href=\"" + listUrl + "period=" 
+						+ period + "&pageNum=" + page + "\">"
+						+ page + "</a>&nbsp;");
+				
+			}
+			
+			page++;
+			
+		}		
+		
+		//다음▶
+		if(totalPage - currentPageSetup > numPerBlock){
+						
+			sb.append("<a href=\"" + listUrl + "period=" 
+					+ period + "&pageNum=" + page + "\">다음▶</a>&nbsp;");
+			
+		}
+		
+		
+		return sb.toString();
+		
+	}
+	
 	
 }

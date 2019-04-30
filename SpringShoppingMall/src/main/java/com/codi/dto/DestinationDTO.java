@@ -13,6 +13,10 @@ public class DestinationDTO {
 	private String addr1;
 	private String addr2;
 	private String addrKey;
+	
+	//전체 주소
+	private String destAddr;
+	private String userEmail;
 
 	
 	public String getUserId() {
@@ -96,5 +100,20 @@ public class DestinationDTO {
 		else
 			addrKey="yes";
 	}
+	
+	public String getDestAddr() {
+		return destAddr;
+	}
+	public void setDestAddr(String destAddr) {
+		this.destAddr = destAddr;
+	}
+	
+	public String getUserEmail() {
+		return userEmail;
+	}
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
 
+	
 }

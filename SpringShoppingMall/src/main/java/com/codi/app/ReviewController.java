@@ -124,7 +124,7 @@ public class ReviewController {
 			ReviewDTO reviewDTO = it.next();
 			reviewDTO.setProductName(URLDecoder.decode(reviewDTO.getProductName(),"UTF-8"));
 		}
-		
+			
 		String listUrl = cp + "/reviewPossibleList.action";
 		
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);

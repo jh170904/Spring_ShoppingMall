@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="orderMapper">
+
+<!-- 사용자 기본 배송지 가져오기 -->
+<select id="getOrderDest" parameterType="String" resultType="com.codi.dto.DestinationDTO">
+	select addrKey,destNickname,destName,zip,addr1,addr2,destPhone,destTel
+	from destination where userId=#{userId} and addrKey='yes'
+</select>
+
+<!-- 사용자 모든 배송지 정보 가져오기 -->
+<select id="getAllDest" parameterType="String" resultType="com.codi.dto.DestinationDTO">
+	select destNickname,destName,destPhone,zip,addr1,addr2 ,addrKey
+	from destination where userId=#{userId}
+</select>
+
+<!-- 사용자 포인트 가져오기 --> 
+<select id="getMemberPoint" parameterType="String" resultType="int">
+	select point from member where userId=#{userId}
+</select>
+
+ 
+<!-- 사용자 주문 목록 가져오기 -->
+<select id="getOrderList" parameterType="String" resultType="com.codi.dto.OrderListDTO">
+	select cart.userId userId,cart.productId productId,productName,cart.productSize productSize, cart.color color, cart.amount amount,cart.price price,originalName,saveFileName
+	from cart,product
+	where cart.productId=product.productId
+	and userId=#{userId} and orderSelect='yes'
+</select>	
+
+<!-- 사용자가 주문한 물품 개수 -->
+<select id="getOrderCount" parameterType="String" resultType="int">
+	select nvl(count(*),0) from cart 
+	where userId=#{userId} and orderSelect='yes'
+</select>	
+
+<!-- 사용 가능한 쿠폰 정보 가져오기 -->
+<!-- 
+<select id="getUserCoupon" parameterType="hashMap" resultType="com.codi.dto.CouponDTO">
+	select userId,issueDate,coupon.couponKey couponKey,couponName,couponScore,discount,couponStartDay,couponEndDay,couponGrade,used
+	from coupon,issue ";
+	where issue.couponKey = coupon.couponKey
+	and userId=? and used='N' and ?>=couponScore
+</select>
+-->
+
+<!-- orderTable에서 오늘 주문한 상품 개수 가져오기 -->
+<select id="getMaxNum" resultType="int">
+	select nvl(count(*),0) from orderTable where orderDate > to_char(sysdate,'yyyy-mm-dd')
+</select>
+
+<!-- 주문 데이터 입력-->
+<insert id="insertOrderDataProduct" parameterType="com.codi.dto.OrderDTO">
+	insert into orderTable (orderNum,userId,productId,amount,price,zip,addr1,addr2,addrKey,eMail,orderDate,payment)
+	values (#{orderNum},#{userId},#{productId},#{amount},#{price},#{zip},#{addr1},#{addr2},#{addrKey},#{eMail},sysdate,#{payment})
+</insert>	
+
+<!-- 무통장입금완료시 주문데이터 변경 -->
+<update id="updateOrderDataProduct" parameterType="hashMap">
+	update orderTable set payment='yes'
+	where userId=#{userId} and orderNum=#{orderNum}
+</update>
+<!-- 주문 성공시 issue 테이블에 사용쿠폰 업데이트 -->
+<!-- 
+<update id="useCouponUpdate" parameterMap="hashMap">
+	update issue set used='Y' where userId=#{userId} and couponKey=#{couponKey}
+</update>
+ -->
+ 
+<!-- 주문 성공시 장바구니에서 구매품목 삭제 -->
+<delete id="deleteCartProduct" parameterType="hashMap">
+	delete cart where userId=#{userId} and productId=#{productId} and orderSelect='yes'
+</delete>
+	
+<!-- 주문 성공시 멤버테이블 포인트 추가 -->	
+<update id="updateMemberPoint" parameterType="hashMap">
+	update member set point=point+#{point} where userId=#{userId}
+</update>
+
+<!-- orderTable에서 주문 정보 가져오기 -->	
+<select id="getCompleteOrder" parameterType="hashMap" resultType="com.codi.dto.OrderDTO">
+	select orderNum,orderDate,userId,orderTable.productId productId,productName,orderTable.zip zip,orderTable.addr1 addr1, 
+	orderTable.addr2 addr2,orderTable.addrkey addrkey,orderTable.amount amount,orderTable.price price,email,originalName,saveFileName 
+	from orderTable,product where orderTable.productId = product.productId 
+	and orderNum=#{orderNum} and userId=#{userId}
+</select>
+
+<!-- 리뷰 추가 -->
+<insert id="insertReview" parameterType="com.codi.dto.OrderDTO">
+	insert into review (userId,productId,reviewDate,writed)
+	values (#{userId},#{productId},sysdate,'no')
+</insert>
+	
+<!-- 사용자 기간별 주문조회 -->
+<select id="getUserOrderLists" parameterType="hashMap" resultType="com.codi.dto.OrderDTO">
+	select * from (
+	select rownum rnum, data.* from (
+	select orderNum,to_char(orderDate,'yyyy-mm-dd') orderDate,userId,ordertable.productId productId,productName,zip,addr1,addr2,addrKey,ordertable.amount amount,
+	ordertable.price price,eMail,originalName,saveFileName,superProduct
+	from ordertable,product where ordertable.productId = product.productId 
+	and userId=#{userId} and payment='yes' and to_char(orderDate,'yyyy-mm-dd')>=(select to_char(sysdate-(interval '${num}' ${searchPeriod}),'yyyy-mm-dd') from dual) 
+	order by orderNum desc) data) 
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- 사용자 기간별 주문 양 -->
+<select id="getNumUserOrderLists" parameterType="String" resultType="int">
+	select nvl(count(*),0)
+	from ordertable,product where ordertable.productId = product.productId 
+	and userId=#{userId} and payment='yes' and to_char(orderDate,'yyyy-mm-dd')>=(select to_char(sysdate-(interval '${num}' ${searchPeriod}),'yyyy-mm-dd') from dual)
+</select>
+
+</mapper>
