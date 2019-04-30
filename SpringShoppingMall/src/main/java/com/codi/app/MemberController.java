@@ -1,11 +1,15 @@
 package com.codi.app;
 
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Message;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,19 +17,21 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.codi.dao.MemberDAO;
 import com.codi.dto.MemberDTO;
 import com.codi.util.MyUtil;
 
 
-@Controller
+@Controller("memberController")
 public class MemberController {
 	
 	@Autowired
@@ -35,84 +41,103 @@ public class MemberController {
 	@Autowired
 	MyUtil myUtil;//Bean 객체 생성
 	
-	@RequestMapping(value = "/main.action", method = {RequestMethod.POST, RequestMethod.GET})
-	public String footer() {
-		return "main";
+	//메일전송에 필요
+	@Autowired 
+	private JavaMailSender mailSender;
+	private String from = "codi@codi.com"; 
+	private String subject	= "[내일의 코디북] 임시 비밀번호 발급 안내"; 
+	
+	
+	@RequestMapping(value = "/test.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String test() {
+		return "test";
 	}
 	
-	@RequestMapping(value = "/signup.action", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = "/mem/signup.action", method = {RequestMethod.POST, RequestMethod.GET})
 	public String signup() {
 		return "mem/signup";
 	}
 	
-	@RequestMapping(value = "/signup_ok.action", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = "/mem/signup_ok.action", method = {RequestMethod.POST, RequestMethod.GET})
 	public String signup_ok(MemberDTO dto) {
 
 		dto.setEmail(dto.getEmail1()+"@"+dto.getEmail2());
 		dao.insertData(dto);
 		
-		return "redirect:/signup_com.action";
+		return "redirect:/mem/signup_com.action";
 	}
 	
 	//새로고침할때 오류
-	@RequestMapping(value = "/signup_com.action", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = "/mem/signup_com.action", method = {RequestMethod.POST, RequestMethod.GET})
 	public String signup_com(MemberDTO dto) {		
 		return "mem/signup_ok";
 	}
 
-	@RequestMapping(value = "/login.action", method = RequestMethod.GET)
-	public String login() {
-		return "mem/login";
+	//로그인 인터셉터 이전페이지 url저장
+	@RequestMapping(value = "/mem/login", method = RequestMethod.GET)
+	public String loginPage(HttpServletRequest request){
+		
+		//이 경우에 직접 주소창에 쳐서들어가는경우 null값이 반환된다.
+	    String referrer = request.getHeader("Referer");
+	    
+	    //주소창 들어가는경우는 null이니까 main페이지로 가게
+	    if(referrer==null||referrer==""||referrer.contains("/mem")) {
+	    	referrer="/commuMain.action";
+	    }
+	    
+	    request.getSession().setAttribute("prevPage", referrer);
+	    return "mem/login";
 	}
 	
-	@RequestMapping(value = "/login_ok.action", method = RequestMethod.GET)
-	public ModelAndView login_ok(HttpServletRequest request, HttpServletResponse response) {
+	//로그인 DB판별 Ajax
+	@RequestMapping(value = "/mem/loginAjax.action",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public Map<Object, Object> loginAjax(@RequestBody MemberDTO dto ) {
         
-		ModelAndView mav=new ModelAndView("mem/loginSuccess");//성공하면 여기로감
-		
-        String userId=request.getParameter("userId");
-        String userPwd=request.getParameter("userPwd");
+        int count=0;
+        Map<Object, Object> map = new HashMap<Object, Object>();
+ 
+        count = dao.loginChk(dto);
+        
+        map.put("cnt", count);
+ 
+        return map;
+    }
+	
+	@RequestMapping(value = "/mem/login_ok.action", method = RequestMethod.GET)
+	public String login_ok(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
         Cookie cookie=null;
+        String userId=request.getParameter("userId");
         String id_rem=request.getParameter("id_ck");
-    	
+        
         MemberDTO dto=dao.getReadData(userId);
         
-        //dto가 null이면 아이디가 틀린것(id가없어서 오라클에서 return값이 null)
-        //패스워드 비교해서 틀리면 패스워드가 틀린것
-        if(dto==null||!dto.getUserPwd().equals(userPwd)){
-
-        	request.setAttribute("message", "false");
-        	mav.setViewName("mem/login");	//실패시
-        }
-
-        //session도 out.print처럼 jsp에는 그냥 사용가능한데
-        //java에서는 요청을 한뒤 써야한다.
-        HttpSession session=request.getSession();
-        try {
-		
-        	//CustomInfo안쓰고 MemberDTO 사용!
-            session.setAttribute("customInfo", dto);
-            
+        //CustomInfo안쓰고 MemberDTO 사용!
+        session.setAttribute("customInfo", dto);
+        
+        try { 
             if(id_rem!=null&&id_rem.trim().equals("on")){
-               cookie=new Cookie("userId",URLEncoder.encode(userId,"UTF-8"));
-           	 cookie.setMaxAge(60*60);//1시간
+               cookie=new Cookie("userId", URLEncoder.encode(userId,"UTF-8"));
+           	   cookie.setMaxAge(60*60);//1시간
                response.addCookie(cookie);
             }else{
                cookie=new Cookie("userId",null);
                cookie.setMaxAge(0);
                response.addCookie(cookie);
             }
-            
 		} catch (Exception e) {
-			
+			System.out.println(e.toString());
 		}
         
-        mav.addObject("msg","로그인에 성공하였습니다.");
+        String redirectUrl = (String) session.getAttribute("prevPage");
+        System.out.println(redirectUrl);
         
-		return mav;
+		return "redirect:"+redirectUrl;
 	}
 	
-	@RequestMapping(value = "/idcheck.action",method = {RequestMethod.GET,RequestMethod.POST})
+	//아이디 중복확인
+	@RequestMapping(value = "/mem/idcheck.action",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public Map<Object, Object> idcheck(@RequestBody String userid) {
         
@@ -125,13 +150,188 @@ public class MemberController {
         return map;
     }
 	
-	
-	/*
-	@RequestMapping(value = "/created.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String created(HttpServletRequest request, HttpServletResponse response) throws Exception{
-			
-		return "bbs/created";
+	//id 찾기 페이지 띄워주기
+	@RequestMapping(value = "/mem/searchid.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String searchid(HttpServletRequest request, HttpServletResponse response) {
+		
+		return "mem/searchid";
 	}
-	*/
+	
+	@RequestMapping(value = "/mem/searchid_ok.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String searchid_ok(MemberDTO dto, HttpServletRequest request, HttpServletResponse response) {
+	
+		dto.setEmail(dto.getEmail1()+"@"+dto.getEmail2());
+		String userId = dao.findId(dto);
+		request.setAttribute("userId", userId);
+		
+		return "mem/searchid_com";
+	}
+	
+	//Id 찾기 DB판별 Ajax
+	@RequestMapping(value = "/mem/idAjax.action",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public Map<Object, Object> idAjax(@RequestBody MemberDTO dto ) {
+        
+        String userId="";
+        Map<Object, Object> map = new HashMap<Object, Object>();
+ 
+        userId = dao.findId(dto);
+        
+        map.put("cnt", userId);
+ 
+        return map;
+    }
+
+	//비밀번호찾기
+	@RequestMapping(value = "/mem/searchpw.action", method = RequestMethod.GET)
+	public String searchpw(HttpServletRequest request, HttpServletResponse response) {
+		
+		return "mem/searchpw";
+	}
+	
+	@RequestMapping(value = "/mem/searchpw_ok.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String searchpw_ok(MemberDTO dto, HttpServletRequest request, HttpServletResponse response) {
+
+		dto.setEmail(dto.getEmail1()+"@"+dto.getEmail2());
+		String email = dao.findPwdTemp(dto);
+		
+		System.out.println(email);
+		
+		//메일부분
+        try {
+        	
+			MimeMessage message = mailSender.createMimeMessage(); 
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+			messageHelper.setTo(email);
+			
+	        String pw = "";
+	        for(int i = 0; i < 8; i++){
+	        	
+	         //char upperStr = (char)(Math.random() * 26 + 65);
+	         char lowerStr = (char)(Math.random() * 26 + 97);
+	         if(i%2 == 0){
+	        	 pw += (int)(Math.random() * 10);
+	         }else{
+	        	 pw += lowerStr;
+	         }
+	        }
+		
+	        String html = "<div align='center' style='border:1px solid black; font-family:verdana'>";
+	        
+	        html+="<br/>안녕하세요. <strong>내일의 코디북</strong> 입니다. ";
+	        html+="저희 쇼핑몰을 방문해 주셔서 감사드립니다.<br/>";
+	        html+="<h3 style='color:blue;'><strong>"+dto.getUserId();
+	        html+="님</strong>의 임시 비밀번호 입니다. 로그인 후 비밀번호를 변경하세요.</h3>";
+	        html+="<p>임시 비밀번호 : <strong>"+pw+"</strong></p><br/>";
+	        html+="</div>";
+
+	        messageHelper.setText(html, true);
+
+			messageHelper.setFrom(from); 
+			messageHelper.setSubject(subject);	//메일제목은 생략 가능
+
+			System.out.println(from);
+			
+			
+			mailSender.send(message);
+
+			// 비밀번호 변경
+    		dto.setUserPwd(pw);
+    		dao.updatePwd(dto);
+
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+
+		return "redirect:/mem/searchpw_com.action?email="+email;
+	}
+	
+	@RequestMapping(value = "/mem/searchpw_com.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String searchpw_com(HttpServletRequest request, HttpServletResponse response) {
+
+		String email = request.getParameter("email");
+		request.setAttribute("email", email);
+		
+		return "mem/searchpw_com";
+	}
+
+	//Id 찾기 DB판별 Ajax
+	@RequestMapping(value = "/mem/pwdAjax.action",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public Map<Object, Object> pwdAjax(@RequestBody MemberDTO dto ) {
+        
+        String userPwd="";
+        Map<Object, Object> map = new HashMap<Object, Object>();
+ 
+        userPwd = dao.findPwd(dto);
+
+        map.put("cnt", userPwd);
+ 
+        return map;
+    }
+	
+	@RequestMapping(value = "/mem/logout.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String logout(HttpSession session) {
+		
+		session.removeAttribute("customInfo");
+		session.invalidate();//변수도 지운다.
+		
+		return "redirect:/commuMain.action";
+	}
+	
+	@RequestMapping(value = "/con/mypage.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String mypage() {
+		return "mem/mypage_content";
+	}
+	
+	@RequestMapping(value = "/con/update.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String update(MemberDTO dto, HttpServletRequest request) {
+		
+		return "mem/update";
+	}
+	
+	@RequestMapping(value = "/con/update_ok.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String update_ok(HttpSession session, HttpServletRequest request) {
+		
+		MemberDTO info=(MemberDTO)session.getAttribute("customInfo");
+		MemberDTO dto=dao.getReadData(info.getUserId());
+		request.setAttribute("dto", dto);
+		
+		return "mem/update_detail";
+	}
+	
+	//비밀번호 수정
+	@RequestMapping(value = "/con/update_pwd.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String update_pwd(HttpSession session, MemberDTO dto, HttpServletRequest request, HttpServletResponse response) {
+		
+		MemberDTO info=(MemberDTO)session.getAttribute("customInfo");
+		
+		dto.setUserPwd(request.getParameter("pass1"));
+		dto.setUserId(info.getUserId());
+		
+		dao.updatePwd(dto);
+		
+        session.setAttribute("customInfo", dto);
+        
+		return "redirect:/con/update_ok.action";
+	}
+	
+	//개인정보수정
+	@RequestMapping(value = "/con/update_data.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String update_data(HttpSession session, MemberDTO dto, HttpServletRequest request, HttpServletResponse response) {
+		
+		MemberDTO info=(MemberDTO)session.getAttribute("customInfo");
+		
+		dto.setEmail(request.getParameter("email"));
+		dto.setUserId(info.getUserId());
+		
+		dao.updateData(dto);
+		
+        session.setAttribute("customInfo", dto);
+        
+		return "redirect:/con/update_ok.action";
+	}
+	
+
 
 }

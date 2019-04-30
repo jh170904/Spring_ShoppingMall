@@ -147,7 +147,7 @@ select:focus  {outline:1px dotted #000}
 
 /* header */
 .header {position:relative; text-align:center;}
-.header h1 {margin:0 auto; font-size:22px; line-height:67px; font-weight:bold; box-sizing:border-box; color:#88a2c3;}
+.header h1 {margin:0 auto; font-size:22px; line-height:67px; font-weight:bold; box-sizing:border-box; color:#000000;}
 .header a {display:block; min-width:30px; height:30px; font-size:0}
 .title-area strong{font-weight:bold;}
 .title-area p{margin-top:32px;}

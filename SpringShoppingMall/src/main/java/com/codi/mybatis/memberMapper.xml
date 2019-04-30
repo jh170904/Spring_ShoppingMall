@@ -16,14 +16,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	from member where userId=#{userId}
 </select>
 
+<!-- id 중복확인 -->
 <select id="idcheck" parameterType="String" resultType="Integer">
-      SELECT COUNT(*) FROM member
-      WHERE userid = #{userid}
+     select count(*) from member
+     where userid = #{userid}
 </select>
 
+<!-- 아이디 찾기 -->
+<select id="findId" parameterType="com.codi.dto.MemberDTO" resultType="String">
+     select userId from member
+     where userName = #{userName} and email=#{email}
+</select>
+
+<!-- 비밀번호 찾기(이메일전송) -->
+<select id="findPwd" parameterType="com.codi.dto.MemberDTO" resultType="String">
+     select userPwd from member
+     where userId=#{userId} and userName = #{userName} and email=#{email}
+</select>
+
+<!-- 비밀번호 찾기(이메일전송) -->
+<select id="findPwdTemp" parameterType="com.codi.dto.MemberDTO" resultType="String">
+     select email from member
+     where userId=#{userId} and userName = #{userName} and email=#{email}
+</select>
+
+<!-- 로그인 -->
+<select id="loginChk" parameterType="com.codi.dto.MemberDTO" resultType="Integer">
+     select count(*) from member
+     where userId=#{userId} and userPwd = #{userPwd}
+</select>
+
+<!-- 정보수정 -->
+<update id="updatePwd" parameterType="com.codi.dto.MemberDTO">
+	update member set userPwd=#{userPwd} where userId=#{userId}
+</update>
+
 <update id="updateData" parameterType="com.codi.dto.MemberDTO">
-	update board set name=#{name},pwd=#{pwd},email=#{email},subject=#{subject},
-	content=#{content} where num=#{num}
+	update member set email=#{email} where userId=#{userId}
 </update>
 
 <delete id="deleteData" parameterType="int">

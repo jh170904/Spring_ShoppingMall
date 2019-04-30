@@ -45,6 +45,50 @@ public class MemberDAO {
 		
 		return count;
 	}
+	
+	public String findId(MemberDTO dto) {
+		
+		String userId=sessionTemplate.selectOne("memberMapper.findId",dto);
+		
+		return userId;
+	}
+	
+	//비밀번호 찾기
+	public String findPwd(MemberDTO dto) {
+		
+		String userPwd=sessionTemplate.selectOne("memberMapper.findPwd",dto);
+		
+		return userPwd;
+	}
+	
+	//비밀번호 찾기(이메일)
+	public String findPwdTemp(MemberDTO dto) {
+		
+		String email=sessionTemplate.selectOne("memberMapper.findPwdTemp",dto);
+		
+		return email;
+	}
+	
+	//로그인 Ajax검사
+	public int loginChk(MemberDTO dto) {
+		
+		int count=sessionTemplate.selectOne("memberMapper.loginChk",dto);
+		
+		return count;
+	}
+	//정보수정 Pwd
+	public void updatePwd(MemberDTO dto){
+		
+		sessionTemplate.update("memberMapper.updatePwd",dto);
+		
+	}
+	
+	//정보수정 Data
+	public void updateData(MemberDTO dto){
+		
+		sessionTemplate.update("memberMapper.updateData",dto);
+		
+	}
 
 
 }

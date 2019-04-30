@@ -8,35 +8,19 @@
 <html>
 <head>
 <title>회원가입</title>
-<script type="text/javascript"
-	src="<%=cp%>/resources/js/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="<%=cp%>/resources/css/member-join.css">
+<script type="text/javascript" src="<%=cp%>/resources/js/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=cp%>/resources/css/member-join.css">
 <script type="text/javascript">
 
 //아이디의 유효성 검사
 var regExp1= /^[A-Za-z0-9+]{4,12}$/;
 
 //아이디 체크여부 확인 (아이디 중복일 경우 = 0 , 중복이 아닐경우 = 1 )
-var idck = 0;
 $(function() {
-    //idck 버튼을 클릭했을 때 
-    $("#idck").click(function() {
-        
-        //userid 를 param.
+	$("#userId").keyup(function(){
+		//userid 를 param.
         var userid =  $("#userId").val();
-        
-        if(userid==''){
-        	alert("아이디를 입력해주세요.");
-        	return;
-        }
-        
-        if(!regExp1.test(userid)){
-    		alert("형식에 맞춰 ID를 입력하세요.");
-    		return;
-    	}
-        
-        
+
         $.ajax({
             async: true,
             type : 'POST',
@@ -45,35 +29,49 @@ $(function() {
             dataType : "json",
             contentType: "application/json; charset=UTF-8",
             success : function(data) {
-            	if(data.cnt > 0) {
+				//입력창이 비었을경우 html 지워줌
+            	if(userid==""){
+                  	var newDiv=document.getElementById("result");
+                  	newDiv.innerHTML="";
+                  	idck = 0;
+				}
+            	else if(!regExp1.test(userid)){
+                  	var html="<p class=\"text\" style=\"color:red;\">"
+                      	html+="형식에 맞게 아이디를 입력해주세요.</p>"
+                      	var newDiv=document.getElementById("result");
+                      	newDiv.innerHTML=html;
+                    idck = 0;
+            	}
+				else if(data.cnt > 0) {
                     
-                    alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
-                    //아이디가 존제할 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인
-                    $("#divInputId").addClass("has-error")
-                    $("#divInputId").removeClass("has-success")
                     $("#userId").focus();
-                    
+                  	
+                  	var html="<p class=\"text\" style=\"color:red;\">"
+                  	html+="사용할 수 없는 아이디입니다.</p>"
+                  	var newDiv=document.getElementById("result");
+                  	newDiv.innerHTML=html;
+                  	
+                    idck = 0;
                 
-                } else {
-                    alert("사용가능한 아이디입니다.");
-                    //아이디가 존제할 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인
-                    $("#divInputId").addClass("has-success")
-                    $("#divInputId").removeClass("has-error")
-                    $("#userPwd").focus();
+                }else {
+                	
+                  	var html="<p class=\"text\" style=\"color:blue;\">"
+                    html+="사용가능합니다.</p>"
+                    var newDiv=document.getElementById("result");
+                    newDiv.innerHTML=html;
+                    
                     //아이디가 중복하지 않으면  idck = 1 
                     idck = 1;
-                    
                 }
                 
             },
             error : function(error) {
-                
                 alert("error : " + error);
             }
         });
-    });
+		
+	});
 });
- 
 
 </script>
 <script type="text/javascript">
@@ -122,7 +120,6 @@ function sendIt(){
 	}
 	
 	if(str!=f.userPwd1.value){
-
 		alert("비밀번호가 동일하지 않습니다.");
 		str="";
 		f.userPwd1.focus();
@@ -149,6 +146,7 @@ function sendIt(){
 	
     //if(confirm("회원가입을 하시겠습니까?")){
     //}
+    
     if(idck==0){
 	    alert('아이디 중복체크를 해주세요');
 	    return;
@@ -180,7 +178,6 @@ function sendIt(){
 </script>
 </head>
 <body>
-
 	<div class="ap_wrapper">
 
 		<div id="ap_container" class="ap_container">
@@ -200,11 +197,11 @@ function sendIt(){
 								<input type="text" title="아이디 입력" id="userId" name="userId"
 									value="" placeholder="아이디(4-12자 영문, 숫자)">
 							</div>
-							<span class="gap"></span>
-							<div id="divInputId" class="input_wrap w30p">
-								<input id="idck" type="button" value="중복확인" />
+						</div>
+						
+						<div class="input_group" style="margin-top: 5px;">
+							<div id="result" class="input_wrap w30p">
 							</div>
-
 						</div>
 						<div class="input_wrap">
 							<input type="password" title="비밀번호 입력" id="userPwd"
@@ -222,9 +219,7 @@ function sendIt(){
 								user-name="user-name" />
 						</div>
 
-
 						<div class="input_group">
-
 							<div class="input_wrap w30p no-check">
 								<input type="tel" pattern="[0-9]*" placeholder="이메일"
 									title="이메일 입력" name="email1" 
@@ -256,8 +251,6 @@ function sendIt(){
 						</div>
 					</fieldset>
 				</form>
-
-
 			</div>
 
 		</div>

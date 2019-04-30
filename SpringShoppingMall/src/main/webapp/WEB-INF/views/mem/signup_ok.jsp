@@ -12,7 +12,6 @@
 
 </head>
 <body>
-
 	<div class="ap_wrapper">
 
 		<div id="ap_container" class="ap_container">
@@ -32,7 +31,7 @@
 					</p>
 				</div>
 				<div class="page_btns">
-					<button class="btn_lg_primary" onclick="location.replace('main.action')" type="button">홈으로
+					<button class="btn_lg_primary" onclick="location.replace('<%=cp%>/commuMain.action')" type="button">홈으로
 						이동</button>
 				</div>
 			</div>
