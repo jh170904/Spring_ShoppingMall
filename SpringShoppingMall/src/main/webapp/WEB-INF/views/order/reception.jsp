@@ -67,7 +67,7 @@
 			return;
 		}
 		
-		f.action = "order/payReq.action";
+		f.action = "<%=cp%>/order/payReq.action";
 		f.submit();
 		
 	}

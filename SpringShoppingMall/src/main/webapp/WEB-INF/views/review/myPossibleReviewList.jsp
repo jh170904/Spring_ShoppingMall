@@ -17,8 +17,8 @@
 		<!-- tab menu -->
 		<div class="tab_menu equally">
 			<ul>
-				<li><a href="review/reviewList.action?order=recent">작성한 리뷰 <b id="availCnt">${dataCount_yes }</b>개</a></li>
-				<li class="on"><a href="review/reviewPossibleList.action">작성 가능한 리뷰 <b id="expCnt">${dataCount_no }</b>개</a></li>
+				<li><a href="<%=cp%>/review/reviewList.action?order=recent">작성한 리뷰 <b id="availCnt">${dataCount_yes }</b>개</a></li>
+				<li class="on"><a href="<%=cp%>/review/reviewPossibleList.action">작성 가능한 리뷰 <b id="expCnt">${dataCount_no }</b>개</a></li>
 			</ul>
 		</div>
 
@@ -45,9 +45,9 @@
 						<c:forEach var="dto" items="${lists }">
 							<tr>
 								<td class="check_wrap check_only">${dto.productId }</td>
-								<td><a href="pr/detail.action?superProduct=${dto.superProduct}">${dto.productName }</a></td>
+								<td><a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">${dto.productName }</a></td>
 								<td>
-									<button onclick="javascript:location.href='review/reviewWrited.action?productId=${dto.productId }&reviewDate=${dto.reviewDate }&pageNum=${pageNum }'" class="btn_sm_bordered">작성하기</button>
+									<button onclick="javascript:location.href='<%=cp%>/review/reviewWrited.action?productId=${dto.productId }&reviewDate=${dto.reviewDate }&pageNum=${pageNum }'" class="btn_sm_bordered">작성하기</button>
 								</td>
 							</tr>
 						</c:forEach>

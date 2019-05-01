@@ -27,7 +27,7 @@
 		<p class="text bullet_dot">자주 사용하시는 배송지를 등록 및 관리하실 수 있습니다. 배송지는 최대 5개까지 추가하실 수 있습니다.</p>
 	</td>
 	<td>
-		<button onclick="javascript:location.href='dest/destwrited.action';"
+		<button onclick="javascript:location.href='<%=cp%>/dest/destwrited.action';"
 			class="btn_md_primary addr_add">배송지 추가하기</button>
 	</td>
 </tr>
@@ -62,7 +62,7 @@
 	<tr>
 		<td class="check_wrap check_only">
 			<c:if test="${dto.addrKey=='no' }">
-				<a href="dest/changeAddrkey_ok.action?destNickname=${dto.destNickname }">
+				<a href="<%=cp%>/dest/changeAddrkey_ok.action?destNickname=${dto.destNickname }">
 					<img alt="" src="<%=cp%>/resources/image/checkmark_no.png" height="25px;">
 				</a>
 			</c:if> 
@@ -77,12 +77,12 @@
 		<td class="align_left">[${dto.zip }] ${dto.addr1 } ${dto.addr2 }</td>
 		<td>${dto.destPhone }</td>
 		<td>
-			<button onclick="javascript:location.href='dest/destupdated.action?destNickname=${dto.destNickname }';" class="btn_sm_bordered" >
+			<button onclick="javascript:location.href='<%=cp%>/dest/destupdated.action?destNickname=${dto.destNickname }';" class="btn_sm_bordered" >
 				수정하기
 			</button>
 		</td>
 		<td>
-			<button onclick="javascript:location.href='dest/destdeleted.action?destNickname=${dto.destNickname }'" class="btn_sm_bordered" >
+			<button onclick="javascript:location.href='<%=cp%>/dest/destdeleted.action?destNickname=${dto.destNickname }'" class="btn_sm_bordered" >
 				삭제하기
 			</button>
 		</td>

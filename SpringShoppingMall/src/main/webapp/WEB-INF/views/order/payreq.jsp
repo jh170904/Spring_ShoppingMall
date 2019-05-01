@@ -47,7 +47,7 @@ function getFormObject() {
  */
 function complete() {
 	var f = document.getElementById("LGD_PAYINFO");
-	f.action = "order/orderComplete.action";
+	f.action = "<%=cp%>/order/orderComplete.action";
 	f.submit();
 }
 
@@ -55,7 +55,7 @@ function complete() {
 
 </head>
 <body onload="complete()">
-<form method="post" name="LGD_PAYINFO" id="LGD_PAYINFO" action="order/orderComplete.action">
+<form method="post" name="LGD_PAYINFO" id="LGD_PAYINFO" action="<%=cp%>/order/orderComplete.action">
 <table>
     
     <tr>

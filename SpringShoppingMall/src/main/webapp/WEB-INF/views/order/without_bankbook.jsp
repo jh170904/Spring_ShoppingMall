@@ -11,7 +11,7 @@ function sendMain() {
 	
 	var f = document.orderCompleteFoem;
 	
-	f.action = "pr/listNew.action";
+	f.action = "<%=cp%>/pr/listNew.action";
 	
 	f.submit();
 	

@@ -30,23 +30,23 @@
 		<!-- tab menu -->
 		<div style="margin-left: 12px;">
 			<dl>
-				<dd class="inLine_myOrder"><button onclick="javascript:location.href='order/myOrderLists.action?period=week';" 
+				<dd class="inLine_myOrder"><button onclick="javascript:location.href='<%=cp%>/order/myOrderLists.action?period=week';" 
 					style="<c:if test='${period eq "week"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" 
 					class="btn_sm_bordered_review">1주일</button>
 				</dd>
-				<dd class="inLine_myOrder"><button onclick="javascript:location.href='order/myOrderLists.action?period=month';" 
+				<dd class="inLine_myOrder"><button onclick="javascript:location.href='<%=cp%>/order/myOrderLists.action?period=month';" 
 					style="<c:if test='${period eq "month"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" 
 					class="btn_sm_bordered_review">1개월</button>
 				</dd>
-				<dd class="inLine_myOrder"><button onclick="javascript:location.href='order/myOrderLists.action?period=3month';" 
+				<dd class="inLine_myOrder"><button onclick="javascript:location.href='<%=cp%>/order/myOrderLists.action?period=3month';" 
 					style="<c:if test='${period eq "3month"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" 
 					class="btn_sm_bordered_review">3개월</button>
 				</dd>
-				<dd class="inLine_myOrder"><button onclick="javascript:location.href='order/myOrderLists.action?period=6month';" 
+				<dd class="inLine_myOrder"><button onclick="javascript:location.href='<%=cp%>/order/myOrderLists.action?period=6month';" 
 					style="<c:if test='${period eq "6month"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" 
 					class="btn_sm_bordered_review">6개월</button>
 				</dd>
-				<dd class="inLine_myOrder"><button onclick="javascript:location.href='order/myOrderLists.action?period=year';" 
+				<dd class="inLine_myOrder"><button onclick="javascript:location.href='<%=cp%>/order/myOrderLists.action?period=year';" 
 					style="<c:if test='${period eq "year"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" 
 					class="btn_sm_bordered_review">12개월</button>
 				</dd>
@@ -88,12 +88,12 @@
 									<br/>${dto.orderNum }
 								</td>
 								<td style="vertical-align: top; text-align: left;">
-									<a href="pr/detail.action?superProduct=${dto.superProduct}">
+									<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">
 										<img alt="" src="${imagePath }/${dto.saveFileName }" height="50px;">
 									</a>
 								</td>
 								<td style="vertical-align: top; text-align: left;">
-									<a href="pr/detail.action?superProduct=${dto.superProduct}">${dto.productName }</a>
+									<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">${dto.productName }</a>
 									${dto.amount }&nbsp;개 &nbsp;&nbsp;${dto.price }&nbsp;원 
 									<br/>(총합&nbsp;&nbsp;:&nbsp;&nbsp;${dto.amount * dto.price }) &nbsp;&nbsp;&nbsp;&nbsp;
 								</td>

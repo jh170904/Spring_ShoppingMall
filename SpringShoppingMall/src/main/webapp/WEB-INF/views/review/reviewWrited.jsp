@@ -29,7 +29,7 @@
 			return;
 		}
 
-		f.action = "review/reviewWrited_ok.action";
+		f.action = "<%=cp%>/review/reviewWrited_ok.action";
 		f.submit();
 	}
 	
@@ -112,7 +112,7 @@
 	<td colspan="2">
 		<input type="hidden" name="productId" value="${dto.productId }">
 		<input type="hidden" name="reviewDate" value="${dto.reviewDate }">
-		<input type="button" class="btn_blg_secondary" value="취소" onclick="javascript:location.href='review/reviewPossibleList.action?pageNum=${pageNum}';">
+		<input type="button" class="btn_blg_secondary" value="취소" onclick="javascript:location.href='<%=cp%>/review/reviewPossibleList.action?pageNum=${pageNum}';">
 		<input type="button" class="btn_blg_primary" value="등록" onclick="writeReview()">
 	</td>
 </tr>
