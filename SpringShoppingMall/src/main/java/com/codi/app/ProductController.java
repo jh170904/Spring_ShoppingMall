@@ -198,6 +198,25 @@ public class ProductController {
 			lists = dao.getListsCategory(start, end, productCategory);
 		}
 
+
+		//각각의 dto에 reviewCount 와 reviewRate 추가
+		
+		ListIterator<ProductDTO> it = lists.listIterator();
+		
+		while(it.hasNext()){
+			ProductDTO vo = (ProductDTO)it.next();
+			
+			//dao.getReviewCount(vo.productId)
+			int reviewCount =  reviewDAO.getProductDataCount(vo.getSuperProduct());
+			//dao.getReviewRate(vo.productId)
+			float avgReviewRate = reviewDAO.productGetList_heart(vo.getSuperProduct());
+			
+			vo.setReviewCount(reviewCount);
+			vo.setReviewRate(avgReviewRate);
+		}
+		
+		
+		
 		// 이미지저장 경로 보내주기
 		String imagePath = req.getSession().getServletContext().getRealPath("/upload");
 
@@ -263,6 +282,27 @@ public class ProductController {
 		List<ProductDTO> lists;
 
 		lists = dao.getListOrder(start, end, "amount desc");
+		
+		
+
+		//각각의 dto에 reviewCount 와 reviewRate 추가
+		
+		ListIterator<ProductDTO> it = lists.listIterator();
+		
+		while(it.hasNext()){
+			ProductDTO vo = (ProductDTO)it.next();
+			
+			//dao.getReviewCount(vo.productId)
+			int reviewCount =  reviewDAO.getProductDataCount(vo.getSuperProduct());
+			//dao.getReviewRate(vo.productId)
+			float avgReviewRate = reviewDAO.productGetList_heart(vo.getSuperProduct());
+			
+			vo.setReviewCount(reviewCount);
+			vo.setReviewRate(avgReviewRate);
+		}
+		
+		
+		
 
 		// 이미지저장 경로 보내주기
 		String imagePath = req.getSession().getServletContext().getRealPath("/upload");
