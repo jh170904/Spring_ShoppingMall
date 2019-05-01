@@ -31,7 +31,7 @@ public class DestinationController {
 	@Autowired()
 	MyUtil myUtil;//Bean 객체 생성
 	
-	@RequestMapping(value = "/destlist.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/dest/destlist.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String list(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
@@ -64,7 +64,7 @@ public class DestinationController {
 		return "destination/destinationList";
 	}
 	
-	@RequestMapping(value = "/destwrited.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/dest/destwrited.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String writed(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
 
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
@@ -79,7 +79,7 @@ public class DestinationController {
 			
 			redirectAttributes.addAttribute("message","배송지는 최대 5개까지만 등록 가능합니다.");
 			
-			return "redirect:/destlist.action";
+			return "redirect:/dest/destlist.action";
 		}
 		
 		List<DestinationDTO> lists = dao.selectDestNickname(info.getUserId(), " ");
@@ -101,7 +101,7 @@ public class DestinationController {
 		
 	}
 	
-	@RequestMapping(value = "/destwrited_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/dest/destwrited_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String writed_ok(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
@@ -111,11 +111,11 @@ public class DestinationController {
 		
 		dao.insertData(dto);
 		
-		return "redirect:/destlist.action";
+		return "redirect:/dest/destlist.action";
 		
 	}
 	
-	@RequestMapping(value = "/changeAddrkey_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/dest/changeAddrkey_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String changeAddrkey_ok(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
@@ -125,12 +125,12 @@ public class DestinationController {
 		dao.changeAddrkeyNo(userId);
 		dao.changeAddrkeyYes(userId, dto.getDestNickname());
 		
-		return "redirect:/destlist.action";
+		return "redirect:/dest/destlist.action";
 		
 	}
 	
 		
-	@RequestMapping(value = "/destupdated.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/dest/destupdated.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String updated(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
 	
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
@@ -155,7 +155,7 @@ public class DestinationController {
 		return "destination/destinationUpdated";
 	}
 	
-	@RequestMapping(value = "/destupdated_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/dest/destupdated_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String updated_ok(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
@@ -164,18 +164,18 @@ public class DestinationController {
 		dto.setUserId(info.getUserId());		
 		dao.updateData(dto);
 		
-		return "redirect:/destlist.action";
+		return "redirect:/dest/destlist.action";
 		
 	}
 	
-	@RequestMapping(value = "/destdeleted.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/dest/destdeleted.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String destdeleted(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		
 		dao.deleteData(info.getUserId(), dto.getDestNickname());
 		
-		return "redirect:/destlist.action";
+		return "redirect:/dest/destlist.action";
 		
 	}
 

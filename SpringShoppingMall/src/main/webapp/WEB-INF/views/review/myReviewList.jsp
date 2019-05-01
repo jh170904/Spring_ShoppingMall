@@ -44,8 +44,8 @@
 		<!-- tab menu -->
 		<div class="tab_menu equally">
 			<ul>
-				<li class="on"><a href="reviewList.action?order=recent">작성한 리뷰 <b id="availCnt">${dataCount_yes }</b>개</a></li>
-				<li><a href="reviewPossibleList.action">작성 가능한 리뷰 <b id="expCnt">${dataCount_no }</b>개</a></li>
+				<li class="on"><a href="review/reviewList.action?order=recent">작성한 리뷰 <b id="availCnt">${dataCount_yes }</b>개</a></li>
+				<li><a href="review/reviewPossibleList.action">작성 가능한 리뷰 <b id="expCnt">${dataCount_no }</b>개</a></li>
 			</ul>
 		</div>
 		
@@ -53,9 +53,9 @@
 		
 		<div style="margin-left: 12px;">
 			<dl>
-				<dd class="inLine_review"><button onclick="javascript:location.href='reviewList.action?order=recent';" style="<c:if test='${order eq "recent"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" class="btn_sm_bordered_review">최신순</button></dd>
-				<dd class="inLine_review"><button onclick="javascript:location.href='reviewList.action?order=worst';" style="<c:if test='${order eq "worst"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" class="btn_sm_bordered_review">낮은 평점순</button></dd>
-				<dd class="inLine_review"><button onclick="javascript:location.href='reviewList.action?order=best';" style="<c:if test='${order eq "best"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" class="btn_sm_bordered_review">높은 평점순</button></dd>
+				<dd class="inLine_review"><button onclick="javascript:location.href='review/reviewList.action?order=recent';" style="<c:if test='${order eq "recent"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" class="btn_sm_bordered_review">최신순</button></dd>
+				<dd class="inLine_review"><button onclick="javascript:location.href='review/reviewList.action?order=worst';" style="<c:if test='${order eq "worst"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" class="btn_sm_bordered_review">낮은 평점순</button></dd>
+				<dd class="inLine_review"><button onclick="javascript:location.href='review/reviewList.action?order=best';" style="<c:if test='${order eq "best"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" class="btn_sm_bordered_review">높은 평점순</button></dd>
 			</dl>			
 		</div>
 
@@ -88,11 +88,11 @@
 						<c:forEach var="dto" items="${lists }">
 							<tr>
 								<td class="check_wrap check_only" style="vertical-align: top;">${dto.reviewDate_view }</td>
-								<td style="vertical-align: top;"><a href="detail.action?superProduct=${dto.superProduct}">${dto.productName }</a></td>
+								<td style="vertical-align: top;"><a href="pr/detail.action?superProduct=${dto.superProduct}">${dto.productName }</a></td>
 								<td align="left" style="vertical-align: top;">${dto.subject }
 									<p id="${dto.reviewDate }" style="display: none; font-size: 11px;" ><br/>
 									<c:if test="${dto.originalName ne null }">
-										<img alt="" src="./upload/review/${dto.originalName }" height="100px;"><br/>
+										<img alt="" src="../upload/review/${dto.originalName }" height="100px;"><br/>
 									</c:if>
 									${dto.content }</p>
 								</td>
@@ -109,7 +109,7 @@
 									<button onclick="showReview('${dto.reviewDate }')" class="btn_sm_bordered">리뷰보기</button>
 								</td>
 								<td style="vertical-align: top;">
-									<button onclick="javascript:location.href='reviewDeleted.action?productId=${dto.productId }&reviewDate=${dto.reviewDate }&originalName=${dto.originalName }';" class="btn_sm_bordered">삭제하기</button>
+									<button onclick="javascript:location.href='review/reviewDeleted.action?productId=${dto.productId }&reviewDate=${dto.reviewDate }&originalName=${dto.originalName }';" class="btn_sm_bordered">삭제하기</button>
 								</td>
 							</tr>
 						</c:forEach>

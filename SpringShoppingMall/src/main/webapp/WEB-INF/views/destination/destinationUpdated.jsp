@@ -156,7 +156,7 @@
 	        return;
 	    }
 	    
-	    f.action = "destupdated_ok.action";
+	    f.action = "dest/destupdated_ok.action";
 	    f.submit();
 		
 	}
@@ -256,7 +256,7 @@
 	<td colspan="2">
 		<input type="hidden" name="ex_destNickname" value="${ex_destNickname }">
 		<input type="button" class="btn_blg_secondary" value="취소" onclick="javascript:location.href='destlist.action';">
-		<input type="button" class="btn_blg_primary" value="수정" onclick="updateDest();">
+		<input type="button" class="btn_blg_primary" value="수정" onclick="dest/updateDest();">
 	</td>
 </tr>
 

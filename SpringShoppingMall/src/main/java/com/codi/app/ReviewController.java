@@ -38,7 +38,7 @@ public class ReviewController {
 	@Autowired
 	MyUtil myUtil;//Bean 按眉 积己
 	
-	@RequestMapping(value = "/reviewList.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/review/reviewList.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String list(ReviewDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
@@ -85,7 +85,7 @@ public class ReviewController {
 			reviewDTO.setReviewDate_view(reviewDTO.getReviewDate().substring(0,10));
 		}
 		
-		String listUrl = cp + "/reviewList.action?order="+order;
+		String listUrl = cp + "/review/reviewList.action?order="+order;
 		
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
@@ -98,7 +98,7 @@ public class ReviewController {
 		return "review/myReviewList";
 	}
 	
-	@RequestMapping(value = "/reviewPossibleList.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/review/reviewPossibleList.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String possibleList(ReviewDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
@@ -131,7 +131,7 @@ public class ReviewController {
 			reviewDTO.setProductName(URLDecoder.decode(reviewDTO.getProductName(),"UTF-8"));
 		}
 			
-		String listUrl = cp + "/reviewPossibleList.action";
+		String listUrl = cp + "/review/reviewPossibleList.action";
 		
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 
@@ -145,7 +145,7 @@ public class ReviewController {
 		return "review/myPossibleReviewList";
 	}
 	
-	@RequestMapping(value = "/reviewWrited.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/review/reviewWrited.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String writed(ReviewDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
@@ -160,7 +160,7 @@ public class ReviewController {
 		return "review/reviewWrited";
 	}
 	
-	@RequestMapping(value = "/reviewWrited_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/review/reviewWrited_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String writed_ok(ReviewDTO dto, MultipartHttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
@@ -199,10 +199,10 @@ public class ReviewController {
 		//2. DB俊 持扁
 		dao.insertData(dto);
 		
-		return "redirect:/reviewList.action";
+		return "redirect:/review/reviewList.action";
 	}
 	
-	@RequestMapping(value = "/reviewDeleted.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/review/reviewDeleted.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String deleted(ReviewDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
@@ -216,7 +216,7 @@ public class ReviewController {
 		
 		dao.deleteData(info.getUserId(), dto.getProductId(), dto.getReviewDate());
 		
-		return "redirect:/reviewList.action";
+		return "redirect:/review/reviewList.action";
 	}
 	
 

@@ -67,7 +67,7 @@
 			return;
 		}
 		
-		f.action = "payReq.action";
+		f.action = "order/payReq.action";
 		f.submit();
 		
 	}

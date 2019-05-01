@@ -154,7 +154,7 @@
 	        return;
 	    }
 	    
-	    f.action = "destwrited_ok.action";
+	    f.action = "dest/destwrited_ok.action";
 	    f.submit();
 		
 	}
@@ -253,7 +253,7 @@
 
 <tr align="center">
 	<td colspan="2">
-		<input type="button" class="btn_blg_secondary" value="취소" onclick="javascript:location.href='destlist.action';">
+		<input type="button" class="btn_blg_secondary" value="취소" onclick="javascript:location.href='dest/destlist.action';">
 		<input type="button" class="btn_blg_primary" value="등록" onclick="writeDest();">
 	</td>
 </tr>

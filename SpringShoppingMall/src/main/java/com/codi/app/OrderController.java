@@ -39,7 +39,7 @@ public class OrderController {
 	@Autowired
 	MyUtil myUtil;
 	
-	@RequestMapping(value = "/orderList.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/order/orderList.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String list(OrderDTO orderDTO, OrderListDTO orderListDTO, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
@@ -114,7 +114,7 @@ public class OrderController {
 		List<CouponDTO> couponList = dao.getUserCoupon(info.getUserId(), totalPrice);
 		*/
 		
-		String imagePath = "./upload/list";
+		String imagePath = "../upload/list";
 		int deliveryFee = 2500;
 		request.setAttribute("destDto", destDto);
 		request.setAttribute("destAllList", destAllList);
@@ -130,7 +130,7 @@ public class OrderController {
 		return "order/reception";
 	}
 	
-	@RequestMapping(value = "/payReq.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/order/payReq.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String payReq(OrderDTO orderDTO, OrderListDTO orderListDTO, DestinationDTO destinationDTO,
 			HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
 	
@@ -231,7 +231,7 @@ public class OrderController {
 			redirectAttributes.addAttribute("totalOrderPrice",totalOrderPrice);
 			redirectAttributes.addAttribute("discount",discount);
 
-			return "redirect:/orderComplete.action";
+			return "redirect:/order/orderComplete.action";
 		}
 		
 		
@@ -239,7 +239,7 @@ public class OrderController {
 		
 	}
 	
-	@RequestMapping(value = "/orderComplete.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/order/orderComplete.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String orderComplate(OrderDTO orderDTO, OrderListDTO orderListDTO, DestinationDTO destinationDTO, ReviewDTO reviewDTO,
 			HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		
@@ -350,7 +350,7 @@ public class OrderController {
 		
 	}
 	
-	@RequestMapping(value = "/myOrderLists.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/order/myOrderLists.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String myOrderLists(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
@@ -405,22 +405,21 @@ public class OrderController {
 		
 		userOrderlist = dao.getUserOrderLists(info.getUserId(), numPerPage, searchPeriod, start, end);
 		
-		String listUrl = cp + "/myOrderLists.action";
+		String listUrl = cp + "/order/myOrderLists.action";
 		
 		String pageIndexList = myUtil.myOrderPageIndexList(currentPage, totalPage, listUrl,period);
 		
 		request.setAttribute("userOrderlist", userOrderlist);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("period", period);
-		request.setAttribute("imagePath", "./upload/list");
+		request.setAttribute("imagePath", "../upload/list");
 		
 		return "order/myOrderList";
 	}
 	
 	
 	//관리자
-	
-	@RequestMapping(value = "/bankbookPaymentAdmin.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/order/bankbookPaymentAdmin.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String bankkbookPaymentAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String cp = request.getContextPath();
@@ -441,7 +440,7 @@ public class OrderController {
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
 		
-		String listUrl = cp + "/bankbookPaymentAdmin.action";
+		String listUrl = cp + "/order/bankbookPaymentAdmin.action";
 		
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
@@ -472,7 +471,7 @@ public class OrderController {
 		return "admin/order_bankbook_payment";
 	}
 	
-	@RequestMapping(value = "/without_bankbook_paymentYes.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/order/without_bankbook_paymentYes.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String without_bankbook_paymentYes(OrderDTO orderDTO, OrderListDTO orderListDTO, DestinationDTO destinationDTO, ReviewDTO reviewDTO,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
@@ -486,7 +485,7 @@ public class OrderController {
 		//포인트 적립
 		dao.updateMemberPoint(userId,(int)(price*0.01));
 		
-		return "redirect:/bankbookPaymentAdmin.action";
+		return "redirect:/order/bankbookPaymentAdmin.action";
 	}
 	
 }
