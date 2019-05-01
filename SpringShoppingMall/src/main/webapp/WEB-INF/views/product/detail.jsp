@@ -262,7 +262,6 @@ tr{
 			var params = "superProduct=" + superProduct+ "&order=" + order;
 			
 			$.ajax({
-			
 				type:"POST",
 				url:"detailReview.action",
 				data:params,
@@ -291,12 +290,16 @@ tr{
 						+ "&color=" + $("#color").val();
 			$.ajax({				
 				type:"POST",
-				url:"cart/cartAdd_ok.action",
+				url:"<%=cp%>/cart/cartAdd_ok.action",
 				data: params,
 				//dataType : "",//반환데이터
 				success:function(args){
 					//콜백함수
-					alert("장바구니에 상품이 추가되었습니다.");
+					if(args==true){
+						alert("장바구니에 상품이 추가되었습니다.");
+					}else{
+						alert("장바구니를 이용하시려면, 로그인이 필요합니다.")
+					}
 				},
 				beforeSend:addCartItem,
 				error:function(e){
@@ -470,7 +473,7 @@ tr{
 							<!-- 구매버튼,장바구니버튼 -->
 							<div class="purchase_button_set">
 								<span><button id="btn_buy_now" class="btn_lg_bordered emp btn_buy_now" type="button" onclick="addDirectOrder();">바로구매</button></span>
-								<span><button id="btn_basket" class="btn_lg_primary btn_basket" type="button" onclick="addCartItem">장바구니 담기</button></span>
+								<span><button id="btn_basket" class="btn_lg_primary btn_basket" type="button">장바구니 담기</button></span>
 							</div>
 							</td>
 						</tr>						
