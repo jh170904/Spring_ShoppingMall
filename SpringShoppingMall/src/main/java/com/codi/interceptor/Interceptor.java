@@ -15,7 +15,7 @@ public class Interceptor extends HandlerInterceptorAdapter{
 
 
 	static final String[] EXCLUDE_URL_LIST = {//로그인 페이지, 회원가입 페이지 등은 인터셉터 적용 제외 페이지
-			"/login","/mem"
+			"/login","/mem" ,"/pr"
 	};
 
 	@Override

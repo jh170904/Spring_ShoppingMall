@@ -32,7 +32,7 @@ public class ProductDetailController {
 	@Autowired
 	MyUtil myUtil;//Bean °´Ã¼ »ý¼º
 	
-	@RequestMapping(value = "/detail.action", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/pr/detail.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String detail(HttpServletRequest request, HttpServletResponse response) {
 		String cp = request.getContextPath();
 		String superProduct = request.getParameter("superProduct");
@@ -67,7 +67,7 @@ public class ProductDetailController {
 		return "product/detail";
 	}
 	
-	@RequestMapping(value = "/detailReview.action", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "pr/detailReview.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String detailReview(HttpServletRequest request, HttpServletResponse response) {
 		
 		String cp = request.getContextPath();

@@ -1,4 +1,3 @@
-
 <%-- <%@page import="com.member.MemberDTO"%> --%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -350,7 +349,7 @@ tr{
 				
 					<div class="prd_img_wrap">
 						<div class="slide goods_slide ix-slide-max-apply">
-							<img style="width: 500px; height: 500px;" alt="${dto.originalName}" src="./upload/list/${dto.saveFileName }">
+							<img style="width: 500px; height: 500px;" alt="${dto.originalName}" src="../upload/list/${dto.saveFileName }">
 						</div>
 					</div>
 				

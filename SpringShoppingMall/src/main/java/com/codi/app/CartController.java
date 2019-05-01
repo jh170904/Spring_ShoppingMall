@@ -42,6 +42,10 @@ public class CartController {
 		String cp = request.getContextPath();
 		HttpSession session=request.getSession();
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		
+		if(info==null)
+			return "mem/login";
+		
 		String userId = info.getUserId();
 
 		List<CartDTO> lists = dao.getReadData(userId);

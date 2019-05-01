@@ -57,13 +57,16 @@
 	</beans:bean>
 	
 	<!-- 로그인 인터셉터(멤버 마이페이지) -->
-<!-- 	
 	<interceptors>
 	 <interceptor>
 	  <mapping path="/con/**" />
+	  <mapping path="/cart/**" />
+	  <mapping path="/dest/**" />
+	  <mapping path="/order/**" />
+	  <mapping path="/review/**" />
 	  <beans:bean class="com.codi.interceptor.Interceptor" />
 	 </interceptor>
-	</interceptors> -->
+	</interceptors>
 	 
 	<!-- 이메일 보내기 -->	
 	<beans:bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >

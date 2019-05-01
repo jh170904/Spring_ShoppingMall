@@ -191,16 +191,20 @@
 				<tr style="widows: 1200px; height: 70px;" align="center">
 					<!-- 주문상품 체크 -->
 					<td class="check_wrap check_only" rowspan="2" width="50">
-						<button class="btn_basket_orderSelect" value="${status.count}">
-						<div id="btn_basket_orderSelect_img_${status.count}">
-							<c:if test="${dto.orderSelect=='no'}">
+						<c:if test="${dto.orderSelect=='no'}">
+							<button class="btn_basket_orderSelect" value="${status.count}">
+							<div id="btn_basket_orderSelect_img_${status.count}">
 							<img alt="" src="<%=cp%>/resources/image/checkmark_no.png" height="25px;" >
-							</c:if> 
-							<c:if test="${dto.orderSelect=='yes' }">
+							</div>
+							</button>
+						</c:if> 
+						<c:if test="${dto.orderSelect=='yes' }">
+							<button class="btn_basket_orderSelect" value="${status.count}">
+							<div id="btn_basket_orderSelect_img_${status.count}">
 							<img alt="" src="<%=cp%>/resources/images/member/ico_join_complete.png" height="25px;">
-							</c:if>
-						</div>
-						</button>						
+							</div>
+							</button>
+						</c:if>						
 					</td>
 					<!-- 상품이미지 -->
 					<td width="160px" rowspan="2">
