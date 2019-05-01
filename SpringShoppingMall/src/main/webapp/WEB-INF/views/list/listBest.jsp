@@ -80,7 +80,7 @@ $(function(){
 	
 	
 	<div class="ap_contents prd_list">
-		<div class="prd_category">
+		<div class="prd_category"  style="border-top-color: #ebebeb;">
 		
 
 		<div class="item_list column2">
@@ -129,8 +129,8 @@ $(function(){
 										
 										<c:set var="count" value="${count+1 }" />
 									</div>
-									<a href="<%=cp%>/detail.action?superProduct=${dto.superProduct}">
-									<img style="background-color: #f5f5f5; width: 268px; height: 268px; margin-left : 10px; margin-right: 10px" alt="" src="./upload/list/${dto.originalName}" />
+									<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">
+									<img style="background-color: #f5f5f5; width: 268px; height: 268px; margin-left : 10px; margin-right: 10px" alt="" src="../upload/list/${dto.originalName}" />
 									</a>
 								</td>
 							</tr>

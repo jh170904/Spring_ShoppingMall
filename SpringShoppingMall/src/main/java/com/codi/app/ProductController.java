@@ -51,17 +51,17 @@ public class ProductController {
 	@Autowired
 	MyUtil myUtil;// Bean 객체 생성
 
-	@RequestMapping(value = "/commuMain.action", method = RequestMethod.GET)
+	@RequestMapping(value = "pr/commuMain.action", method = RequestMethod.GET)
 	public String commuMain(HttpServletRequest req) {
 		return "commuMain";
 	}
 
-	@RequestMapping(value = "/storeMain.action", method = RequestMethod.GET)
+	@RequestMapping(value = "pr/storeMain.action", method = RequestMethod.GET)
 	public String storeMain(HttpServletRequest req) {
 		return "storeMain";
 	}
 
-	@RequestMapping(value = "/listNew.action", method = RequestMethod.GET)
+	@RequestMapping(value = "pr/listNew.action", method = RequestMethod.GET)
 	public String listNew(HttpServletRequest req, HttpSession session) throws IOException {
 		
 		
@@ -136,7 +136,7 @@ public class ProductController {
 		// req.getSession().getServletContext().getRealPath("/WEB-INF/files");
 
 		// 페이징을 위한 값들 보내주기
-		String listUrl = cp + "/listNew.action";
+		String listUrl = cp + "/pr/listNew.action";
 
 		String pageIndexList = myUtil.listPageIndexList(currentPage, totalPage, listUrl, order);
 
@@ -152,7 +152,7 @@ public class ProductController {
 		return "list/listNew";
 	}
 
-	@RequestMapping(value = "/listCategory.action", method = RequestMethod.GET)
+	@RequestMapping(value = "pr/listCategory.action", method = RequestMethod.GET)
 	public String listCategory(HttpServletRequest req,HttpSession session) throws IOException {
 
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo"); 
@@ -230,7 +230,7 @@ public class ProductController {
 		// req.getSession().getServletContext().getRealPath("/WEB-INF/files");
 
 		// 페이징을 위한 값들 보내주기
-		String listUrl = cp + "/listCategory.action?productCategory=" + productCategory;
+		String listUrl = cp + "/pr/listCategory.action?productCategory=" + productCategory;
 
 		String pageIndexList = myUtil.listPageIndexList(currentPage, totalPage, listUrl, order);
 
@@ -251,7 +251,7 @@ public class ProductController {
 		return "list/listCategory";
 	}
 
-	@RequestMapping(value = "/listBest.action", method = RequestMethod.GET)
+	@RequestMapping(value = "pr/listBest.action", method = RequestMethod.GET)
 	public String listBest(HttpServletRequest req,HttpSession session) throws IOException {
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo"); 
@@ -317,7 +317,7 @@ public class ProductController {
 		// req.getSession().getServletContext().getRealPath("/WEB-INF/files");
 
 		// 페이징을 위한 값들 보내주기
-		String listUrl = cp + "/listBest	.action";
+		String listUrl = cp + "/pr/listBest.action";
 
 		String pageIndexList = myUtil.listPageIndexList(currentPage, totalPage, listUrl, "amount desc");
 

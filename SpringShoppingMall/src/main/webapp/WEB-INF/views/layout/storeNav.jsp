@@ -11,8 +11,8 @@
 				<td>
 				<div class="gnb_area" style="border: none;">
 					<ul class="gnb">
-						<li><a href="<%=cp2 %>/commuMain.action">커뮤니티</a></li>
-						<li><a style="color: #8080FF;" href="<%=cp2 %>/storeMain.action">스토어</a></li>
+						<li><a href="<%=cp2 %>/pr/commuMain.action">커뮤니티</a></li>
+						<li><a style="color: #8080FF;" href="<%=cp2 %>/pr/storeMain.action">스토어</a></li>
 					</ul>
 				</div>
 				</td>
@@ -22,8 +22,8 @@
 				<div class="gnb_area">
 					<ul class="gnb" >
 						<li><a href="#">스토어홈</a></li>
-						<li><a href="<%=cp2 %>/listNew.action">카테고리</a></li>
-						<li><a href="<%=cp2 %>/listBest.action">랭킹</a></li>
+						<li><a href="<%=cp2 %>/pr/listNew.action">카테고리</a></li>
+						<li><a href="<%=cp2 %>/pr/listBest.action">랭킹</a></li>
 						<li><a href="#">코디속BEST</a></li>
 					</ul>
 				</div>

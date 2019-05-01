@@ -82,14 +82,14 @@ $(function(){
 	<div class="ap_contents prd_list">
 		<div class="prd_category">
 			<ul>
-				<li><a href="<%=cp %>/listNew.action" class="on">ALL</a></li>
+				<li><a href="<%=cp %>/pr/listNew.action" class="on">ALL</a></li>
 					<% 
 						String arrCategory3[] = {"OUTER","TOP","BOTTOM","DRESS","SHOES","BAG","ACC"};
 					
 						for(String s:arrCategory3 ){
 							
 							String category = URLEncoder.encode(s, "UTF-8");
-							out.println("<li><a href="+cp+"/listCategory.action?productCategory="+category+">");
+							out.println("<li><a href="+cp+"/pr/listCategory.action?productCategory="+category+">");
 							out.println(s+"</a></li>");
 						}
 					%>
@@ -140,8 +140,8 @@ $(function(){
 					
 						<table width="400">
 							<tr>
-								<a href="<%=cp%>/detail.action?superProduct=${dto.superProduct}">
-								<img style="background-color: #f5f5f5; width: 268px; height: 268px; margin-left : 10px; margin-right: 10px" alt="" src="./upload/list/${dto.originalName}" />
+								<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">
+								<img style="background-color: #f5f5f5; width: 268px; height: 268px; margin-left : 10px; margin-right: 10px" alt="" src="../upload/list/${dto.originalName}" />
 								</a>
 							</tr>
 							<tr>

@@ -11,8 +11,8 @@
 				<td>
 				<div class="gnb_area" style="border: none;">
 					<ul class="gnb">
-						<li><a style="color: #8080FF;" href="<%=cp4 %>/commuMain.action">커뮤니티</a></li>
-						<li><a href="<%=cp4 %>/storeMain.action">스토어</a></li>
+						<li><a style="color: #8080FF;" href="<%=cp4 %>/pr/commuMain.action">커뮤니티</a></li>
+						<li><a href="<%=cp4 %>/pr/storeMain.action">스토어</a></li>
 					</ul>
 				</div>
 				</td>
