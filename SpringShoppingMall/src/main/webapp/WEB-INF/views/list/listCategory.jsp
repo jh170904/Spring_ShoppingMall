@@ -1,5 +1,6 @@
 <%@page import="com.codi.dto.MemberDTO"%>
 <%@page import="java.net.URLEncoder"%>
+<%@page import="java.net.URLDecoder"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@include file="../layout/storeNav.jsp"  %>
 
@@ -53,7 +54,6 @@ $(function(){
 
 </script>
 
-
 <style>
 #order{
     color: #757575;
@@ -73,27 +73,39 @@ $(function(){
 
 	<div class="page_title_area">
 		<div class="page_title" style="border-top-color: black;">
-			<h3 class="h_title page">ALL</h3>
+<%			
+			String productCategory = request.getParameter("productCategory");
+			String hangul = URLDecoder.decode(productCategory, "UTF-8");
+%>  
+			<h2 class="h_title page"><%=hangul %></h2>
 			<p class="text font_lg"></p>
 		</div>
 	</div>
 	
 	
 	<div class="ap_contents prd_list">
+		
 		<div class="prd_category">
 			<ul>
-				<li><a href="<%=cp %>/listNew.action" class="on">ALL</a></li>
+				<li><a href="<%=cp %>/listNew.action" >ALL</a></li>
 					<% 
-						String arrCategory3[] = {"OUTER","TOP","BOTTOM","DRESS","SHOES","BAG","ACC"};
+						String arrCategory2[] = {"OUTER","TOP","BOTTOM","DRESS","SHOES","BAG","ACC"};
 					
-						for(String s:arrCategory3 ){
+						for(String s:arrCategory2 ){
 							
-							String category = URLEncoder.encode(s, "UTF-8");
-							out.println("<li><a href="+cp+"/listCategory.action?productCategory="+category+">");
-							out.println(s+"</a></li>");
+							if(s.equals(hangul)){
+								String category = URLEncoder.encode(s, "UTF-8");
+								out.println("<li><a class='on' href="+cp+"/listCategory.action?productCategory="+category+">");
+								out.println(s+"</a></li>");
+							}else{
+								String category = URLEncoder.encode(s, "UTF-8");
+								out.println("<li><a href="+cp+"/listCategory.action?productCategory="+category+">");
+								out.println(s+"</a></li>");
+							}
 						}
 					%>
 			</ul>
+			
 		</div>
 		
 		
@@ -102,9 +114,9 @@ $(function(){
 				<select id="order" name="order">
 					<option onclick="javascript:location.href='${listUrl}';">신제품순</option>
 					<!-- amount -->
-					<option onclick="javascript:location.href='${listUrl}?order=amount desc';">판매량순</option>
-					<option onclick="javascript:location.href='${listUrl}?order=price desc';">가격이 높은 순</option>
-					<option onclick="javascript:location.href='${listUrl}?order=price asc';">가격이 낮은 순</option>
+					<option onclick="javascript:location.href='${listUrl}&order=amount desc';">판매량순</option>
+					<option onclick="javascript:location.href='${listUrl}&order=price desc';">가격이 높은 순</option>
+					<option onclick="javascript:location.href='${listUrl}&order=price asc';">가격이 낮은 순</option>
 					<!-- 하트 많이 받은 순 -->
 					<option>인기순</option>
 					<option>리뷰 순</option>
@@ -156,11 +168,11 @@ $(function(){
 								<p align="left" style="font-size: 17pt; margin-bottom: 10px; margin-left: 62px; color: black;">${dto.price}원</p>
 							</tr>
 							<tr>
-								<p align="left" style="margin: 0px 10px 10px 62px; height: 20px">
-								<span style="font-size: 14pt;  color: #8080FF" >★</span>
+								<p align="left" style="margin: 0px 0px 10px 62px;">
+								<span style="font-size: 11pt;  color: #8080FF" >★</span>
 								<span>평점 ${dto.reviewRate}</span>
 								<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;${dto.reviewCount}</span>
-								
+							
 								<span style="font-size: 14pt;  color: #8080FF; margin-left: 112px;">
 									<input type="hidden" id="superProduct" value="${dto.superProduct}" >
 									<button class="goodButton" value="${dto.superProduct}">

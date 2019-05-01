@@ -19,7 +19,7 @@ public class ProductDAO {
 		this.sessionTemplate = sessionTemplate;
 	}
 	
-	//listNew(카테고리 ALL) dataCount
+	//listNew/Best dataCount
 	public int getDataCount(){
 		int result = 0;
 
@@ -28,16 +28,18 @@ public class ProductDAO {
 		return result;
 	}	
 	
-	//listNew(카테고리 ALL) dataCount
+	//Category dataCount
 	public int getDataCountCategory(String productCategory){
 		int result = 0;
 
 		result = sessionTemplate.selectOne("productMapper.getDataCountCategory",productCategory);
 
 		return result;
-	}	
+	}
 	
-	//listNew(카테고리 ALL) list
+	
+	
+	//listNew list 
 	public List<ProductDTO> getList(int start, int end){
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
@@ -52,7 +54,7 @@ public class ProductDAO {
 		return lists;
 	}
 	
-	//listNew(카테고리 ALL) list
+	//listNew 정렬
 	public List<ProductDTO> getListOrder(int start, int end,String order){
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
@@ -85,7 +87,7 @@ public class ProductDAO {
 		return lists;
 	}
 	
-	//listCategoryOrder list
+	//listCategory 정렬 / listBest 
 	public List<ProductDTO> getListsCategoryOrder(int start, int end, String productCategory,String order) {
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
@@ -105,6 +107,57 @@ public class ProductDAO {
 		return lists;
 	}
 	
+	//storeHeartCount
+	public int storeHeartCount(String superProduct,String userId){
+		
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("superProduct", superProduct);
+		params.put("userId",userId);
+
+		int result = 
+				sessionTemplate.selectOne("productMapper.storeHeartCount",params);
+
+		return result;
+	}
+	
+	
+	//insertHeart
+	public void insertHeart(String superProduct,String userId){
+		
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("superProduct", superProduct);
+		params.put("userId",userId);
+		
+		sessionTemplate.insert("productMapper.insertHeart",params);
+	}
+	
+	//deleteHeart
+	public void deleteHeart(String superProduct,String userId){
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("superProduct", superProduct);
+		params.put("userId",userId);
+		
+		sessionTemplate.delete("productMapper.deleteHeart", params);
+
+	}
+
+	//storeHeartList
+	public List<String> storeHeartList(String userId){
+	
+		List<String> lists = 
+				sessionTemplate.selectList("productMapper.storeHeartList",userId);
+	
+		return lists;
+	}
+	
+	
+		
 	//productAdminCreate
 	public void insertData(ProductDTO dto){
 		sessionTemplate.insert("productMapper.insertData",dto);

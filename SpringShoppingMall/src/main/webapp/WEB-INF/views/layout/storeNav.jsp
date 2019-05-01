@@ -23,7 +23,7 @@
 					<ul class="gnb" >
 						<li><a href="#">스토어홈</a></li>
 						<li><a href="<%=cp2 %>/listNew.action">카테고리</a></li>
-						<li><a href="#">랭킹</a></li>
+						<li><a href="<%=cp2 %>/listBest.action">랭킹</a></li>
 						<li><a href="#">코디속BEST</a></li>
 					</ul>
 				</div>

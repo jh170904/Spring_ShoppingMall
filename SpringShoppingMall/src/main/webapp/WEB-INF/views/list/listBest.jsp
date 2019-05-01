@@ -3,6 +3,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@include file="../layout/storeNav.jsp"  %>
 
+
 <script type="text/javascript">
 
 
@@ -53,7 +54,6 @@ $(function(){
 
 </script>
 
-
 <style>
 #order{
     color: #757575;
@@ -73,7 +73,7 @@ $(function(){
 
 	<div class="page_title_area">
 		<div class="page_title" style="border-top-color: black;">
-			<h3 class="h_title page">ALL</h3>
+			<h3 class="h_title page">랭킹</h3>
 			<p class="text font_lg"></p>
 		</div>
 	</div>
@@ -81,39 +81,8 @@ $(function(){
 	
 	<div class="ap_contents prd_list">
 		<div class="prd_category">
-			<ul>
-				<li><a href="<%=cp %>/listNew.action" class="on">ALL</a></li>
-					<% 
-						String arrCategory3[] = {"OUTER","TOP","BOTTOM","DRESS","SHOES","BAG","ACC"};
-					
-						for(String s:arrCategory3 ){
-							
-							String category = URLEncoder.encode(s, "UTF-8");
-							out.println("<li><a href="+cp+"/listCategory.action?productCategory="+category+">");
-							out.println(s+"</a></li>");
-						}
-					%>
-			</ul>
-		</div>
 		
-		
-		<div class="item_list column2" style="height: 70px;">
-			<div style="padding: 20px; float: right;">
-				<select id="order" name="order">
-					<option onclick="javascript:location.href='${listUrl}';">신제품순</option>
-					<!-- amount -->
-					<option onclick="javascript:location.href='${listUrl}?order=amount desc';">판매량순</option>
-					<option onclick="javascript:location.href='${listUrl}?order=price desc';">가격이 높은 순</option>
-					<option onclick="javascript:location.href='${listUrl}?order=price asc';">가격이 낮은 순</option>
-					<!-- 하트 많이 받은 순 -->
-					<option>인기순</option>
-					<option>리뷰 순</option>
-					<option>평점 순</option>
-				</select>
-			</div>
-		</div>
-		
-		
+
 		<div class="item_list column2">
 			<div class="panel notice etu_find_store_none no_result"
 				style="display: none;">
@@ -125,61 +94,90 @@ $(function(){
 			
 			<table style="width: 1200">
 				<c:set var="i" value="0" />
+				
+				<!-- 순위 count 변수 -->
+				<c:choose>
+					<c:when test="${empty pageNum}">
+						<c:set var="count" value="1" />
+					</c:when>
+					<c:otherwise>
+						<c:set var="count" value="${(pageNum-1)*10+1}" />
+					</c:otherwise>
+				</c:choose>
+				
+				<!-- list 출력 -->
 				<c:forEach var="dto" items="${lists }">
-
+				
 					<c:if test="${i==0 }">
-					
 						<tr height="30px"></tr>
 						<tr>
 						<c:set var="j" value="0" />
 					</c:if>
 
-
-
 					<td align="center">
 					
 						<table width="400">
 							<tr>
-								<a href="<%=cp%>/detail.action?superProduct=${dto.superProduct}">
-								<img style="background-color: #f5f5f5; width: 268px; height: 268px; margin-left : 10px; margin-right: 10px" alt="" src="./upload/list/${dto.originalName}" />
-								</a>
+								<td align="center" style="position: relative;">
+									<div style="position: absolute; top: 10px; left:85px; z-index: 2; font-size: 17pt; color: #000000;">
+										<h1>
+										${count}
+										</h1>										
+										<span style="color: #8800FF">
+										--
+										</span>
+										
+										<c:set var="count" value="${count+1 }" />
+									</div>
+									<a href="<%=cp%>/detail.action?superProduct=${dto.superProduct}">
+									<img style="background-color: #f5f5f5; width: 268px; height: 268px; margin-left : 10px; margin-right: 10px" alt="" src="./upload/list/${dto.originalName}" />
+									</a>
+								</td>
 							</tr>
 							<tr>
+								<td>
 								<a href="${dto.storeUrl }" >
-								<p align="left" style="font-size: 11pt; margin-bottom: 10px; margin-left: 62px;">${dto.storeName }</p>
-								</a>
+									<p align="left" style="font-size: 11pt; margin-bottom: 10px; margin-left: 62px;">${dto.storeName }</p>
+									</a>
+								</td>
 							</tr>
 							<tr height="16px">
-								<p align="left" style="font-size: 13pt; margin-bottom: 10px; margin-left: 62px;">${dto.productName }</p>
+								<td>
+									<p align="left" style="font-size: 11pt; margin-bottom: 10px; margin-left: 62px;">${dto.productName }</p>
+								</td>
 							</tr>
 							<tr height="25px">
-								<p align="left" style="font-size: 17pt; margin-bottom: 10px; margin-left: 62px; color: black;">${dto.price}원</p>
+								<td>
+									<p align="left" style="font-size: 17pt; margin-bottom: 10px; margin-left: 62px; color: black;">${dto.price }원</p>
+								</td>
 							</tr>
 							<tr>
-								<p align="left" style="margin: 0px 10px 10px 62px; height: 20px">
-								<span style="font-size: 14pt;  color: #8080FF" >★</span>
-								<span>평점 ${dto.reviewRate}</span>
-								<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;${dto.reviewCount}</span>
-								
-								<span style="font-size: 14pt;  color: #8080FF; margin-left: 112px;">
-									<input type="hidden" id="superProduct" value="${dto.superProduct}" >
-									<button class="goodButton" value="${dto.superProduct}">
-										<div class="goodDiv${dto.superProduct}">
-											<c:set var="k" value="0" />
-											<c:forEach var="good" items="${good }">
-												<c:if test="${dto.superProduct eq good}">
-													♥
-													<c:set var="k" value="1" />
-												</c:if>
-											</c:forEach>
-											<c:if test="${k==0 }">
-												♡
-											</c:if>
-										</div>
-									</button>
-								</span>
-								
-								</p>
+								<td>
+									<p align="left" style="margin: 0px 0px 10px 62px;">
+										<span style="font-size: 11pt;  color: #8080FF" >★</span>
+										<span>평점 ${dto.reviewRate}</span>
+										<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;${dto.reviewCount}</span>
+
+										<span style="font-size: 14pt;  color: #8080FF; margin-left: 112px;">
+											<input type="hidden" id="superProduct" value="${dto.superProduct}" >
+											<button class="goodButton" value="${dto.superProduct}">
+												<div class="goodDiv${dto.superProduct}">
+													<c:set var="k" value="0" />
+													<c:forEach var="good" items="${good }">
+														<c:if test="${dto.superProduct eq good}">
+															♥
+															<c:set var="k" value="1" />
+														</c:if>
+													</c:forEach>
+													<c:if test="${k==0 }">
+														♡
+													</c:if>
+												</div>
+											</button>
+										</span>
+									
+									</p>
+								</td>
 							</tr>
 						</table>
 						

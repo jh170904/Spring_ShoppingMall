@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 특정 상품 리뷰 데이터(평점용) -->
 <select id="productGetList_heart" parameterType="String" resultType="float">
-	select avg(rate) 
+	select nvl(avg(rate) ,0)
 	from review,product 
 	where review.productId = product.productId 
 	and superProduct=#{superProduct} and writed='yes'

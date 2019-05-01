@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>
 </select>
 
-<!-- listNew list -->
+<!-- listNew list order -->
 <select id="getListsOrder" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
 	select * from (
 	select rownum rnum, data.* from(
@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>
 </select>
 
-<!-- listCategoryOrder list -->
+<!-- listCategory list order-->
 <select id="getListsCategoryOrder" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
 	select * from (
 	select rownum rnum, data.* from(
@@ -61,6 +61,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
+</select>
+
+<!-- storeHeart count -->
+<select id="storeHeartCount" parameterType="hashMap" resultType="int">
+	select nvl(count(*),0) from storeHeart
+	where superProduct=#{superProduct} and userId = #{userId}
+</select>
+
+<!-- storeHeart insert -->
+<insert id="insertHeart" parameterType="hashMap">
+	insert into storeHeart (superProduct,userId)
+	values (#{superProduct},#{userId})
+</insert>
+
+<!-- storeHeart delete -->
+<delete id="deleteHeart" parameterType="hashMap">
+	delete storeHeart where superProduct=#{superProduct} and userId = #{userId}
+</delete>
+
+<!-- storeHeart count list -->
+<select id="storeHeartList" parameterType="String" resultType="String">
+	select superProduct from storeHeart where userId = #{userId}
 </select>
 
 <!-- productAdminList -->

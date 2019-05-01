@@ -20,6 +20,24 @@ public class ProductDTO {
 	private String storeUrl;
 	private String superProduct;
 	
+	//해당 상품의 리뷰수 저장
+	private int reviewCount;
+	//해당 상품의 평점 저장
+	private float reviewRate;
+	
+	public float getReviewRate() {
+		return reviewRate;
+	}
+	public void setReviewRate(float reviewRate) {
+		this.reviewRate = reviewRate;
+	}
+	public int getReviewCount() {
+		return reviewCount;
+	}
+	public void setReviewCount(int reviewCount) {
+		this.reviewCount = reviewCount;
+	}
+
 	//실제 옵션 값이 저장되 있는 컬럼
 	private String productOption;
 	
