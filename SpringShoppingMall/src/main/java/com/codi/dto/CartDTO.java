@@ -1,21 +1,43 @@
 package com.codi.dto;
 
+import java.util.List;
+
 public class CartDTO {
 
 	private String userId;
 	private String productId;
 	private String productName;
-	
 	private String color;
 	private String productSize;
-	
 	private String originalName;
 	private String saveFileName;
 	private int amount;
 	private int price;
+	private String superProduct;
+	private String orderSelect;	
 	
-	private String orderSelect;
+	//페이지 출력용
+	private List<String> sizeList;
+	private List<String> colorList;
 	
+	public List<String> getSizeList() {
+		return sizeList;
+	}
+	public void setSizeList(List<String> sizeList) {
+		this.sizeList = sizeList;
+	}
+	public List<String> getColorList() {
+		return colorList;
+	}
+	public void setColorList(List<String> colorList) {
+		this.colorList = colorList;
+	}
+	public String getSuperProduct() {
+		return superProduct;
+	}
+	public void setSuperProduct(String superProduct) {
+		this.superProduct = superProduct;
+	}
 	public String getColor() {
 		return color;
 	}

@@ -7,7 +7,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="cartMapper">
 
 <select id="getReadData" parameterType="String" resultType="com.codi.dto.CartDTO" >
-	select a.color color,a.productSize productSize,a.userId userId,a.productId productId,productName,a.amount amount,a.price price,originalName, saveFileName,orderSelect
+	select a.color color,a.productSize productSize,a.userId userId,a.productId productId,
+	productName,a.amount amount,a.price price,originalName, saveFileName,orderSelect,
+	superProduct 
 	from cart a,product b 
 	where a.productId=b.productId
 	and userId=#{userId} 
@@ -15,15 +17,54 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 <select id="getTotalItemCount" parameterType="String" resultType="Int" >
-	select sum(amount) from cart where userId=#{userId} 
+	select nvl(sum(amount),0) from cart where userId=#{userId} 
 </select>
 
 <select id="getTotalItemPrice" parameterType="String" resultType="Int" >
-	select sum(amount*price) from cart where userId=#{userId} 
+	select nvl(sum(amount*price),0) from cart where userId=#{userId} and orderSelect='yes'
 </select>
 
-<select id="getTotalItemCountYes" parameterType="String" resultType="Int" >
-	select sum(amount) from cart where userId=#{userId} 
+<select id="getTotalItemCountYes" parameterType="hashmap" resultType="Int" >
+	select nvl(sum(amount),0) from cart where userId=#{userId} and orderSelect='yes'
 </select>
+
+<select id="getProductId" parameterType="hashmap" resultType="String" >
+	select productId from product where productName='${productName}' and productSize='${productSize}' and color='${color}'
+</select>
+
+<select id="searchBeforeItem" parameterType="com.codi.dto.CartDTO" resultType="Int" >
+	select nvl(count(*),0) amount from cart where userId=#{userId} and productId=#{productId}
+</select>
+
+<insert id="insertCartItem" parameterType="com.codi.dto.CartDTO" >
+	insert into cart(userId,productId,amount,price,productSize,color,orderSelect)
+	values (#{userId},#{productId},#{amount},#{price},#{productSize},#{color},'yes')
+</insert>
+
+<update id="updateCartItemAddAmount" parameterType="com.codi.dto.CartDTO" >
+	update cart set amount=amount+#{amount} where userId=#{userId} and productId=#{productId}
+</update>
+
+<update id="updateCartItemAmount" parameterType="com.codi.dto.CartDTO" >
+	update cart set amount=#{amount} where userId=#{userId} and productId=#{productId}
+</update>
+
+<delete id="deleteCart" parameterType="hashmap" >
+	delete cart where userId=#{userId} and productId=#{productId}
+</delete>
+
+<select id="getOrderSelectData" parameterType="hashmap" resultType="String" >
+	select orderSelect from cart where userId=#{userId} and productId=#{productId}
+</select>
+
+<update id="updateOrderSelectData" parameterType="hashmap">
+	update cart set orderSelect=#{orderSelect} where userId=#{userId} and productId=#{productId}
+</update>
+
+<update id="updateCartItemSizeOrColor" parameterType="com.codi.dto.CartDTO">
+	update cart set amount=#{amount}, price=#{price},
+	productSize=#{productSize}, color=#{color} 
+	where userId=#{userId} and productId=#{productId}
+</update>
 
 </mapper>

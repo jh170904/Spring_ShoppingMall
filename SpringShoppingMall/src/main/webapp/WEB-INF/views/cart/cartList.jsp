@@ -8,43 +8,154 @@
 	color:#8080ff; 
 	background:#fff;
 }
+
+.total_money_list{
+	border-top: 1px solid #D2D2D2;
+	border-bottom:1px solid #D2D2D2;
+}
+
+.cart_list>dl>dt.on{
+	border-top: 1px solid #D2D2D2;
+	border-bottom:1px solid #D2D2D2;
+}
+
+.btn_basket_delete{
+	background:#fff; 
+	border:1px solid #333; 
+	color:#333;
+	font-size: 14px;
+    min-width: 80px;
+    height: 30px;
+}
+
+.selectItem{
+	background-color:#eee;  
+	width: 150px; 
+	height: 25px; 
+	font-size: 10pt; 
+	padding: 2px 2px; 
+	border: 1px solid #d9d9d9;
+}
+
+
 </style>
 
-
 <script type="text/javascript">
-
-	function setAmendAmount(count,productId,price){
-		var amendCount = count ;
-		document.getElementById("amendAmount").value = amendCount;
-		
-		document.getElementById("productId").value = productId;
-		document.getElementById("price").value = price;
-	}
-	
-	function sendUpdateData(){
-		
-		var f = document.amendForm;
-		f.action = "<%=cp %>/cart/cartUpdated_ok.do";
-		f.submit();
-	}
-	
 	function sendList() {
-		
 		var f = document.sendListForm;
-		f.action = "<%=cp %>/order/orderList.do";
+		f.action = "<%=cp%>/orderList.action";
 		f.submit();
-		
 	}
 	
 	function sendMain() {
-		
 		var f = document.sendListForm;
-		f.action = "<%=cp %>/product/main.do";
+		f.action = "<%=cp%>/listNew.action";
 		f.submit();
 	}
+	
+ 	$(function(){
+ 		//장바구니 아이템 삭제
+	 	$('.btn_basket_delete').each(function(i){ 		
+			$(this).click(function(e){
+				e.preventDefault();
+				var params = "productId=" + $(this).val();
+				location.href = 'deleteCartItem.action?'+params;
+			});
+	 	});
+ 		
+		//장바구니 주문여부 선택
+	 	$('.btn_basket_orderSelect').each(function(i){
+			$(this).click(function(e){
+				e.preventDefault();
+				var cnt = $(this).val();
+				var params = "productId="+$('#amendItem_productId_'+cnt).val();
+				location.href = 'amendToOrderSelect.action?'+ params;
+			});
+		}); 
+	
+		$('.btn_basket_orderSelect').each(function(i){	
+			$(this).click(function(e){
+				var cnt = $(this).val();
+				var params = "productId="+$('#amendItem_productId_'+cnt).val();
+				$.ajax({
+					url:"<%=cp%>/cart/amendToOrderSelect.action",
+					data: params,
+					success:function(args){
+						if(args=="no"){
+							$("#btn_basket_orderSelect_img_"+cnt).html("<img alt='' src='/app/resources/image/checkmark_no.png' height='25px;' >");
+							//$("#btn_basket_orderSelect_img_"+cnt).attr("src","/app/resources/image/checkmark_no.png");
+						}else{
+							$("#btn_basket_orderSelect_img_"+cnt).html("<img alt='' src='/app/resources/images/member/ico_join_complete.png' height='25px;' >");
+							//$("#btn_basket_orderSelect_img_"+cnt).attr("src","/app/resources/images/member/ico_join_complete.png");
+						}
+					},
+					error:function(e){
+						alert(e.responseText);
+					}	
+				}); 
+			});
+		}); 
+
+		//장바구니 옵션 변경
+	 	$('.btn_sm_primary').each(function(i){
+			$(this).click(function(e){
+				e.preventDefault();
+				var cnt = $(this).val();
+				var productId = $('#amendItem_productId_'+cnt).val();
+				var productSize = $('#amendItem_productSize_'+cnt).val();
+				var color = $('#amendItem_color_'+cnt).val();
+				var amount = $('#amendItem_amount_'+cnt).val();
+				var productName = $('#amendItem_productName_'+cnt).text();
+				var price = $('#amendItem_price_'+cnt).val();
+				//location.href = 'amendProductOption.action?'+ params;
+				
+				//보내기전에 실행되는 함수
+				function showRequest(){
+					var selectedProductSize = $.trim(productSize);
+					var selectedColor = $.trim(color);
+					var selectedAmount = $.trim(amount);
+					
+					if(!selectedProductSize){
+						alert("\n사이즈를 선택하세요.");
+						$("#amendItem_productSize_"+cnt).focus();
+						return false;//null이므로 진행 중단
+					}
+					if(!selectedColor){
+						alert("\n컬러를 선택하세요.");
+						$("#amendItem_color_"+cnt).focus();
+						return false;//null이므로 진행 중단
+					}
+					if(!selectedAmount){
+						alert("\n수량을 선택하세요.");
+						$("#amendItem_amount_"+cnt).focus();
+						return false;//null이므로 진행 중단
+					}
+					return true;
+				}
+
+	 			$.post({
+					url:"<%=cp%>/cart/amendProductOption.action",
+					data:{ 
+						productId:productId,
+						productSize:productSize,
+						color:color,
+						amount:amount,
+						productName:productName,
+						price:price
+					},
+					success:function(args){
+						location.href = 'cartList.action';					
+					},
+					beforeSend:showRequest,
+					error:function(e){
+						alert(e.responseText);
+					}	
+				}); 
+			});
+		});
+	}); 
+
 </script>
-
-
 
 <!-- page title -->
 <div class="page_title">
@@ -63,39 +174,43 @@
 			<li><i class="ico"></i><span class="num">3</span>주문완료</li>
 		</ul>
 	</div>
-	<div class="ui_accordion cart_list">
+	<div class="cart_list">
 		<dl>
-			<dt class="on">
+			<dt class="on" style="padding-left:10px; color: #333; margin-bottom: 10px;">
 				<span class="check_wrap">
 					총 장바구니 상품 ${totalItemCount }개
 				</span>
-				<button type="button"><span class="sr_only">닫기</span></button>
 			</dt>
 			<!-- 장바구니 상품 내역 -->
-			<c:forEach var="dto" items="${lists }">
+			<c:if test="${empty lists }" >
+			<div align="center" style="padding: 20px 20px 20px 20px; font-weight: bold; font-size: 20pt;">장바구니에 담긴 상품이 없습니다.</div>
+			</c:if>
+			<c:forEach var="dto" items="${lists }" varStatus="status">
 				<div align="center">
-				<table border="0">
+				<table border="0" style="margin-top: 10px;">
 				<tr style="widows: 1200px; height: 70px;" align="center">
-				
+					<!-- 주문상품 체크 -->
 					<td class="check_wrap check_only" rowspan="2" width="50">
-						<c:if test="${dto.orderSelect=='no' }">
- 							<a href="<%=cp%>/cart/orderSelectToYes_ok.do?productId=${dto.productId }">
-								<img alt="" src="<%=cp%>/resources/image/checkmark_no.png" height="25px;">
- 							</a>
-						</c:if> 
-						<c:if test="${dto.orderSelect=='yes' }">
-							<a href="<%=cp%>/cart/orderSelectToNo_ok.do?productId=${dto.productId }">
-								<img alt="" src="<%=cp%>/resources/images/member/ico_join_complete.png" height="25px;">
-							</a>
-						</c:if> 
+						<button class="btn_basket_orderSelect" value="${status.count}">
+						<div id="btn_basket_orderSelect_img_${status.count}">
+							<c:if test="${dto.orderSelect=='no'}">
+							<img alt="" src="<%=cp%>/resources/image/checkmark_no.png" height="25px;" >
+							</c:if> 
+							<c:if test="${dto.orderSelect=='yes' }">
+							<img alt="" src="<%=cp%>/resources/images/member/ico_join_complete.png" height="25px;">
+							</c:if>
+						</div>
+						</button>						
+					</td>
+					<!-- 상품이미지 -->
+					<td width="160px" rowspan="2">
+						<img src="../upload/list/${dto.saveFileName }" width="140" height="140" style="margin-right: 10px;" >
 					</td>
 					
-					<td width="150px" rowspan="2">
-						<img src="./upload/list/${dto.saveFileName }" width="110">
-					</td>
-					
-					<td width="650px" style="padding-left: 30px;font-size: 20px;color: #000;" align="left" >
-						${dto.productName }
+					<td width="640px" style="padding-left: 30px;font-size: 20px;color: #000;" align="left" >
+						<a href="<%=cp%>/detail.action?superProduct=${dto.superProduct}">
+						<span id="amendItem_productName_${status.count}">${dto.productName }</span>
+						</a>
 					</td>
 					
 					<td width="100px">
@@ -108,25 +223,41 @@
 					</td>
 					
 					<td width="200px">
-						<a href="${deleteUrl}${dto.productId}">
-						<button class="btn_sm_bordered" >
-						삭제
-						</button>
-						</a>
+						<button class="btn_basket_delete" value="${dto.productId}" >삭&nbsp;&nbsp;제</button>
 					</td>
 				</tr>
 				
-					<tr align="center" bgcolor="#eeeeee" height="60px">
-				
+					<tr align="center" bgcolor="#eeeeee" height="60px" style="padding-left: 80px;">
+						<!-- 상품 옵션 -->
 						<td align="left" style="padding-left: 30px; color: #000;">
-							#옵션 ${dto.productSize}  ${dto.color} 
+							<table border="0">
+							<tr height="30">
+								<td width="50" align="center">사이즈</td>
+								<td width="200" style="padding-left: 20px;">
+								<select name="productSize" class="selectItem" id="amendItem_productSize_${status.count}">
+									<c:forEach var="option" items="${dto.sizeList }">
+									<option <c:if test="${option==dto.productSize}">selected='selected'</c:if> value="${option }">${option }</option>
+									</c:forEach>
+								</select>
+								</td>
+							</tr>
+							<tr height="30">
+								<td width="50" align="center">색상</td>
+								<td width="200" style="padding-left: 20px;">
+								<select name="color" class="selectItem" id="amendItem_color_${status.count}">
+									<c:forEach var="option" items="${dto.colorList }">
+									<option <c:if test="${option==dto.color}">selected='selected'</c:if> value="${option }">${option }</option>
+									</c:forEach>
+								</select>
+								</td>
+							</tr>
+							</table>
 						</td>
 						<td>
 							<b>
-							<select name="amount" style="background-color:#eee;  width: 60px; height: 20px; font-size: 10pt; padding: 2px 2px; border: 1px solid #d9d9d9;">
+							<select name="amount" class="selectItem" id="amendItem_amount_${status.count}" style="width: 60px;">
 								<c:forEach var="cnt"  begin="1" end="30" step="1"> 
-									<option onclick="setAmendAmount(${cnt},${dto.productId},${dto.price });"
-									<c:if test="${cnt==dto.amount}">selected='selected'</c:if> value="${cnt}">
+									<option <c:if test="${cnt==dto.amount}">selected='selected'</c:if> value="${cnt}">
 										${cnt}
 									</option>
 								</c:forEach>
@@ -135,14 +266,15 @@
 						</td>
 						<td>
 							<b style="color: #333;font-weight: 500;}">
+							<input type="hidden" value="${dto.productId}"  id="amendItem_productId_${status.count}">
+							<input type="hidden" value="${dto.price}"  id="amendItem_price_${status.count}">
 							<fmt:formatNumber value="${dto.price}" groupingUsed="true"/> 원
 							</b>
 						</td>
 						<td>
-							<button class="btn_sm_primary" onclick="sendUpdateData(${dto.productId},${dto.price});">옵션 변경</button>
+							<button class="btn_sm_primary" value="${status.count}" >옵션 변경</button>
 						</td>
 					</tr>
-					
 				</table>
 				</div>
 			</c:forEach>
@@ -150,14 +282,15 @@
 	</div>
 	
 	<!-- 총구매개수, 구매액 -->
-	<dl class="total_money_list" id="calculationResult" >
-		<dt class="on" >
+	<dl class="total_money_list" id="calculationResult" style="margin-top: 10px;" >
+		<dt class="on" style="font-size: 16px;">
 			총 상품 구매금액(${totalItemCountYes }개) 
 			<span style="float: right;font-style: normal; font-size: 24px;font-weight: 700;">
-				<em style="color:#8080ff; "><fmt:formatNumber value="${totalItemPrice}" groupingUsed="true"/>원</em>
+				<em style="color:#8080ff; padding-right: 20px;"><fmt:formatNumber value="${totalItemPrice}" groupingUsed="true"/>원</em>
 			</span>
 		</dt>
 	</dl>
+	
 	<!-- 버튼 -->
 	<form name="sendListForm">
 	<div class="page_btns">
@@ -165,21 +298,6 @@
 		<button class="btn_lg_primary" id="btnCheckOrder" onclick="sendList();">주문 결제하기</button>
 	</div>
 	</form>
-
-</div>
-
-<form name="amendForm">
-	<input type="hidden" value="" readonly="readonly" id="productId" name="productId" ><br/>
-	<input type="hidden" value="" readonly="readonly" id="price" name="price" ><br/>
-	<input type="hidden" value="" readonly="readonly" id="amendAmount" name="amendAmount"><br/>
-</form>
-
-	
-<!-- // page contents -->
-<div class="loading_full_order" id="orderLoading" style="min-height: 100px; display: none">
-	<span>
-		<img alt="" src="/kr/ko/pc/ko/images/common/loading.gif">
-	</span>
 </div>
 
 <%@include file="../layout/footer.jsp"  %>

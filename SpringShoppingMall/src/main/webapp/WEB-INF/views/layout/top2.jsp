@@ -89,7 +89,7 @@
 					<span class="num" style="display: none;"></span>
 					</a>
 				</li>
-				<li><a href="<%=cp %>/cart/cartList.do" class="cart">장바구니
+				<li><a href="<%=cp %>/cart/cartList.action" class="cart">장바구니
 					<span class="num" style="display: none;"></span>
 					</a></li>
 			</ul>
