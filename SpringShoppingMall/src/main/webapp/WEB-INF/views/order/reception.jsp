@@ -28,7 +28,7 @@
 </style>
 
 <script>
-
+	
 	var point = 0;
 	var couponPrice = 0 ;
 	
@@ -59,17 +59,19 @@
 		    
 		var f = document.orderForm;
 		
+		f.action = "<%=cp%>/order/payReq.action";
+		f.submit();
+		
+
+/* 		
 		var str = f.userEmail.value;
 		str = str.trim();
 		if(!str) {
 			alert("이메일을 입력해주세요.");
 			f.userEmail.focus();
 			return;
-		}
-		
-		f.action = "<%=cp%>/order/payReq.action";
-		f.submit();
-		
+		}	
+	*/	
 	}
 	
 	$(document).ready(function(){
@@ -247,6 +249,7 @@
 		
 		document.orderForm.destName1.value = destName;
 		document.orderForm.destName2.value = destName;
+		document.orderForm.sndOrdername.value = destName;
 		document.orderForm.destAddr.value = '[' + zip + '] ' + addr1 + ' ' + addr2;	
 		document.orderForm.destPhone1.value = destPhone;
 		document.orderForm.destPhone2.value = destPhone;

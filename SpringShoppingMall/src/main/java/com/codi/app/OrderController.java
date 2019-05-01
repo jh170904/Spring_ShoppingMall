@@ -203,7 +203,7 @@ public class OrderController {
 		//사용자 주소
 		String destAddr = destinationDTO.getDestAddr();
 		request.setAttribute("orderNum", orderNum);
-		request.setAttribute("userName", userName);
+		request.setAttribute("userName", URLEncoder.encode(userName,"UTF-8"));
 		request.setAttribute("orderProdudct", orderProdudct);
 		request.setAttribute("totalOrderPrice", totalOrderPrice);
 		request.setAttribute("userEmail", userEmail);
@@ -212,8 +212,8 @@ public class OrderController {
 		request.setAttribute("hashData", hashData);
 		request.setAttribute("destAddr", destAddr);
 		request.setAttribute("destZip", destinationDTO.getZip());
-		request.setAttribute("destAddr1", destinationDTO.getAddr1());
-		request.setAttribute("destAddr2", destinationDTO.getAddr2());
+		request.setAttribute("destAddr1", URLEncoder.encode(destinationDTO.getAddr1(),"UTF-8"));
+		request.setAttribute("destAddr2", URLEncoder.encode(destinationDTO.getAddr2(),"UTF-8"));
 		request.setAttribute("destAddrKey", destinationDTO.getAddrKey());
 		request.setAttribute("totalPoint", totalPoint);
 		request.setAttribute("discount", discount);
@@ -252,27 +252,15 @@ public class OrderController {
 		
 		//배송지
 		orderDTO.setZip(request.getParameter("destZip"));
-		orderDTO.setAddr1(request.getParameter("destAddr1"));
-		orderDTO.setAddr2(request.getParameter("destAddr2"));
+		orderDTO.setAddr1(URLDecoder.decode(request.getParameter("destAddr1"),"UTF-8"));
+		orderDTO.setAddr2(URLDecoder.decode(request.getParameter("destAddr2"),"UTF-8"));
 		orderDTO.setAddrKey(request.getParameter("destAddrKey"));
-		
-		
-		String orderNum,userEmail,userName="";
-		int totalPrice = 0;
-		//무통장 입금일 경우
-		if(mode=="without_bankbook" || mode.equals("without_bankbook")) {
-			orderNum = (request.getParameter("orderNum"));
-			userEmail = request.getParameter("userEmail");
-			userName = request.getParameter("userName");
-			totalPrice = Integer.parseInt(request.getParameter("totalOrderPrice"));
-			
-		} else {
-			orderNum = (request.getParameter("LGD_OID"));
-			userEmail = request.getParameter("LGD_BUYEREMAIL");
-			userName = request.getParameter("LGD_BUYER");
-			totalPrice = Integer.parseInt(request.getParameter("LGD_AMOUNT"));
-			
-		}
+
+		String orderNum = (request.getParameter("orderNum"));
+		String userEmail = request.getParameter("userEmail");
+		String userName = URLDecoder.decode(request.getParameter("userName"),"UTF-8");
+		int	totalPrice = Integer.parseInt(request.getParameter("totalOrderPrice"));
+	
 		
 		orderDTO.setOrderNum(orderNum);
 		orderDTO.seteMail(userEmail);
@@ -294,7 +282,7 @@ public class OrderController {
 			orderDTO.setAmount(dto.getAmount());
 			orderDTO.setPrice(dto.getPrice());
 			
-			if(mode.equals("without_bankbook")) {
+			if(mode=="without_bankbook" || mode.equals("without_bankbook")) {
 				orderDTO.setPayment("no");
 			}
 			else {
