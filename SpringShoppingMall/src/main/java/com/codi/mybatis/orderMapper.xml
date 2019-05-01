@@ -26,7 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <!-- 사용자 주문 목록 가져오기 -->
 <select id="getOrderList" parameterType="String" resultType="com.codi.dto.OrderListDTO">
-	select cart.userId userId,cart.productId productId,productName,cart.productSize productSize, cart.color color, cart.amount amount,cart.price price,originalName,saveFileName
+	select cart.userId userId,cart.productId productId,productName,cart.productSize productSize, cart.color color, 
+	cart.amount amount,cart.price price,originalName,saveFileName,superProduct
 	from cart,product
 	where cart.productId=product.productId
 	and userId=#{userId} and orderSelect='yes'
@@ -50,7 +51,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- orderTable에서 오늘 주문한 상품 개수 가져오기 -->
 <select id="getMaxNum" resultType="int">
-	select nvl(count(*),0) from orderTable where orderDate > to_char(sysdate,'yyyy-mm-dd')
+	select nvl(count(distinct orderNum),0) from orderTable where orderDate > to_char(sysdate,'yyyy-mm-dd') 
+	order by orderNum desc
 </select>
 
 <!-- 주문 데이터 입력-->
@@ -58,6 +60,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	insert into orderTable (orderNum,userId,productId,amount,price,zip,addr1,addr2,addrKey,eMail,orderDate,payment)
 	values (#{orderNum},#{userId},#{productId},#{amount},#{price},#{zip},#{addr1},#{addr2},#{addrKey},#{eMail},sysdate,#{payment})
 </insert>	
+
+<!-- 주문 데이터 입력2-->
+<insert id="insertOrderPayment" parameterType="hashMap">
+	insert into orderPayment (orderNum,userId,price,discount)
+	values (#{orderNum},#{userId},#{totalPrice},#{discount})
+</insert>	
+
+<!-- 상품 구매개수 추가 -->
+<update id="updateProductAcount" parameterType="hashMap">
+	update product set amount = amount + #{amount} where productId=#{superProduct}
+</update>
+
+
+<!-- 무통장입금시 주문번호로 아이디 가져오기 -->
+<select id="searchUserId" parameterType="String" resultType="String">
+	select userId from orderTable 
+	where orderNum=#{orderNum} and rownum=1
+</select>
 
 <!-- 무통장입금완료시 주문데이터 변경 -->
 <update id="updateOrderDataProduct" parameterType="hashMap">
@@ -81,10 +101,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	update member set point=point+#{point} where userId=#{userId}
 </update>
 
+<!-- 포인트 사용시 차감 -->
+<update id="updateMemberPointUse" parameterType="hashMap">
+	update member set point=point-#{point} where userId=#{userId}
+</update>
 <!-- orderTable에서 주문 정보 가져오기 -->	
 <select id="getCompleteOrder" parameterType="hashMap" resultType="com.codi.dto.OrderDTO">
 	select orderNum,orderDate,userId,orderTable.productId productId,productName,orderTable.zip zip,orderTable.addr1 addr1, 
-	orderTable.addr2 addr2,orderTable.addrkey addrkey,orderTable.amount amount,orderTable.price price,email,originalName,saveFileName 
+	orderTable.addr2 addr2,orderTable.addrkey addrkey,orderTable.amount amount,orderTable.price price,email,originalName,saveFileName,superProduct 
 	from orderTable,product where orderTable.productId = product.productId 
 	and orderNum=#{orderNum} and userId=#{userId}
 </select>
@@ -98,12 +122,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 사용자 기간별 주문조회 -->
 <select id="getUserOrderLists" parameterType="hashMap" resultType="com.codi.dto.OrderDTO">
 	select * from (
-	select rownum rnum, data.* from (
+	select rownum rnum, data.*, originalName,saveFileName  from (
 	select orderNum,to_char(orderDate,'yyyy-mm-dd') orderDate,userId,ordertable.productId productId,productName,zip,addr1,addr2,addrKey,ordertable.amount amount,
-	ordertable.price price,eMail,originalName,saveFileName,superProduct
-	from ordertable,product where ordertable.productId = product.productId 
-	and userId=#{userId} and payment='yes' and to_char(orderDate,'yyyy-mm-dd')>=(select to_char(sysdate-(interval '${num}' ${searchPeriod}),'yyyy-mm-dd') from dual) 
-	order by orderNum desc) data) 
+	ordertable.price price,eMail,superProduct
+	from ordertable,product 
+	where ordertable.productId = product.productId 
+	and userId=#{userId} and payment='yes' 
+	and to_char(orderDate,'yyyy-mm-dd')>=(select to_char(sysdate-(interval '${num}' ${searchPeriod}),'yyyy-mm-dd') 
+	from dual group by orderNum) 
+	order by orderNum desc) 
+	data,product where product.productId=data.superProduct) 
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
@@ -114,6 +142,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select nvl(count(*),0)
 	from ordertable,product where ordertable.productId = product.productId 
 	and userId=#{userId} and payment='yes' and to_char(orderDate,'yyyy-mm-dd')>=(select to_char(sysdate-(interval '${num}' ${searchPeriod}),'yyyy-mm-dd') from dual)
+</select>
+
+<!-- 관리자 무통장입금 확인(주문번호,예금주,가격,주문 객수) -->
+<select id="adminPaymentCheck" parameterType="hashMap" resultType="com.codi.dto.AdminPaymentDTO">
+	select * from (
+	select rownum rnum, data.* from (
+	select orderNum, userName, nvl(sum(orderTable.amount),0) amount,nvl(sum(orderTable.price),0) price
+	from orderTable,member,product where orderTable.productId=product.productId and orderTable.userId=member.userId and payment='no'
+	group by orderNum,userName order by orderNum desc) data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- 관리자 무통장입금 확인(상품명 목록) -->
+<select id="adminPaymentCheck2" resultType="com.codi.dto.AdminPaymentDTO">
+	select orderNum, productName,orderTable.amount amount
+	from orderTable,product where orderTable.productId=product.productId and payment='no'
+	order by orderNum desc
+</select>
+
+<!-- 무통장입금 주문번호별 개수 -->
+<select id="adminPaymentCheckCount" parameterType="String" resultType="int">
+	select nvl(count(*),0)
+	from orderTable,product where orderTable.productId=product.productId 
+	and payment='no' and orderNum=#{orderNum}
+</select>
+
+<!-- 무통장입금 총 주문번호 개수 -->
+<select id="adminPaymentCheckCountAll" resultType="int">
+	select nvl(count(distinct orderNum),0)
+	from orderTable,product where orderTable.productId=product.productId and payment='no' 
+</select>
+
+
+<!-- 여러개 주문시 이름 설정(□□□ 외 몇 건) -->
+<select id="adminPaymentCheckProduct" parameterType="String" resultType="String">
+	select productName
+	from orderTable,product where orderTable.productId=product.productId and payment='no' 
+	and orderNum=#{orderNum} and rownum=1
+</select>
+
+<select id="adminDiscountPrice" resultType="com.codi.dto.AdminPaymentDTO">
+	select distinct orderNum,price from orderPayment
 </select>
 
 </mapper>

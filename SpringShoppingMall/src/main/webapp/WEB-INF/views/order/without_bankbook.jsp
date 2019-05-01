@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@include file="../layout/top.jsp"  %>
+<%@include file="../layout/storeNav.jsp"  %>
 
 <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 
@@ -63,13 +63,25 @@ function sendMain() {
 					</tr>
 					<c:forEach var="orderList" items="${orderList }">
 					<tr style="height: 50px;">
-						<td valign="top"><img alt="" src="${imagePath }/${orderList.saveFileName }" height="100px" width="100px">${orderList.productName }</td>
-						<td style="text-align: right;">${orderList.amount }개/<fmt:formatNumber value="${orderList.price }" type="number"/>원 
-							<fmt:formatNumber value="${orderList.amount * orderList.price }" type="number"/>
+						<td>
+							<img alt="" src="${imagePath }/${orderList.saveFileName }" height="100px" width="100px">
 						</td>
-					</tr>
-					
+						<td valign="top">
+							<span style="text-align: left;">
+								${orderList.productName }&nbsp;<fmt:formatNumber value="${orderList.price }" type="number"/> 원 
+							</span>
+							<span style="text-align: right; float: right;" >
+								${orderList.amount }개(<fmt:formatNumber value="${orderList.amount * orderList.price }" type="number"/>)원
+							</span>							
+						</td>
+					</tr>	
 					</c:forEach>
+					<c:if test="${discount !=0 }">
+					<tr style="height: 50px;">
+						<td></td>
+						<td style="text-align: right;">(할인&nbsp;&nbsp;<fmt:formatNumber value="${discount }" type="number"/>원 )</td>
+					</tr>
+					</c:if>
 					<tr style="height: 50px;">
 						<td></td>
 						<td style="text-align: right;">${totalAmount }개 (총 <fmt:formatNumber value="${totalPrice }" type="number"/>원 )</td>

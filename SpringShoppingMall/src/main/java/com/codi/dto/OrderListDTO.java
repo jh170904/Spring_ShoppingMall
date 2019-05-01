@@ -11,6 +11,7 @@ public class OrderListDTO {
 	private String color;
 	private String originalName;
 	private String saveFileName;
+	private String superProduct;
 	
 	
 	public String getUserId() {
@@ -74,6 +75,13 @@ public class OrderListDTO {
 	}
 	public void setSaveFileName(String saveFileName) {
 		this.saveFileName = saveFileName;
+	}
+	
+	public String getSuperProduct() {
+		return superProduct;
+	}
+	public void setSuperProduct(String superProduct) {
+		this.superProduct = superProduct;
 	}	
-
+	
 }

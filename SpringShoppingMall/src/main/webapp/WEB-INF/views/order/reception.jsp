@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@include file="../layout/top.jsp"  %>
+<%@include file="../layout/storeNav.jsp"  %>
 
 <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
@@ -632,7 +632,7 @@
 							<td style="padding: 10px 40px;" align="right">
 								<span style="font-size: 17px; color: gray; text-align: right;" >
 									<span><input type="text" readonly="readonly" style="text-align: right; background-color: #f5f5f5; border:0" 
-										name="discount" value="0">&nbsp;원</span>
+										name="discount" value=0>&nbsp;원</span>
 								</span>					
 							</td>
 						</tr>	
@@ -643,7 +643,7 @@
 							<td style="padding: 10px 40px;" align="right">
 								<span style="font-size: 17px; color: gray; text-align: right;" >
 									<span><input type="text" readonly="readonly" style="text-align: right; background-color: #f5f5f5; border:0" 
-										name="couponDiscount" value="0">&nbsp;원</span>
+										name="couponDiscount" value=0>&nbsp;원</span>
 								</span>					
 							</td>
 						</tr>	

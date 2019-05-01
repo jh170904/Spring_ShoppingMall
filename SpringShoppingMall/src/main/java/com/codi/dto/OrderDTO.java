@@ -20,6 +20,7 @@ public class OrderDTO {
 	private String saveFileName;
 	private String payment;
 	private String superProduct;
+	private int discount;
 	
 	public String getOrderNum() {
 		return orderNum;
@@ -147,5 +148,11 @@ public class OrderDTO {
 		this.superProduct = superProduct;
 	}
 	
+	public int getDiscount() {
+		return discount;
+	}
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
 	
 }

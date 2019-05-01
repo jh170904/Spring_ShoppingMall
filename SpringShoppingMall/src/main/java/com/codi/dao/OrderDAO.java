@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.codi.dto.AdminPaymentDTO;
 import com.codi.dto.DestinationDTO;
 import com.codi.dto.OrderDTO;
 import com.codi.dto.OrderListDTO;
@@ -66,6 +67,28 @@ public class OrderDAO {
 		sessionTemplate.insert("orderMapper.insertOrderDataProduct",dto);
 	}
 	
+	public void insertOrderPayment(String orderNum,String userId,int totalPrice,int discount) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("orderNum", orderNum);
+		params.put("userId", userId);
+		params.put("totalPrice", totalPrice);
+		params.put("discount", discount);
+		
+		sessionTemplate.insert("orderMapper.insertOrderPayment",params);
+	}
+
+	public void updateProductAcount(int amount, String superProduct) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("amount", amount);
+		params.put("superProduct", superProduct);
+		sessionTemplate.update("orderMapper.updateProductAcount",params);
+	}
+	
+	public String searchUserId(String orderNum) {
+		String result = sessionTemplate.selectOne("orderMapper.searchUserId",orderNum);
+		return result;
+	}
+	
 	public void updateOrderDataProduct(String userId, String orderNum) {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("userId", userId);
@@ -95,6 +118,14 @@ public class OrderDAO {
 		params.put("point", point);
 		
 		sessionTemplate.update("orderMapper.updateMemberPoint",params);
+	}
+	
+	public void updateMemberPointUse(String userId,int point) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("userId", userId);
+		params.put("point", point);
+		
+		sessionTemplate.update("orderMapper.updateMemberPointUse",params);
 	}
 	
 	public List<OrderDTO> getCompleteOrder(String userId, String orderNum) {
@@ -131,4 +162,36 @@ public class OrderDAO {
 		return result;
 	}
 	
+	public List<AdminPaymentDTO> adminPaymentCheck(int start, int end){
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("start", start);
+		params.put("end", end);
+		List<AdminPaymentDTO> lists = sessionTemplate.selectList("orderMapper.adminPaymentCheck",params);
+		return lists;
+	}
+	
+	public List<AdminPaymentDTO> adminPaymentCheck2(){
+		List<AdminPaymentDTO> lists = sessionTemplate.selectList("orderMapper.adminPaymentCheck2");
+		return lists;
+	}
+	
+	public int adminPaymentCheckCount(String orderNum){
+		int restult = sessionTemplate.selectOne("orderMapper.adminPaymentCheckCount",orderNum);
+		return restult;
+	}
+	
+	public int adminPaymentCheckCountAll(){
+		int restult = sessionTemplate.selectOne("orderMapper.adminPaymentCheckCountAll");
+		return restult;
+	}
+	
+	public String adminPaymentCheckProduct(String orderNum){
+		String restult = sessionTemplate.selectOne("orderMapper.adminPaymentCheckProduct",orderNum);
+		return restult;
+	}
+	
+	public List<AdminPaymentDTO> adminDiscountPrice(){
+		List<AdminPaymentDTO> lists = sessionTemplate.selectList("orderMapper.adminDiscountPrice");
+		return lists;
+	}
 }

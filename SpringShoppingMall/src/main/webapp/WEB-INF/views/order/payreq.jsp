@@ -105,6 +105,7 @@ function complete() {
 <input type='hidden' name='destAddrKey' id='destAddrKey' value='${destAddrKey }'>
 <input type='hidden' name='totalPoint' id='totalPoint' value='${totalPoint }'>
 <input type='hidden' name='mode' id='mode' value='card'>
+<input type='hidden' name='discount' id='discount' value='${discount }'>
 
 </form>
 </body>

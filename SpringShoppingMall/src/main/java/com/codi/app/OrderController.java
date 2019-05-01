@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.codi.dao.OrderDAO;
+import com.codi.dto.AdminPaymentDTO;
 import com.codi.dto.DestinationDTO;
 import com.codi.dto.OrderDTO;
 import com.codi.dto.OrderListDTO;
@@ -130,6 +131,9 @@ public class OrderController {
 	
 		String userName = request.getParameter("destName");
 		
+		//사용 포인트
+		int discount = Integer.parseInt(request.getParameter("discount"));
+		
 		//신용카드 / 무통장 구분
 		String order_payment = request.getParameter("order_payment");
 		
@@ -205,6 +209,7 @@ public class OrderController {
 		request.setAttribute("destAddr2", destinationDTO.getAddr2());
 		request.setAttribute("destAddrKey", destinationDTO.getAddrKey());
 		request.setAttribute("totalPoint", totalPoint);
+		request.setAttribute("discount", discount);
 		
 		if(order_payment.equals("without_bankbook")) {
 			
@@ -217,6 +222,7 @@ public class OrderController {
 			redirectAttributes.addAttribute("orderNum",orderNum);
 			redirectAttributes.addAttribute("userEmail",userEmail);
 			redirectAttributes.addAttribute("totalOrderPrice",totalOrderPrice);
+			redirectAttributes.addAttribute("discount",discount);
 
 			return "redirect:/orderComplete.action";
 		}
@@ -226,20 +232,14 @@ public class OrderController {
 		
 	}
 	
-	@RequestMapping(value = "/without_bankbook_paymentYes.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String without_bankbook_paymentYes(OrderDTO orderDTO, OrderListDTO orderListDTO, DestinationDTO destinationDTO, ReviewDTO reviewDTO,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		
-		
-		return "redirect:/list.action";
-	}
-	
 	@RequestMapping(value = "/orderComplete.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String orderComplate(OrderDTO orderDTO, OrderListDTO orderListDTO, DestinationDTO destinationDTO, ReviewDTO reviewDTO,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String mode = request.getParameter("mode");
+		
+		//할인
+		int discount = Integer.parseInt(request.getParameter("discount"));
 		
 		//배송지
 		orderDTO.setZip(request.getParameter("destZip"));
@@ -251,7 +251,7 @@ public class OrderController {
 		String orderNum,userEmail,userName="";
 		int totalPrice = 0;
 		//무통장 입금일 경우
-		if(mode=="without_bankbook" && mode.equals("without_bankbook")) {
+		if(mode=="without_bankbook" || mode.equals("without_bankbook")) {
 			orderNum = (request.getParameter("orderNum"));
 			userEmail = request.getParameter("userEmail");
 			userName = request.getParameter("userName");
@@ -275,10 +275,9 @@ public class OrderController {
 		//주문 리스트
 		List<OrderListDTO> orderList = dao.getOrderList("aaa");
 		Iterator<OrderListDTO> orderLists = orderList.iterator();
-		int totalAmount=0;
-		
+		int totalAmount=0;		
 		while(orderLists.hasNext()){
-		
+			
 			//주문정보 입력
 			OrderListDTO dto = orderLists.next();
 			
@@ -298,13 +297,14 @@ public class OrderController {
 			}
 			
 			dao.insertOrderDataProduct(orderDTO);
+			dao.insertOrderPayment(orderNum,"aaa",totalPrice,discount);
+			dao.updateProductAcount(dto.getAmount(), dto.getSuperProduct());
 			
 			//장바구니 데이터 삭제
 			dao.deleteCartProduct("aaa", dto.getProductId());
 			
 			//총 가격 및 개수
 			totalAmount += dto.getAmount();
-
 		}
 		
 		//기본 정보
@@ -326,8 +326,11 @@ public class OrderController {
 		request.setAttribute("orderDate", orderDate);
 		request.setAttribute("totalPrice", totalPrice);
 		request.setAttribute("totalAmount", totalAmount);
+		request.setAttribute("discount", discount);
 		request.setAttribute("imagePath", "./upload/list");
 		
+		//사용자 포인트 차감
+		dao.updateMemberPointUse("aaa", discount);
 		if(mode.equals("without_bankbook")) {
 			return "order/without_bankbook";
 		}
@@ -401,6 +404,78 @@ public class OrderController {
 		request.setAttribute("imagePath", "./upload/list");
 		
 		return "order/myOrderList";
+	}
+	
+	
+	//관리자
+	
+	@RequestMapping(value = "/bankbookPaymentAdmin.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String bankkbookPaymentAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String cp = request.getContextPath();
+		
+		String pageNum = request.getParameter("pageNum");
+		
+		int currentPage = 1;
+		
+		if(pageNum!=null)
+			currentPage = Integer.parseInt(pageNum);
+		
+		int numPerPage = 7;
+		int totalPage = myUtil.getPageCount(numPerPage, dao.adminPaymentCheckCountAll());
+		
+		if(currentPage>totalPage)
+			currentPage = totalPage;
+		
+		int start = (currentPage-1)*numPerPage+1;
+		int end = currentPage*numPerPage;
+		
+		String listUrl = cp + "/bankbookPaymentAdmin.action";
+		
+		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		
+		List<AdminPaymentDTO> adminPaymentCheckList = dao.adminPaymentCheck(start, end);
+		List<AdminPaymentDTO> adminPaymentCheck2List = dao.adminPaymentCheck2();
+		List<AdminPaymentDTO> adminDiscountPrice = dao.adminDiscountPrice();
+		
+		Iterator<AdminPaymentDTO> it = adminPaymentCheckList.iterator();
+		while(it.hasNext()) {
+			AdminPaymentDTO dto = it.next();
+			
+			dto.setOrderCount(dao.adminPaymentCheckCount(dto.getOrderNum()));
+			if(dto.getOrderCount()>1) {
+				dto.setProductName(dao.adminPaymentCheckProduct(dto.getOrderNum()) +" 외 "  + dto.getOrderCount() + "건");
+			}
+			else {
+				dto.setProductName(dao.adminPaymentCheckProduct(dto.getOrderNum()));
+			}
+			
+		}
+		
+		request.setAttribute("adminPaymentCheckList", adminPaymentCheckList);
+		request.setAttribute("adminPaymentCheck2List", adminPaymentCheck2List);
+		request.setAttribute("adminDiscountPrice", adminDiscountPrice);
+		request.setAttribute("pageIndexList", pageIndexList);
+		request.setAttribute("dataCount", dao.adminPaymentCheckCountAll());
+		
+		return "admin/order_bankbook_payment";
+	}
+	
+	@RequestMapping(value = "/without_bankbook_paymentYes.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String without_bankbook_paymentYes(OrderDTO orderDTO, OrderListDTO orderListDTO, DestinationDTO destinationDTO, ReviewDTO reviewDTO,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String orderNum = request.getParameter("orderNum");
+		int price = Integer.parseInt(request.getParameter("price"));
+		String userId = dao.searchUserId(orderNum);
+		
+		//주문 데이터 변경
+		dao.updateOrderDataProduct(userId, orderNum);
+		
+		//포인트 적립
+		dao.updateMemberPoint(userId,(int)(price*0.01));
+		
+		return "redirect:/bankbookPaymentAdmin.action";
 	}
 	
 }
