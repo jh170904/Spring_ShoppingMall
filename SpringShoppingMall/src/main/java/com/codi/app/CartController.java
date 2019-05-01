@@ -37,7 +37,7 @@ public class CartController {
 	MyUtil myUtil;//Bean 객체 생성
 	
     //장바구니 리스트
-	@RequestMapping(value = "cart/cartList.action", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/cart/cartList.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String cartList(CartDTO dto, HttpServletRequest request, HttpServletResponse response) {
 		String cp = request.getContextPath();
 		HttpSession session=request.getSession();
@@ -74,14 +74,17 @@ public class CartController {
 	}
 	
 	//장바구니 아이템 등록
-	@RequestMapping(value = "cart/cartAdd_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/cart/cartAdd_ok.action", method = {RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
 	public boolean cartAddItem(CartDTO dto, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session=request.getSession();
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		String userId = info.getUserId();
-
-		dto.setUserId(userId);
+		if(userId==null) {
+			return false;
+		} else {
+			dto.setUserId(userId);
+		}
 		dto.setProductId(dao.getProductId(dto.getProductName(), dto.getProductSize(), dto.getColor()));
 
 		//장바구니내 동일상품 등록여부 검색		
@@ -96,10 +99,11 @@ public class CartController {
 	}
 	
 	//장바구니 아이템 삭제
-	@RequestMapping(value = "cart/deleteCartItem.action", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/cart/deleteCartItem.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String deleteCartItem(String productId, HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
+		System.out.println("세션출력"+session);
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		String userId = info.getUserId();
 
@@ -109,7 +113,7 @@ public class CartController {
 	}
 	
 	//장바구니 주문아이템 선택
-	@RequestMapping(value = "cart/amendToOrderSelect.action", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/cart/amendToOrderSelect.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String amendToOrderSelect(String productId, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
@@ -127,7 +131,7 @@ public class CartController {
 	}
 	
 	//장바구니 옵션 변경
-	@RequestMapping(value = "cart/amendProductOption.action", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/cart/amendProductOption.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String amendProductOption(CartDTO dto, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");

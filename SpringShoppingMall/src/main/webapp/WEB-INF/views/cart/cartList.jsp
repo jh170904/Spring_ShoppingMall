@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../layout/storeNav.jsp"  %>
 <style>
-
 .btn_sm_neutral{
 	color:#8080ff; 
 	background:#fff;
@@ -36,20 +35,18 @@
 	padding: 2px 2px; 
 	border: 1px solid #d9d9d9;
 }
-
-
 </style>
 
 <script type="text/javascript">
 	function sendList() {
 		var f = document.sendListForm;
-		f.action = "<%=cp%>/orderList.action";
+		f.action = "<%=cp%>/order/orderList.action";
 		f.submit();
 	}
 	
 	function sendMain() {
 		var f = document.sendListForm;
-		f.action = "<%=cp%>/listNew.action";
+		f.action = "<%=cp%>/pr/listNew.action";
 		f.submit();
 	}
 	
@@ -59,7 +56,7 @@
 			$(this).click(function(e){
 				e.preventDefault();
 				var params = "productId=" + $(this).val();
-				location.href = 'deleteCartItem.action?'+params;
+				location.href = '<%=cp%>/cart/deleteCartItem.action?'+params;
 			});
 	 	});
  		
@@ -69,10 +66,10 @@
 				e.preventDefault();
 				var cnt = $(this).val();
 				var params = "productId="+$('#amendItem_productId_'+cnt).val();
-				location.href = 'amendToOrderSelect.action?'+ params;
+				location.href = '<%=cp%>/cart/amendToOrderSelect.action?'+ params;
 			});
 		}); 
-	
+<%-- 	
 		$('.btn_basket_orderSelect').each(function(i){	
 			$(this).click(function(e){
 				var cnt = $(this).val();
@@ -95,7 +92,7 @@
 				}); 
 			});
 		}); 
-
+ --%>
 		//장바구니 옵션 변경
 	 	$('.btn_sm_primary').each(function(i){
 			$(this).click(function(e){
@@ -144,7 +141,7 @@
 						price:price
 					},
 					success:function(args){
-						location.href = 'cartList.action';					
+						location.href = '<%=cp%>/cart/cartList.action';					
 					},
 					beforeSend:showRequest,
 					error:function(e){
