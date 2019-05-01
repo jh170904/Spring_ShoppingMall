@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.codi.dao.ReviewDAO;
+import com.codi.dto.MemberDTO;
 import com.codi.dto.ReviewDTO;
 import com.codi.util.MyUtil;
 
@@ -37,7 +39,9 @@ public class ReviewController {
 	MyUtil myUtil;//Bean °´Ã¼ »ý¼º
 	
 	@RequestMapping(value = "/reviewList.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String list(ReviewDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) throws Exception {
+	public String list(ReviewDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		
 		String cp = request.getContextPath();
 		
@@ -54,8 +58,8 @@ public class ReviewController {
 		if(pageNum!=null)
 			currentPage = Integer.parseInt(pageNum);
 		
-		int dataCount_yes = dao.getDataCount("aaa","yes");
-		int dataCount_no = dao.getDataCount("aaa", "no");
+		int dataCount_yes = dao.getDataCount(info.getUserId(),"yes");
+		int dataCount_no = dao.getDataCount(info.getUserId(), "no");
 		
 		int numPerPage = 7;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount_yes);
@@ -74,7 +78,7 @@ public class ReviewController {
 		else
 			orderBy = "rate desc";
 		
-		List<ReviewDTO> lists = dao.getList("aaa","yes",start, end, orderBy);
+		List<ReviewDTO> lists = dao.getList(info.getUserId(),"yes",start, end, orderBy);
 		Iterator<ReviewDTO> it = lists.iterator();
 		while(it.hasNext()){
 			ReviewDTO reviewDTO = it.next();
@@ -95,7 +99,9 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/reviewPossibleList.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String possibleList(ReviewDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) throws Exception {
+	public String possibleList(ReviewDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		
 		String cp = request.getContextPath();
 		
@@ -105,8 +111,8 @@ public class ReviewController {
 		
 		if(pageNum!=null)
 			currentPage = Integer.parseInt(pageNum);
-		int dataCount_yes = dao.getDataCount("aaa","yes");
-		int dataCount_no = dao.getDataCount("aaa", "no");
+		int dataCount_yes = dao.getDataCount(info.getUserId(),"yes");
+		int dataCount_no = dao.getDataCount(info.getUserId(), "no");
 		
 		int numPerPage = 7;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount_no);
@@ -118,7 +124,7 @@ public class ReviewController {
 		int end = currentPage*numPerPage;
 		
 		String orderBy = "reviewDate";
-		List<ReviewDTO> lists = dao.getList("aaa","no",start, end, orderBy);
+		List<ReviewDTO> lists = dao.getList(info.getUserId(),"no",start, end, orderBy);
 		Iterator<ReviewDTO> it = lists.iterator();
 		while(it.hasNext()){
 			ReviewDTO reviewDTO = it.next();
@@ -140,11 +146,13 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/reviewWrited.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String writed(ReviewDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) throws Exception {
+	public String writed(ReviewDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		
 		String pageNum = request.getParameter("pageNum");
 		
-		ReviewDTO writeDTO = (ReviewDTO)dao.getProductList("aaa", dto.getProductId(),dto.getReviewDate());
+		ReviewDTO writeDTO = (ReviewDTO)dao.getProductList(info.getUserId(), dto.getProductId(),dto.getReviewDate());
 		
 		request.setAttribute("dto", writeDTO);
 		request.setAttribute("pageNum", pageNum);
@@ -153,9 +161,11 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/reviewWrited_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String writed_ok(ReviewDTO dto, MultipartHttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) throws Exception {
+	public String writed_ok(ReviewDTO dto, MultipartHttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
 		
-		dto.setUserId("aaa");
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		
+		dto.setUserId(info.getUserId());
 		dto.setOriginalName("");
 		dto.setSavefileName("");
 
@@ -193,7 +203,9 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/reviewDeleted.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String deleted(ReviewDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) throws Exception {
+	public String deleted(ReviewDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		
 		String path = request.getSession().getServletContext().getRealPath("/upload/review");
 		
@@ -202,7 +214,7 @@ public class ReviewController {
         
         file.delete();
 		
-		dao.deleteData("aaa", dto.getProductId(), dto.getReviewDate());
+		dao.deleteData(info.getUserId(), dto.getProductId(), dto.getReviewDate());
 		
 		return "redirect:/reviewList.action";
 	}

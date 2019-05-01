@@ -9,6 +9,8 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.codi.dao.OrderDAO;
 import com.codi.dto.AdminPaymentDTO;
 import com.codi.dto.DestinationDTO;
+import com.codi.dto.MemberDTO;
 import com.codi.dto.OrderDTO;
 import com.codi.dto.OrderListDTO;
 import com.codi.dto.ReviewDTO;
@@ -37,18 +40,20 @@ public class OrderController {
 	MyUtil myUtil;
 	
 	@RequestMapping(value = "/orderList.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String list(OrderDTO orderDTO, OrderListDTO orderListDTO, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String list(OrderDTO orderDTO, OrderListDTO orderListDTO, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		
 		//배송지 정보
-		DestinationDTO destDto = dao.getOrderDest("aaa");
+		DestinationDTO destDto = dao.getOrderDest(info.getUserId());
 		//모든 배송지 정보
-		List<DestinationDTO> destAllList = dao.getAllDest("aaa");
+		List<DestinationDTO> destAllList = dao.getAllDest(info.getUserId());
 		//주문 리스트
-		List<OrderListDTO> orderList = dao.getOrderList("aaa");
+		List<OrderListDTO> orderList = dao.getOrderList(info.getUserId());
 		//주문 개수
-		int totalOrderCount = dao.getOrderCount("aaa");
+		int totalOrderCount = dao.getOrderCount(info.getUserId());
 		//멤버 포인트 정보 가져오기
-		int memberPoint = dao.getMemberPoint("aaa");
+		int memberPoint = dao.getMemberPoint(info.getUserId());
 		
 		//총 주문 합계 / 총 주문 개수
 		int totalPrice=0;
@@ -127,8 +132,10 @@ public class OrderController {
 	
 	@RequestMapping(value = "/payReq.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String payReq(OrderDTO orderDTO, OrderListDTO orderListDTO, DestinationDTO destinationDTO,
-			HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) throws Exception {
+			HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
 	
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		
 		String userName = request.getParameter("destName");
 		
 		//사용 포인트
@@ -151,7 +158,7 @@ public class OrderController {
 		
 		//주문 리스트
 		String orderProdudct="";
-		List<OrderListDTO> orderList = dao.getOrderList("aaa");
+		List<OrderListDTO> orderList = dao.getOrderList(info.getUserId());
 		Iterator<OrderListDTO> orderLists = orderList.iterator();
 		int orderSize = orderList.size();
 		if(orderLists.hasNext()){
@@ -234,7 +241,9 @@ public class OrderController {
 	
 	@RequestMapping(value = "/orderComplete.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String orderComplate(OrderDTO orderDTO, OrderListDTO orderListDTO, DestinationDTO destinationDTO, ReviewDTO reviewDTO,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+			HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		
 		String mode = request.getParameter("mode");
 		
@@ -269,11 +278,11 @@ public class OrderController {
 		orderDTO.seteMail(userEmail);
 		
 		//사용자
-		orderDTO.setUserId("aaa");
-		reviewDTO.setUserId("aaa");
+		orderDTO.setUserId(info.getUserId());
+		reviewDTO.setUserId(info.getUserId());
 				
 		//주문 리스트
-		List<OrderListDTO> orderList = dao.getOrderList("aaa");
+		List<OrderListDTO> orderList = dao.getOrderList(info.getUserId());
 		Iterator<OrderListDTO> orderLists = orderList.iterator();
 		int totalAmount=0;		
 		while(orderLists.hasNext()){
@@ -297,11 +306,11 @@ public class OrderController {
 			}
 			
 			dao.insertOrderDataProduct(orderDTO);
-			dao.insertOrderPayment(orderNum,"aaa",totalPrice,discount);
+			dao.insertOrderPayment(orderNum,info.getUserId(),totalPrice,discount);
 			dao.updateProductAcount(dto.getAmount(), dto.getSuperProduct());
 			
 			//장바구니 데이터 삭제
-			dao.deleteCartProduct("aaa", dto.getProductId());
+			dao.deleteCartProduct(info.getUserId(), dto.getProductId());
 			
 			//총 가격 및 개수
 			totalAmount += dto.getAmount();
@@ -311,7 +320,7 @@ public class OrderController {
 		String orderDate ="";
 		String orderDest="";
 		
-		List<OrderDTO> orderCompleteList = dao.getCompleteOrder("aaa",orderNum);
+		List<OrderDTO> orderCompleteList = dao.getCompleteOrder(info.getUserId(),orderNum);
 		Iterator<OrderDTO> orderCompleteLists = orderCompleteList.iterator();
 		if(orderCompleteLists.hasNext()){
 			OrderDTO dto = orderCompleteLists.next();
@@ -330,19 +339,21 @@ public class OrderController {
 		request.setAttribute("imagePath", "./upload/list");
 		
 		//사용자 포인트 차감
-		dao.updateMemberPointUse("aaa", discount);
+		dao.updateMemberPointUse(info.getUserId(), discount);
 		if(mode.equals("without_bankbook")) {
 			return "order/without_bankbook";
 		}
 		
 		//사용자 포인트 적립
-		dao.updateMemberPoint("aaa", (int)Float.parseFloat(request.getParameter("totalPoint")));
+		dao.updateMemberPoint(info.getUserId(), (int)Float.parseFloat(request.getParameter("totalPoint")));
 		return "order/orderComplete";
 		
 	}
 	
 	@RequestMapping(value = "/myOrderLists.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String myOrderLists(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String myOrderLists(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		
 		String period = request.getParameter("period");
 		
@@ -381,7 +392,7 @@ public class OrderController {
 		if(pageNum!=null)
 			currentPage = Integer.parseInt(pageNum);
 		
-		int dataCount = dao.getNumUserOrderLists("aaa", num, searchPeriod);
+		int dataCount = dao.getNumUserOrderLists(info.getUserId(), num, searchPeriod);
 		int numPerPage = 7;
 		
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
@@ -392,7 +403,7 @@ public class OrderController {
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
 		
-		userOrderlist = dao.getUserOrderLists("aaa", numPerPage, searchPeriod, start, end);
+		userOrderlist = dao.getUserOrderLists(info.getUserId(), numPerPage, searchPeriod, start, end);
 		
 		String listUrl = cp + "/myOrderLists.action";
 		

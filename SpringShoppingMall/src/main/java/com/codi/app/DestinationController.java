@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.codi.dao.DestinationDAO;
 import com.codi.dto.DestinationDTO;
+import com.codi.dto.MemberDTO;
 import com.codi.util.MyUtil;
 
 @Controller("destinationController")
@@ -30,10 +32,12 @@ public class DestinationController {
 	MyUtil myUtil;//Bean °´Ã¼ »ý¼º
 	
 	@RequestMapping(value = "/destlist.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String list(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public String list(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
 		
-		int dataCount = dao.getDataCount("aaa");
-		List<DestinationDTO> lists = dao.getList("aaa");
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		
+		int dataCount = dao.getDataCount(info.getUserId());
+		List<DestinationDTO> lists = dao.getList(info.getUserId());
 		
 		Iterator<DestinationDTO> it = lists.iterator();
 
@@ -61,13 +65,15 @@ public class DestinationController {
 	}
 	
 	@RequestMapping(value = "/destwrited.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String writed(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) throws Exception {
+	public String writed(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
 
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		
 		if(dto.getDestNickname()!=null){
 			dto.setDestNickname(URLDecoder.decode(dto.getDestNickname(),"UTF-8"));
 		}
 
-		int totalDataCount = dao.getDataCount("aaa");
+		int totalDataCount = dao.getDataCount(info.getUserId());
 		
 		if(totalDataCount==5){
 			
@@ -76,7 +82,7 @@ public class DestinationController {
 			return "redirect:/destlist.action";
 		}
 		
-		List<DestinationDTO> lists = dao.selectDestNickname("aaa", " ");
+		List<DestinationDTO> lists = dao.selectDestNickname(info.getUserId(), " ");
 		Iterator<DestinationDTO> it = lists.iterator();
 		String[] destNicknameList = new String[lists.size()];
 		
@@ -96,9 +102,11 @@ public class DestinationController {
 	}
 	
 	@RequestMapping(value = "/destwrited_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String writed_ok(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String writed_ok(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		
-		dto.setUserId("aaa");
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		
+		dto.setUserId(info.getUserId());
 		dto.setAddrKey("no");	
 		
 		dao.insertData(dto);
@@ -108,9 +116,11 @@ public class DestinationController {
 	}
 	
 	@RequestMapping(value = "/changeAddrkey_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String changeAddrkey_ok(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String changeAddrkey_ok(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		
-		String userId = "aaa";
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		
+		String userId = info.getUserId();
 		
 		dao.changeAddrkeyNo(userId);
 		dao.changeAddrkeyYes(userId, dto.getDestNickname());
@@ -121,11 +131,13 @@ public class DestinationController {
 	
 		
 	@RequestMapping(value = "/destupdated.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String updated(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public String updated(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
 	
-		DestinationDTO updateDTO = (DestinationDTO)dao.getReadData("aaa", dto.getDestNickname());
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		
+		DestinationDTO updateDTO = (DestinationDTO)dao.getReadData(info.getUserId(), dto.getDestNickname());
 
-		List<DestinationDTO> lists = dao.selectDestNickname("aaa", dto.getDestNickname());
+		List<DestinationDTO> lists = dao.selectDestNickname(info.getUserId(), dto.getDestNickname());
 		Iterator<DestinationDTO> it = lists.iterator();
 		String[] destNicknameList = new String[lists.size()];
 		
@@ -144,10 +156,12 @@ public class DestinationController {
 	}
 	
 	@RequestMapping(value = "/destupdated_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String updated_ok(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String updated_ok(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		
 		dto.setEx_destNickname(request.getParameter("ex_destNickname"));
-		dto.setUserId("aaa");		
+		dto.setUserId(info.getUserId());		
 		dao.updateData(dto);
 		
 		return "redirect:/destlist.action";
@@ -155,9 +169,11 @@ public class DestinationController {
 	}
 	
 	@RequestMapping(value = "/destdeleted.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String destdeleted(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response) throws Exception {
-			
-		dao.deleteData("aaa", dto.getDestNickname());
+	public String destdeleted(DestinationDTO dto, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		
+		dao.deleteData(info.getUserId(), dto.getDestNickname());
 		
 		return "redirect:/destlist.action";
 		
