@@ -41,10 +41,13 @@ public class ProductDetailController {
 		List<String> sizeList = dao.getProductSizeList(dto.getSuperProduct());
 		
 		// 이미지파일경로
-		String imagePath = cp + "/pds/productImageFile";
+		String imagePath = cp + "/upload/list";
 		request.setAttribute("imagePath", imagePath);
-		//List<ProductDetailImageDTO> detailImagelists = dao.getDetailImageList("productName",productName);
-		//List<String> optionList = dao.getOptionList(productName);
+		String detailImagePath = cp + "/upload/productDetail";
+		request.setAttribute("detailImagePath", detailImagePath);
+		
+		
+		List<ProductDetailDTO> detailImagelists = dao.getDetailImageList(superProduct);
 		
 		String order = request.getParameter("order");	
 		
@@ -54,7 +57,7 @@ public class ProductDetailController {
 		int dataCount_yes = reviewDAO.getProductDataCount(superProduct);
 		
 		request.setAttribute("dataCount_yes", dataCount_yes);
-		
+		request.setAttribute("detailImagelists", detailImagelists);
 		request.setAttribute("dto", dto);
 		request.setAttribute("order", order);
 		request.setAttribute("superProduct", superProduct);

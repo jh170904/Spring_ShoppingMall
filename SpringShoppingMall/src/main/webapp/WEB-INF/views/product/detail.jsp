@@ -92,10 +92,6 @@ div.amount{
 	margin-right: 380px;
 }
 
-span.amount{
-	
-}
-
 .bold{
 	font-weight: bold;
 	font-size: 17pt;
@@ -117,11 +113,11 @@ span.amount{
 }
 
 .selling-option {
+	font:400 13.3333px Arial;
     width: 200px;
     padding-left: 15px;
     padding-right: 15px;
 	height: 30px; 
-	font-size: 12pt;
 	padding: 2px 2px; 
 	border: 1px solid #d9d9d9;
 }
@@ -136,7 +132,6 @@ tr{
     font-size: 32px;
     margin-right: -8px;
 }
-
 </style>
 
 <script type="text/javascript" src="<%=cp%>/resources/js/httpRequest.js"></script>
@@ -165,22 +160,35 @@ tr{
 	}
 
 	function addCartItem(){
-		
 		f = document.detailForm;
 		//장바구니 추가
-	
 		str = f.amount.value;
 		str = str.trim();
 		if(str==0){
-			alert("\n 수량을 선택하세요.");//공백제거후 내용이 없으면
+			alert("\n 구매할 수량을 선택하세요.");
 			f.amount.focus();
-			return;
+			return false;
 		}
 		f.amount.value = str;
-
-		f.action = "<%=cp %>/cart/cartAdd_ok.do";
-		f.submit();
-				
+		
+		str = f.productSize.value;
+		str = str.trim();
+		if(str==0){
+			alert("\n 상품 사이즈를 선택하세요.");
+			f.productSize.focus();
+			return false;
+		}
+		f.productSize.value = str;
+		
+		str = f.color.value;
+		str = str.trim();
+		if(str==0){
+			alert("\n 상품 색상을 선택하세요.");
+			f.color.focus();
+			return false;
+		}
+		f.color.value = str;
+		return true;
 	}
 	
 	function addDirectOrder(){
@@ -271,7 +279,37 @@ tr{
 		});
 		
 	});
+
+	
+ 	$(function(){
 		
+		$("#btn_basket").click(function(){
+			
+			var params = "productName=" + $("#productName").val() 
+						+ "&amount=" + $("#amount").val()
+						+ "&price=" + $("#price").val()
+						+ "&productSize=" + $("#productSize").val()
+						+ "&color=" + $("#color").val();
+			$.ajax({				
+				type:"POST",
+				url:"cart/cartAdd_ok.action",
+				data: params,
+				//dataType : "",//반환데이터
+				success:function(args){
+					//콜백함수
+					alert("장바구니에 상품이 추가되었습니다.");
+				},
+				beforeSend:addCartItem,
+				error:function(e){
+					alert(e.responseText);
+				}
+				
+			});
+			
+		});
+
+	}); 
+	
 	function listPage(page,order){
 		
 		var url = "detailReview.action";
@@ -319,7 +357,7 @@ tr{
 					<div class="prd_info_wrap">
 						<table>
 						<tr>
-							<td><input type="hidden" name="productId" value="${dto.productId}"></td>
+							<td><input type="hidden" id="productId" name="productId" value=""></td>
 						</tr>
 						<tr>
 							<td><a href="${dto.storeUrl }" style="font-weight: bold; color:#8080ff; font-size: 16pt;">${dto.storeName }</a><br>
@@ -327,21 +365,21 @@ tr{
 						</tr>
 						<tr>
 							<td style="margin-top: 10px; height: 70px;">
-							<input type="hidden" value="${dto.productName}" name="productName"> 
+							<input type="hidden" value="${dto.productName}" name="productName" id="productName"> 
 							<h3 style="font-size: 34px; color:#333; font-weight: 300; word-break: keep-all; ">${dto.productName} </h3>
 							</td>
 						</tr>
 						<tr>
 							<td style="font-size: 26px; height: 80px;">
 							<span class="cover__info__product__price">
-							<input type="hidden" value="${dto.price}" name="price">
+							<input type="hidden" value="${dto.price}" name="price" id="price">
 								<b><fmt:formatNumber value="${dto.price}" groupingUsed="true"/>원</b>
 							</span>
 							
 							<div class="cover__info__coupon">
 					            <button class="cover__info__coupon__btn">
 					              <span class="icon-common-etc__m-10" style="vertical-align: middle;"></span>
-					              7,000원 할인쿠폰
+					              ????원 할인쿠폰
 					            </button>
 					          </div>
 							</td>
@@ -352,7 +390,7 @@ tr{
 							<td style="padding: 2px 0px 0px 0px">
 							수량
 							<span style="float: right;">
-							<select name="amount" class="selling-option">
+							<select name="amount" class="selling-option" id="amount">
 								<option value="0">수량선택</option>
 								<c:forEach var="cnt"  begin="1" end="9" step="1">
 									<option onclick="totSet(${cnt});"value="${cnt}">${cnt}</option>
@@ -368,7 +406,7 @@ tr{
 							<td style="padding: 2px 0px 0px 0px">
 							사이즈
 							<span style="float: right;">
-							<select name="productSize" class="selling-option" >
+							<select name="productSize" class="selling-option" id="productSize">
 								<option value="0">사이즈 선택</option>
 								<c:forEach var="option" items="${sizeList }">
 									<option value="${option }">${option }</option>
@@ -385,7 +423,7 @@ tr{
 							<td style="padding: 2px 0px 0px 0px">
 							색상
 							<span style="float: right;">
-							<select name="color" class="selling-option" onchange="">
+							<select name="color" class="selling-option" id="color">
 								<option value="0">색상 선택</option>
 								<c:forEach var="option" items="${colorList }">
 									<option value="${option }">${option }</option>
@@ -416,7 +454,7 @@ tr{
 									</dl>
 									<dl>
 										<dt>배송비</dt>
-										<dd>최종 결제금액 20,000원 이상 주문시 무료배송</dd>
+										<dd>최종 결제금액 50,000원 이상 주문시 무료배송</dd>
 									</dl>
 								</div>
 								<div class="prd_etc_info_right"> 
@@ -432,8 +470,8 @@ tr{
 							<td>
 							<!-- 구매버튼,장바구니버튼 -->
 							<div class="purchase_button_set">
-								<span><button class="btn_lg_bordered emp btn_buy_now" type="button" onclick="addDirectOrder();">바로구매</button></span>
-								<span><button class="btn_lg_primary btn_basket" type="button" onclick="addCartItem();">장바구니 담기</button></span>
+								<span><button id="btn_buy_now" class="btn_lg_bordered emp btn_buy_now" type="button" onclick="addDirectOrder();">바로구매</button></span>
+								<span><button id="btn_basket" class="btn_lg_primary btn_basket" type="button" onclick="addCartItem">장바구니 담기</button></span>
 							</div>
 							</td>
 						</tr>						
@@ -491,9 +529,9 @@ tr{
 			<div class="prd_detail_wrap">
 				<div class="contenteditor-root">
 					<!-- 상세이미지 출력 -->
-					<c:forEach var="dto" items="${detailImagelists}">
+					<c:forEach var="detailDTO" items="${detailImagelists}">
 						<div class="contenteditor-image">
-							<a href="${imagePath }/${dto.saveFileName}"><img src="${imagePath }/${dto.saveFileName}" /></a>
+							<a href="${detailImagePath }/${detailDTO.saveFileName}"><img src="${detailImagePath }/${detailDTO.saveFileName}" /></a>
 						</div>
 					</c:forEach>
 				</div>

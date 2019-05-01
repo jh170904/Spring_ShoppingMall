@@ -32,5 +32,18 @@ public class ProductDetailDAO {
 		return lists;
 	}
 	
-
+	//상세이미지등록
+	public void insertData(ProductDetailDTO dto) {
+		 sessionTemplate.insert("productDetailMapper.insertData", dto);
+	}
+	
+	//상위상품검색
+	public String searchSuperProduct(String productName) {
+		 return sessionTemplate.selectOne("productDetailMapper.getSuperProduct", productName);
+	}
+	
+	//상세사진리스트
+	public List<ProductDetailDTO> getDetailImageList(String superProduct) {
+		 return sessionTemplate.selectList("productDetailMapper.getDetailImageList", superProduct);
+	}
 }

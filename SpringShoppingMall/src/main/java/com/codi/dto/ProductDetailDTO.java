@@ -3,7 +3,8 @@ package com.codi.dto;
 import java.util.List;
 
 public class ProductDetailDTO {
-
+	
+	private String detailNum;
 	private String productId;
 	private String productCategory;
 	private String productName;
@@ -24,6 +25,12 @@ public class ProductDetailDTO {
 	private List<String> sizeList;
 	private List<String> colorList;
 	
+	public String getDetailNum() {
+		return detailNum;
+	}
+	public void setDetailNum(String detailNum) {
+		this.detailNum = detailNum;
+	}
 	public String getProductId() {
 		return productId;
 	}
@@ -126,4 +133,5 @@ public class ProductDetailDTO {
 	public void setColorList(List<String> colorList) {
 		this.colorList = colorList;
 	}
+
 }

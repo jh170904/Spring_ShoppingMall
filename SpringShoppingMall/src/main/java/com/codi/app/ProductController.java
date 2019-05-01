@@ -26,9 +26,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.codi.dao.ProductDAO;
+import com.codi.dao.ProductDetailDAO;
 import com.codi.dao.ReviewDAO;
 import com.codi.dto.MemberDTO;
 import com.codi.dto.ProductDTO;
+import com.codi.dto.ProductDetailDTO;
 import com.codi.util.MyUtil;
 
 @Controller
@@ -42,6 +44,10 @@ public class ProductController {
 	@Qualifier("reviewDAO")
 	ReviewDAO reviewDAO;
 
+	@Autowired
+	@Qualifier("productDetailDAO")
+	ProductDetailDAO productDetailDAO;
+	
 	@Autowired
 	MyUtil myUtil;// Bean 객체 생성
 
@@ -334,13 +340,14 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/productAdminCreate_ok.action", method = { RequestMethod.POST, RequestMethod.GET })
-	public String productAdminCreate_ok(ProductDTO dto, MultipartHttpServletRequest request, String str)
+	public String productAdminCreate_ok(ProductDTO dto, ProductDetailDTO detailDTO, MultipartHttpServletRequest request, String str)
 			throws Exception {
 
 		// 1. 리스트 파일을 서버에 올리는 작업
 
 		// Spring3.0에서 경로가 바뀜 : WEB-INF에 files라는 폴더를 생성해서 저장해라
 		String path = request.getSession().getServletContext().getRealPath("/upload/list");
+		String detailImagePath = request.getSession().getServletContext().getRealPath("/upload/productDetail");
 		// D:\sts-bundle\work\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringShoppingMall\
 
 		// 이름으로 file을 받아옴
@@ -381,9 +388,57 @@ public class ProductController {
 		dto.setSaveFileName(file.getOriginalFilename());
 
 		dao.insertData(dto);
-
+		
+		// 상품 상세이미지 등록
+		// 업로드한 상세이미지 파일 정보 추출
+		// 상세이미지는 첨부파일이 3개까지 가능
+		for (int i=1; i<=3; i++) {		
+			String productDetailImage = "productDetailImage"+i;
+			//이름으로 file을 받아옴
+			MultipartFile detailFile = request.getFile(productDetailImage);
+			//파일업로드
+			if(detailFile!=null && detailFile.getSize()>0) {
+				
+				try {
+					FileOutputStream fos = new FileOutputStream(detailImagePath + "/" + detailFile.getOriginalFilename());
+					InputStream is = detailFile.getInputStream();
+					byte[] buffer = new byte[512];
+					
+					while(true) {
+						int data = is.read(buffer,0,buffer.length);
+						if(data==-1) {
+							break;
+						}
+						fos.write(buffer,0,data);
+					}
+					is.close();
+					fos.close();
+					
+				} catch (Exception e) {
+					System.out.println(e.toString());
+				}
+				
+				//DB반영
+				detailDTO.setOriginalName(detailFile.getOriginalFilename());
+				detailDTO.setSaveFileName(detailFile.getOriginalFilename());
+				
+				//상위상품미입력시
+				if(detailDTO.getSuperProduct()==null) {
+					//동일상품명 상품조회
+					String superProduct = productDetailDAO.searchSuperProduct(detailDTO.getProductName());
+					//결과 없을 경우 자신이 최상위상품
+					if(superProduct==null) {
+						detailDTO.setSuperProduct(detailDTO.getProductId());
+					} else {
+						detailDTO.setSuperProduct(superProduct);
+					}
+				}
+				String detailNum = detailDTO.getProductId()+"-"+i;
+				detailDTO.setDetailNum(detailNum);
+				productDetailDAO.insertData(detailDTO);
+			}
+		}
 		return "redirect:/productAdminList.action";
-
 	}
 
 	@RequestMapping(value = "/productAdminList.action", method = RequestMethod.GET)
@@ -403,16 +458,23 @@ public class ProductController {
 		String originalName = req.getParameter("originalName");
 
 		String path = req.getSession().getServletContext().getRealPath("/upload/list/" + originalName);
-
+		String detailImagePath = req.getSession().getServletContext().getRealPath("/upload/productDetail");
+		
 		// DB파일 삭제
 		dao.productAdminDelete(productId);
-
+		
 		// 물리적 파일 삭제
 		try {
 			File file = new File(path);
 			if (file.exists()) {
 				file.delete();
 			}
+			
+			file = new File(detailImagePath);
+			if (file.exists()) {
+				file.delete();
+			}
+			
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

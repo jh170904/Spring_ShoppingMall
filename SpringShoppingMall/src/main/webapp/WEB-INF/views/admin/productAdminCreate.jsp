@@ -128,6 +128,14 @@
 		</tr>
 		<tr>
 			<td width="140" height="30" style="padding-left: 20px;">
+			상위상품id (superProduct)
+			</td>
+			<td width="460" style="padding-left: 10px;">
+			<input type="text" name="superProduct" maxlength="20" class="boxTF">
+			</td>
+		</tr>
+		<tr>
+			<td width="140" height="30" style="padding-left: 20px;">
 			상품카테고리
 			</td>
 			<td width="460" style="padding-left: 10px;">
