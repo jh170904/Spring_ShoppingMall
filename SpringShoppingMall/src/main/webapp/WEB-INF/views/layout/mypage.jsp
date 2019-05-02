@@ -6,17 +6,18 @@
 
 <style>
 
-.myPageCategory{
-	width: 1200px; 
+.myPageCategory{ 
+	width : 700px;
 	margin-left: auto; 
 	margin-right: auto;
 	margin-top: 20px;
 }
 
 #myPageMenu {
-	height:60px;  
+	height:40px;  
 	margin-left: auto; 
 	margin-right: auto;
+	text-align:center;
 }
 
 .myPageCategory ul li {
@@ -25,14 +26,13 @@
 	color:#000000;
 	line-height:30px;
 	vertical-align:middle;
-	text-align:center;
-	
+	text-align:center;	
 }
 
 .myPageCategory .menuLink {
 	text-decoration:none;
 	display:block; 
-	width:120px;
+	width:130px;
 	font-size:16px;
 }
 
@@ -42,11 +42,13 @@
 	
 }
 
-.myPageMenuCategory{
-	height:60px;  
+.myPageMenuCategory {
+	height:40px;  
+	width:800px;
 	margin-left: auto; 
 	margin-right: auto;
 }
+
 </style>
 
 <script>
@@ -75,7 +77,7 @@
 				<a class="menuLink" href="<%=cp1%>/myPage/myPageMain.action" id="myPage">프로필</a>
 			</li> 
 			<li>
-				<a class="menuLink" href="<%=cp1%>/order/myOrderLists.action" id="order">나의쇼핑</a>
+				<a class="menuLink" href="<%=cp1%>/order/myOrderLists.action" id="order">주문/배송조회</a>
 			</li> 
 			
 			<li>
@@ -121,46 +123,5 @@
 		</ul> 
 	</nav>
 	
-	<nav name="myPageMenuCategory" id="order_category" style="display: none;"> 
-		<ul> 
-			<li>
-				<a class="menuLink" href="#">주문배송내역 조회</a>
-			</li> 
-			<li>
-				<a class="menuLink" href="#">제품 스크랩북</a>
-			</li> 
-			
-			<li>
-				<a class="menuLink" href="#">삼품문의내역</a>
-			</li> 
-			
-			<li>
-				<a class="menuLink" href="#">포인트</a>
-			</li>
-			
-			<li>
-				<a class="menuLink" href="#">고객센터</a>
-			</li> 
-		</ul> 
-	</nav>
-	
-	<nav name="myPageMenuCategory" id="review_category" style="display: none;"> 
-		<ul> 
-			<li>
-				<a class="menuLink" href="#">내가 작성한 리뷰</a>
-			</li> 
-			<li>
-				<a class="menuLink" href="#">리뷰쓰기</a>
-			</li> 			 
-		</ul> 
-	</nav>
-	
-	<nav name="myPageMenuCategory" id="dest_category" style="display: none;"> 
-		<ul> 
-			<li>
-				<a class="menuLink" href="#">배송지 관리</a>
-			</li> 		 
-		</ul> 
-	</nav>
-		
 </div>
+
