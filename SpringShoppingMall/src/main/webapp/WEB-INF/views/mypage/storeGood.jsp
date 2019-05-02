@@ -1,6 +1,6 @@
 <%@page import="java.net.URLEncoder"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@include file="../layout/top2.jsp"  %>
+<%@include file="../layout/top3.jsp"  %>
 <%@include file="../layout/mypage.jsp"  %>
 
 <style>
@@ -8,23 +8,26 @@
     margin-right: auto;
     margin-left: auto;
     box-sizing: border-box;
-    width: 1136px;
+    width: 1186px;
     max-width: 100%;
     box-sizing: border-box;
     min-height: 600px;
-    padding-top: 50px;
+    padding-top: 60px;
 }
 
 .profile-image {
     top: 20px;
     width: 250px;
     height: 250px;
-    margin: auto;
+    margin-top:30px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .profile-info__name {
     font-size: 30px;
     line-height: 40px;
+    margin-left: 10px;
     margin-bottom: 9px;
     word-wrap: break-word;
 }
@@ -37,7 +40,7 @@
 
 .short-cut__item {
 	display: inline-block;
-	width: 90px;
+	width: 105px;
 	text-align: center;
 }
 
@@ -45,19 +48,23 @@
 
 <div class="container2">
 
-<div style="width: 336px; display: inline-block; vertical-align: top;">
+<div style="width: 336px; margin-right:50px; display: inline-block; vertical-align: top;">
 
 <div style="display: block; ">
 	<div class="profile-image" >
 	<img alt="" src="../upload/list/1806576130.jpg" style="border-radius: 100%;">
 	</div>
 	
+	<div style="border-bottom: 1px solid #ebebeb; margin-bottom: 20px; margin-top: 20px;"  ></div>
+	
 	<div class="profile-info__name"><strong>${userId }</strong></div>
 	
 	<div style="color: #bdbdbd; font-size: 13px;">
-		<a href="/users/1527075/follower" style="display: inline-block; ">팔로워 <!-- -->0</a>&nbsp;&nbsp;&nbsp;
-		<a href="/users/1527075/followee" style="display: inline-block; ">팔로잉 <!-- -->0</a>
+		<a href="/users/1527075/follower" style="display: inline-block; margin-left: 10px; ">팔로워 <!-- -->0</a>&nbsp;&nbsp;&nbsp;
+		<a href="/users/1527075/followee" style="display: inline-block;">팔로잉 <!-- -->0</a>
 	</div>
+	
+	<div style="border-bottom: 1px solid #ebebeb; margin-bottom: 20px; margin-top: 20px;"  ></div>
 	
 	<div style="margin-top:20px;">
 		<div class="short-cut__item">

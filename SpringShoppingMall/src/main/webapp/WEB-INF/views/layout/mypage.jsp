@@ -102,7 +102,7 @@
 </script>
 
 <div class="myPageCategory">
-	<nav id="myPageMenu" > 
+	<nav id="myPageMenu" style="border-bottom: 1px solid #ebebeb; " > 
 		<ul> 
 			<li>
 				<a class="menuLink" href="<%=cp1%>/myPage/myPageMain.action" id="myPage">프로필</a>
@@ -126,6 +126,8 @@
 		</ul> 
 	</nav>
 </div>
+
+
 <div class="myPageCategory2" name="myPageMenuCategory" id="myPage_category" style="display: none;">
 	<nav> 
 		<ul> 
@@ -155,5 +157,8 @@
 		</ul> 
 	</nav>
 </div>		
+
+
+<div style="border-bottom: 1px solid #ebebeb;"  ></div>
 
 
