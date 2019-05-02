@@ -96,20 +96,23 @@
     	  var f = location.pathname;
           var url = f.split('/');
           var option = url[2];
-          
+          var option2 = url[3];
           var mypage = url[3]; 
 
     	  var x = document.getElementById(eval("'" + option + "'"));
     	  var y = document.getElementById(eval("'" + option + "_category'"));
+    	  var z = document.getElementById(eval("'" + option2 + "'"));
     	  
     	  x.style.color="#8080ff";
     	  x.style.fontWeight="bold";
     	  
     	  y.style.display="block"
-    	  
     	  if(mypage=='update.action'){
-    		  y.style.display="none"
-    	  }
+        	 y.style.display="none"
+         }
+    	  
+    	  z.style.color="#8080ff";
+    	  z.style.fontWeight="bold";    	  
     	      	  
 	 });
 	
@@ -146,26 +149,26 @@
 	<nav> 
 		<ul> 
 			<li>
-				<a class="menuLink" href="#">모두보기</a>
+				<a class="menuLink" href="#" id="">모두보기</a>
 			</li> 
 			<li>
-				<a class="menuLink" href="#">사진</a>
-			</li> 
-			
-			<li>
-				<a class="menuLink" href="#">질문과답변</a>
+				<a class="menuLink" href="#" id="">사진</a>
 			</li> 
 			
 			<li>
-				<a class="menuLink" href="#">스크랩북</a>
+				<a class="menuLink" href="#" id="">질문과답변</a>
+			</li> 
+			
+			<li>
+				<a class="menuLink" href="#" id="">스크랩북</a>
 			</li>
 			
 			<li>
-				<a class="menuLink" href="#">좋아요</a>
+				<a class="menuLink" href="#" id="">좋아요</a>
 			</li> 
 			
 			<li>
-				<a class="menuLink" href="#">나의활동</a>
+				<a class="menuLink" href="#" id="">나의활동</a>
 			</li> 
 			 
 		</ul> 
@@ -176,10 +179,10 @@
 	<nav> 
 		<ul> 
 			<li>
-				<a class="menuLink" href="<%=cp1%>/con/update_ok.action">회원 정보 수정</a>
+				<a class="menuLink" href="<%=cp1%>/con/update_ok.action" id="update_ok.action">회원 정보 수정</a>
 			</li> 
 			<li>
-				<a class="menuLink" href="<%=cp1%>/con/update_ok_pwd.action">비밀번호 수정</a>
+				<a class="menuLink" href="<%=cp1%>/con/update_ok_pwd.action" id="update_ok_pwd.action">비밀번호 수정</a>
 			</li> 			 
 		</ul> 
 	</nav>
