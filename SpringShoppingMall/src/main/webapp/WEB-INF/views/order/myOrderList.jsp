@@ -85,7 +85,6 @@
 						<c:forEach var="dto" items="${userOrderlist }">
 							<tr>
 								<td class="check_wrap check_only">${dto.orderDate }
-									<br/>${dto.orderNum }
 								</td>
 								<td style="vertical-align: top; text-align: left;">
 									<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">

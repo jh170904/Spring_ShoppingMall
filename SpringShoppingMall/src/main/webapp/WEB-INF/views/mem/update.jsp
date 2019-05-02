@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file="../layout/commuNav.jsp"%>
+<%@ include file="../layout/top3.jsp" %>
 <%@ include file="../layout/mypage.jsp"%>
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -92,37 +92,3 @@ function sendUpdate(){
 </div>
 
 <%@ include file="../layout/footer.jsp"%>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -26,11 +26,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <!-- 사용자 주문 목록 가져오기 -->
 <select id="getOrderList" parameterType="String" resultType="com.codi.dto.OrderListDTO">
-	select cart.userId userId,cart.productId productId,productName,cart.productSize productSize, cart.color color, 
-	cart.amount amount,cart.price price,originalName,saveFileName,superProduct
+	select a.*,originalName,saveFileName from
+	(select cart.userId userId,cart.productId
+	productId,productName,cart.productSize productSize, cart.color color,
+	cart.amount amount,cart.price price,superProduct
 	from cart,product
 	where cart.productId=product.productId
-	and userId=#{userId} and orderSelect='yes'
+	and userId=#{userId} and orderSelect='yes') a,
+	(select productId,originalName,saveFileName from product) b
+	where a.superProduct = b.productId
 </select>	
 
 <!-- 사용자가 주문한 물품 개수 -->
@@ -107,10 +111,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </update>
 <!-- orderTable에서 주문 정보 가져오기 -->	
 <select id="getCompleteOrder" parameterType="hashMap" resultType="com.codi.dto.OrderDTO">
-	select orderNum,orderDate,userId,orderTable.productId productId,productName,orderTable.zip zip,orderTable.addr1 addr1, 
-	orderTable.addr2 addr2,orderTable.addrkey addrkey,orderTable.amount amount,orderTable.price price,email,originalName,saveFileName,superProduct 
-	from orderTable,product where orderTable.productId = product.productId 
-	and orderNum=#{orderNum} and userId=#{userId}
+	select * from 
+	(select orderNum,orderDate,userId,orderTable.productId productId,productName,orderTable.zip zip,orderTable.addr1 addr1, 
+	orderTable.addr2 addr2,orderTable.addrkey addrkey,orderTable.amount amount,orderTable.price price,email,superProduct 
+	from orderTable,product where orderTable.productId = product.productId and userId=#{userId}) a, 
+	(select productId,originalName,saveFileName from product) b
+	where a.superProduct = b.productId
 </select>
 
 <!-- 리뷰 추가 -->

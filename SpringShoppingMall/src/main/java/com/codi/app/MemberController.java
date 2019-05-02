@@ -292,7 +292,17 @@ public class MemberController {
 		MemberDTO dto=dao.getReadData(info.getUserId());
 		request.setAttribute("dto", dto);
 		
-		return "mem/update_detail";
+		return "mem/update_member";
+	}
+	
+	@RequestMapping(value = "/con/update_ok_pwd.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String update_ok_pwd(HttpSession session, HttpServletRequest request) {
+		
+		MemberDTO info=(MemberDTO)session.getAttribute("customInfo");
+		MemberDTO dto=dao.getReadData(info.getUserId());
+		request.setAttribute("dto", dto);
+		
+		return "mem/update_pwd";
 	}
 	
 	//비밀번호 수정

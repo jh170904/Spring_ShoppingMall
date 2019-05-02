@@ -13,8 +13,16 @@
 	margin-top: 20px;
 }
 
-.myPageCategory2{ 
+#myPage_category{ 
 	width : 780px;
+	height:50px;
+	margin-left: auto; 
+	margin-right: auto;
+	margin-top: 20px;
+}
+
+#con_category{ 
+	width : 260px;
 	height:50px;
 	margin-left: auto; 
 	margin-right: auto;
@@ -87,7 +95,7 @@
     	  
     	  var f = location.pathname;
           var url = f.split('/');
-          var option = url[2];          
+          var option = url[2];   
 
     	  var x = document.getElementById(eval("'" + option + "'"));
     	  var y = document.getElementById(eval("'" + option + "_category'"));
@@ -120,7 +128,7 @@
 			</li>
 			
 			<li>
-				<a class="menuLink" href="<%=cp1%>/con/update.action">설정</a>
+				<a class="menuLink" href="<%=cp1%>/con/update.action" id="con">개인정보 수정</a>
 			</li> 
 			 
 		</ul> 
@@ -154,6 +162,19 @@
 				<a class="menuLink" href="#">나의활동</a>
 			</li> 
 			 
+		</ul> 
+	</nav>
+</div>		
+
+<div class="myPageCategory2" name="myPageMenuCategory" id="con_category" style="display: none;">
+	<nav> 
+		<ul> 
+			<li>
+				<a class="menuLink" href="<%=cp1%>/con/update_ok.action">회원 정보 수정</a>
+			</li> 
+			<li>
+				<a class="menuLink" href="<%=cp1%>/con/update_ok_pwd.action">비밀번호 수정</a>
+			</li> 			 
 		</ul> 
 	</nav>
 </div>		
