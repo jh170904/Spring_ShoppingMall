@@ -26,6 +26,7 @@ import com.codi.dto.DestinationDTO;
 import com.codi.dto.MemberDTO;
 import com.codi.dto.OrderDTO;
 import com.codi.dto.OrderListDTO;
+import com.codi.dto.ProductDetailDTO;
 import com.codi.dto.ReviewDTO;
 import com.codi.util.MyUtil;
 
@@ -125,7 +126,6 @@ public class OrderController {
 		request.setAttribute("memberPoint", memberPoint);
 		request.setAttribute("imagePath", imagePath);
 		request.setAttribute("deliveryFee", deliveryFee);
-		request.setAttribute("imagePath", "./upload/list");
 				
 		return "order/reception";
 	}
@@ -324,7 +324,7 @@ public class OrderController {
 		request.setAttribute("totalPrice", totalPrice);
 		request.setAttribute("totalAmount", totalAmount);
 		request.setAttribute("discount", discount);
-		request.setAttribute("imagePath", "./upload/list");
+		request.setAttribute("imagePath", "../upload/list");
 		
 		//사용자 포인트 차감
 		dao.updateMemberPointUse(info.getUserId(), discount);
@@ -404,8 +404,7 @@ public class OrderController {
 		
 		return "order/myOrderList";
 	}
-	
-	
+
 	//관리자
 	@RequestMapping(value = "/order/bankbookPaymentAdmin.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String bankkbookPaymentAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -419,8 +418,14 @@ public class OrderController {
 		if(pageNum!=null)
 			currentPage = Integer.parseInt(pageNum);
 		
+		String searchOrderName = request.getParameter("searchOrderName");
+		
+		if(searchOrderName==null || searchOrderName.equals("")) {
+			searchOrderName="";
+		}
+		
 		int numPerPage = 7;
-		int totalPage = myUtil.getPageCount(numPerPage, dao.adminPaymentCheckCountAll());
+		int totalPage = myUtil.getPageCount(numPerPage, dao.adminPaymentCheckCountAll(searchOrderName));
 		
 		if(currentPage>totalPage)
 			currentPage = totalPage;
@@ -428,11 +433,7 @@ public class OrderController {
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
 		
-		String listUrl = cp + "/order/bankbookPaymentAdmin.action";
-		
-		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
-		
-		List<AdminPaymentDTO> adminPaymentCheckList = dao.adminPaymentCheck(start, end);
+		List<AdminPaymentDTO> adminPaymentCheckList = dao.adminPaymentCheck(start, end, searchOrderName);
 		List<AdminPaymentDTO> adminPaymentCheck2List = dao.adminPaymentCheck2();
 		List<AdminPaymentDTO> adminDiscountPrice = dao.adminDiscountPrice();
 		
@@ -450,11 +451,17 @@ public class OrderController {
 			
 		}
 		
+		searchOrderName = URLEncoder.encode(searchOrderName, "UTF-8");
+		
+		String listUrl = cp + "/order/bankbookPaymentAdmin.action?searchOrderName=" + searchOrderName;
+		
+		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		
 		request.setAttribute("adminPaymentCheckList", adminPaymentCheckList);
 		request.setAttribute("adminPaymentCheck2List", adminPaymentCheck2List);
 		request.setAttribute("adminDiscountPrice", adminDiscountPrice);
 		request.setAttribute("pageIndexList", pageIndexList);
-		request.setAttribute("dataCount", dao.adminPaymentCheckCountAll());
+		request.setAttribute("dataCount", dao.adminPaymentCheckCountAll(searchOrderName));
 		
 		return "admin/order_bankbook_payment";
 	}
