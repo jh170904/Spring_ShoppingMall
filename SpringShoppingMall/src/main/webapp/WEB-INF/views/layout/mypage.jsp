@@ -15,6 +15,7 @@
 
 .myPageCategory2{ 
 	width : 780px;
+	height:50px;
 	margin-left: auto; 
 	margin-right: auto;
 	margin-top: 20px;
@@ -73,6 +74,12 @@
 	font-size:16px;
 }
 
+.myPageCategory2 .menuLink:hover { 
+	color:#8080ff;
+	font-weight: bold; 
+	
+}
+
 </style>
 
 <script>
@@ -113,14 +120,14 @@
 			</li>
 			
 			<li>
-				<a class="menuLink" href="#">설정</a>
+				<a class="menuLink" href="<%=cp1%>/con/update.action">설정</a>
 			</li> 
 			 
 		</ul> 
 	</nav>
 </div>
-<div class="myPageCategory2">
-	<nav name="myPageMenuCategory" id="myPage_category" style="display: none;"> 
+<div class="myPageCategory2" name="myPageMenuCategory" style="display: none;">
+	<nav id="myPage_category"> 
 		<ul> 
 			<li>
 				<a class="menuLink" href="#">모두보기</a>
