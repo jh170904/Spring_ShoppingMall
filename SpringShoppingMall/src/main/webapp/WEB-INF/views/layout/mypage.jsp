@@ -44,7 +44,7 @@
 
 .myPageMenuCategory {
 	height:40px;  
-	width:800px;
+	width:900px;
 	margin-left: auto; 
 	margin-right: auto;
 }
