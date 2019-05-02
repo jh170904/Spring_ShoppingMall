@@ -18,6 +18,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where fileCategory='list' and productCategory=#{productCategory}
 </select>
 
+<!-- listCategory dataCount  --> 
+<select id="getDataCountSearch" parameterType="hashMap" resultType="int">
+	select nvl(count(*),0) from product
+	where fileCategory='list' 
+	and (color like '%'||#{searchHeader}||'%' 
+	or productName like '%'||#{searchHeader}||'%' 
+	or productCategory like '%'||UPPER(#{searchCategory})||'%') 
+</select>
+
  
 <!-- listNew list -->
 <select id="getLists" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
@@ -63,6 +72,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>
 </select>
 
+<!-- listSearch -->
+<select id="getListsSearch" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select productId,productName,price,savefilename,storeName,storeUrl,originalName,superProduct 
+	from product where fileCategory='list' 
+	and (color like '%'||#{searchHeader}||'%' 
+	or productName like '%'||#{searchHeader}||'%' 
+	or productCategory like '%'||UPPER(#{searchCategory})||'%')
+	) data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
 <!-- storeHeart count -->
 <select id="storeHeartCount" parameterType="hashMap" resultType="int">
 	select nvl(count(*),0) from storeHeart
@@ -97,7 +121,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	insert into product(productId,productCategory,productName,productSize,price,
 	productDate,amount,color,state,fileCategory,originalName,saveFileName,superProduct,storeName,storeUrl)
 	values (#{productId},#{productCategory},#{productName},#{productSize},#{price},
-	sysdate,0,#{color},#{state},#{fileCategory},#{originalName},#{saveFileName},#{superProduct},#{storeName},#{storeUrl})
+	sysdate,0,#{color},#{state},#{fileCategory,jdbcType=VARCHAR},#{originalName},#{saveFileName},#{superProduct},#{storeName},#{storeUrl})
 </insert>
 
 <delete id="productAdminDelete" parameterType="string">

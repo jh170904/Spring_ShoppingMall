@@ -42,10 +42,6 @@ public class CartController {
 		String cp = request.getContextPath();
 		HttpSession session=request.getSession();
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
-		
-		if(info==null)
-			return "mem/login";
-		
 		String userId = info.getUserId();
 
 		List<CartDTO> lists = dao.getReadData(userId);
@@ -103,7 +99,6 @@ public class CartController {
 	public String deleteCartItem(String productId, HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();
-		System.out.println("세션출력"+session);
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		String userId = info.getUserId();
 

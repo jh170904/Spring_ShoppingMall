@@ -51,11 +51,57 @@
 	display: block;
 	font-family: 'Noto Sans Korean', 'NotoSansKR-Regular', sans-serif;
 }
+.searchHeader {
+	text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    font-family: 'Noto Sans Regular','Spoqa Han Sans JP','맑은 고딕',Dotum,'Apple SD Gothic Neo',Sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 35px;
+    width: 480px;
+    background: url(//s1.codibook.net/images/header/search.png) no-repeat 5px 50%;
+    background-size: 24px 24px;
+    border: 0;
+    border: 1.5px solid #8080FF;
+    outline: 0;
+    transition: width 150ms cubic-bezier(.165,.84,.44,1),opacity 150ms cubic-bezier(.165,.84,.44,1);
+}
 </style>
 
 
 <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+<script type="text/javascript">
 
+function goSearch(){
+	f = document.searchForm;
+	str = f.searchHeader.value;
+	str = str.trim();
+	if(str=="" || !str){
+		alert("\n 검색어를 입력해주세요.");
+		f.searchHeader.focus();
+		return;
+	}
+	if(str.length<2){
+		alert("\n 검색어를 두글자이상 입력해주세요.");
+		f.searchHeader.focus();
+		return;
+	}
+	f.action = "<%=cp %>/pr/listSearch.action";
+	f.submit();
+}
+
+</script>
 
 </head>
 <body>
@@ -65,6 +111,11 @@
 
 		<div class="inner_wrap">
 			<ul class="header_menu">
+				<li>
+					<form name="searchForm" onsubmit="return false">
+					<input class="searchHeader" name="searchHeader" placeholder="검색어를 입력하세요" autocomplete="off" value="" onkeypress="if( event.keyCode==13 ){goSearch();}" >
+					</form>
+				</li>
 				<li>
 					<c:choose>
 						<c:when test="${empty sessionScope.customInfo.userId }">
@@ -85,7 +136,7 @@
 						</c:otherwise>
 				</c:choose>
 				</li>
-				<li><a href="<%=cp%>/order/myOrderLists.do" class="order">주문조회
+				<li><a href="<%=cp%>/order/myOrderLists.action" class="order">주문조회
 					<span class="num" style="display: none;"></span>
 					</a>
 				</li>

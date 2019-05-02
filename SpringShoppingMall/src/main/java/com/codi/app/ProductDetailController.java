@@ -33,9 +33,8 @@ public class ProductDetailController {
 	MyUtil myUtil;//Bean °´Ã¼ »ý¼º
 	
 	@RequestMapping(value = "/pr/detail.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String detail(HttpServletRequest request, HttpServletResponse response) {
+	public String detail(String superProduct, HttpServletRequest request, HttpServletResponse response) {
 		String cp = request.getContextPath();
-		String superProduct = request.getParameter("superProduct");
 		ProductDetailDTO dto = dao.getReadData(superProduct);
 		List<String> colorList = dao.getColorList(dto.getSuperProduct());
 		List<String> sizeList = dao.getProductSizeList(dto.getSuperProduct());
@@ -67,7 +66,7 @@ public class ProductDetailController {
 		return "product/detail";
 	}
 	
-	@RequestMapping(value = "pr/detailReview.action", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/pr/detailReview.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String detailReview(HttpServletRequest request, HttpServletResponse response) {
 		
 		String cp = request.getContextPath();

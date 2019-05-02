@@ -333,6 +333,111 @@ public class ProductController {
 		return "list/listBest";
 	}
 
+	@RequestMapping(value = "/pr/listSearch.action", method = RequestMethod.GET)
+	public String listSearch(String searchHeader, HttpServletRequest req,HttpSession session) throws IOException {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo"); 
+		
+		List<String> good = null;	
+		
+		String searchCategory = searchHeader;
+		//DB 카테고리
+		String arrCategory[] = {"OUTER","TOP","BOTTOM","DRESS","SHOES","BAG","ACC"};
+		//분류용 카테고리
+		String arrCompareCategory[][] = {
+				//OUTER
+				{"자켓","외투","겉옷","아우터"},
+				//TOP
+				{"상의","탑"},
+				//BOTTOM
+				{"하의","바지","팬츠","청바지","레깅스"},
+				//DRESS
+				{"원피스","스커트","치마","드레스"},
+				//SHOES
+				{"신발","슈즈"},
+				//BAG
+				{"가방"},
+				//ACC
+				{"악세서리","악세사리","쥬얼리","장신구"}
+			};
+		
+		//카테고리 매칭
+		for(int i=0; i<arrCategory.length; i++) {
+			for(int j=0;j<arrCompareCategory[i].length;j++) {
+				if(searchHeader.equals(arrCompareCategory[i][j])) {
+					//System.out.println( "인덱스 i:"+i+"j:"+j+ ", 매칭카테고리" + arrCategory[i]);
+					searchCategory = arrCategory[i];
+				}
+			}	
+		}
+
+		if(info!=null) {
+			good = dao.storeHeartList(info.getUserId());
+			System.out.println(good);
+		}
+		
+		String cp = req.getContextPath();
+
+		String pageNum = req.getParameter("pageNum");
+
+		int currentPage = 1;
+
+		if (pageNum != null)
+			currentPage = Integer.parseInt(pageNum);
+		
+		int dataCount = dao.getDataCountSearch(searchHeader, searchCategory);
+
+		int numPerPage = 3;
+		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+
+		if (currentPage > totalPage)
+			currentPage = totalPage;
+
+		int start = (currentPage - 1) * numPerPage + 1;
+		int end = currentPage * numPerPage;
+
+		List<ProductDTO> lists;
+
+		lists = dao.getListsSearch(start, end, searchHeader, searchCategory);
+		
+		//각각의 dto에 reviewCount 와 reviewRate 추가
+		
+		ListIterator<ProductDTO> it = lists.listIterator();
+		
+		while(it.hasNext()){
+			ProductDTO vo = (ProductDTO)it.next();
+			
+			//dao.getReviewCount(vo.productId)
+			int reviewCount =  reviewDAO.getProductDataCount(vo.getSuperProduct());
+			//dao.getReviewRate(vo.productId)
+			float avgReviewRate = reviewDAO.productGetList_heart(vo.getSuperProduct());
+			
+			vo.setReviewCount(reviewCount);
+			vo.setReviewRate(avgReviewRate);
+		}
+		
+		// 이미지저장 경로 보내주기
+		String imagePath = req.getSession().getServletContext().getRealPath("/upload");
+
+
+		// 페이징을 위한 값들 보내주기
+		String listUrl = cp + "/pr/listSearch.action?searchHeader="+searchHeader;
+
+		String pageIndexList = myUtil.listPageIndexList(currentPage, totalPage, listUrl, "amount desc");
+
+		req.setAttribute("searchHeader", searchHeader);
+		req.setAttribute("good", good);
+		req.setAttribute("listUrl", listUrl);
+		req.setAttribute("imagePath", imagePath);
+		req.setAttribute("lists", lists);
+		req.setAttribute("pageIndexList", pageIndexList);
+		req.setAttribute("dataCount", dataCount);
+		req.setAttribute("totalPage", totalPage);
+		req.setAttribute("pageNum", pageNum);
+
+		return "list/listSearch";
+	}
+	
 	@RequestMapping(value = "/productAdminCreate.action", method = RequestMethod.GET)
 	public String productadminCreate(HttpServletRequest req) {
 

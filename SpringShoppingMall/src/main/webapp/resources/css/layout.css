@@ -51,7 +51,7 @@ html{min-width:1200px;}
 .ap_header .header_menu{float:right; margin-top:35px;}
 .ap_header .header_menu>li{float:left; text-align:center; font-size:12px;}
 .ap_header .header_menu>li a{display:block; position:relative;}
-.ap_header .header_menu>li a:before{content:''; display:block; width:20px; height:20px; margin:0 auto 7px; background:url(../project/image/navi.PNG) no-repeat;}
+.ap_header .header_menu>li a:before{content:''; display:block; width:20px; height:20px; margin:0 auto 7px; background:url(../image/navi.PNG) no-repeat;}
 .ap_header .header_menu>li a.join:before{background-position:0 -20px;}
 .ap_header .header_menu>li a.order:before{background-position:0 -40px;}
 .ap_header .header_menu>li a.cart:before{background-position:0 -60px;}

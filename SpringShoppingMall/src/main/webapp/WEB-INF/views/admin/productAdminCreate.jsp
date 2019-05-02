@@ -94,8 +94,8 @@
 		
 		if(f.fileCategory.checked==true){
 			f.fileCategory.value="list";
-		}else{
-			f.fileCategory.value='';
+		}else if(f.fileCategory.checked==false){
+			f.fileCategory.value="";
 		}
 
 		f.action = "<%=cp %>/productAdminCreate_ok.action";
@@ -170,7 +170,7 @@
 			<td width="460" style="padding-left: 10px;">
 				<select name="color" style="width: 350px; height: 20px;" class="boxTF">
 					<option value="">색상 선택</option>
-					<c:forTokens var='item' items="핑크,레드,오렌지,보라,블랙/그레이,브라운,그린,블루,옐로우/베이지,화이트/실버" delims="," >
+					<c:forTokens var='item' items="핑크,레드,오렌지,보라,블랙,그레이,브라운,그린,블루,옐로우,베이지,화이트,실버" delims="," >
 					<option value="${item}">${item}</option>
 					</c:forTokens>
 				</select>

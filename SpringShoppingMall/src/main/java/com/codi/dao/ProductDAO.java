@@ -37,7 +37,18 @@ public class ProductDAO {
 		return result;
 	}
 	
-	
+	//Search dataCount
+	public int getDataCountSearch(String searchHeader, String searchCategory){
+		int result = 0;
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("searchHeader", searchHeader);
+		params.put("searchCategory",searchCategory);
+		
+		result = sessionTemplate.selectOne("productMapper.getDataCountSearch",params);
+
+		return result;
+	}
 	
 	//listNew list 
 	public List<ProductDTO> getList(int start, int end){
@@ -103,6 +114,21 @@ public class ProductDAO {
 				sessionTemplate.selectList("productMapper.getListsCategoryOrder",params);
 		
 
+		return lists;
+	}
+	
+	//listSearch 
+	public List<ProductDTO> getListsSearch(int start, int end, String searchHeader , String searchCategory) {
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("start", start);
+		params.put("end",end);
+		params.put("searchHeader",searchHeader);
+		params.put("searchCategory",searchCategory);
+		
+		List<ProductDTO> lists = 
+				sessionTemplate.selectList("productMapper.getListsSearch",params);
+		
 
 		return lists;
 	}
