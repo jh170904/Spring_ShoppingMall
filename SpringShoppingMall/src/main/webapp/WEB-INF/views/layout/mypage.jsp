@@ -126,8 +126,8 @@
 		</ul> 
 	</nav>
 </div>
-<div class="myPageCategory2" name="myPageMenuCategory" style="display: none;">
-	<nav id="myPage_category"> 
+<div class="myPageCategory2" name="myPageMenuCategory" id="myPage_category" style="display: none;">
+	<nav> 
 		<ul> 
 			<li>
 				<a class="menuLink" href="#">모두보기</a>
