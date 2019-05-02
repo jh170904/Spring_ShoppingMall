@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mypageMapper">
+
+
+<select id="getDataCount" parameterType="String" resultType="int">
+	select nvl(count(*),0) from storeHeart
+	where userId=#{userid}
+</select>
+ 
+<select id="getLists" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select a.productid,a.productname,a.price,a.savefilename,a.storeName,a.storeUrl,a.originalName,a.superProduct 
+	from product a, storeHeart b
+	where a.productid = b.superProduct and b.USERID=#{userId}
+	)data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+</mapper>

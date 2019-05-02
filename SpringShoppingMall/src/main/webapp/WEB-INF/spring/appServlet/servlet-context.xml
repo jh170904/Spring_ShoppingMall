@@ -63,6 +63,8 @@
 	  <mapping path="/cart/**" />
 	  <mapping path="/dest/**" />
 	  <mapping path="/order/**" />
+	  <mapping path="/storeGood/**" />
+	  <mapping path="/myPage/**" />
 	  <mapping path="/review/**" />
 	  <beans:bean class="com.codi.interceptor.Interceptor" />
 	 </interceptor>

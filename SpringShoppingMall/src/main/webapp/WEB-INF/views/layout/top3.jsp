@@ -151,5 +151,18 @@ function goSearch(){
 				</a>
 			</h1>
 		</div>
+
+		<div style="border-bottom: 1px solid #ebebeb;"></div>
+
+		<div class="gnb_area">
+			<div class="inner_wrap" style="font-size: 13pt;">
+				<ul class="gnb">
+					<li><a href="<%=cp %>/pr/commuMain.action">커뮤니티</a></li>
+					<li><a href="<%=cp %>/pr/storeMain.action">스토어</a></li>
+				</ul>
+			</div>
+
+			<%@ include file="./category.jsp"%>
+		</div>
 		
 		<div style="border-bottom: 1px solid #ebebeb;" ></div>
