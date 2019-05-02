@@ -7,13 +7,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="cartMapper">
 
 <select id="getReadData" parameterType="String" resultType="com.codi.dto.CartDTO" >
-	select a.color color,a.productSize productSize,a.userId userId,a.productId productId,
-	productName,a.amount amount,a.price price,originalName, saveFileName,orderSelect,
-	superProduct 
+	select a.productName, a.color, a.productSize,a.userId,a.productId,a.productName,a.amount,a.price,orderSelect,
+	b.originalName originalName,b.saveFileName saveFileName, a.superProduct 
+	from 
+	(select a.color,a.productSize,a.userId,a.productId,productName,a.amount,a.price,orderSelect,superProduct 
 	from cart a,product b 
-	where a.productId=b.productId
-	and userId=#{userId} 
-	order by productName
+	where a.productId=b.productId and userId=#{userId} ) a, product b
+	where a.superProduct=b.productid
+	order by a.productName
 </select>
 
 <select id="getTotalItemCount" parameterType="String" resultType="Int" >

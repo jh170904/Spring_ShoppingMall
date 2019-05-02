@@ -205,7 +205,7 @@
 					</td>
 					<!-- 상품이미지 -->
 					<td width="160px" rowspan="2">
-						<img src="../upload/list/${dto.saveFileName }" width="140" height="140" style="margin-right: 10px;" >
+						<img src="../upload/list/${dto.originalName}" width="140" height="140" style="margin-right: 10px;" >
 					</td>
 					
 					<td width="640px" style="padding-left: 30px;font-size: 20px;color: #000;" align="left" >

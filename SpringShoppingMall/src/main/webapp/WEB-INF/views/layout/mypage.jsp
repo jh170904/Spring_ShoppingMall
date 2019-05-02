@@ -1,34 +1,166 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-	String cp1 = request.getContextPath();
+	String cp1 = request.getContextPath();	
 %>
-<!-- mypage sitemap -->
-<div class="mypage_map">
-	<ul style="height: 222px;">
-		<li style="width: 240px;"><span class="bottom_menu">나의 주문 관리</span> <!-- 메뉴 선택시 selected 클래스 -->
-			<ul class="total_menu_wrap">
-				<li><a href="<%=cp1%>/order/myOrderLists.action">주문 조회</a></li>
-				<!-- 메뉴 선택시 selected 클래스 -->
-			</ul></li>
-		<li style="width: 240px;"><span class="bottom_menu">나의 혜택 관리</span>
-			<ul class="total_menu_wrap">
-				<li><a href="<%=cp1%>/coupon/myCouponList.do">나의 쿠폰</a></li>
-			</ul></li>
-		<li style="width: 240px;"><span class="bottom_menu">나의 활동 관리</span>
-			<ul class="total_menu_wrap">
-				<li><a href="<%=cp1%>/review/reviewList.action">나의 구매 후기</a></li>
-			</ul></li>
-		<li style="width: 240px;"><span class="bottom_menu">나의 지역 관리</span>
-			<ul class="total_menu_wrap">
-				<li><a href="<%=cp1%>/dest/destList.action">배송지 관리</a></li>
-				<li><a href="<%=cp1%>/shop/list.do">단골매장 관리</a></li>
-			</ul></li>
-		<li style="width: 240px;"><span class="bottom_menu">나의 정보 관리</span>
-			<ul class="total_menu_wrap">
-				<li><a href="<%=cp1%>/con/update.action">개인정보 수정</a></li>
-				<li><div><a href="#loginmodal" class="flatbtn" id="modaltrigger">회원 탈퇴</a></div></li>
-			</ul></li>
-	</ul>
-</div>
 
-<%-- <%@ include file="../member/delete.jsp"  %> --%>
+<style>
+
+.myPageCategory{
+	width: 1200px; 
+	margin-left: auto; 
+	margin-right: auto;
+	margin-top: 20px;
+}
+
+#myPageMenu {
+	height:60px;  
+	margin-left: auto; 
+	margin-right: auto;
+}
+
+.myPageCategory ul li {
+	list-style:none;
+	float:left;
+	color:#000000;
+	line-height:30px;
+	vertical-align:middle;
+	text-align:center;
+	
+}
+
+.myPageCategory .menuLink {
+	text-decoration:none;
+	display:block; 
+	width:120px;
+	font-size:16px;
+}
+
+.myPageCategory .menuLink:hover { 
+	color:#8080ff;
+	font-weight: bold; 
+	
+}
+
+.myPageMenuCategory{
+	height:60px;  
+	margin-left: auto; 
+	margin-right: auto;
+}
+</style>
+
+<script>
+	$(document).ready( function(){
+    	  
+    	  var f = location.pathname;
+          var url = f.split('/');
+          var option = url[2];          
+
+    	  var x = document.getElementById(eval("'" + option + "'"));
+    	  var y = document.getElementById(eval("'" + option + "_category'"));
+    	  
+    	  x.style.color="#8080ff";
+    	  x.style.fontWeight="bold";
+    	  
+    	  y.style.display="block"
+    	      	  
+	 });
+	
+</script>
+
+<div class="myPageCategory">
+	<nav id="myPageMenu" > 
+		<ul> 
+			<li>
+				<a class="menuLink" href="<%=cp1%>/myPage/myPageMain.action" id="myPage">프로필</a>
+			</li> 
+			<li>
+				<a class="menuLink" href="<%=cp1%>/order/myOrderLists.action" id="order">나의쇼핑</a>
+			</li> 
+			
+			<li>
+				<a class="menuLink" href="<%=cp1%>/review/reviewList.action" id="review">나의 리뷰</a>
+			</li> 
+			
+			<li>
+				<a class="menuLink" href="<%=cp1%>/dest/destlist.action" id="dest">배송지 관리</a>
+			</li>
+			
+			<li>
+				<a class="menuLink" href="#">설정</a>
+			</li> 
+			 
+		</ul> 
+	</nav>
+	
+	<nav name="myPageMenuCategory" id="myPage_category" style="display: none;"> 
+		<ul> 
+			<li>
+				<a class="menuLink" href="#">모두보기</a>
+			</li> 
+			<li>
+				<a class="menuLink" href="#">사진</a>
+			</li> 
+			
+			<li>
+				<a class="menuLink" href="#">질문과답변</a>
+			</li> 
+			
+			<li>
+				<a class="menuLink" href="#">스크랩북</a>
+			</li>
+			
+			<li>
+				<a class="menuLink" href="#">좋아요</a>
+			</li> 
+			
+			<li>
+				<a class="menuLink" href="#">나의활동</a>
+			</li> 
+			 
+		</ul> 
+	</nav>
+	
+	<nav name="myPageMenuCategory" id="order_category" style="display: none;"> 
+		<ul> 
+			<li>
+				<a class="menuLink" href="#">주문배송내역 조회</a>
+			</li> 
+			<li>
+				<a class="menuLink" href="#">제품 스크랩북</a>
+			</li> 
+			
+			<li>
+				<a class="menuLink" href="#">삼품문의내역</a>
+			</li> 
+			
+			<li>
+				<a class="menuLink" href="#">포인트</a>
+			</li>
+			
+			<li>
+				<a class="menuLink" href="#">고객센터</a>
+			</li> 
+		</ul> 
+	</nav>
+	
+	<nav name="myPageMenuCategory" id="review_category" style="display: none;"> 
+		<ul> 
+			<li>
+				<a class="menuLink" href="#">내가 작성한 리뷰</a>
+			</li> 
+			<li>
+				<a class="menuLink" href="#">리뷰쓰기</a>
+			</li> 			 
+		</ul> 
+	</nav>
+	
+	<nav name="myPageMenuCategory" id="dest_category" style="display: none;"> 
+		<ul> 
+			<li>
+				<a class="menuLink" href="#">배송지 관리</a>
+			</li> 		 
+		</ul> 
+	</nav>
+		
+</div>

@@ -168,32 +168,25 @@ tr {
 		f.amount.value = str;
 		
 		//사이즈선택
-		var sizeLists = ${sizeList};
-		if(sizeLists[0]=="null"){
-			str = f.productSize.value;
-			str = str.trim();
-			if(str==""){
-				if(!str){s
-					alert("\n 사이즈를 선택하세요.");
-					f.productSize.focus();
-					return;
-				}
-				f.productOption.value = str;
+		str = f.productSize.value;
+		str = str.trim();
+		if(str==""){
+			if(!str){
+				alert("\n 사이즈를 선택하세요.");
+				f.productSize.focus();
+				return;
 			}
 		}
-		
+		f.productSize.value = str;
+
 		//색상선택
-		var colorLists= ${colorList};
-		if(colorLists[0]=="[null]"){
-			str = f.color.value;
-			str = str.trim();
-			if(str==""){
-				if(!str){
-					alert("\n 색상을 선택하세요.");
-					f.color.focus();
-					return;
-				}
-				f.productOption.value = str;
+		str = f.color.value;
+		str = str.trim();
+		if(str==""){
+			if(!str){
+				alert("\n 색상을 선택하세요.");
+				f.color.focus();
+				return;
 			}
 		}
 		f.color.value = str;
@@ -215,34 +208,28 @@ tr {
 		f.amount.value = str;
 		
 		//사이즈선택
-		var sizeLists = ${sizeList};
-		if(sizeLists[0]=="null"){
-			str = f.productSize.value;
-			str = str.trim();
-			if(str==""){
-				if(!str){
-					alert("\n 사이즈를 선택하세요.");
-					f.productSize.focus();
-					return;
-				}
-				f.productOption.value = str;
+		str = f.productSize.value;
+		str = str.trim();
+		if(str==""){
+			if(!str){
+				alert("\n 사이즈를 선택하세요.");
+				f.productSize.focus();
+				return;
 			}
 		}
-		
+		f.productSize.value = str;
+
 		//색상선택
-		var colorLists= ${colorList};
-		if(colorLists.length!=null){
-			str = f.color.value;
-			str = str.trim();
-			if(str==""){
-				if(!str){
-					alert("\n 색상을 선택하세요.");
-					f.color.focus();
-					return;
-				}
-				f.productOption.value = str;
+		str = f.color.value;
+		str = str.trim();
+		if(str==""){
+			if(!str){
+				alert("\n 색상을 선택하세요.");
+				f.color.focus();
+				return;
 			}
 		}
+		f.color.value = str;
 		
 		f.action = "<%=cp%>/cart/cartAdd_directOrder.do";
 		f.submit();
@@ -501,8 +488,9 @@ tr {
 								</td>
 							</tr>
 						</table>
-						<!-- 옵션선택 ajax 수정예정.... -->
-						<section class="selected-options text-caption-1">
+
+
+						<%-- <section class="selected-options text-caption-1">
 							<div class="item hide">
 								<p class="name">${dto.productName}- ${dto.color} -
 									${dto.productSize}</p>
@@ -525,7 +513,7 @@ tr {
 									onclick="removeItem();">
 								</span>
 							</div>
-						</section>
+						</section> --%>
 					</div>
 				</div>
 			</div>
