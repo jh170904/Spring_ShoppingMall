@@ -144,13 +144,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	and userId=#{userId} and payment='yes' and to_char(orderDate,'yyyy-mm-dd')>=(select to_char(sysdate-(interval '${num}' ${searchPeriod}),'yyyy-mm-dd') from dual)
 </select>
 
-<!-- 관리자 무통장입금 확인(주문번호,예금주,가격,주문 객수) -->
+<!-- 관리자 무통장입금 확인(주문번호,예금주,가격,주문 개수) -->
 <select id="adminPaymentCheck" parameterType="hashMap" resultType="com.codi.dto.AdminPaymentDTO">
 	select * from (
 	select rownum rnum, data.* from (
 	select orderNum, userName, nvl(sum(orderTable.amount),0) amount,nvl(sum(orderTable.price),0) price
 	from orderTable,member,product where orderTable.productId=product.productId and orderTable.userId=member.userId and payment='no'
-	group by orderNum,userName order by orderNum desc) data)
+	group by orderNum,userName having userName like '%' || #{searchOrderName} || '%'
+	order by orderNum desc) data)
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
@@ -173,7 +174,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 무통장입금 총 주문번호 개수 -->
 <select id="adminPaymentCheckCountAll" resultType="int">
 	select nvl(count(distinct orderNum),0)
-	from orderTable,product where orderTable.productId=product.productId and payment='no' 
+	from orderTable,product,member where orderTable.productId=product.productId and orderTable.userId=member.userId 
+	and payment='no' and userName like '%' || #{searchOrderName} || '%'
 </select>
 
 

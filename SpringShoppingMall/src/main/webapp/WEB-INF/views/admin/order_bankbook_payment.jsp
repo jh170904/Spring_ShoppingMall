@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../layout/top.jsp"  %>
 
 <script>
@@ -12,22 +13,38 @@
 			content.style.display = "none";
 		}
 	}
+	
+	function searchOrderName() {
+		
+		var searchOrderName = document.search.searchOrderName.value.trim();
+		
+		searchOrderName.action = "<%=cp%>/order/bankbookPaymentAdmin.action";
+		searchOrderName.submit();
+		
+	}
 </script>
 
 <div class="ap_contents product detail" style="padding-left: 70px;">
 
 	<div style="width:1100px;margin:30px auto;text-align:left;">
-		<div style="border:1px solid ; width: 1100px; padding-left:20px;height:40px;text-align:left;line-height:40px;margin-bottom:30px;">
-		무통장입금 관리 (admin)
+		<div style="width: 1100px; padding-left:20px;height:40px;text-align:left;line-height:40px;" class="btn_sm_bordered">
+		무통장입금 관리 (admin)	
 		</div>
-	
+		
+		<div style="padding: 10px 0px; float: right;">
+			<form action="" method="post" name="search">
+			<input type="text;" style="width: 200px; text-align: left;" class="btn_sm_bordered" name="searchOrderName">
+			<button class="btn_sm_bordered" onclick="searchOrderName()">검색</button>
+			</form>
+		</div>
+		
 		<div style="width: 1100px;">
 			<table class="ui_table_striped data_table thead_colored align_center @table-striped-apply" >
 			
 				<colgroup>
+					<col width="15%">
 					<col width="10%">
-					<col width="10%">
-					<col width="40%">
+					<col width="35%">
 					<col width="10%">
 					<col width="15%">
 					<col width="15%">
@@ -61,7 +78,7 @@
 							<td style="vertical-align: top;">
 								<c:forEach var="vo" items="${adminDiscountPrice }">
 									<c:if test="${dto.orderNum eq vo.orderNum }">
-										${vo.price }
+										<fmt:formatNumber value="${vo.price }" type="number"/>원
 									</c:if>
 								</c:forEach>
 							</td>	
@@ -69,7 +86,7 @@
 								<button onclick="showOrder('${dto.orderNum }')" class="btn_sm_bordered">상품보기</button>
 							</td>
 							<td style="vertical-align: top;">
-								<a href="<%=cp %>/without_bankbook_paymentYes.action?orderNum=${dto.orderNum}&price=${dto.price}" class="btn_sm_bordered">입금완료</a>
+								<a href="<%=cp%>/order/without_bankbook_paymentYes.action?orderNum=${dto.orderNum}&price=${dto.price}" class="btn_sm_bordered">입금완료</a>
 							</td>
 						</tr>
 					</c:forEach>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="../layout/top.jsp" %>
+<%@ include file="../layout/mypage.jsp" %>
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>

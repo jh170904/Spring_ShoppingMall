@@ -162,10 +162,11 @@ public class OrderDAO {
 		return result;
 	}
 	
-	public List<AdminPaymentDTO> adminPaymentCheck(int start, int end){
+	public List<AdminPaymentDTO> adminPaymentCheck(int start, int end, String searchOrderName){
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("start", start);
 		params.put("end", end);
+		params.put("searchOrderName", searchOrderName);
 		List<AdminPaymentDTO> lists = sessionTemplate.selectList("orderMapper.adminPaymentCheck",params);
 		return lists;
 	}
@@ -180,8 +181,8 @@ public class OrderDAO {
 		return restult;
 	}
 	
-	public int adminPaymentCheckCountAll(){
-		int restult = sessionTemplate.selectOne("orderMapper.adminPaymentCheckCountAll");
+	public int adminPaymentCheckCountAll(String searchOrderName){
+		int restult = sessionTemplate.selectOne("orderMapper.adminPaymentCheckCountAll",searchOrderName);
 		return restult;
 	}
 	

@@ -48,11 +48,6 @@ public class MemberController {
 	private String subject	= "[내일의 코디북] 임시 비밀번호 발급 안내"; 
 	
 	
-	@RequestMapping(value = "/test.action", method = {RequestMethod.POST, RequestMethod.GET})
-	public String test() {
-		return "test";
-	}
-	
 	@RequestMapping(value = "/mem/signup.action", method = {RequestMethod.POST, RequestMethod.GET})
 	public String signup() {
 		return "mem/signup";
@@ -82,7 +77,7 @@ public class MemberController {
 	    
 	    //주소창 들어가는경우는 null이니까 main페이지로 가게
 	    if(referrer==null||referrer==""||referrer.contains("/mem")) {
-	    	referrer="/commuMain.action";
+	    	referrer="/pr/commuMain.action";
 	    }
 	    
 	    request.getSession().setAttribute("prevPage", referrer);
@@ -276,7 +271,7 @@ public class MemberController {
 		session.removeAttribute("customInfo");
 		session.invalidate();//변수도 지운다.
 		
-		return "redirect:/commuMain.action";
+		return "redirect:/pr/commuMain.action";
 	}
 	
 	@RequestMapping(value = "/con/mypage.action", method = {RequestMethod.POST, RequestMethod.GET})

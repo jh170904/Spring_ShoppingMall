@@ -1,6 +1,7 @@
 <%@page import="java.net.URLEncoder"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="../layout/top.jsp" %>
+<%@ include file="../layout/mypage.jsp" %>
 
 <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 
