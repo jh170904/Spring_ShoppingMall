@@ -29,7 +29,7 @@ $(function(){
             async: true,
             type : 'POST',
             data : superProduct,
-            url : "good.action",
+            url : "../good.action",
             dataType : "json",
             contentType: "application/json; charset=UTF-8",
             success : function(data) {
