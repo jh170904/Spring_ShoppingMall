@@ -95,7 +95,9 @@
     	  
     	  var f = location.pathname;
           var url = f.split('/');
-          var option = url[2];   
+          var option = url[2];
+          
+          var mypage = url[3]; 
 
     	  var x = document.getElementById(eval("'" + option + "'"));
     	  var y = document.getElementById(eval("'" + option + "_category'"));
@@ -104,6 +106,10 @@
     	  x.style.fontWeight="bold";
     	  
     	  y.style.display="block"
+    	  
+    	  if(mypage=='update.action'){
+    		  y.style.display="none"
+    	  }
     	      	  
 	 });
 	
