@@ -13,6 +13,13 @@
 	margin-top: 20px;
 }
 
+.myPageCategory2{ 
+	width : 780px;
+	margin-left: auto; 
+	margin-right: auto;
+	margin-top: 20px;
+}
+
 #myPageMenu {
 	height:40px;  
 	margin-left: auto; 
@@ -44,9 +51,26 @@
 
 .myPageMenuCategory {
 	height:40px;  
-	width:900px;
+	width:1000px;
 	margin-left: auto; 
 	margin-right: auto;
+	text-align:center;
+}
+
+.myPageCategory2 ul li {
+	list-style:none;
+	float:left;
+	color:#000000;
+	line-height:30px;
+	vertical-align:middle;
+	text-align:center;	
+}
+
+.myPageCategory2 .menuLink {
+	text-decoration:none;
+	display:block; 
+	width:130px;
+	font-size:16px;
 }
 
 </style>
@@ -94,7 +118,8 @@
 			 
 		</ul> 
 	</nav>
-	
+</div>
+<div class="myPageCategory2">
 	<nav name="myPageMenuCategory" id="myPage_category" style="display: none;"> 
 		<ul> 
 			<li>
@@ -122,6 +147,6 @@
 			 
 		</ul> 
 	</nav>
-	
-</div>
+</div>		
+
 
