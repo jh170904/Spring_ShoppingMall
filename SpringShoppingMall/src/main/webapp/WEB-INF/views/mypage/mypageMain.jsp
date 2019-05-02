@@ -4,7 +4,7 @@
 <%@include file="../layout/mypage.jsp"  %>
 
 <style>
-.container {
+.container2 {
     margin-right: auto;
     margin-left: auto;
     box-sizing: border-box;
@@ -73,7 +73,7 @@
 
 </style>
 
-<div class="container">
+<div class="container2">
 
 <div style="width: 336px; display: inline-block; vertical-align: top;">
 

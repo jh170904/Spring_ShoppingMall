@@ -108,7 +108,7 @@ function goSearch(){
 <body>
 	<div class="ap_wrapper">
 	
-		<div id="header" class="ap_header" style="height: 210px;">
+		<div id="header" class="ap_header" style="height: 110px;">
 
 		<div class="inner_wrap">
 			<ul class="header_menu">
@@ -166,3 +166,4 @@ function goSearch(){
 		</div>
 		
 		<div style="border-bottom: 1px solid #ebebeb;" ></div>
+		
