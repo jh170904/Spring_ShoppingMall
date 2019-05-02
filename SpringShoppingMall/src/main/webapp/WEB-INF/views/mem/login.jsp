@@ -59,6 +59,7 @@ function sendIt(){
 	            type : 'POST',
 	            data : json_data,
 	            url : "loginAjax.action",
+	            contentType : "application/json; charset=UTF-8",
 	            success : function(data) {
 	            	
 	            	if(data.cnt==0) {
@@ -107,6 +108,8 @@ function sendIt(){
 
 	<!-- // breadcrumb 미노출 페이지는 감춤 -->
 	<div class="page_title">
+
+
 		<h2 class="h_title page">로그인</h2>
 
 		<p class="text font_lg"></p>
