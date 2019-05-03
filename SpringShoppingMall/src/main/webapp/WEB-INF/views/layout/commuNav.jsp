@@ -22,7 +22,7 @@
 				<div class="gnb_area">
 					<ul class="gnb" >
 						<li><a href="#">커뮤니티홈</a></li>
-						<li><a href="#">코디</a></li>
+						<li><a href="<%=cp4 %>/pr/commuList.action">코디</a></li>
 						<li><a href="#">테마</a></li>
 						<li><a href="#">질문과 답변</a></li>
 					</ul>
