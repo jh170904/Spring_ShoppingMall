@@ -55,9 +55,50 @@ public class ProductController {
 	public String commuMain(HttpServletRequest req) {
 		return "commuMain";
 	}
-
+	
+	//스토어홈 메인페이지
 	@RequestMapping(value = "pr/storeMain.action", method = RequestMethod.GET)
-	public String storeMain(HttpServletRequest req) {
+	public String storeMain(HttpServletRequest req, HttpSession session) {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo"); 
+
+		List<String> good = null;
+
+		System.out.println(info);
+
+		if(info!=null) {
+			good = dao.storeHeartList(info.getUserId());
+			System.out.println(good);
+		}
+		
+		String cp = req.getContextPath();
+
+		List<ProductDTO> lists;
+
+		lists = dao.getListOrder(1, 4, "amount desc");
+
+		//각각의 dto에 reviewCount 와 reviewRate 추가
+		ListIterator<ProductDTO> it = lists.listIterator();
+		
+		while(it.hasNext()){
+			ProductDTO vo = (ProductDTO)it.next();
+			
+			//dao.getReviewCount(vo.productId)
+			int reviewCount =  reviewDAO.getProductDataCount(vo.getSuperProduct());
+			//dao.getReviewRate(vo.productId)
+			float avgReviewRate = reviewDAO.productGetList_heart(vo.getSuperProduct());
+			
+			vo.setReviewCount(reviewCount);
+			vo.setReviewRate(avgReviewRate);
+		}
+
+		// 이미지저장 경로 보내주기
+		String imagePath = req.getSession().getServletContext().getRealPath("/upload");
+
+		req.setAttribute("good", good);
+		req.setAttribute("imagePath", imagePath);
+		req.setAttribute("lists", lists);
+
 		return "storeMain";
 	}
 

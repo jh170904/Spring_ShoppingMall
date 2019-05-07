@@ -21,7 +21,7 @@
 			<td>
 				<div class="gnb_area">
 					<ul class="gnb" >
-						<li><a href="#">스토어홈</a></li>
+						<li><a href="<%=cp2 %>/pr/storeMain.action">스토어홈</a></li>
 						<li><a href="<%=cp2 %>/pr/listNew.action">카테고리</a></li>
 						<li><a href="<%=cp2 %>/pr/listBest.action">랭킹</a></li>
 						<li><a href="#">코디속BEST</a></li>
