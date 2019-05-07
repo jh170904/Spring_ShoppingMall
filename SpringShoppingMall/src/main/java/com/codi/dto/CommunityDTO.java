@@ -3,6 +3,7 @@ package com.codi.dto;
 public class CommunityDTO {
 
 	private int iNum;
+	private String iSubject;
 	private String iContent;
 	private String userId;
 	private String iImage;
@@ -16,6 +17,12 @@ public class CommunityDTO {
 	}
 	public void setiNum(int iNum) {
 		this.iNum = iNum;
+	}
+	public String getiSubject() {
+		return iSubject;
+	}
+	public void setiSubject(String iSubject) {
+		this.iSubject = iSubject;
 	}
 	public String getiContent() {
 		return iContent;

@@ -14,7 +14,7 @@
 }
 
 #myPage_category{ 
-	width : 780px;
+	width : 940px;
 	height:50px;
 	margin-left: auto; 
 	margin-right: auto;
@@ -151,12 +151,21 @@
 			<li>
 				<a class="menuLink" href="#" id="">모두보기</a>
 			</li> 
-			<li>
-				<a class="menuLink" href="#" id="">사진</a>
-			</li> 
 			
 			<li>
 				<a class="menuLink" href="#" id="">질문과답변</a>
+			</li> 
+			
+			<li>
+				<a class="menuLink" href="<%=cp1%>/myPage/myInstarLists.action" id="myInstarLists.action">인스타</a>
+			</li> 
+						
+			<li>
+				<a class="menuLink" href="<%=cp1%>/myPage/instarWrited.action" id="instarWrited.action">인스타 올리기</a>
+			</li> 
+			
+			<li>
+				<a class="menuLink" href="#" id="">내코디</a>
 			</li> 
 			
 			<li>
@@ -165,10 +174,6 @@
 			
 			<li>
 				<a class="menuLink" href="#" id="">좋아요</a>
-			</li> 
-			
-			<li>
-				<a class="menuLink" href="#" id="">나의활동</a>
 			</li> 
 			 
 		</ul> 

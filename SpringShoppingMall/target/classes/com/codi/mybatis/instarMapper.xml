@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="instarMapper">
+
+<select id="getDataCount" resultType="int">
+	select nvl(count(*),0) from instarboard
+</select>
+
+<!-- 인스타 작성 -->
+<insert id="insertInstar" parameterType="com.codi.dto.CommunityDTO">
+	insert into instarBoard (iNum,iSubject,iContent,userId,iImage,iDate,iHitCount,iHashTag)
+	values (#{iNum},#{iSubject},#{iContent},#{userId},#{iImage},sysdate,0,#{iHashTag})
+</insert>
+
+<!-- 해당 사용자 인스타 정보 가져오기 -->
+<select id="selectUserInstar" parameterType="hashMap" resultType="com.codi.dto.CommunityDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select iNum,iSubject,iContent,userId,iImage,iDate,iHitCount,iHashTag
+	from instarboard order by idate desc)data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+
+<!-- 인스타보드 상세페이지 -->
+<select id="getOne" parameterType="int" resultType="com.codi.dto.CommunityDTO">
+	select iSubject,iContent,userId,iImage,iDate,iHitCount,iHashTag
+	from instarBoard where iNum=#{iNum}
+</select>
+
+</mapper>
