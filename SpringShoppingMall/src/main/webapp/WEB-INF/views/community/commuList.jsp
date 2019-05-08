@@ -115,14 +115,14 @@
 
 <c:if test="${j!=4 }">
 	<c:forEach begin="${j }" end="3" step="1">
-		<div style="width: 280px; height: 450px; display: inline-block; "></div>
+		<div style="width: 280px; height: 450px; display: inline-block; ">
+			<div style="position: relative;  text-align: left;"></div>
+		</div>
 		<c:set var="j" value="${j+1 }" />
 	</c:forEach>
-	</tr>
 </c:if>
 
-<div>
-
+</div>
 
 
 <%@include file="../layout/footer.jsp"  %>

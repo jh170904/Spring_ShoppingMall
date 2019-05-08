@@ -14,7 +14,7 @@
 }
 
 #myPage_category{ 
-	width : 940px;
+	width : 800px;
 	height:50px;
 	margin-left: auto; 
 	margin-right: auto;
@@ -112,8 +112,9 @@
          }
     	  
     	  z.style.color="#8080ff";
-    	  z.style.fontWeight="bold";    	  
-    	      	  
+    	  z.style.fontWeight="bold";   
+    	  z.style.border="1px solid #8080ff";
+    	  
 	 });
 	
 </script>
@@ -149,7 +150,7 @@
 	<nav> 
 		<ul> 
 			<li>
-				<a class="menuLink" href="#" id="">모두보기</a>
+				<a class="menuLink" href="<%=cp1%>/myPage/myPageMain.action" id="myPageMain.action">모두보기</a>
 			</li> 
 			
 			<li>
@@ -157,19 +158,15 @@
 			</li> 
 			
 			<li>
-				<a class="menuLink" href="<%=cp1%>/myPage/myInstarLists.action" id="myInstarLists.action">인스타</a>
+				<a class="menuLink" href="<%=cp1%>/myPage/myInstarLists.action" id="myInstarLists.action">내코디</a>
 			</li> 
 						
 			<li>
-				<a class="menuLink" href="<%=cp1%>/myPage/instarWrited.action" id="instarWrited.action">인스타 올리기</a>
+				<a class="menuLink" href="<%=cp1%>/codi/codiCreated.action" id="codiCreated.action">코디 올리기</a>
 			</li> 
 			
 			<li>
-				<a class="menuLink" href="#" id="">내코디</a>
-			</li> 
-			
-			<li>
-				<a class="menuLink" href="#" id="">스크랩북</a>
+				<a class="menuLink" href="#" id="">관심상품</a>
 			</li>
 			
 			<li>

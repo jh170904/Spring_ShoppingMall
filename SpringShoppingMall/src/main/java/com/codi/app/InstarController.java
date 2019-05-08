@@ -2,6 +2,8 @@ package com.codi.app;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -74,7 +76,7 @@ public class InstarController {
 		}
 		
 		//2. DB¿¡ ³Ö±â
-		dao.insertInstar(dto);
+		dao.updateInstar(dto);
 		
 		return "redirect:/myPage/myInstarLists.action";
 	}
@@ -126,10 +128,13 @@ public class InstarController {
 		dao.updateHitCount(iNum);
 		
 		dto.setiContent(dto.getiContent().replaceAll("\n", "<br/>"));
-		String hashTag[] = dto.getiHashTag().split("#");
+		String[] hashTag = dto.getiHashTag().split("#");
+		List<String> list = new ArrayList<String>(); 
+		Collections.addAll(list, hashTag); 
+		list.remove(0);
 		
 		request.setAttribute("dto", dto);
-		request.setAttribute("hashTag", hashTag);
+		request.setAttribute("hashTag", list);
 		request.setAttribute("imagePath", "../upload/instar");
 		
 		return "instar/instar";

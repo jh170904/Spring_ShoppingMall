@@ -20,8 +20,8 @@ public class InstarDAO {
 		return result;
 	}
 	
-	public void insertInstar(CommunityDTO dto) {
-		sessionTemplate.insert("instarMapper.insertInstar",dto);
+	public void updateInstar(CommunityDTO dto) {
+		sessionTemplate.update("instarMapper.updateInstar",dto);
 	}
 	
 	public int countUserInstar(String userId) {
