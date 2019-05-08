@@ -26,7 +26,7 @@ $(function(){
             async: true,
             type : 'POST',
             data : {superProduct:superProduct},
-            url : "../good.action",
+            url : "../storeGood.action",
             dataType : "json",
             contentType: "application/json; charset=UTF-8",
             success : function(data) {

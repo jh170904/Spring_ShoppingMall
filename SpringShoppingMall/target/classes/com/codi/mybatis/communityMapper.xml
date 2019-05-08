@@ -20,4 +20,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>
 </select>
 
+<!-- storeHeart count list -->
+<select id="myCodiHeartList" parameterType="String" resultType="String">
+	select inum from codiHeart where userId = #{userId}
+</select>
+
+<!-- storeHeart count -->
+<select id="myCodiHeart" parameterType="hashMap" resultType="int">
+	select nvl(count(*),0) from codiHeart
+	where iNum=#{iNum} and userId = #{userId}
+</select>
+
+<!-- storeHeart count -->
+<select id="heartCount" parameterType="int" resultType="int">
+	select nvl(count(*),0) from codiHeart
+	where iNum=#{iNum}
+</select>
+
+<!-- storeHeart insert -->
+<insert id="insertHeart" parameterType="hashMap">
+	insert into codiHeart (iNum,userId)
+	values (#{iNum},#{userId})
+</insert>
+
+<!-- storeHeart delete -->
+<delete id="deleteHeart" parameterType="hashMap">
+	delete codiHeart where iNum=#{iNum} and userId = #{userId}
+</delete>
+
 </mapper>

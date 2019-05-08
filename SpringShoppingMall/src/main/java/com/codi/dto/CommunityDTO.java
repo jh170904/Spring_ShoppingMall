@@ -1,5 +1,7 @@
 package com.codi.dto;
 
+import java.util.List;
+
 public class CommunityDTO {
 
 	private int iNum;
@@ -12,8 +14,16 @@ public class CommunityDTO {
 	private String iHashTag;
 	private int iHeart;
 	private int iComment;
+	private int heartCount;
 	
 	
+	
+	public int getHeartCount() {
+		return heartCount;
+	}
+	public void setHeartCount(int heartCount) {
+		this.heartCount = heartCount;
+	}
 	public int getiNum() {
 		return iNum;
 	}
