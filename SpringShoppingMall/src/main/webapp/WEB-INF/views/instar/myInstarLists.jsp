@@ -36,13 +36,13 @@
     -moz-align-items: center;
     align-items: center;
     width: 100%;
-    padding: 80px 0;
+    padding: 220px 0;
     border: 1px dashed #dbdbdb;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     color: #757575;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .profile-image {
@@ -74,24 +74,9 @@
 	text-align: center;
 }
 
-.instarDiv {
-	position: absolute; 
-	width: 170px; 
-	height: 130px; 
-	top: 51px; 
-	left: 539px; 
-	border-radius: 7px; 
-	background-color: rgba( 0, 0, 0, 0.3 );
-}
+.no_codi {
+	
 
-.instarDivP {
-	font-size: 40px; 
-	color: #ffffff; 
-	height: 130px; 
-	text-shadow: 2px 2px 6px #000000; 
-	text-align: center; 
-	line-height:130px; 
-	font-weight: bold; 
 }
 
 </style>
@@ -161,50 +146,43 @@
 
 </div>
 
-
 <div style="width: 750px; display: inline-block; vertical-align: top;">
-
-<div style="margin-bottom: 60px; position: relative;">
-<h5 class="post__title">관심코디 <strong>0</strong></h5>
-<a href="#" class="post--projects__upload post__upload">
-좋아요를 눌러보세요
-</a>
-</div>
-
-<div style="margin-bottom: 60px; position: relative;">
-<h5 class="post__title" style="width: 700px;">내코디 <strong>${userInstarCount }</strong>
-<c:if test="${userInstarCount != 0 }"><a href="<%=cp%>/myPage/myInstarLists.action" style="text-align: right; margin-left: 630px; color: #8080ff;">전체보기</a></c:if>
-</h5>
-<c:if test="${userInstarCount != 0 }">
-	<c:forEach var="dto" items="${instarList }">
-		<div style="display: inline-block; margin-right: 5px; position: relative;">
-			<a href="#">
-				<img alt="" src="${imagePath }/${dto.iImage}" width="170px;" height="130px" style="border-radius: 7px;">
-			</a><br/>
-			<p align="left" style="margin-top: 5px; font-size: 12px;">${dto.iSubject }</p>
+	<c:if test="${empty lists }">
+		<div  class="post__upload">
+			<a href="<%=cp1%>/codi/codicreated.action">
+			아직 포스팅이 없습니다.
 		</div>
-		<c:if test="${userInstarCount > 4 }">
-		<div class="instarDiv">
-			<p class="instarDivP"> + ${userInstarCount-4 }</p>
-		</div>
-		</c:if>
+	</c:if>
+	
+	<c:if test="${!empty lists }">
+	<%int cnt = 0;%>
+	<c:forEach var="dto" items="${lists }">
+
+	<%
+		if (cnt == 0) {
+			out.print("<dl>");
+		}
+	%>
+	<dd style="display: inline-block; margin-right: 5px; margin-bottom: 30px;">
+	<a href="<%=cp%>/pr/instarView.action?iNum=${dto.iNum}">
+		<img alt="" src="${imagePath }/${dto.iImage}" width="230" height="170" style="border-radius: 7px;"><br/>
+		<p align="left" style="font-size: 15px; margin-top: 5px;">${dto.iSubject }</p>
+	</a>
+	</dd>
+
+
+	<%cnt++;%>
+	
+	<%
+		if (cnt == 3) {
+			out.print("</dl>");
+			cnt = 0;
+		}
+	%>
 	</c:forEach>
-</c:if>
-<c:if test="${userInstarCount == 0 }">
-	<a href="<%=cp1%>/codi/codicreated.action" class="post--projects__upload post__upload">
-	첫 번째 코디를 공유해 보세요
-</a>
-</c:if>
-
+	</c:if>
+	
 </div>
-
-<div>
-
-
-
-</div>
-</div>
-
 
 </div>
 

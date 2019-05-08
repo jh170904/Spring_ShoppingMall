@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.codi.dao.CodiDAO;
 import com.codi.dao.MemberDAO;
@@ -151,7 +152,7 @@ public class CodiController {
 	}
 	
 	@RequestMapping(value = "/codi/insertBoard.action", method = {RequestMethod.POST, RequestMethod.GET})
-	public String insertBoard(HttpServletRequest request,HttpSession session,String str) throws Exception{
+	public String insertBoard(HttpServletRequest request,HttpSession session,String str,RedirectAttributes redirectAttributes) throws Exception{
 		
 		// , ·Î ±¸ºÐ
 		/*String[] array = str.split(",");
@@ -171,6 +172,9 @@ public class CodiController {
 		System.out.println(str);
 		System.out.println(fileName);
 		dao.insertCodi(inum+1, str,fileName,userid);
+		
+		redirectAttributes.addAttribute("iNum",inum+1);
+		redirectAttributes.addAttribute("iImage",fileName);
 
 		return "redirect:/myPage/instarWrited.action";
 	}

@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 인스타 작성 -->
 <update id="updateInstar" parameterType="com.codi.dto.CommunityDTO">
-	update codiList set iSubject=#{iSubject},iDate=sysdate,iHitCount=0,iHashTag=#{iHashTag}
+	update codiList set iSubject=#{iSubject},iContent=#{iContent},iHashTag=#{iHashTag}
 	where iNum=#{iNum}
 </update>
 

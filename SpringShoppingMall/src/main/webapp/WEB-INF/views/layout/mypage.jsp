@@ -113,7 +113,7 @@
     	  
     	  z.style.color="#8080ff";
     	  z.style.fontWeight="bold";   
-    	  z.style.border="1px solid #8080ff";
+    	  z.style.border_bottom="1px solid #8080ff";
     	  
 	 });
 	
@@ -162,7 +162,7 @@
 			</li> 
 						
 			<li>
-				<a class="menuLink" href="<%=cp1%>/codi/codiCreated.action" id="codiCreated.action">코디 올리기</a>
+				<a class="menuLink" href="<%=cp1%>/codi/codicreated.action" id="codiCreated.action">코디 올리기</a>
 			</li> 
 			
 			<li>
@@ -170,7 +170,7 @@
 			</li>
 			
 			<li>
-				<a class="menuLink" href="#" id="">좋아요</a>
+				<a class="menuLink" href="#" id="">관심코디</a>
 			</li> 
 			 
 		</ul> 
