@@ -126,7 +126,7 @@ public class MemberController {
 		}
         
         String redirectUrl = (String) session.getAttribute("prevPage");
-        System.out.println(redirectUrl);
+        //System.out.println(redirectUrl);
         
 		return "redirect:"+redirectUrl;
 	}

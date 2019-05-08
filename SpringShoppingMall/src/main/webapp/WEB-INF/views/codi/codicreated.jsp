@@ -37,8 +37,8 @@
 .selceted {
 	/*div끼리 영향 안받게*/
 	position: absolute;
-	top:230px;
-	left:0px;
+	top:250px;
+	left:150px;
 	
 }
 
@@ -92,7 +92,7 @@
 					containment : "#droppable",
 					scroll : false
 				}).resizable({
-					containment : "#droppable",
+					//containment : "#droppable",
 					ghost : true,
 					edges : {
 						left : true,
@@ -108,6 +108,25 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
 <script type="text/javascript">
 	function capture() {
+		
+		var chk=0;
+		
+		var str="";
+		for(var i=0;i<=10;i++){
+			if($('#id'+i).children().attr('id')!=null){
+				//alert($('#id'+i).children().attr('id'));
+				str+=$('#id'+i).children().attr('id')+',';
+				chk=1;
+			}
+		
+		}
+		
+		if(chk==0){
+			alert("코디할 옷을 선택해주세요.");
+			return;
+		}
+
+		$('#str').val(str);
 
 		html2canvas($("#droppable"), {
 			onrendered : function(canvas) {
@@ -121,7 +140,7 @@
 					data : $("form").serialize(),
 					url : "imageCreate.ajax",
 					error : function(a, b, c) {
-						//alert("사진이 저장되었습니다.");
+						alert("사진이 저장되었습니다.");
 						sendIt();
 					},
 					success : function(data) {
@@ -143,25 +162,6 @@
 	function sendIt(){
 		
 		var f= document.dynAjax;
-		var chk=0;
-		
-		var str="";
-		for(var i=0;i<=10;i++){
-			if($('#id'+i).children().attr('id')!=null){
-				//alert($('#id'+i).children().attr('id'));
-				str+=$('#id'+i).children().attr('id')+',';
-				chk=1;
-			}
-		
-		}
-		
-		if(chk==0){
-			alert("코디할 옷을 선택해주세요.");
-			return;
-		}
-
-		$('#str').val(str);
-		//capture();
 		
 		f.action="<%=cp1%>/codi/insertBoard.action";
 		f.submit(); 
@@ -181,7 +181,7 @@
 
 			var params = "category=" + $(this).val();
 
-	        alert(params);
+	        //alert(params);
 	       
 	        $.ajax({				
 				type:"POST",
@@ -234,9 +234,9 @@
 </head>
 </head>
 <body>
-	<div id="sector1" style="width: 1600px; margin-top: 20px;">
+	<div id="sector1" style="width: 1600px; margin-top: 20px;  margin-left:auto; margin-right:auto;">
 		<div id="droppable" class="ui-widget-header"
-			style="width: 800px; height: 640px; float: left; border: 2px solid #8080ff; background: white;">
+			style="width: 800px; height: 700px; float: left; border: 2px solid #8080ff; background: white;">
 			<div id="container" style="width: 100%; height: 100%;">
 			
 			
@@ -255,7 +255,7 @@
 		<div class="imageList">
 			<table style="width: 700px; margin-left: 50px;">
 
-				<tr height="30px" style="float:left; position: absolute; left:810px; top:230px;">
+				<tr height="30px" style="float:left; position: absolute; left:950px; top:230px;">
 					<td><input type="button" value="OUTER" class="ctg"/></td>
 					<td><input type="button" value="TOP"  class="ctg"/></td>
 					<td><input type="button" value="BOTTOM" class="ctg"/></td>
@@ -266,7 +266,7 @@
 				</tr>
 				
 				<form name="dynAjax">
-				<div id="ajax" style=" position: absolute; left:810px; top:300px;">
+				<div id="ajax" style=" position: absolute; left:950px; top:300px;">
 			
 				</div>
 				<input type="hidden" name="str" id="str">
