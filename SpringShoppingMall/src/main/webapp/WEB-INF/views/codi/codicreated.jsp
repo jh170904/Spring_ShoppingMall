@@ -253,9 +253,9 @@
 		</div>
 
 		<div class="imageList">
-			<table style="width: 700px; margin-left: 50px;">
+			<table style="width: 700px; margin-left: 30px; margin-bottom: 20px;">
 
-				<tr height="30px" style="float:left; position: absolute; left:950px; top:230px;">
+				<tr height="30px" style="float:left; position: relative; ">
 					<td><input type="button" value="OUTER" class="ctg"/></td>
 					<td><input type="button" value="TOP"  class="ctg"/></td>
 					<td><input type="button" value="BOTTOM" class="ctg"/></td>
@@ -264,15 +264,15 @@
 					<td><input type="button" value="BAG" class="ctg"/></td>
 					<td><input type="button" value="ACC" class="ctg"/></td>
 				</tr>
+		    </table>
 				
 				<form name="dynAjax">
-				<div id="ajax" style=" position: absolute; left:950px; top:300px;">
+				<div id="ajax" style=" position: relative; margin-left: 20px;">
 			
 				</div>
 				<input type="hidden" name="str" id="str">
 				</form>
 
-			</table>
 		</div>
 
 
