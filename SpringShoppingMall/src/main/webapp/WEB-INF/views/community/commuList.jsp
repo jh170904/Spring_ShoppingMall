@@ -163,7 +163,7 @@ $(function(){
 
 <c:if test="${j!=4 and j!=0}">
 	<c:forEach begin="${j }" end="3" step="1">
-		<div style="width: 280px; height: 450px; display: inline-block; "></div>
+		<div style="width: 280px; display: inline-block; "></div>
 		<c:set var="j" value="${j+1 }" />
 	</c:forEach>
 	</div>
