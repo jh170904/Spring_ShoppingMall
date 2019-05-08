@@ -23,7 +23,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.codi.dao.InstarDAO;
 import com.codi.dto.CommunityDTO;
 import com.codi.dto.MemberDTO;
-import com.codi.dto.ReviewDTO;
 import com.codi.util.MyUtil;
 
 @Controller("instarController")
@@ -37,7 +36,12 @@ public class InstarController {
 	MyUtil myUtil;
 	
 	@RequestMapping(value = "/myPage/instarWrited.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String instarWrited(HttpServletRequest req) {
+	public String instarWrited(HttpServletRequest request ,HttpServletResponse response) {
+		
+		request.setAttribute("iNum", Integer.parseInt(request.getParameter("iNum")));
+		request.setAttribute("iImage", request.getParameter("iImage")+ ".png");
+		request.setAttribute("imagePath", "../upload/makecodi");
+		System.out.println("번호 : " + Integer.parseInt(request.getParameter("iNum")));
 		
 		return "instar/instarWrited";
 		
@@ -45,37 +49,7 @@ public class InstarController {
 	
 	@RequestMapping(value = "/myPage/instarWrited_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String instarWrited_ok(CommunityDTO dto, MultipartHttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
-		
-		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
-		
-		dto.setUserId(info.getUserId());
-		dto.setiImage("");
-		dto.setiNum(dao.getDataCount()+1);
 
-		Date date = new Date();
-		SimpleDateFormat today = new SimpleDateFormat("yyyymmdd24hhmmss");
-		String time = today.format(date);
-		
-		String path = request.getSession().getServletContext().getRealPath("/upload/instar");
-		
-		MultipartFile file = request.getFile("instarImage");
-		
-		if(file!=null && file.getSize()>0) {
-			try {
-					
-				String saveName = time + file.getOriginalFilename();
-					
-				File saveFile = new File(path,saveName); 
-				file.transferTo(saveFile);
-					
-				dto.setiImage(saveName);
-
-			} catch (Exception e) {
-				System.out.println(e.toString());
-			}
-		}
-		
-		//2. DB에 넣기
 		dao.updateInstar(dto);
 		
 		return "redirect:/myPage/myInstarLists.action";
@@ -110,8 +84,9 @@ public class InstarController {
 		String listUrl = cp + "/myPage/myInstarLists.action";
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
+		request.setAttribute("userId", info.getUserId());
 		request.setAttribute("lists", lists);
-		request.setAttribute("imagePath", "../upload/instar");
+		request.setAttribute("imagePath", "../upload/makecodi");
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("pageNum", pageNum);
 		
@@ -119,28 +94,44 @@ public class InstarController {
 		
 	}
 	
-	@RequestMapping(value = "/pr/instarView.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String instarView(CommunityDTO dto, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/myPage/myCodiHeartists.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String mycodiHeartists(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) {
 		
-		int iNum = Integer.parseInt(request.getParameter("iNum"));
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		String cp = request.getContextPath();
 		
-		dto = dao.getOneInstar(iNum);
-		dao.updateHitCount(iNum);
+		String pageNum = request.getParameter("pageNum");
 		
-		dto.setiContent(dto.getiContent().replaceAll("\n", "<br/>"));
-		String[] hashTag = dto.getiHashTag().split("#");
-		List<String> list = new ArrayList<String>(); 
-		Collections.addAll(list, hashTag); 
-		list.remove(0);
+		int currentPage = 1;
 		
-		request.setAttribute("dto", dto);
-		request.setAttribute("hashTag", list);
-		request.setAttribute("imagePath", "../upload/instar");
+		if(pageNum!=null)
+			currentPage = Integer.parseInt(pageNum);
 		
-		return "instar/instar";
+		int dataCount = dao.getUserCodiHeartCount(info.getUserId());
+		
+		int numPerPage = 12;
+		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+		
+		if(currentPage>totalPage)
+			currentPage = totalPage;
+		
+		int start = (currentPage-1)*numPerPage+1;
+		int end = currentPage*numPerPage;
+		
+		List<CommunityDTO> lists = dao.getUserCodiHeart(info.getUserId(), start, end);
+		
+		String listUrl = cp + "/myPage/myCodiHeartLists.action";
+		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		
+		request.setAttribute("userId", info.getUserId());
+		request.setAttribute("lists", lists);
+		request.setAttribute("imagePath", "../upload/makecodi");
+		request.setAttribute("pageIndexList", pageIndexList);
+		request.setAttribute("pageNum", pageNum);
+		
+		return "instar/myCodiHeartLists";
 		
 	}
-	
 	
 	
 }

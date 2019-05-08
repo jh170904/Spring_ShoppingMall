@@ -15,13 +15,6 @@
     padding-top: 60px;
 }
 
-.post__title {
-    color: #000;
-    font-weight: 700;
-    position: relative;
-    margin-bottom: 20px;
-}
-
 .post__upload {
     display: -webkit-box;
     display: -moz-flex;
@@ -74,11 +67,6 @@
 	text-align: center;
 }
 
-.no_codi {
-	
-
-}
-
 </style>
 
 <div class="container2">
@@ -116,7 +104,7 @@
 		</div>
 		
 		<div class="short-cut__item ">
-		<a href="#">
+		<a href="<%=cp%>/myPage/myCodiHeartists.action">
 		<div class="short-cut__icon">
 			<svg width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 			<path fill="currentColor" d="M22.971 7.638c-.548-5.17-7.119-7.135-10.57-2.488a.5.5 0 0 1-.802 0C8.148.503 1.577 2.469 1.029 7.625.642 12.451 3.897 17.183 12 21.436c8.104-4.252 11.36-8.984 10.972-13.798zm.996-.093c.428 5.319-3.137 10.446-11.738 14.899a.5.5 0 0 1-.46 0C3.169 17.99-.395 12.864.034 7.532.656 1.67 7.904-.683 12 4.052 16.096-.683 23.344 1.67 23.967 7.545z">
@@ -128,7 +116,7 @@
 		</div>
 		
 		<div class="short-cut__item">
-		<a href="#">
+		<a href="<%=cp%>/myPage/myInstarLists.action">
 		<div class="short-cut__icon">
 			<svg width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 				<path fill="#000" fill-opacity=".74" fill-rule="evenodd" transform="matrix(1 0 0 -1 0 23.033)" d="M12.943 6.342a2 2 0 0 1-1.886 0L3 2.032V20.5a.5.5 0 0 0 .5.5h17a.5.5 0 0 0 .5-.5V2.033l-8.057 4.309zm-.471-.882l8.056-4.31A1 1 0 0 1 22 2.034V20.5a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 20.5V2.033a1 1 0 0 1 1.472-.882l8.056 4.31a1 1 0 0 0 .944 0z">
@@ -149,7 +137,6 @@
 <div style="width: 750px; display: inline-block; vertical-align: top;">
 	<c:if test="${empty lists }">
 		<div  class="post__upload">
-			<a href="<%=cp1%>/codi/codicreated.action">
 			아직 포스팅이 없습니다.
 		</div>
 	</c:if>
@@ -164,8 +151,8 @@
 		}
 	%>
 	<dd style="display: inline-block; margin-right: 5px; margin-bottom: 30px;">
-	<a href="<%=cp%>/pr/instarView.action?iNum=${dto.iNum}">
-		<img alt="" src="${imagePath }/${dto.iImage}" width="230" height="170" style="border-radius: 7px;"><br/>
+	<a href="<%=cp%>/pr/codiDetailList.action?iNum=${dto.iNum}">
+		<img alt="" src="${imagePath }/${dto.iImage}.png" width="230" height="170" style="border:1px solid #d4d4d4; border-radius: 7px;"><br/>
 		<p align="left" style="font-size: 15px; margin-top: 5px;">${dto.iSubject }</p>
 	</a>
 	</dd>

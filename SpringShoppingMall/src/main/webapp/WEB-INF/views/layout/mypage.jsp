@@ -170,7 +170,7 @@
 			</li>
 			
 			<li>
-				<a class="menuLink" href="#" id="">관심코디</a>
+				<a class="menuLink" href="<%=cp1%>/myPage/myCodiHeartists.action" id="myCodiHeartists.action">관심코디</a>
 			</li> 
 			 
 		</ul> 
