@@ -169,8 +169,8 @@ public class CodiController {
 		
 		int inum=dao.getMaxNum();
 		
-		System.out.println(str);
-		System.out.println(fileName);
+		//System.out.println(str);
+		//System.out.println(fileName);
 		dao.insertCodi(inum+1, str,fileName,userid);
 		
 		redirectAttributes.addAttribute("iNum",inum+1);

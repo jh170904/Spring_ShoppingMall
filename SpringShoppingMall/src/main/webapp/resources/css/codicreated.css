@@ -22,7 +22,12 @@
 	position: absolute;
 	top:0px;
 	left:0px;
-	
+}
+
+.checked {
+	position: absolute;
+	top:0px;
+	left:0px;
 }
 
 .selected {
@@ -45,7 +50,7 @@
 #sector1 {
 	display: block;
 	width: 100%;
-	height: 640px;
+	height: 700px;
 }
 
 .imageList {

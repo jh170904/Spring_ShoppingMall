@@ -40,13 +40,18 @@ public class InstarDAO {
 		
 	}
 	
-	public CommunityDTO getOneInstar(int iNum) {
-		CommunityDTO dto = sessionTemplate.selectOne("instarMapper.getOneInstar",iNum);
-		return dto;
+	public int getUserCodiHeartCount(String userId) {
+		int result = sessionTemplate.selectOne("instarMapper.getUserCodiHeartCount",userId);
+		return result;
 	}
 	
-	public void updateHitCount(int iNum) {
-		sessionTemplate.update("instarMapper.updateHitCount",iNum);
-	}
+	public List<CommunityDTO> getUserCodiHeart(String userId,int start, int end){
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("userId", userId);
+		params.put("start", start);
+		params.put("end", end);
 		
+		List<CommunityDTO> lists = sessionTemplate.selectList("instarMapper.getUserCodiHeart",params);
+		return lists;
+	}
 }

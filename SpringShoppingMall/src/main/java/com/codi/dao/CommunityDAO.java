@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.codi.dto.CommunityDTO;
+import com.codi.dto.ProductDTO;
 
 @Component("communityDAO")
 public class CommunityDAO {	@Autowired
@@ -45,4 +46,60 @@ public class CommunityDAO {	@Autowired
 		return lists;
 	}
 	
+	//myCodiHeart
+	public int myCodiHeart(int iNum,String userId){
+		
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("iNum", iNum);
+		params.put("userId",userId);
+
+		int result = 
+				sessionTemplate.selectOne("commuMapper.myCodiHeart",params);
+
+		return result;
+	}
+	
+	//myCodiHeartList
+	public List<String> myCodiHeartList(String userId){
+	
+		List<String> lists = 
+				sessionTemplate.selectList("commuMapper.myCodiHeartList",userId);
+	
+		return lists;
+	}
+	
+	//myCodiHeartList
+	public int heartCount(int iNum){
+	
+		int heartCount = 
+				sessionTemplate.selectOne("commuMapper.heartCount",iNum);
+	
+		return heartCount;
+	}
+	
+	//insertHeart
+	public void insertHeart(int iNum,String userId){
+		
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("iNum", iNum);
+		params.put("userId",userId);
+		
+		sessionTemplate.insert("commuMapper.insertHeart",params);
+	}
+	
+	//deleteHeart
+	public void deleteHeart(int iNum,String userId){
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("iNum", iNum);
+		params.put("userId",userId);
+		
+		sessionTemplate.delete("commuMapper.deleteHeart", params);
+
+	}
 }

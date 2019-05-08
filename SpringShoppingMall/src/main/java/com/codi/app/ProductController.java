@@ -200,11 +200,8 @@ public class ProductController {
 
 		List<String> good = null;
 
-		System.out.println(info);
-
 		if(info!=null) {
 			good = dao.storeHeartList(info.getUserId());
-			System.out.println(good);
 		}
 		
 		String order = req.getParameter("order");
@@ -628,7 +625,7 @@ public class ProductController {
 		return "redirect:/productAdminList.action";
 	}
 
-	@RequestMapping(value = "/good.action", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/storeGood.action", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map<Object, Object> good(@RequestBody String superProduct, HttpSession session) {
 

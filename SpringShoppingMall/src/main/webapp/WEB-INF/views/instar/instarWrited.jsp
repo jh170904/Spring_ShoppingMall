@@ -116,12 +116,6 @@
 		
 		var f = document.instarForm;
 		
-		str = f.instarImage.value;
-		if(!str) {
-	        alert("사진을 넣어주세요");
-	        return;
-	    }
-		
 		str = f.iSubject.value;
 		if(!str) {
 	        alert("제목을 입력하세요");
@@ -154,8 +148,7 @@
 	<form id="instarForm" method="post" name="instarForm" enctype="multipart/form-data">
 		<div class="form_fields">
 			<div id="upload_image">
-				<img id="showImage" src="">			
-               	<input type="file" id="instarImage" name="instarImage"  onchange="LoadImg(this);"/>
+				<img id="showImage" src="${imagePath }/${iImage}">
 			</div>
 			
 			<div class="description">
@@ -174,6 +167,8 @@
 		<div class="ui-floating-menu">
 			<button class="button" onclick="writeInstar();">작성하기</button>
 		</div>
+		
+		<input type="hidden" name="iNum" value="${iNum }">
 	</form>
 	
 </body>

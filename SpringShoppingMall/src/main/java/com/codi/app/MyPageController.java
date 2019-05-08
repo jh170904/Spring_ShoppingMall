@@ -50,13 +50,17 @@ public class MyPageController {
 		}
 		
 		int userInstarCount = instardao.countUserInstar(userId);
+		int userCodiHeartCount = instardao.getUserCodiHeartCount(userId);
 		
 		List<CommunityDTO> instarList = instardao.selectUserInstar(userId, 1, 4);
+		List<CommunityDTO> codiHeartList = instardao.getUserCodiHeart(userId, 1, 4);
 		
 		req.setAttribute("userId", userId);
 		req.setAttribute("userInstarCount", userInstarCount);
 		req.setAttribute("instarList", instarList);
-		req.setAttribute("imagePath", "../upload/instar");
+		req.setAttribute("userCodiHeartCount", userCodiHeartCount);
+		req.setAttribute("codiHeartList", codiHeartList);
+		req.setAttribute("imagePath", "../upload/makecodi");
 
 		return "mypage/mypageMain";
 	}
