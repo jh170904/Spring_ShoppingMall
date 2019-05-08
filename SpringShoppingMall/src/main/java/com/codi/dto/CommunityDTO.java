@@ -12,7 +12,6 @@ public class CommunityDTO {
 	private String iHashTag;
 	private int iHeart;
 	private int iComment;
-	private int iScrap;
 	
 	
 	public int getiNum() {
@@ -74,12 +73,6 @@ public class CommunityDTO {
 	}
 	public void setiComment(int iComment) {
 		this.iComment = iComment;
-	}
-	public int getiScrap() {
-		return iScrap;
-	}
-	public void setiScrap(int iScrap) {
-		this.iScrap = iScrap;
 	}
 	
 }

@@ -1,3 +1,4 @@
+<%@page import="com.codi.dto.MemberDTO"%>
 <%@page import="java.net.URLEncoder"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@include file="../layout/commuNav.jsp"  %>
@@ -42,10 +43,57 @@
 }
 
 
-
-
-
 </style>
+
+<script type="text/javascript">
+
+
+$(function(){
+	
+	
+	$(".goodButton").click(function(){
+
+
+		var superProduct = $(this).attr('value');
+
+
+        var info = '<%=(MemberDTO)session.getAttribute("customInfo")%>';
+        
+        if(info=="" || info==null){
+        	alert("ㅅㅂ로그인이 필요합니다.");
+           	alert(id);
+        	return;
+        }
+        
+        
+        
+        $.ajax({
+            async: true,
+            type : 'POST',
+            data : superProduct,
+            url : "../good.action",
+            dataType : "json",
+            contentType: "application/json; charset=UTF-8",
+            success : function(data) {
+            	if(data.cnt > 0) {
+            		$(".goodDiv" + superProduct).html('♡');
+                } else {
+            		$(".goodDiv" + superProduct).html('♥');
+                }
+                
+            },
+            error : function(error) {
+            	alert("로그인이 필요합니다.");
+            }
+        });
+			
+	});
+	
+});
+
+
+
+</script>
 
 <div class="container2">
 
@@ -81,7 +129,7 @@
 	</a>
 	
 	<div style="display: flex;">
-		<button class="card__action__btn" type="button">
+		<button class="goodButton" value="${dto.iNum}">
 		<img src="../resources/image/heart.PNG" style="background-position: width: 30px; height: 30px;"/>
 		1
 		</button>
@@ -113,16 +161,13 @@
 
 </c:forEach>
 
-<c:if test="${j!=4 }">
+<c:if test="${j!=4 and j!=0}">
 	<c:forEach begin="${j }" end="3" step="1">
-		<div style="width: 280px; height: 450px; display: inline-block; ">
-			<div style="position: relative;  text-align: left;"></div>
-		</div>
+		<div style="width: 280px; height: 450px; display: inline-block; "></div>
 		<c:set var="j" value="${j+1 }" />
 	</c:forEach>
+	</div>
 </c:if>
-
-</div>
 
 
 <%@include file="../layout/footer.jsp"  %>

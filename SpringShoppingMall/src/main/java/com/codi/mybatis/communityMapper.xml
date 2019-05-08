@@ -7,14 +7,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="commuMapper">
 
 <select id="getDataCount" resultType="int">
-	select nvl(count(*),0) from instarboard
+	select nvl(count(*),0) from codilist
 </select>
 
 <select id="getLists" parameterType="hashMap" resultType="com.codi.dto.CommunityDTO">
 	select * from (
 	select rownum rnum, data.* from(
 	select inum, icontent, userid,iimage,idate,ihitcount,ihashtag
-	from instarboard order by idate desc)data)
+	from codilist order by idate desc)data)
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
