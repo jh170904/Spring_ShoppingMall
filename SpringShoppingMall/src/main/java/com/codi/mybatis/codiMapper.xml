@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="codiMapper">
+
+<!-- 기본 dataCount -->
+<select id="getDataCount" resultType="int">
+	select nvl(count(*),0) from codi
+</select>
+
+<!-- 카테고리 dataCount -->
+<select id="getDataCountSel" parameterType="String" resultType="int">
+	select nvl(count(*),0) from codi where category=#{category}
+</select>
+
+<!-- 기본 list -->
+<select id="getLists" parameterType="hashMap" resultType="com.codi.dto.CodiDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select productid,productname,savefilename,originalName 
+	from codi order by productid desc)data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- 카테고리별 list -->
+<select id="getListsSelect" parameterType="String" resultType="com.codi.dto.CodiDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select productid,productname,savefilename,originalName 
+	from codi where category=#{category}
+	order by productid desc)data)
+</select>
+
+<!-- codi 목록 insert -->
+<insert id="insertCodi" parameterType="hashMap">
+	insert into codiList(inum,productId,iimage,userid) 
+	values (#{inum},#{productId},#{iimage},#{userid})
+</insert>
+
+<!-- BNUM 가져옴 -->
+<select id="maxNum" resultType="int">
+	select nvl(max(inum),0) from codiList
+</select>
+
+</mapper>

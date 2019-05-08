@@ -66,6 +66,7 @@
 	  <mapping path="/storeGood/**" />
 	  <mapping path="/myPage/**" />
 	  <mapping path="/review/**" />
+	  <mapping path="/codi/**"/>
 	  <beans:bean class="com.codi.interceptor.Interceptor" />
 	 </interceptor>
 	</interceptors>
