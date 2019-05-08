@@ -12,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.codi.dao.InstarDAO;
 import com.codi.dao.MyPageDAO;
 import com.codi.dao.ReviewDAO;
+import com.codi.dto.CommunityDTO;
 import com.codi.dto.MemberDTO;
 import com.codi.dto.ProductDTO;
 import com.codi.util.MyUtil;
@@ -31,6 +33,10 @@ public class MyPageController {
 	@Autowired
 	@Qualifier("myPageDAO")
 	MyPageDAO dao;
+	
+	@Autowired
+	@Qualifier("instarDAO")
+	InstarDAO instardao;
 
 	@RequestMapping(value = "myPage/myPageMain.action", method = RequestMethod.GET)
 	public String mypageMain(HttpServletRequest req,HttpSession session) {
@@ -43,7 +49,14 @@ public class MyPageController {
 			userId = info.getUserId();
 		}
 		
+		int userInstarCount = instardao.countUserInstar(userId);
+		
+		List<CommunityDTO> instarList = instardao.selectUserInstar(userId, 1, 4);
+		
 		req.setAttribute("userId", userId);
+		req.setAttribute("userInstarCount", userInstarCount);
+		req.setAttribute("instarList", instarList);
+		req.setAttribute("imagePath", "../upload/instar");
 
 		return "mypage/mypageMain";
 	}

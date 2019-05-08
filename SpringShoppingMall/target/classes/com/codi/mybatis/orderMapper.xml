@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 
 <select id="getUserCoupon" parameterType="hashMap" resultType="com.codi.dto.CouponDTO">
 	select userId,issueDate,coupon.couponKey couponKey,couponName,couponScore,discount,couponStartDay,couponEndDay,couponGrade,used
-	from coupon,issue ";
+	from coupon,issue
 	where issue.couponKey = coupon.couponKey
 	and userId=? and used='N' and ?>=couponScore
 </select>

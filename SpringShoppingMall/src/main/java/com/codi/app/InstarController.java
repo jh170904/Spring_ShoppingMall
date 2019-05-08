@@ -3,6 +3,7 @@ package com.codi.app;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -79,10 +80,62 @@ public class InstarController {
 	}
 	
 	@RequestMapping(value = "/myPage/myInstarLists.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String myInstarLists(HttpServletRequest req) {
+	public String myInstarLists(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		String cp = request.getContextPath();
+		
+		String pageNum = request.getParameter("pageNum");
+		
+		int currentPage = 1;
+		
+		if(pageNum!=null)
+			currentPage = Integer.parseInt(pageNum);
+		
+		int dataCount = dao.countUserInstar(info.getUserId());
+		
+		int numPerPage = 12;
+		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+		
+		if(currentPage>totalPage)
+			currentPage = totalPage;
+		
+		int start = (currentPage-1)*numPerPage+1;
+		int end = currentPage*numPerPage;
+		
+		List<CommunityDTO> lists = dao.selectUserInstar(info.getUserId(), start, end);
+		
+		String listUrl = cp + "/myPage/myInstarLists.action";
+		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		
+		request.setAttribute("lists", lists);
+		request.setAttribute("imagePath", "../upload/instar");
+		request.setAttribute("pageIndexList", pageIndexList);
+		request.setAttribute("pageNum", pageNum);
 		
 		return "instar/myInstarLists";
 		
 	}
+	
+	@RequestMapping(value = "/pr/instarView.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String instarView(CommunityDTO dto, HttpServletRequest request, HttpServletResponse response) {
+		
+		int iNum = Integer.parseInt(request.getParameter("iNum"));
+		
+		dto = dao.getOneInstar(iNum);
+		dao.updateHitCount(iNum);
+		
+		dto.setiContent(dto.getiContent().replaceAll("\n", "<br/>"));
+		String hashTag[] = dto.getiHashTag().split("#");
+		
+		request.setAttribute("dto", dto);
+		request.setAttribute("hashTag", hashTag);
+		request.setAttribute("imagePath", "../upload/instar");
+		
+		return "instar/instar";
+		
+	}
+	
+	
 	
 }

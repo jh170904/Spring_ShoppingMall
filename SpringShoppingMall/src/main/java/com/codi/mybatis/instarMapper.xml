@@ -16,22 +16,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	values (#{iNum},#{iSubject},#{iContent},#{userId},#{iImage},sysdate,0,#{iHashTag})
 </insert>
 
+<!-- 해당 사용자 인스타 개수 -->
+<select id="countUserInstar" parameterType="String" resultType="int">
+	select nvl(count(*),0) from instarboard where userId=#{userId}
+</select>
+
 <!-- 해당 사용자 인스타 정보 가져오기 -->
 <select id="selectUserInstar" parameterType="hashMap" resultType="com.codi.dto.CommunityDTO">
 	select * from (
 	select rownum rnum, data.* from(
-	select iNum,iSubject,iContent,userId,iImage,iDate,iHitCount,iHashTag
-	from instarboard order by idate desc)data)
+	select iNum,iSubject,iContent,userId,iImage,iDate,iHitCount,iHashTag,iHeart,iComment,iScrap
+	from instarboard where userId=#{userId} order by idate desc)data)
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
 </select>
 
-
 <!-- 인스타보드 상세페이지 -->
-<select id="getOne" parameterType="int" resultType="com.codi.dto.CommunityDTO">
+<select id="getOneInstar" parameterType="int" resultType="com.codi.dto.CommunityDTO">
 	select iSubject,iContent,userId,iImage,iDate,iHitCount,iHashTag
 	from instarBoard where iNum=#{iNum}
 </select>
+
+<!-- 조회수 증가 -->
+<update id="updateHitCount" parameterType="int">
+	update instarBoard set iHitCount=iHitCount+1 where iNum=#{iNum}
+</update>
 
 </mapper>

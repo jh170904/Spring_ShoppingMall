@@ -74,6 +74,25 @@
 	text-align: center;
 }
 
+.instarDiv {
+	position: absolute; 
+	width: 170px; 
+	height: 130px; 
+	top: 51px; 
+	left: 539px; 
+	border-radius: 7px; 
+	background-color: rgba( 0, 0, 0, 0.3 );
+}
+
+.instarDivP {
+	font-size: 40px; 
+	color: #ffffff; 
+	height: 130px; 
+	text-shadow: 2px 2px 6px #000000; 
+	text-align: center; 
+	line-height:130px; 
+	font-weight: bold; 
+}
 
 </style>
 
@@ -143,9 +162,6 @@
 </div>
 
 
-
-
-
 <div style="width: 750px; display: inline-block; vertical-align: top;">
 
 <div style="margin-bottom: 60px; position: relative;">
@@ -156,10 +172,30 @@
 </div>
 
 <div style="margin-bottom: 60px; position: relative;">
-<h5 class="post__title">집들이 <strong>0</strong></h5>
-<a href="/projects/write" class="post--projects__upload post__upload">
-첫 번째 집들이를 올려보세요
+<h5 class="post__title" style="width: 700px;">인스타 <strong>${userInstarCount }</strong>
+<c:if test="${userInstarCount != 0 }"><a href="<%=cp%>/myPage/myInstarLists.action" style="text-align: right; margin-left: 630px; color: #8080ff;">전체보기</a></c:if>
+</h5>
+<c:if test="${userInstarCount != 0 }">
+	<c:forEach var="dto" items="${instarList }">
+		<div style="display: inline-block; margin-right: 5px; position: relative;">
+			<a href="#">
+				<img alt="" src="${imagePath }/${dto.iImage}" width="170px;" height="130px" style="border-radius: 7px;">
+			</a><br/>
+			<p align="left" style="margin-top: 5px; font-size: 12px;">${dto.iSubject }</p>
+		</div>
+		<c:if test="${userInstarCount > 4 }">
+		<div class="instarDiv">
+			<p class="instarDivP"> + ${userInstarCount-4 }</p>
+		</div>
+		</c:if>
+	</c:forEach>
+</c:if>
+<c:if test="${userInstarCount == 0 }">
+	<a href="<%=cp%>/myPage/instarWrited.action" class="post--projects__upload post__upload">
+	첫 번째 일상을 공유해 보세요
 </a>
+</c:if>
+
 </div>
 
 <div>

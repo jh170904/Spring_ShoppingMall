@@ -10,6 +10,9 @@ public class CommunityDTO {
 	private String iDate;
 	private int iHitCount;
 	private String iHashTag;
+	private int iHeart;
+	private int iComment;
+	private int iScrap;
 	
 	
 	public int getiNum() {
@@ -60,7 +63,23 @@ public class CommunityDTO {
 	public void setiHashTag(String iHashTag) {
 		this.iHashTag = iHashTag;
 	}
-	
-	
+	public int getiHeart() {
+		return iHeart;
+	}
+	public void setiHeart(int iHeart) {
+		this.iHeart = iHeart;
+	}
+	public int getiComment() {
+		return iComment;
+	}
+	public void setiComment(int iComment) {
+		this.iComment = iComment;
+	}
+	public int getiScrap() {
+		return iScrap;
+	}
+	public void setiScrap(int iScrap) {
+		this.iScrap = iScrap;
+	}
 	
 }
