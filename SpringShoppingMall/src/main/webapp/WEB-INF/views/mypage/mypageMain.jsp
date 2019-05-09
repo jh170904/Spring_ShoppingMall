@@ -77,7 +77,7 @@
 .instarDiv {
 	position: absolute; 
 	width: 170px; 
-	height: 130px; 
+	height: 146px; 
 	top: 52px; 
 	left: 539px; 
 	border-radius: 7px; 
@@ -87,8 +87,8 @@
 .heartDiv {
 	position: absolute; 
 	width: 170px; 
-	height: 130px; 
-	top: 37px; 
+	height: 146px; 
+	top: 52px; 
 	left: 539px; 
 	border-radius: 7px; 
 	background-color: rgba( 0, 0, 0, 0.3 );
@@ -97,10 +97,10 @@
 .instarDivP {
 	font-size: 40px; 
 	color: #ffffff; 
-	height: 130px; 
+	height: 148px; 
 	text-shadow: 2px 2px 6px #000000; 
 	text-align: center; 
-	line-height:130px; 
+	line-height:148px; 
 	font-weight: bold; 
 }
 
@@ -129,7 +129,7 @@
 	
 	<div style="margin-top:20px;">
 		<div class="short-cut__item">
-		<a href="<%=cp %>/myPage/storeGood.action">
+		<a href="<%=cp %>/myPage/myStoreHeartLists.action">
 		<div class="short-cut__icon">
 			<svg width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 			<path fill="currentColor" d="M22.971 7.638c-.548-5.17-7.119-7.135-10.57-2.488a.5.5 0 0 1-.802 0C8.148.503 1.577 2.469 1.029 7.625.642 12.451 3.897 17.183 12 21.436c8.104-4.252 11.36-8.984 10.972-13.798zm.996-.093c.428 5.319-3.137 10.446-11.738 14.899a.5.5 0 0 1-.46 0C3.169 17.99-.395 12.864.034 7.532.656 1.67 7.904-.683 12 4.052 16.096-.683 23.344 1.67 23.967 7.545z">
@@ -183,7 +183,7 @@
 	<c:forEach var="dto" items="${codiHeartList }">
 		<div style="display: inline-block; margin-right: 5px; position: relative;">
 			<a href="<%=cp%>/pr/codiDetailList.action?iNum=${dto.iNum}">
-				<img alt="" src="${imagePath }/${dto.iImage}.png" width="170px;" height="130px" style="border:1px solid #d4d4d4; border-radius: 7px;">
+				<img alt="" src="${imagePath }/${dto.iImage}.png" width="170px;" height="148px" style="border:1px solid #d4d4d4; border-radius: 7px;">
 			</a><br/>
 			<p align="left" style="margin-top: 5px; font-size: 12px;">${dto.iSubject }</p>
 		</div>
@@ -211,7 +211,7 @@
 	<c:forEach var="dto" items="${instarList }">
 		<div style="display: inline-block; margin-right: 5px; position: relative;">
 			<a href="<%=cp%>/pr/codiDetailList.action?iNum=${dto.iNum}">
-				<img alt="" src="${imagePath }/${dto.iImage}.png" width="170px;" height="130px" style="border:1px solid #d4d4d4; border-radius: 7px;">
+				<img alt="" src="${imagePath }/${dto.iImage}.png" width="170px;" height="148px" style="border:1px solid #d4d4d4; border-radius: 7px;">
 			</a><br/>
 			<p align="left" style="margin-top: 5px; font-size: 12px;">${dto.iSubject }</p>
 		</div>

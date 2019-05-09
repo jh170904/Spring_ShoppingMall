@@ -37,12 +37,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select nvl(count(*),0) from codiHeart where userId=#{userId}
 </select>
 
-<!-- 해당 사용자 관신코디 -->
+<!-- 해당 사용자 관심코디 -->
 <select id="getUserCodiHeart" parameterType="hashMap" resultType="com.codi.dto.CommunityDTO">
 	select * from (
 	select rownum rnum, data.* from(
 	select iNum,iImage,iSubject from codiList where iNum in 
 	(select iNum from codiHeart where userId=#{userId}) order by iDate desc) data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- 해당 사용자의 관심상품 개수 -->
+<select id="countUserStoreHeart" parameterType="String" resultType="int">
+	select nvl(count(*),0) from storeHeart where userId=#{userId}
+</select>
+
+<select id="userStoreHeart" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select product.superProduct superProduct,productName,saveFileName,price,storeName,storeUrl
+	from storeHeart,(select distinct * from product where product.productId = product.superProduct) product 
+	where userId=#{userId} and storeHeart.superProduct=product.superProduct) data)
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 ]]>

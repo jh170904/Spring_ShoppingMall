@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,8 +22,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.codi.dao.InstarDAO;
+import com.codi.dao.ReviewDAO;
 import com.codi.dto.CommunityDTO;
 import com.codi.dto.MemberDTO;
+import com.codi.dto.ProductDTO;
 import com.codi.util.MyUtil;
 
 @Controller("instarController")
@@ -31,6 +34,10 @@ public class InstarController {
 	@Autowired
 	@Qualifier("instarDAO")
 	InstarDAO dao;
+	
+	@Autowired
+	@Qualifier("reviewDAO")
+	ReviewDAO reviewDAO;
 	
 	@Autowired
 	MyUtil myUtil;
@@ -88,6 +95,7 @@ public class InstarController {
 		request.setAttribute("lists", lists);
 		request.setAttribute("imagePath", "../upload/makecodi");
 		request.setAttribute("pageIndexList", pageIndexList);
+		request.setAttribute("dataCount", dataCount);
 		request.setAttribute("pageNum", pageNum);
 		
 		return "instar/myInstarLists";
@@ -120,16 +128,66 @@ public class InstarController {
 		
 		List<CommunityDTO> lists = dao.getUserCodiHeart(info.getUserId(), start, end);
 		
-		String listUrl = cp + "/myPage/myCodiHeartLists.action";
+		String listUrl = cp + "/myPage/myCodiHeartists.action";
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
 		request.setAttribute("userId", info.getUserId());
 		request.setAttribute("lists", lists);
 		request.setAttribute("imagePath", "../upload/makecodi");
 		request.setAttribute("pageIndexList", pageIndexList);
+		request.setAttribute("dataCount", dataCount);
 		request.setAttribute("pageNum", pageNum);
 		
 		return "instar/myCodiHeartLists";
+		
+	}
+	
+	@RequestMapping(value = "/myPage/myStoreHeartLists.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String myStoreHeartLists(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		String cp = request.getContextPath();
+		
+		String pageNum = request.getParameter("pageNum");
+		
+		int currentPage = 1;
+		
+		if(pageNum!=null)
+			currentPage = Integer.parseInt(pageNum);
+		
+		int dataCount = dao.countUserStoreHeart(info.getUserId());
+		
+		int numPerPage = 6;
+		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+		
+		if(currentPage>totalPage)
+			currentPage = totalPage;
+		
+		int start = (currentPage-1)*numPerPage+1;
+		int end = currentPage*numPerPage;
+		
+		List<ProductDTO> lists = dao.userStoreHeart(info.getUserId(), start, end);
+		
+		ListIterator<ProductDTO> productList = lists.listIterator();
+		
+		while(productList.hasNext()) {
+			ProductDTO dto = productList.next();
+			
+			dto.setReviewCount(reviewDAO.getProductDataCount(dto.getSuperProduct()));
+			dto.setReviewRate(reviewDAO.productGetList_heart(dto.getSuperProduct()));
+		}
+		
+		String listUrl = cp + "/myPage/myStoreHeartLists.action";
+		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		
+		request.setAttribute("userId", info.getUserId());
+		request.setAttribute("lists", lists);
+		request.setAttribute("imagePath", "../upload/list");
+		request.setAttribute("pageIndexList", pageIndexList);
+		request.setAttribute("dataCount", dataCount);
+		request.setAttribute("pageNum", pageNum);
+		
+		return "instar/myStoreHeartLists";
 		
 	}
 	

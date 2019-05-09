@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.codi.dto.CommunityDTO;
+import com.codi.dto.ProductDTO;
 
 @Component("instarDAO")
 public class InstarDAO {
@@ -52,6 +53,21 @@ public class InstarDAO {
 		params.put("end", end);
 		
 		List<CommunityDTO> lists = sessionTemplate.selectList("instarMapper.getUserCodiHeart",params);
+		return lists;
+	}
+	
+	public int countUserStoreHeart(String userId) {
+		int result = sessionTemplate.selectOne("instarMapper.countUserStoreHeart",userId); 
+		return result;	
+	}
+	
+	public List<ProductDTO> userStoreHeart(String userId,int start, int end){		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("userId", userId);
+		params.put("start", start);
+		params.put("end", end);
+		
+		List<ProductDTO> lists = sessionTemplate.selectList("instarMapper.userStoreHeart",params);
 		return lists;
 	}
 }

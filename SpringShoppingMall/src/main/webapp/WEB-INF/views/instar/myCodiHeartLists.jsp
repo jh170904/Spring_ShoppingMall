@@ -92,7 +92,7 @@
 	
 	<div style="margin-top:20px;">
 		<div class="short-cut__item">
-		<a href="<%=cp %>/myPage/storeGood.action">
+		<a href="<%=cp %>/myPage/myStoreHeartLists.action">
 		<div class="short-cut__icon">
 			<svg width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 			<path fill="currentColor" d="M22.971 7.638c-.548-5.17-7.119-7.135-10.57-2.488a.5.5 0 0 1-.802 0C8.148.503 1.577 2.469 1.029 7.625.642 12.451 3.897 17.183 12 21.436c8.104-4.252 11.36-8.984 10.972-13.798zm.996-.093c.428 5.319-3.137 10.446-11.738 14.899a.5.5 0 0 1-.46 0C3.169 17.99-.395 12.864.034 7.532.656 1.67 7.904-.683 12 4.052 16.096-.683 23.344 1.67 23.967 7.545z">
@@ -137,7 +137,7 @@
 <div style="width: 750px; display: inline-block; vertical-align: top;">
 	<c:if test="${empty lists }">
 		<div  class="post__upload">
-			아직 포스팅이 없습니다.
+			아직 좋아요 누른 코디가 없습니다.
 		</div>
 	</c:if>
 	
@@ -152,7 +152,7 @@
 	%>
 	<dd style="display: inline-block; margin-right: 5px; margin-bottom: 30px;">
 	<a href="<%=cp%>/pr/codiDetailList.action?iNum=${dto.iNum}">
-		<img alt="" src="${imagePath }/${dto.iImage}.png" width="230" height="170" style="border:1px solid #d4d4d4; border-radius: 7px;"><br/>
+		<img alt="" src="${imagePath }/${dto.iImage}.png" width="240" height="210" style="border:1px solid #d4d4d4; border-radius: 7px;"><br/>
 		<p align="left" style="font-size: 15px; margin-top: 5px;">${dto.iSubject }</p>
 	</a>
 	</dd>
@@ -168,6 +168,12 @@
 	%>
 	</c:forEach>
 	</c:if>
+	
+	<div style="text-align: center;">
+		<c:if test="${dataCount!=0 }">
+			<font style="font-size: 20px">${pageIndexList}</font>
+		</c:if>
+	</div>
 	
 </div>
 

@@ -172,7 +172,7 @@
 			</li> 
 			
 			<li>
-				<a class="menuLink" href="<%=cp1%>/myPage/storeGood.action" id="storeGood.action">관심상품</a>
+				<a class="menuLink" href="<%=cp1%>/myPage/myStoreHeartLists.action" id="myStoreHeartLists.action">관심상품</a>
 			</li>
 			
 			<li>
