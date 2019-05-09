@@ -1,16 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="../layout/commuNav.jsp"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-	String cp1 = request.getContextPath();
-%>
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>jQuery UI Droppable - Revert draggable position</title>
+<%@include file="../layout/top3.jsp"  %>
+<%@include file="../layout/mypage.jsp"  %>
+
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
@@ -163,7 +155,7 @@
 		
 		var f= document.dynAjax;
 		
-		f.action="<%=cp1%>/codi/insertBoard.action";
+		f.action="<%=cp%>/codi/insertBoard.action";
 		f.submit(); 
 
 		}	
@@ -281,10 +273,9 @@
 	</div>
 	
 	<div style="text-align: center; margin:10px 0px 40px; ">
-	<button onclick="capture();" value="글 저장" id="save">글 저장</button>
+		<button onclick="capture();" value="글 저장" id="save">글 저장</button>
 	</div>
 	<form id="myform">
 		<input type="hidden" name="imgSrc" id="imgSrc" />
 	</form>
-</body>
-</html>
+<%@include file="../layout/footer.jsp"  %>
