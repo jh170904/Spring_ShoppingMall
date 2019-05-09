@@ -99,17 +99,22 @@
           var option2 = url[3];
           var mypage = url[3]; 
 
+          if(option=='codi'){
+    		  option = 'myPage';
+    	  }
+          
     	  var x = document.getElementById(eval("'" + option + "'"));
+    	  
     	  var y = document.getElementById(eval("'" + option + "_category'"));
     	  var z = document.getElementById(eval("'" + option2 + "'"));
     	  
     	  x.style.color="#8080ff";
     	  x.style.fontWeight="bold";
     	  
-    	  y.style.display="block"
+    	  y.style.display="block";
     	  if(mypage=='update.action'){
-        	 y.style.display="none"
-         }
+        	 y.style.display="none";
+          }
     	  
     	  z.style.color="#8080ff";
     	  z.style.fontWeight="bold";   
@@ -163,7 +168,7 @@
 			</li> 
 						
 			<li>
-				<a class="menuLink" href="<%=cp1%>/codi/codicreated.action" id="codiCreated.action">코디 올리기</a>
+				<a class="menuLink" href="<%=cp1%>/codi/codicreated.action" id="codicreated.action">코디 올리기</a>
 			</li> 
 			
 			<li>
