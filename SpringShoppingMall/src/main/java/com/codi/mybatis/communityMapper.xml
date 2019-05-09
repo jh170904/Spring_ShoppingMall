@@ -13,8 +13,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="getLists" parameterType="hashMap" resultType="com.codi.dto.CommunityDTO">
 	select * from (
 	select rownum rnum, data.* from(
-	select inum, icontent, userid,iimage,idate,ihitcount,ihashtag
-	from codilist order by idate desc)data)
+	select a.inum, a.icontent, a.userid,a.iimage,a.idate,a.ihitcount,a.ihashtag,b.mImage,b.mMessage
+	from codilist a,member b where a.userid=b.userid order by a.idate desc)data)
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 ]]>

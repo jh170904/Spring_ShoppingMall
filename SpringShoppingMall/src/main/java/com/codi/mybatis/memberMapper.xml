@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </update>
 
 <update id="updateData" parameterType="com.codi.dto.MemberDTO">
-	update member set email=#{email} where userId=#{userId}
+	update member set email=#{email}, mMessage=#{mMessage}, mImage=#{mImage}  where userId=#{userId}
 </update>
 
 <delete id="deleteData" parameterType="int">

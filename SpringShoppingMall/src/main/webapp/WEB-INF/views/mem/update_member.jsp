@@ -125,7 +125,7 @@ input {
 <!-- // page title -->
 <div id="member_form">
 	<div class="title">회원정보 수정</div>
-	<form class="private-info" name="infoUpdateForm">
+	<form class="private-info" name="infoUpdateForm" method="post" enctype="multipart/form-data">
 	
 		<fieldset class="form">
 			<legend class="sr_only">비밀번호 입력항목</legend>
@@ -147,7 +147,19 @@ input {
 				<div class="sub_title">E-mail</div>
 				<input type="text" id="email" value="${dto.email }" name="email" title="이메일 주소 입력">
 			</div>
-
+			
+			<div class="title">프로필 수정</div>
+			
+			<div class="field">
+				<div class="sub_title">사진</div>			
+				<input type="file" name="imageUpdate" maxlength="100" class="boxTF" style="margin-top: 9px;"/>
+			</div>
+			
+			<div class="field">
+				<div class="sub_title">메세지</div>
+				<input type="text" id="mMessage" value="" name="mMessage">
+			</div>
+			
 			<button id="sendButton" onclick="changePrivateInfo()" type="button">수정 완료</button>
 
 		</fieldset>

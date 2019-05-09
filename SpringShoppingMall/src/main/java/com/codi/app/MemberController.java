@@ -1,5 +1,6 @@
 package com.codi.app;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.codi.dao.MemberDAO;
@@ -323,10 +326,37 @@ public class MemberController {
 	
 	//개인정보수정
 	@RequestMapping(value = "/con/update_data.action", method = {RequestMethod.POST, RequestMethod.GET})
-	public String update_data(HttpSession session, MemberDTO dto, HttpServletRequest request, HttpServletResponse response) {
+	public String update_data(HttpSession session, MemberDTO dto, MultipartHttpServletRequest request, HttpServletResponse response) {
+	
+		String path = request.getSession().getServletContext().getRealPath("/upload/profile");
 		
+		MultipartFile file = request.getFile("imageUpdate");
+		
+		//파일이 존재한다면 업로드 하기
+		
+		if(file!=null && file.getSize()>0) {
+
+			try {
+
+				String fimeName = file.getOriginalFilename();
+				
+				File saveFile = new File(path,fimeName);
+				file.transferTo(saveFile);
+
+				dto.setmImage(fimeName);
+				
+				System.out.println(dto.getmImage());
+
+			} catch (Exception e){ 
+				System.out.println(e.toString()); 
+			}
+
+		}
+
+
 		MemberDTO info=(MemberDTO)session.getAttribute("customInfo");
 		
+		dto.setmMessage(request.getParameter("mMessage"));
 		dto.setEmail(request.getParameter("email"));
 		dto.setUserId(info.getUserId());
 		

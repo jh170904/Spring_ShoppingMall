@@ -16,7 +16,32 @@ public class CommunityDTO {
 	private int iComment;
 	private int heartCount;
 	
+	private String mImage;
+	private String mMessage;
 	
+	private String productId;
+	
+	
+
+	public String getProductId() {
+		return productId;
+	}
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+	
+	public String getmImage() {
+		return mImage;
+	}
+	public void setmImage(String mImage) {
+		this.mImage = mImage;
+	}
+	public String getmMessage() {
+		return mMessage;
+	}
+	public void setmMessage(String mMessage) {
+		this.mMessage = mMessage;
+	}
 	
 	public int getHeartCount() {
 		return heartCount;

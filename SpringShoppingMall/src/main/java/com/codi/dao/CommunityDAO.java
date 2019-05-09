@@ -40,8 +40,6 @@ public class CommunityDAO {	@Autowired
 
 		List<CommunityDTO> lists = 
 				sessionTemplate.selectList("commuMapper.getLists",params);
-		
-		System.out.println(lists);
 
 		return lists;
 	}

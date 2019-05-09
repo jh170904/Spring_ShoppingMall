@@ -13,6 +13,23 @@ public class MemberDTO {
 	private int point;
 	private String userGrade;
 	
+	private String mImage;
+	private String mMessage;
+	
+
+	public String getmImage() {
+		return mImage;
+	}
+	public void setmImage(String mImage) {
+		this.mImage = mImage;
+	}
+	public String getmMessage() {
+		return mMessage;
+	}
+	public void setmMessage(String mMessage) {
+		this.mMessage = mMessage;
+	}
+	
 	public String getUserId() {
 		return userId;
 	}
