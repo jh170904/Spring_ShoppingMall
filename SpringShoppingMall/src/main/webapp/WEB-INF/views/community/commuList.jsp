@@ -117,7 +117,7 @@ $(function(){
 	</p>
 	
 	<a href="<%=cp%>/pr/instarView.action?iNum=${dto.iNum}">
-		<img style="border:1px solid #F6F6F6; width: 266px; height: 266px; border-radius: 18px; margin-top:10px; display: inline-block;" src="../upload/instar/${dto.iImage }"/>
+		<img style="border:1px solid #F6F6F6; width: 266px; height: 266px; border-radius: 18px; margin-top:10px; display: inline-block;" src="../upload/makecodi/${dto.iImage }.png"/>
 	</a>
 	
 	<div style="display: flex;">

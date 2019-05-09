@@ -139,15 +139,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	order by orderNum desc) 
 	data,product where product.productId=data.superProduct) 
 <![CDATA[
+	where rnum>=#{start}
+]]>
+</select>
+
+<!-- 사용자 기간변 주문 목록 -->
+<select id="getUserOrderNum" parameterType="hashMap" resultType="String">
+	select orderNum from (
+	select rownum rnum, data.* from (
+	select distinct orderNum
+	from ordertable
+	where userId=#{userId} and payment='yes' 
+	and to_char(orderDate,'yyyy-mm-dd')>=(select to_char(sysdate-(interval '${num}' ${searchPeriod}),'yyyy-mm-dd') 
+	from dual) order by orderNum desc) data) 
+<![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
 </select>
 
 <!-- 사용자 기간별 주문 양 -->
-<select id="getNumUserOrderLists" parameterType="String" resultType="int">
-	select nvl(count(*),0)
-	from ordertable,product where ordertable.productId = product.productId 
-	and userId=#{userId} and payment='yes' and to_char(orderDate,'yyyy-mm-dd')>=(select to_char(sysdate-(interval '${num}' ${searchPeriod}),'yyyy-mm-dd') from dual)
+<select id="getNumUserOrderLists" parameterType="hashMap" resultType="int">
+	select nvl(count(distinct orderNum),0)
+	from ordertable where userId=#{userId} and payment='yes' 
+	and to_char(orderDate,'yyyy-mm-dd')>=(select to_char(sysdate-(interval '${num}' ${searchPeriod}),'yyyy-mm-dd') from dual)
 </select>
 
 <!-- 관리자 무통장입금 확인(주문번호,예금주,가격,주문 개수) -->

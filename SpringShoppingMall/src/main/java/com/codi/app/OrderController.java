@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -391,14 +392,25 @@ public class OrderController {
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
 		
-		userOrderlist = dao.getUserOrderLists(info.getUserId(), numPerPage, searchPeriod, start, end);
+		userOrderlist = dao.getUserOrderLists(info.getUserId(), num, searchPeriod, start, end);
+		List<String> userOrderNum = dao.getUserOrderNum(info.getUserId(), num, searchPeriod, start, end);
+		
+		List<String> orderDateYMD = new ArrayList<String>();
+		String date;
+		Iterator<String> orderDate = userOrderNum.iterator();
+		while(orderDate.hasNext()) {
+			date = orderDate.next();
+			orderDateYMD.add(date.substring(0,4) + "-" + date.substring(4,6) + "-" + date.substring(6,8));
+		}
 		
 		String listUrl = cp + "/order/myOrderLists.action";
 		
 		String pageIndexList = myUtil.myOrderPageIndexList(currentPage, totalPage, listUrl,period);
 		
 		request.setAttribute("userOrderlist", userOrderlist);
+		request.setAttribute("userOrderNum", userOrderNum);
 		request.setAttribute("pageIndexList", pageIndexList);
+		request.setAttribute("orderDateYMD", orderDateYMD);
 		request.setAttribute("period", period);
 		request.setAttribute("imagePath", "../upload/list");
 		
