@@ -235,12 +235,14 @@
 </head>
 <body>
 	<div id="sector1" style="width: 1600px; margin-top: 20px;  margin-left:auto; margin-right:auto;">
+		<div style="width: 800px; height: 700px; float: left; background: white; border: 1px solid #000000">
 		<div id="droppable" class="ui-widget-header"
-			style="width: 800px; height: 700px; float: left; border: 2px solid #8080ff; background: white;">
+			style="width: 800px; height: 700px; float: left; background: white;">
 			<div id="container" style="width: 100%; height: 100%;">
 			
 			
 			</div>
+		</div>
 		</div>
 		<!-- div 리스트 부분 -->
 
