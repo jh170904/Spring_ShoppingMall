@@ -244,12 +244,11 @@
 
 	
 	function destInsertNew(destName,destPhone,zip,addr1,addr2){
-			
+		
 		document.getElementById('destInsert').style.display = 'none';
 		
 		document.orderForm.destName1.value = destName;
 		document.orderForm.destName2.value = destName;
-		document.orderForm.sndOrdername.value = destName;
 		document.orderForm.destAddr.value = '[' + zip + '] ' + addr1 + ' ' + addr2;	
 		document.orderForm.destPhone1.value = destPhone;
 		document.orderForm.destPhone2.value = destPhone;
@@ -258,6 +257,9 @@
 		document.orderForm.addr1.value = addr1;
 		document.orderForm.addr2.value = addr2;
 		document.orderForm.addrKey.value = 'no';
+		
+		
+		
 		
 	}
 	

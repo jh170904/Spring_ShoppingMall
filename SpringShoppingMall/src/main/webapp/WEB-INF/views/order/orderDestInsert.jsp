@@ -89,47 +89,53 @@
 		
 		var f = document.orderDestInserForm;
 	    
-	    destName = f.destName.value;
-	    destName = destName.trim();
-	    if(!destName) {
+	    destNameValue = f.destName.value;
+	    destNameValue = destNameValue.trim();
+	    if(!destNameValue) {
 	        alert("받는사람을 입력하세요");
 	        f.destName.focus();
 	        return;
 	    }
 	    
-	    destPhone = f.destPhone.value;
-	    destPhone = destPhone.trim();
-	    if(!destPhone) {
+	    destPhoneValue = f.destPhone.value;
+	    destPhoneValue = destPhoneValue.trim();
+	    if(!destPhoneValue) {
 	        alert("휴대폰 번호를 입력하세요");
 	        f.destPhone.focus();
 	        return;
 	    }
 	    
-	    zip = f.zip.value;
-	    zip = zip.trim();
-	    if(!zip) {
+	    zipValue = f.zip.value;
+	    zipValue = zipValue.trim();
+	    if(!zipValue) {
 	        alert("우편번호를 입력하세요");
 	        f.zip.focus();
 	        return;
 	    }
 	    
-	    addr1 = f.addr1.value;
-	    addr1 = addr1.trim();
-	    if(!addr1) {
+	    addr1Value = f.addr1.value;
+	    addr1Value = addr1Value.trim();
+	    if(!addr1Value) {
 	        alert("기본주소를 입력하세요");
 	        f.addr1.focus();
 	        return;
 	    }
 	    
-	    addr2 = f.addr2.value;
-	    addr2 = addr2.trim();
-	    if(!addr2) {
+	    addr2Value = f.addr2.value;
+	    addr2Value = addr2Value.trim();
+	    if(!addr2Value) {
 	        alert("상세주소를 입력하세요");
 	        f.addr2.focus();
 	        return;
 	    }
 	    
-	    destInsertNew(destName,destPhone,zip,addr1,addr2);
+	    f.destName.value=""; 
+	    f.destPhone.value="";
+	    f.zip.value="";
+	    f.addr1.value="";
+	    f.addr2.value="";
+	    	
+	    destInsertNew(destNameValue,destPhoneValue,zipValue,addr1Value,addr2Value);
 		
 	}
 
@@ -144,7 +150,7 @@
 <table style="margin-top: 80px; margin-bottom: 50px;" align="center">
 <tr class="page_title">
 	<td colspan="2" align="center">
-		<h2 class="h_title page">배송지 추가</h2>
+		<h2 class="h_title page">배송지 직접 입력</h2>
 		<p class="text font_lg"></p>
 	</td>
 </tr>
