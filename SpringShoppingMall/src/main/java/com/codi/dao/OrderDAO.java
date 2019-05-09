@@ -1,7 +1,10 @@
 package com.codi.dao;
 
+import java.awt.image.RescaleOp;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.naming.spi.DirStateFactory.Result;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,10 +150,21 @@ public class OrderDAO {
 		params.put("num", num);
 		params.put("searchPeriod", searchPeriod);
 		params.put("start", start);
-		params.put("end", end);
 		
 		List<OrderDTO> lists = sessionTemplate.selectList("orderMapper.getUserOrderLists",params);
 		return lists;
+	}
+	
+	public List<String> getUserOrderNum(String userId,int num,String searchPeriod,int start,int end) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("userId", userId);
+		params.put("num", num);
+		params.put("searchPeriod", searchPeriod);
+		params.put("start", start);
+		params.put("end", end);
+		
+		List<String> orderNum = sessionTemplate.selectList("orderMapper.getUserOrderNum",params);
+		return orderNum;
 	}
 	
 	public int getNumUserOrderLists(String userId,int num, String searchPeriod) {

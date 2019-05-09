@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="../layout/top3.jsp" %>
 <%@ include file="../layout/mypage.jsp" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 
 <style>
@@ -14,6 +15,19 @@
 }
 
 </style>
+
+<script>
+	function showOrderList(order) {
+
+		var content = document.getElementById(order);
+
+		if(content.style.display == "none"){
+			content.style.display = "block";
+		}else{
+			content.style.display = "none";
+		}
+	}
+</script>
 
 <div class="page_title_area">
 
@@ -59,51 +73,75 @@
 		<div id="tab-1" class="tab-content">		
 		<div class="tab_cont">
 			<div class="panel benefit_panel_list">
-				<c:if test="${empty userOrderlist }">
-					<div style="text-align: center; font-size: 30px; margin-top: 20px;">조회된 내용이 없습니다.</div>
-				</c:if>	
-				
-				<c:if test="${!empty userOrderlist }">	
+			
 				<table class="ui_table_striped data_table thead_colored align_center @table-striped-apply" id="shpiTable" style="margin-left: -33px;">
 
 					<colgroup>
+						<col width="20%">
+						<col width="40%">
+						<col width="10%">
 						<col width="15%">
-						<col width="5%">
-						<col width="30%">
-						<col width="50%">
+						<col width="15%">
 					</colgroup>
 
 					<thread>
-					<tr>
-						<th scope="col" bgcolor="#F2F2F2">구매일</th>
-						<th scope="col" bgcolor="#F2F2F2" colspan="2">상품</th>
-						<th scope="col" bgcolor="#F2F2F2">배송지</th>
-					</tr>
+						<tr>
+							<th scope="col" bgcolor="#F2F2F2">주문번호</th>
+							<th scope="col" bgcolor="#F2F2F2">상품정보</th>
+							<th scope="col" bgcolor="#F2F2F2">결제금액</th>
+							<th scope="col" bgcolor="#F2F2F2">상품보기</th>
+							<th scope="col" bgcolor="#F2F2F2">진행상태</th>
+						</tr>
 					</thread>
-
+				
+					<c:if test="${!empty userOrderlist }">	
 					<tbody id="paging">
-						<c:forEach var="dto" items="${userOrderlist }">
-							<tr>
-								<td class="check_wrap check_only">${dto.orderDate }
-								</td>
-								<td style="vertical-align: top; text-align: left;">
-									<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">
-										<img alt="" src="${imagePath }/${dto.saveFileName }" height="50px;">
-									</a>
-								</td>
-								<td style="vertical-align: top; text-align: left;">
-									<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">${dto.productName }</a>
-									${dto.amount }&nbsp;개 &nbsp;&nbsp;${dto.price }&nbsp;원 
-									<br/>(총합&nbsp;&nbsp;:&nbsp;&nbsp;${dto.amount * dto.price }) &nbsp;&nbsp;&nbsp;&nbsp;
-								</td>
-								<td style="text-align: left;">
-									[${dto.zip }] ${dto.addr1 } ${dto.addr2 }
-								</td>
+						<c:set var= "number" value="0"/>
+						<c:set var= "productNum" value="0"/>
+						<c:forEach var="orderNum" items="${userOrderNum }">
+						<tr>
+							<td class="check_wrap check_only" style="vertical-align: top;">
+								${orderNum }<br/><p style="color: #8080ff">(${orderDateYMD[number] })</p>
+							</td>
+							
+							<td style="vertical-align: top; text-align: left;">
+								${userOrderlist[productNum].productName } 외
+								<div style="margin-bottom: 10px; display: none;" id="${orderNum }">
+								<br/>
+								<c:forEach var="dto" items="${userOrderlist }">
+									<c:if test="${dto.orderNum eq orderNum }">
+										<c:set var= "price" value="${price + dto.amount * dto.price}"/>
+										<div style="margin-bottom: 10px;">
+											<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">
+											<img alt="" src="${imagePath }/${dto.saveFileName }" height="50px;">
+											</a>&nbsp;&nbsp;<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">${dto.productName }</a>
+											${dto.amount }&nbsp;개 &nbsp;&nbsp;<fmt:formatNumber value="${dto.price }" type="number"/>&nbsp;원<br/>
+											<c:set var= "productNum" value="${productNum+1 }"/>
+										</div>
+									</c:if>
+								</c:forEach>
+								</div>
+							</td>
+							<td style="vertical-align: top;">
+								<fmt:formatNumber value="${price}" type="number"/>원
+							</td>
+							<td style="vertical-align: top;">
+								<button onclick="showOrderList('${orderNum}')" class="btn_sm_bordered_review">상품보기</button>
+							</td>
+							<td style="vertical-align: top;">
+								<button class="btn_sm_bordered_review">결제완료</button>
+							</td>
+							<c:set var= "number" value="${number+1 }"/>
 							</tr>
 						</c:forEach>
+						</c:if>	
+						
+						<c:if test="${empty userOrderlist }">
+							<tr><td colspan="5"><div style="text-align: center; font-size: 30px; margin-top: 50px; margin-bottom: 50px;">조회된 내용이 없습니다.</div></td></tr>
+						</c:if>	
+					
 					</tbody>
 				</table>
-				</c:if>	
 			</div>
 		</div>
 		

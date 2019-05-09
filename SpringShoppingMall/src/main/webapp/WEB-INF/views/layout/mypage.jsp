@@ -113,14 +113,15 @@
     	  
     	  z.style.color="#8080ff";
     	  z.style.fontWeight="bold";   
-    	  z.style.border_bottom="1px solid #8080ff";
+    	  z.style.paddingBottom="10px";
+    	  z.style.borderBottom="3px solid #8080ff";
     	  
 	 });
 	
 </script>
 
 <div class="myPageCategory">
-	<nav id="myPageMenu" style="border-bottom: 1px solid #ebebeb; " > 
+	<nav id="myPageMenu" style="border-bottom: 1px solid #ebebeb;" > 
 		<ul> 
 			<li>
 				<a class="menuLink" href="<%=cp1%>/myPage/myPageMain.action" id="myPage">프로필</a>
@@ -166,7 +167,7 @@
 			</li> 
 			
 			<li>
-				<a class="menuLink" href="#" id="">관심상품</a>
+				<a class="menuLink" href="<%=cp1%>/myPage/storeGood.action" id="storeGood.action">관심상품</a>
 			</li>
 			
 			<li>
