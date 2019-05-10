@@ -20,7 +20,6 @@
 #upload_image {
     height: 600px;
     background-color: #dcdcdc;
-    transition: all 0.1s ease-in-out;
     position: relative;
 }
 
@@ -76,42 +75,10 @@
     text-align: center;
 }
 
-#upload_panel {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    text-align: center;
-    cursor: pointer;
-}
-
-#instarImage {
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
-
 </style>
 
-<script type="text/javascript">
+<script>
 
-	function LoadImg(input) {
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
-
-			reader.onload = function (e) {
-				$('#showImage').attr('src', e.target.result);
-			}
-
-			reader.readAsDataURL(input.files[0]);
-		}
-	}
-	
 	function writeInstar(){
 		
 		var f = document.instarForm;
@@ -145,7 +112,7 @@
 </script>
 
 <body>
-	<form id="instarForm" method="post" name="instarForm" enctype="multipart/form-data">
+	<form id="instarForm" method="post" name="instarForm">
 		<div class="form_fields">
 			<div id="upload_image">
 				<img id="showImage" src="${imagePath }/${iImage}">

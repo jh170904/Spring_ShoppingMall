@@ -236,7 +236,7 @@
 <tr>
 	<td width="100" rowspan="3" height="50">주소</td>
 	<td style="padding-left: 20px;">
-	<input type="text" name="zip" id="zip" readonly="readonly" placeholder="우편번호" class="input_wrap w70p" style="padding: 10px 0px;">
+	<input type="text" name="zip" id="zip" readonly="readonly" placeholder="우편번호" class="input_wrap w65p" style="padding: 10px 0px;">
 		<input type="button" size="20" class="btn_md_form btn_address_fins" onclick="sample2_execDaumPostcode()" value="찾기">
 	</td>
 </tr>

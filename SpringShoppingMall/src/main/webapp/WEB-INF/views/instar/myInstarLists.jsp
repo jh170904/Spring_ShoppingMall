@@ -75,7 +75,7 @@
 
 <div style="display: block; ">
 	<div class="profile-image" >
-	<img alt="" src="../upload/list/1806576130.jpg" style="border-radius: 100%;">
+	<img alt="" src="${memberPath }/${mImage }" style="border-radius: 100%;">
 	</div>
 	
 	<div style="border-bottom: 1px solid #ebebeb; margin-bottom: 20px; margin-top: 20px;"  ></div>
@@ -116,15 +116,15 @@
 		</div>
 		
 		<div class="short-cut__item">
-		<a href="<%=cp%>/myPage/myInstarLists.action">
+		<p>
 		<div class="short-cut__icon">
 			<svg width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
-				<path fill="#000" fill-opacity=".74" fill-rule="evenodd" transform="matrix(1 0 0 -1 0 23.033)" d="M12.943 6.342a2 2 0 0 1-1.886 0L3 2.032V20.5a.5.5 0 0 0 .5.5h17a.5.5 0 0 0 .5-.5V2.033l-8.057 4.309zm-.471-.882l8.056-4.31A1 1 0 0 1 22 2.034V20.5a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 20.5V2.033a1 1 0 0 1 1.472-.882l8.056 4.31a1 1 0 0 0 .944 0z">
+				<path fill="#8080ff" stroke="#8080ff" fill-opacity=".74" fill-rule="evenodd" transform="matrix(1 0 0 -1 0 23.033)" d="M12.943 6.342a2 2 0 0 1-1.886 0L3 2.032V20.5a.5.5 0 0 0 .5.5h17a.5.5 0 0 0 .5-.5V2.033l-8.057 4.309zm-.471-.882l8.056-4.31A1 1 0 0 1 22 2.034V20.5a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 20.5V2.033a1 1 0 0 1 1.472-.882l8.056 4.31a1 1 0 0 0 .944 0z">
 				</path>
 			</svg>
 		</div>
 		<strong>내코디</strong>
-		</a>
+		</p>
 		</div>
 	</div>
 	
@@ -169,13 +169,11 @@
 	</c:forEach>
 	</c:if>
 	
-	<div style="text-align: center;">
+	<div style="text-align: center; margin-top: 25px; margin-bottom: 50px;">
 		<c:if test="${dataCount!=0 }">
 			<font style="font-size: 20px">${pageIndexList}</font>
 		</c:if>
-	</div>
-	
-	
+	</div>	
 </div>
 
 </div>

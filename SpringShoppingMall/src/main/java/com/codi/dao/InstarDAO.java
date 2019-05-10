@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.codi.dto.CommunityDTO;
+import com.codi.dto.MemberDTO;
 import com.codi.dto.ProductDTO;
 
 @Component("instarDAO")
@@ -16,6 +17,11 @@ public class InstarDAO {
 	@Autowired
 	private SqlSessionTemplate sessionTemplate;
 
+	public List<MemberDTO> getUserInfo(String userId){
+		List<MemberDTO> lists = sessionTemplate.selectList("instarMapper.getUserInfo",userId);
+		return lists;
+	}
+	
 	public int getDataCount() {
 		int result = sessionTemplate.selectOne("instarMapper.getDataCount");
 		return result;
@@ -23,6 +29,22 @@ public class InstarDAO {
 	
 	public void updateInstar(CommunityDTO dto) {
 		sessionTemplate.update("instarMapper.updateInstar",dto);
+	}
+	
+	public void insertHashtag(int iNum, String tagContent) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("iNum", iNum);
+		params.put("tagContent", tagContent);
+		sessionTemplate.insert("instarMapper.insertHashtag",params);
+		
+	}
+	
+	public void deleteHashtag(int iNum, String tagContent) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("iNum", iNum);
+		params.put("tagContent", tagContent);
+		sessionTemplate.delete("instarMapper.deleteHashtag",params);
+		
 	}
 	
 	public int countUserInstar(String userId) {

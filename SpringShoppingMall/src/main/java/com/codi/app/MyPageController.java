@@ -1,5 +1,6 @@
 package com.codi.app;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -51,12 +52,26 @@ public class MyPageController {
 		
 		int userInstarCount = instardao.countUserInstar(userId);
 		int userCodiHeartCount = instardao.getUserCodiHeartCount(userId);
+
+		List<MemberDTO> memberInfo = instardao.getUserInfo(userId);	
+		String mImage = null;
+		String mMessage = null;
+		Iterator<MemberDTO> member = memberInfo.iterator();
+		if(member.hasNext()) {
+			MemberDTO dto = member.next();
+			mImage = dto.getmImage();
+			mMessage = dto.getmMessage();
+		}
+		
 		
 		List<CommunityDTO> instarList = instardao.selectUserInstar(userId, 1, 4);
 		List<CommunityDTO> codiHeartList = instardao.getUserCodiHeart(userId, 1, 4);
 		
 		req.setAttribute("userId", userId);
 		req.setAttribute("userInstarCount", userInstarCount);
+		req.setAttribute("memberPath", "../upload/profile");
+		req.setAttribute("mImage", mImage);
+		req.setAttribute("mMessage", mMessage);
 		req.setAttribute("instarList", instarList);
 		req.setAttribute("userCodiHeartCount", userCodiHeartCount);
 		req.setAttribute("codiHeartList", codiHeartList);

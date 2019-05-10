@@ -129,4 +129,10 @@ public class CommunityController {
 		return map;
 	}
 	
+	@RequestMapping(value = "pr/commuMain1.action", method = { RequestMethod.GET, RequestMethod.POST })
+	public String commuHome(HttpServletRequest request,HttpSession session) {
+		
+		return "community/commuHome";
+		
+	}
 }

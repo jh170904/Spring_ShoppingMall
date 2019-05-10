@@ -6,6 +6,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="instarMapper">
 
+<!-- 사용자 정보 -->
+<select id="getUserInfo" parameterType="String" resultType="com.codi.dto.MemberDTO">
+	select mImage,mMessage from member where userId=#{userId}
+</select>
+
 <select id="getDataCount" resultType="int">
 	select nvl(count(*),0) from codiList
 </select>
@@ -15,6 +20,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	update codiList set iSubject=#{iSubject},iContent=#{iContent},iHashTag=#{iHashTag}
 	where iNum=#{iNum}
 </update>
+
+<!-- 해시태그 입력 -->
+<insert id="insertHashtag" parameterType="hashMap">
+	insert into hashtag (iNum,tagContent) 
+	values (#{iNum},#{tagContent})
+</insert>
+
+<delete id="deleteHashtag" parameterType="hashMap">
+	delete hashtag where iNum=#{iNum} and tagContent=#{tagContent}
+</delete>
 
 <!-- 해당 사용자 인스타 개수 -->
 <select id="countUserInstar" parameterType="String" resultType="int">
@@ -32,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>
 </select>
 
-<!-- 해당 사용자 관신코디 개수 -->
+<!-- 해당 사용자 관심코디 개수 -->
 <select id="getUserCodiHeartCount" parameterType="String" resultType="int">
 	select nvl(count(*),0) from codiHeart where userId=#{userId}
 </select>

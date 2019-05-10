@@ -3,8 +3,10 @@ package com.codi.app;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -48,16 +50,24 @@ public class InstarController {
 		request.setAttribute("iNum", Integer.parseInt(request.getParameter("iNum")));
 		request.setAttribute("iImage", request.getParameter("iImage")+ ".png");
 		request.setAttribute("imagePath", "../upload/makecodi");
-		System.out.println("¹øÈ£ : " + Integer.parseInt(request.getParameter("iNum")));
-		
+
 		return "instar/instarWrited";
 		
 	}
 	
 	@RequestMapping(value = "/myPage/instarWrited_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String instarWrited_ok(CommunityDTO dto, MultipartHttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
-
+	public String instarWrited_ok(CommunityDTO dto,RedirectAttributes redirectAttributes) throws Exception {
+		
 		dao.updateInstar(dto);
+		String hashTag[] = dto.getiHashTag().split("#");
+
+		for(int i=1;i<hashTag.length;i++) {
+			dao.deleteHashtag(dto.getiNum(), hashTag[i]);
+		}
+		
+		for(int i=1;i<hashTag.length;i++) {
+			dao.insertHashtag(dto.getiNum(), hashTag[i]);
+		}
 		
 		return "redirect:/myPage/myInstarLists.action";
 	}
@@ -77,7 +87,7 @@ public class InstarController {
 		
 		int dataCount = dao.countUserInstar(info.getUserId());
 		
-		int numPerPage = 12;
+		int numPerPage = 9;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
 		
 		if(currentPage>totalPage)
@@ -85,6 +95,16 @@ public class InstarController {
 		
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
+		
+		List<MemberDTO> memberInfo = dao.getUserInfo(info.getUserId());	
+		String mImage = null;
+		String mMessage = null;
+		Iterator<MemberDTO> member = memberInfo.iterator();
+		if(member.hasNext()) {
+			MemberDTO dto = member.next();
+			mImage = dto.getmImage();
+			mMessage = dto.getmMessage();
+		}
 		
 		List<CommunityDTO> lists = dao.selectUserInstar(info.getUserId(), start, end);
 		
@@ -94,6 +114,9 @@ public class InstarController {
 		request.setAttribute("userId", info.getUserId());
 		request.setAttribute("lists", lists);
 		request.setAttribute("imagePath", "../upload/makecodi");
+		request.setAttribute("memberPath", "../upload/profile");
+		request.setAttribute("mImage", mImage);
+		request.setAttribute("mMessage", mMessage);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
 		request.setAttribute("pageNum", pageNum);
@@ -117,7 +140,7 @@ public class InstarController {
 		
 		int dataCount = dao.getUserCodiHeartCount(info.getUserId());
 		
-		int numPerPage = 12;
+		int numPerPage = 9;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
 		
 		if(currentPage>totalPage)
@@ -126,6 +149,15 @@ public class InstarController {
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
 		
+		List<MemberDTO> memberInfo = dao.getUserInfo(info.getUserId());	
+		String mImage = null;
+		String mMessage = null;
+		Iterator<MemberDTO> member = memberInfo.iterator();
+		if(member.hasNext()) {
+			MemberDTO dto = member.next();
+			mImage = dto.getmImage();
+			mMessage = dto.getmMessage();
+		}
 		List<CommunityDTO> lists = dao.getUserCodiHeart(info.getUserId(), start, end);
 		
 		String listUrl = cp + "/myPage/myCodiHeartists.action";
@@ -134,6 +166,9 @@ public class InstarController {
 		request.setAttribute("userId", info.getUserId());
 		request.setAttribute("lists", lists);
 		request.setAttribute("imagePath", "../upload/makecodi");
+		request.setAttribute("memberPath", "../upload/profile");
+		request.setAttribute("mImage", mImage);
+		request.setAttribute("mMessage", mMessage);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
 		request.setAttribute("pageNum", pageNum);
@@ -157,7 +192,7 @@ public class InstarController {
 		
 		int dataCount = dao.countUserStoreHeart(info.getUserId());
 		
-		int numPerPage = 6;
+		int numPerPage = 9;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
 		
 		if(currentPage>totalPage)
@@ -165,6 +200,16 @@ public class InstarController {
 		
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
+		
+		List<MemberDTO> memberInfo = dao.getUserInfo(info.getUserId());	
+		String mImage = null;
+		String mMessage = null;
+		Iterator<MemberDTO> member = memberInfo.iterator();
+		if(member.hasNext()) {
+			MemberDTO dto = member.next();
+			mImage = dto.getmImage();
+			mMessage = dto.getmMessage();
+		}
 		
 		List<ProductDTO> lists = dao.userStoreHeart(info.getUserId(), start, end);
 		
@@ -183,6 +228,9 @@ public class InstarController {
 		request.setAttribute("userId", info.getUserId());
 		request.setAttribute("lists", lists);
 		request.setAttribute("imagePath", "../upload/list");
+		request.setAttribute("memberPath", "../upload/profile");
+		request.setAttribute("mImage", mImage);
+		request.setAttribute("mMessage", mMessage);
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
 		request.setAttribute("pageNum", pageNum);
