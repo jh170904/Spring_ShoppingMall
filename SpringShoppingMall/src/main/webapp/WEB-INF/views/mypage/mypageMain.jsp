@@ -112,7 +112,7 @@
 
 <div style="display: block; ">
 	<div class="profile-image" >
-	<img alt="" src="${memberPath }/${mImage }" style="border-radius: 100%;">
+	<img alt="" src="${memberPath }/${memberInfo.mImage }" style="border-radius: 100%;">
 	</div>
 	
 	

@@ -75,7 +75,7 @@
 
 <div style="display: block; ">
 	<div class="profile-image" >
-	<img alt="" src="${memberPath }/${mImage }" style="border-radius: 100%;">
+	<img alt="" src="${memberPath }/${memberInfo.mImage }" style="border-radius: 100%;">
 	</div>
 	
 	<div style="border-bottom: 1px solid #ebebeb; margin-bottom: 20px; margin-top: 20px;"  ></div>

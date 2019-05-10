@@ -17,9 +17,9 @@ public class InstarDAO {
 	@Autowired
 	private SqlSessionTemplate sessionTemplate;
 
-	public List<MemberDTO> getUserInfo(String userId){
-		List<MemberDTO> lists = sessionTemplate.selectList("instarMapper.getUserInfo",userId);
-		return lists;
+	public MemberDTO getUserInfo(String userId){
+		MemberDTO dto = sessionTemplate.selectOne("instarMapper.getUserInfo",userId);
+		return dto;
 	}
 	
 	public int getDataCount() {
