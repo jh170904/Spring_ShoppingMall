@@ -46,17 +46,25 @@ public class CodiDetailController {
 	
 	@RequestMapping(value = "pr/codiDetailList.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String detailList(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		
 		int iNum = Integer.parseInt(request.getParameter("iNum"));
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
-		MemberDTO loginUserInfo = null;
+		MemberDTO loginUserInfo = null;	
+		List<String> good = null;
+
+		//코디 게시글 조회수 증가
+		dao.updateHitCount(iNum);
+		
+		//코디 게시글 detail 정보 가져오기
+		CommunityDTO dto = dao.getReadCodiData(iNum);
+		
 		//로그인 사용자 
 		if(info!=null) {
 			String loginUserId = info.getUserId();
 			loginUserInfo = dao.getUserInfo(loginUserId);
+			dto.setHeartCount(dao.getMyCodiHeart(loginUserId, iNum));
+			good = dao.storeHeartList(info.getUserId());
 		}
-		
-		//int iNum=6;
-		CommunityDTO dto = dao.getReadCodiData(iNum);
 		
 		//게시물 작성자 프로필 정보
 		MemberDTO userInfo = dao.getUserInfo(dto.getUserId());
@@ -80,10 +88,12 @@ public class CodiDetailController {
 			if(str!="" && !str.equals(null)) {
 				vo = dao.getCodiProductItem(str);
 				usedProductLists.add(vo);
+				
 			}
 		}
-
+		
 		request.setAttribute("dto", dto);
+		request.setAttribute("good", good);
 		request.setAttribute("userInfo",userInfo);
 		request.setAttribute("loginUserInfo",loginUserInfo);
 		request.setAttribute("codiLists", codiLists);
@@ -110,7 +120,7 @@ public class CodiDetailController {
 		//댓글 입력
 		dao.insertReplyData(dto);
 		
-		return replyLists(request);
+		return replyLists(request,response,session);
 	}
 	
 	//댓글 삭제
@@ -118,17 +128,19 @@ public class CodiDetailController {
 	@ResponseBody
 	public ResponseEntity<Object> replyDeleted(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws Exception {
 		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		int replyNum = Integer.parseInt(request.getParameter("replyNum"));
 		dao.deleteReplyData(replyNum);
-		return replyLists(request);
+		return replyLists(request,response,session);
 
 	}
 	
 	//댓글 조회
 	@RequestMapping(value = "pr/replyList.action", method = {RequestMethod.GET, RequestMethod.POST}, produces="application/json; charset=utf8")
 	@ResponseBody
-	public ResponseEntity<Object> replyLists(HttpServletRequest request) throws Exception {
+	public ResponseEntity<Object> replyLists(HttpServletRequest request ,HttpServletResponse response, HttpSession session) throws Exception {
 		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		HttpHeaders responseHeaders = new HttpHeaders();
 		ArrayList<HashMap<String,Object>> hmlist = new ArrayList<HashMap<String,Object>>();
 		

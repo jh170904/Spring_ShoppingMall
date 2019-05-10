@@ -1,6 +1,7 @@
 <%@page import="com.codi.dto.MemberDTO"%>
 <%@page import="java.net.URLEncoder"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../layout/commuNav.jsp"  %>
 <script type="text/javascript" src="<%=cp%>/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
@@ -135,6 +136,66 @@
 	}
 	
 	
+	$(function(){
+		$(".goodButton").click(function(){
+			var iNum = $(this).attr('value');
+			alert(iNum);
+	        var info = '<%=(MemberDTO)session.getAttribute("customInfo")%>';
+	        $.ajax({
+	            async: true,
+	            type : 'POST',
+	            data : iNum,
+	            url : "../codiGood.action",
+	            dataType : "json",
+	            contentType: "application/json; charset=UTF-8",
+	            success : function(data) {
+	            	if(data.temp > 0) {
+	            		$(".goodDiv" + iNum).html('<img src="../resources/image/heart1.PNG" style="height: 25px;"/> ');
+	            		$(".codiHeartCount").html(data.count);
+	                } else {
+	            		$(".goodDiv" + iNum).html('<img src="../resources/image/heart2.PNG" style="height: 25px;"/> ');
+	            		$(".codiHeartCount").html(data.count);
+	                }
+	            },
+	            error : function(error) {
+	            	alert("로그인이 필요합니다.");
+	            }
+	        });
+		});
+	});
+	
+	$(function(){
+		$(".itemGoodButton").click(function(){
+			var superProduct = $(this).attr('value');
+	        var info = '<%=(MemberDTO)session.getAttribute("customInfo")%>';
+	        
+	        if(info=="" || info==null){
+	        	alert("로그인이 필요합니다.");
+	        	return;
+	        }
+	             
+	        $.ajax({
+	            async: true,
+	            type : 'POST',
+	            data : superProduct,
+	            url : "../storeGood.action",
+	            dataType : "json",
+	            contentType: "application/json; charset=UTF-8",
+	            success : function(data) {
+	            	if(data.cnt > 0) {
+	            		$(".itemGoodDiv" + superProduct).html('<img src="../resources/image/heart2.PNG" style="height: 25px;"/> ');
+	                } else {
+	            		$(".itemGoodDiv" + superProduct).html('<img src="../resources/image/heart1.PNG" style="height: 25px;"/> ');
+	                } 
+	            },
+	            error : function(error) {
+	            	alert("로그인이 필요합니다.");
+	            }
+	        });
+				
+		});
+		
+	});
 </script>
 
 <style type="text/css">
@@ -165,7 +226,7 @@
 
 .info_wrapper{
 
-    padding: 10px 15px 15px 15px;
+    padding: 10px 5px 15px 15px;
 	font-size: 16pt;
 	font-weight: bold;
 	color: #8080ff;
@@ -349,7 +410,7 @@ body {
 
 .price{
 	 font-size: 18px;
-	 padding-left:170px;
+	 padding-left:140px;
 }
 
 .line {
@@ -448,7 +509,21 @@ table {
 				<img src="<%=cp %>/upload/makecodi/${dto.iImage}.png" >
 				
 				<!-- 좋아요 -->
-				<div class="total_liked">${codiHeartCount }명이 좋아합니다 <span style="color: #00b7ff; font-size: 20px;">♥</span></div>
+				<div class="total_liked">
+					<span class="codiHeartCount">${codiHeartCount }</span>명이 좋아합니다 
+					<div style="display: inline;">
+						<button class="goodButton" value="${dto.iNum}" style="margin-left: 5px; height: 40px;">
+							<div class="goodDiv${dto.iNum}">
+								<c:if test="${dto.heartCount==0}">
+									<img src="../resources/image/heart1.PNG" style="height: 25px;"/>
+								</c:if>
+								<c:if test="${dto.heartCount!=0 }">
+									<img src="../resources/image/heart2.PNG" style="height: 25px;"/>
+								</c:if>
+							</div>
+						</button>
+					</div>
+				</div>
 				
 				<!-- 해쉬태그 -->
 				<div class="description">				
@@ -540,10 +615,12 @@ table {
 	
 	<div class="line"></div>
 	<div class="detail_title" style="margin-left: 40px;"><span style="font-size: 16pt; font-weight: 800;">코디에 사용된 상품</span></div>
-	<!-- 반복문 사용 -->
+	<!-- 코디구성상품 -->
 	<c:forEach var="vo" items="${usedProductLists}">
 		<div class="set_container" style="margin-left: 10px;">
+		
 			<div class="set item" >
+				<a href="<%=cp%>/pr/detail.action?superProduct=${vo.superProduct}">
 				<div class="thumb_wrapper">
 				<img class="thumb item" alt="" src="<%=cp %>/upload/codi/${vo.saveFileName}" >
 				</div>
@@ -556,13 +633,35 @@ table {
 				<img alt="new" src="https://s1.codibook.net/images/common/new.png?20160509" align="middle" height="13">
 				${vo.productName }
 				</div>
-			<div class="info_wrapper">
-				<div class="price">${vo.price }원</div>			
+				</a>
+				<div class="info_wrapper">
+					<div class="price">
+					<fmt:formatNumber value="${vo.price}" groupingUsed="true"/>원
+					</div>
+				</div>
+				
+				
+				<span style="font-size: 14pt;  color: #8080FF; padding: 10px 10px 10px 10px;  ">
+						<input type="hidden" id="superProduct" value="${vo.superProduct}" >
+						<button class="itemGoodButton" value="${vo.superProduct}">
+							<div class="itemGoodDiv${vo.superProduct}">
+								<c:set var="k" value="0" />
+								<c:forEach var="good" items="${good }">
+									<c:if test="${vo.superProduct eq good}">
+										<img src="../resources/image/heart2.PNG" style="height: 25px;"/>
+										<c:set var="k" value="1" />
+									</c:if>
+								</c:forEach>
+								<c:if test="${k==0 }">
+									<img src="../resources/image/heart1.PNG" style="height: 25px;"/>
+								</c:if>
+							</div>
+						</button>
+				</span>
 			</div>
-			</div>
+			
 		</div>
 	</c:forEach>
-	
 	
 </div>
 

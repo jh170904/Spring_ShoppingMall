@@ -28,6 +28,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	from codiList where iNum=#{iNum}
 </select>
 
+<!-- 코디 좋아요 체크 -->
+<select id="myCodiHeart" parameterType="hashMap" resultType="int">
+	select nvl(count(*),0) from codiHeart
+	where iNum=#{iNum} and userId = #{userId}
+</select>
+
+<!-- 상품 좋아요 리스트 -->
+<select id="storeHeartList" parameterType="String" resultType="String">
+	select superProduct from storeHeart where userId = #{userId}
+</select>
+
 <!--  동일아이디 코디 정보 가져오기-->
 <select id="getReadCodiLists" parameterType="HashMap" resultType="com.codi.dto.CommunityDTO">
 	select * from (
@@ -46,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select nvl(count(*)-1,0) from codiList where userId=#{userId} 
 </select>
 
-<!-- 코디구성상품조회 -->
+<!-- 코디 구성 상품 조회 -->
 <select id="getCodiProductItem" parameterType="String" resultType="com.codi.dto.ProductDetailDTO">
 	select a.productId productId, a.productCategory productCategory, b.productName productName, productSize, state, price,
 	to_char(productDate,'yyyy-mm-dd') productDate, amount, color, filecategory, superProduct,
@@ -64,8 +75,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="getCodiHeartCount" parameterType="Integer" resultType="Integer">
 	select nvl(count(*),0) from codiHeart where iNum=#{iNum} 
 </select>
-
-
 
 <!-- 댓글 최대 번호 -->
 <select id="getReplyMaxNum" resultType="Integer">

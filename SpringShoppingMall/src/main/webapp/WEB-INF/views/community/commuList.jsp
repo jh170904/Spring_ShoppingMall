@@ -55,9 +55,6 @@ $(function(){
 
 
 		var iNum = $(this).attr('value');
-
-
-        var info = '<%=(MemberDTO)session.getAttribute("customInfo")%>';
         
         $.ajax({
             async: true,
@@ -76,6 +73,52 @@ $(function(){
             },
             error : function(error) {
             	alert("로그인이 필요합니다.");
+            }
+        });
+			
+	});
+	
+	
+	$(".followButton").click(function(){
+
+
+		var dtoId = $(this).attr('value');
+        
+        $.ajax({
+            async: true,
+            type : 'POST',
+            data : dtoId,
+            url : "../follow.action",
+            dataType : "json",
+            contentType: "application/json; charset=UTF-8",
+            success : function(data) {
+            	$(".followDiv" + dtoId).html(data.str);
+            },
+            error : function(jqXHR, exception) {
+                if (jqXHR.status === 0) {
+                    alert('Not connect.\n Verify Network.');
+                }else if (jqXHR.status == 400) {
+                    alert('Server understood the request, but request content was invalid. [400]');
+                }else if (jqXHR.status == 401) {
+                    alert('Unauthorized access. [401]');
+                }else if (jqXHR.status == 403) {
+                    alert('Forbidden resource can not be accessed. [403]');
+               	}else if (jqXHR.status == 404) {
+                    alert('Requested page not found. [404]');
+                }else if (jqXHR.status == 500) {
+                	alert("로그인이 필요합니다.");
+                }else if (jqXHR.status == 503) {
+                    alert('Service unavailable. [503]');
+                }else if (exception === 'parsererror') {
+                    alert('Requested JSON parse failed. [Failed]');
+                }else if (exception === 'timeout') {
+                    alert('Time out error. [Timeout]');
+                }else if (exception === 'abort') {
+                    alert('Ajax request aborted. [Aborted]');
+                }else {
+                    alert('Uncaught Error.n' + jqXHR.responseText);
+                }
+
             }
         });
 			
@@ -109,7 +152,20 @@ $(function(){
 		</a>
 		
 		<strong>&nbsp;・&nbsp;</strong>
-		<button style="color: #C98AFF; padding: 0; font-weight: 700; padding-bottom: 4px;" type="button">팔로우</button>
+		<button class="followButton" value="${dto.userId}"style="color: #C98AFF; padding: 0; font-weight: 700; padding-bottom: 4px;" type="button">
+			<div class="followDiv${dto.userId}">
+				<c:set var="k" value="0" />
+				<c:forEach var="follow" items="${follow }">
+					<c:if test="${dto.userId eq follow}">
+						팔로우 취소
+						<c:set var="k" value="1" />
+					</c:if>
+				</c:forEach>
+				<c:if test="${k==0 }">
+					팔로우
+				</c:if>
+			</div>
+		</button>
 		
 		<a href="/users/820291"><br>
 			<small>${dto.mMessage }</small>

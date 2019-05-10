@@ -22,6 +22,11 @@ public class CodiDetailDAO {
 		return sessionTemplate.selectOne("codiDetailMapper.getOneInstar", iNum);	
 	}
 	
+	//조회수 증가
+	public void updateHitCount(int iNum) {
+		sessionTemplate.update("codiDetailMapper.updateHitCount", iNum);
+	}
+	
 	//동일id 게시글 조회
 	public List<CommunityDTO> getReadCodiData(String userId, int iNum){
 		HashMap<String, Object> hMap = new HashMap<String, Object>();
@@ -43,9 +48,22 @@ public class CodiDetailDAO {
 		return sessionTemplate.selectOne("codiDetailMapper.getCodiProductItem", productId);	
 	}
 	
+	//개발상품 좋아요 조회
+	public List<String> storeHeartList(String userId){
+		return sessionTemplate.selectList("codiDetailMapper.storeHeartList", userId);	
+	}
+	
 	//좋아요 명수 카운트
 	public int getCodiHeartCount(int iNum){
 		return sessionTemplate.selectOne("codiDetailMapper.getCodiHeartCount", iNum);	
+	}
+	
+	//로그인 고객 좋아요 체크
+	public int getMyCodiHeart(String userId,int iNum){
+		HashMap<String, Object> hMap = new HashMap<String, Object>();
+		hMap.put("userId", userId);
+		hMap.put("iNum", iNum);
+		return sessionTemplate.selectOne("codiDetailMapper.myCodiHeart", hMap);	
 	}
 	
 	//작성자 정보 조회
