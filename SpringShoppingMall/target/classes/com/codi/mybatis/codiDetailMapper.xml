@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="codiDetailMapper">
+
+<!-- 해당 사용자 코디 정보 가져오기 -->
+<select id="selectUserInstar" parameterType="hashMap" resultType="com.codi.dto.CommunityDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select iNum,iSubject,iContent,userId,iImage,iDate,iHitCount,iHashTag
+	from codiList where userId=#{userId} order by idate desc)data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- 사용자 정보 -->
+<select id="getUserInfo" parameterType="String" resultType="com.codi.dto.MemberDTO">
+	select mImage,mMessage from member where userId=#{userId}
+</select>
+
+<!-- 코디 상세페이지 -->
+<select id="getOneInstar" parameterType="int" resultType="com.codi.dto.CommunityDTO">
+	select iSubject,iContent,userId,iImage,iDate,iHitCount,iHashTag,productId,iNum  
+	from codiList where iNum=#{iNum}
+</select>
+
+<!--  동일아이디 코디 정보 가져오기-->
+<select id="getReadCodiLists" parameterType="HashMap" resultType="com.codi.dto.CommunityDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select iNum,iSubject,iContent,userId,iImage,iDate,iHitCount,iHashTag,productId 
+	from codiList where userId=#{userId}
+	and NOT iNum IN (#{iNum})
+	order by idate desc) data)
+<![CDATA[
+	where rnum>=1 and rnum<=6
+]]>
+</select>
+
+<!--  동일아이디 코디 갯수 가져오기-->
+<select id="getReadCodiDataCount" parameterType="HashMap" resultType="Integer">
+	select nvl(count(*)-1,0) from codiList where userId=#{userId} 
+</select>
+
+<!-- 코디구성상품조회 -->
+<select id="getCodiProductItem" parameterType="String" resultType="com.codi.dto.ProductDetailDTO">
+	select a.productId productId, a.productCategory productCategory, b.productName productName, productSize, state, price,
+	to_char(productDate,'yyyy-mm-dd') productDate, amount, color, filecategory, superProduct,
+	storeName, storeUrl, B.originalName originalName, B.saveFileName saveFileName 
+	from product a, codi b 
+	where a.productId(+)=b.productId AND b.productId=#{productId}
+</select>
+
+<!-- 조회수 증가 -->
+<update id="updateHitCount" parameterType="int">
+	update codiList set iHitCount=iHitCount+1 where iNum=#{iNum}
+</update>
+
+<!-- 좋아요 갯수 -->
+<select id="getCodiHeartCount" parameterType="Integer" resultType="Integer">
+	select nvl(count(*),0) from codiHeart where iNum=#{iNum} 
+</select>
+
+
+
+<!-- 댓글 최대 번호 -->
+<select id="getReplyMaxNum" resultType="Integer">
+	select nvl(max(replyNum),0) from reply 
+</select>
+
+<!-- 게시물 댓글 데이터 카운트 -->
+<select id="getReplyDataCount" parameterType="int" resultType="int" >
+	select count(*) from reply where iNum=#{iNum}
+</select>
+
+<!-- 댓글 입력 -->
+<insert id="insertReplyData" parameterType="com.codi.dto.ReplyDTO">
+	insert into reply (replyNum, userId, iNum, content, replyDate)
+	values (#{replyNum},#{userId},#{iNum},#{content},sysdate)
+</insert>
+
+<!-- 댓글 삭제 -->
+<delete id="deleteReplyData" parameterType="int">
+	delete reply where replyNum=#{replyNum}
+</delete>
+
+<!-- 댓글 조회  -->
+<select id="getReplyListData" parameterType="HashMap" resultType="com.codi.dto.ReplyDTO">
+	select * from(
+	select rownum rnum, data.* from(
+	select replyNum, a.userId userId, iNum, content, to_char(replyDate,'YYYY-MM-DD') replyDate , mImage
+	from reply a, member b where iNum=#{iNum} and a.userId=b.userId 
+	order by replyNum desc) data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>	
+</select>
+
+</mapper>
