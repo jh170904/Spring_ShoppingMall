@@ -58,6 +58,13 @@ public class MyPageController {
 		List<CommunityDTO> instarList = instardao.selectUserInstar(userId, 1, 4);
 		List<CommunityDTO> codiHeartList = instardao.getUserCodiHeart(userId, 1, 4);
 		
+		//나를 팔루우한 사람
+		int follower = dao.follower(info.getUserId());
+		//내가 팔로우한 사람
+		int following = dao.following(info.getUserId());
+
+		req.setAttribute("follower", follower);
+		req.setAttribute("following", following);
 		req.setAttribute("userId", userId);
 		req.setAttribute("userInstarCount", userInstarCount);
 		req.setAttribute("memberPath", "../upload/profile");
@@ -67,6 +74,7 @@ public class MyPageController {
 		req.setAttribute("codiHeartList", codiHeartList);
 		req.setAttribute("imagePath", "../upload/makecodi");
 
+		
 		return "mypage/mypageMain";
 	}
 	

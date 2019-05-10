@@ -84,8 +84,8 @@
 	
 	
 	<div style="color: #bdbdbd; font-size: 13px;">
-		<a href="/users/1527075/follower" style="display: inline-block; margin-left: 10px; ">팔로워 <!-- -->0</a>&nbsp;&nbsp;&nbsp;
-		<a href="/users/1527075/followee" style="display: inline-block; ">팔로잉 <!-- -->0</a>
+		<a href="/users/1527075/follower" style="display: inline-block; margin-left: 10px; ">팔로워 ${follower }</a>&nbsp;&nbsp;&nbsp;
+		<a href="/users/1527075/followee" style="display: inline-block; ">팔로잉 ${following }</a>
 	</div>
 	
 	<div style="border-bottom: 1px solid #ebebeb; margin-bottom: 20px; margin-top: 20px;"  ></div>
