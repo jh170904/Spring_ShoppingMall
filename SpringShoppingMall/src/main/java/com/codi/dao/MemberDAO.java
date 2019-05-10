@@ -39,6 +39,13 @@ public class MemberDAO {
 		return dto;
 	}
 	
+	public String originalProfile(String userId){
+
+		String name = sessionTemplate.selectOne("mypageMapper.originalProfile",userId);
+		
+		return name;
+	}
+	
 	public int idcheck(String userId) {
 		
 		int count=sessionTemplate.selectOne("memberMapper.idcheck",userId);

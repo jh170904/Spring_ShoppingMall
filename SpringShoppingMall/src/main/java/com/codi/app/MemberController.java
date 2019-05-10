@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -332,30 +334,53 @@ public class MemberController {
 		
 		MultipartFile file = request.getFile("imageUpdate");
 		
+
+		MemberDTO info=(MemberDTO)session.getAttribute("customInfo");
+		
+		
 		//파일이 존재한다면 업로드 하기
 		
 		if(file!=null && file.getSize()>0) {
 
+			System.out.println(file);
+			
 			try {
+				
+				Date date = new Date();
+				SimpleDateFormat today = new SimpleDateFormat("yyyymmdd24hhmmss");
+				String time = today.format(date);
 
-				String fimeName = file.getOriginalFilename();
+				String fimeName = time + file.getOriginalFilename();
 				
 				File saveFile = new File(path,fimeName);
 				file.transferTo(saveFile);
 
 				dto.setmImage(fimeName);
 				
-				System.out.println(dto.getmImage());
-
+				
+				//기존 물리적 파일에 있는 이미지 삭제
+				//1.기존 물리적 파일의 이미지 가져오기(id로) - dao생성
+				//물리적 파일의 이미지 이름이 default.jpg가 아니면 물리적 파일 삭제
+				System.out.println(info.getUserId());
+				
+				String deleteImage = dao.originalProfile(info.getUserId());
+				
+				System.out.println(deleteImage);
+				
+				if(!deleteImage.equals("default.jpg")) {					
+					String deleteFile = path + "/" + deleteImage;
+					File deletefile = new File(deleteFile);
+			        deletefile.delete();
+				}
+				
 			} catch (Exception e){ 
 				System.out.println(e.toString()); 
 			}
 
+		}else {
+			dto.setmImage("default.jpg");
 		}
 
-
-		MemberDTO info=(MemberDTO)session.getAttribute("customInfo");
-		
 		dto.setmMessage(request.getParameter("mMessage"));
 		dto.setEmail(request.getParameter("email"));
 		dto.setUserId(info.getUserId());

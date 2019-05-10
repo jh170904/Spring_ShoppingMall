@@ -23,4 +23,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>
 </select>
 
+<select id="originalProfile" parameterType="String" resultType="String">
+	select mImage from member where userId = #{userId}
+</select>
+
 </mapper>

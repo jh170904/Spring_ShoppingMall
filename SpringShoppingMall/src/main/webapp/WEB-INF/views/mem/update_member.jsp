@@ -157,7 +157,7 @@ input {
 			
 			<div class="field">
 				<div class="sub_title">메세지</div>
-				<input type="text" id="mMessage" value="" name="mMessage">
+				<input type="text" id="mMessage" value="${dto.mMessage }" name="mMessage">
 			</div>
 			
 			<button id="sendButton" onclick="changePrivateInfo()" type="button">수정 완료</button>
