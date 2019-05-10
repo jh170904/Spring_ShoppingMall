@@ -39,11 +39,25 @@ public class MyPageDAO {
 		
 		List<ProductDTO> lists = 
 				sessionTemplate.selectList("mypageMapper.getLists",params);
-
-		
-		System.out.println(lists);
-
 		return lists;
+	}
+	
+	//팔로워 : 나를 팔로우 한 사람 userId = myFreindId인 myId값
+	public int follower(String userId){
+		int result = 0;
+
+		result = sessionTemplate.selectOne("mypageMapper.follower",userId);
+
+		return result;
+	}
+	
+	//팔로잉 : 내가 팔로우 한 사람 userId = myId인 myFreind인값
+	public int following(String userId){
+		int result = 0;
+
+		result = sessionTemplate.selectOne("mypageMapper.following",userId);
+
+		return result;
 	}
 	
 }

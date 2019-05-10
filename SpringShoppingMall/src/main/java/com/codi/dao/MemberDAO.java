@@ -96,6 +96,40 @@ public class MemberDAO {
 		sessionTemplate.update("memberMapper.updateData",dto);
 		
 	}
+	
+	//follow
+	public int myFollow(String myId,String myFriendId){
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("myId", myId);
+		params.put("myFriendId",myFriendId);
+		
+		int result = sessionTemplate.selectOne("commuMapper.myFollow",params);
+		
+		return result;
+	}
+	
+	//follow
+	public void insertFollow(String myId,String myFriendId){
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("myId", myId);
+		params.put("myFriendId",myFriendId);
+		
+		sessionTemplate.insert("memberMapper.insertFollow",params);
+		
+	}
+	
+	//follow
+	public void deleteFollow(String myId,String myFriendId){
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("myId", myId);
+		params.put("myFriendId",myFriendId);
+		
+		sessionTemplate.insert("memberMapper.deleteFollow",params);
+		
+	}
 
 
 }

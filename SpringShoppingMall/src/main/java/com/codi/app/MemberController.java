@@ -326,6 +326,33 @@ public class MemberController {
 		return "redirect:/con/update_ok.action";
 	}
 	
+	//팔로우 /con/follow.action
+	@RequestMapping(value = "/follow.action", method = {RequestMethod.POST, RequestMethod.GET})
+	@ResponseBody
+	public Map<Object, Object> follow(HttpSession session,@RequestBody String dtoId) {
+
+		MemberDTO info=(MemberDTO)session.getAttribute("customInfo");
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		
+		//팔로우 테이블에 있으면 insert,팔로우 취소 없으면 delete 팔로우
+		int result = dao.myFollow(info.getUserId(),dtoId);
+		String str = "";
+		
+		
+		if(result==0 && !dtoId.equals(info.getUserId())) {
+			dao.insertFollow(info.getUserId(),dtoId);
+			str = "팔로우 취소";
+		}else {
+			dao.deleteFollow(info.getUserId(),dtoId);
+			str = "팔로우";
+		}
+		
+		System.out.println(str);
+		
+		map.put("str", str);
+		return map;
+	}
+	
 	//개인정보수정
 	@RequestMapping(value = "/con/update_data.action", method = {RequestMethod.POST, RequestMethod.GET})
 	public String update_data(HttpSession session, MemberDTO dto, MultipartHttpServletRequest request, HttpServletResponse response) {
@@ -361,11 +388,7 @@ public class MemberController {
 				//기존 물리적 파일에 있는 이미지 삭제
 				//1.기존 물리적 파일의 이미지 가져오기(id로) - dao생성
 				//물리적 파일의 이미지 이름이 default.jpg가 아니면 물리적 파일 삭제
-				System.out.println(info.getUserId());
-				
 				String deleteImage = dao.originalProfile(info.getUserId());
-				
-				System.out.println(deleteImage);
 				
 				if(!deleteImage.equals("default.jpg")) {					
 					String deleteFile = path + "/" + deleteImage;

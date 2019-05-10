@@ -40,9 +40,11 @@ public class CommunityController {
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo"); 
 
 		List<String> good = null;
+		List<String> follow = null;
 
 		if(info!=null) {
 			good = dao.myCodiHeartList(info.getUserId());
+			follow = dao.myFollowList(info.getUserId());
 		}
 		
 		String cp = req.getContextPath();
@@ -86,6 +88,7 @@ public class CommunityController {
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 
 		req.setAttribute("good", good);
+		req.setAttribute("follow", follow);
 		req.setAttribute("listUrl", listUrl);
 		req.setAttribute("lists", lists);
 		req.setAttribute("pageIndexList", pageIndexList);

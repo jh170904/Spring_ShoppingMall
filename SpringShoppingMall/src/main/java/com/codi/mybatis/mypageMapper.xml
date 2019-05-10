@@ -27,4 +27,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select mImage from member where userId = #{userId}
 </select>
 
+<select id="follower" parameterType="String" resultType="int">
+	select nvl(count(*),0) from follow
+	where myFriendId=#{userId}
+</select>
+
+<select id="following" parameterType="String" resultType="int">
+	select nvl(count(*),0) from follow
+	where myId=#{userId}
+</select>
+
 </mapper>

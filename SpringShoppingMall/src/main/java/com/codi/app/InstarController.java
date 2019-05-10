@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.codi.dao.InstarDAO;
+import com.codi.dao.MyPageDAO;
 import com.codi.dao.ReviewDAO;
 import com.codi.dto.CommunityDTO;
 import com.codi.dto.MemberDTO;
@@ -36,6 +37,10 @@ public class InstarController {
 	@Autowired
 	@Qualifier("instarDAO")
 	InstarDAO dao;
+
+	@Autowired
+	@Qualifier("myPageDAO")
+	MyPageDAO myPageDAO;
 	
 	@Autowired
 	@Qualifier("reviewDAO")
@@ -102,7 +107,14 @@ public class InstarController {
 		
 		String listUrl = cp + "/myPage/myInstarLists.action";
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
-		
+
+		//나를 팔루우한 사람
+		int follower = myPageDAO.follower(info.getUserId());
+		//내가 팔로우한 사람
+		int following = myPageDAO.following(info.getUserId());
+
+		request.setAttribute("follower", follower);
+		request.setAttribute("following", following);
 		request.setAttribute("userId", info.getUserId());
 		request.setAttribute("lists", lists);
 		request.setAttribute("imagePath", "../upload/makecodi");
@@ -145,7 +157,14 @@ public class InstarController {
 		
 		String listUrl = cp + "/myPage/myCodiHeartists.action";
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
-		
+
+		//나를 팔루우한 사람
+		int follower = myPageDAO.follower(info.getUserId());
+		//내가 팔로우한 사람
+		int following = myPageDAO.following(info.getUserId());
+
+		request.setAttribute("follower", follower);
+		request.setAttribute("following", following);
 		request.setAttribute("userId", info.getUserId());
 		request.setAttribute("lists", lists);
 		request.setAttribute("imagePath", "../upload/makecodi");
@@ -198,7 +217,14 @@ public class InstarController {
 		
 		String listUrl = cp + "/myPage/myStoreHeartLists.action";
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
-		
+
+		//나를 팔루우한 사람
+		int follower = myPageDAO.follower(info.getUserId());
+		//내가 팔로우한 사람
+		int following = myPageDAO.following(info.getUserId());
+
+		request.setAttribute("follower", follower);
+		request.setAttribute("following", following);
 		request.setAttribute("userId", info.getUserId());
 		request.setAttribute("lists", lists);
 		request.setAttribute("imagePath", "../upload/list");
