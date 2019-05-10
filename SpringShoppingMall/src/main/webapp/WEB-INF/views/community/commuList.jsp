@@ -106,7 +106,7 @@ $(function(){
                	}else if (jqXHR.status == 404) {
                     alert('Requested page not found. [404]');
                 }else if (jqXHR.status == 500) {
-                    alert('Internal server error. [500]');
+                	alert("로그인이 필요합니다.");
                 }else if (jqXHR.status == 503) {
                     alert('Service unavailable. [503]');
                 }else if (exception === 'parsererror') {
