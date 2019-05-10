@@ -24,8 +24,6 @@ public class CommunityDAO {	@Autowired
 		int result = 0;
 
 		result = sessionTemplate.selectOne("commuMapper.getDataCount");
-
-		System.out.println(result);
 		
 		return result;
 	}	
@@ -99,5 +97,16 @@ public class CommunityDAO {	@Autowired
 		
 		sessionTemplate.delete("commuMapper.deleteHeart", params);
 
+	}
+	
+	//myFriendList
+	public List<String> myFollowList(String userId){
+	
+		List<String> lists = 
+				sessionTemplate.selectList("commuMapper.myFollowList",userId);
+		
+		System.out.println(lists);
+	
+		return lists;
 	}
 }

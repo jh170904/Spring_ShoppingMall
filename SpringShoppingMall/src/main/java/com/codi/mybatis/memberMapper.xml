@@ -59,4 +59,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	delete board where num=#{num}
 </delete>
 
+<insert id="insertFollow" parameterType="hashMap">
+	insert into follow(myId,myFriendId)
+	values (#{myId},#{myFriendId})
+</insert>
+
+<insert id="deleteFollow" parameterType="hashMap">
+	delete follow where myId=#{myId} and myFriendId=#{myFriendId}
+</insert>
+
 </mapper>

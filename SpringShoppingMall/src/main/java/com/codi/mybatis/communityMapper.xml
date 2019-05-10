@@ -20,6 +20,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>
 </select>
 
+<!-- myFollow count -->
+<select id="myFollow" parameterType="hashMap" resultType="int">
+	select nvl(count(*),0) from Follow
+	where myId=#{myId} and myFriendId = #{myFriendId}
+</select>
+
+<!-- storeHeart count list -->
+<select id="myFollowList" parameterType="String" resultType="String">
+	select myFriendId from follow where myId = #{userId}
+</select>
+
 <!-- storeHeart count list -->
 <select id="myCodiHeartList" parameterType="String" resultType="String">
 	select inum from codiHeart where userId = #{userId}
