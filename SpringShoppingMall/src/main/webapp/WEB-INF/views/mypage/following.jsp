@@ -15,29 +15,6 @@
     padding-top: 60px;
 }
 
-.post__upload {
-    display: -webkit-box;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;	
-    -ms-flex-pack: center;
-    -moz-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -moz-align-items: center;
-    align-items: center;
-    width: 100%;
-    padding: 220px 0;
-    border: 1px dashed #dbdbdb;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    color: #757575;
-    font-weight: 700;
-    font-size: 15px;
-}
-
 .profile-image {
     top: 20px;
     width: 250px;
@@ -67,6 +44,50 @@
 	text-align: center;
 }
 
+.page-navigation__item{
+    display: block;
+    padding: 0 10px;
+    font-weight: bold;
+    height: 60px;
+    line-height: 60px;
+    transition: color .15s ease;
+    font-size: 13px;
+    display: inline-block; 
+    position: relative;
+}
+
+#content3 {
+    max-width: 1030px;
+    width: 100%;
+    min-height: 170px;
+    margin: 30px auto;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+    overflow: hidden;
+    padding: 40px 50px 50px;
+    color: #424242;
+}
+
+#content3>.title {
+    font-size: 24px;
+    font-weight: 700;
+    padding: 0 0 20px;
+}
+
+.user {
+    overflow: hidden;
+    padding: 30px 0;
+    border-top: solid 1px #dcdcdc;
+}
+
+.name {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 30px;
+    display: inline-block;
+}
+
 </style>
 
 <div class="container2">
@@ -75,17 +96,16 @@
 
 <div style="display: block; ">
 	<div class="profile-image" >
-	<img alt="" src="${memberPath }/${memberInfo.mImage }" style="border-radius: 100%;">
+	<img alt="" src="../upload/profile/${userInfo.mImage }" style="border-radius: 100%;">
 	</div>
 	
 	<div style="border-bottom: 1px solid #ebebeb; margin-bottom: 20px; margin-top: 20px;"  ></div>
 	
-	<div class="profile-info__name"><strong>${userId }</strong></div>
-	
+	<div class="profile-info__name"><strong>${userInfo.userId }</strong></div>
 	
 	<div style="color: #bdbdbd; font-size: 13px;">
-		<a href="<%=cp %>/myPage/follower.action" style="display: inline-block; margin-left: 10px; ">팔로워 ${follower }</a>&nbsp;&nbsp;&nbsp;
-		<a href="<%=cp %>/myPage/following.action" style="display: inline-block; ">팔로잉 ${following }</a>
+		<a href="<%=cp %>/myPage/follower.action" style="display: inline-block; margin-left: 10px; ">팔로워 ${follower}</a>&nbsp;&nbsp;&nbsp;
+		<a href="<%=cp %>/myPage/following.action" style="display: inline-block;">팔로잉 ${following}</a>
 	</div>
 	
 	<div style="border-bottom: 1px solid #ebebeb; margin-bottom: 20px; margin-top: 20px;"  ></div>
@@ -116,15 +136,15 @@
 		</div>
 		
 		<div class="short-cut__item">
-		<p>
+		<a href="#">
 		<div class="short-cut__icon">
 			<svg width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
-				<path fill="#8080ff" stroke="#8080ff" fill-opacity=".74" fill-rule="evenodd" transform="matrix(1 0 0 -1 0 23.033)" d="M12.943 6.342a2 2 0 0 1-1.886 0L3 2.032V20.5a.5.5 0 0 0 .5.5h17a.5.5 0 0 0 .5-.5V2.033l-8.057 4.309zm-.471-.882l8.056-4.31A1 1 0 0 1 22 2.034V20.5a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 20.5V2.033a1 1 0 0 1 1.472-.882l8.056 4.31a1 1 0 0 0 .944 0z">
+				<path fill="#000" fill-opacity=".74" fill-rule="evenodd" transform="matrix(1 0 0 -1 0 23.033)" d="M12.943 6.342a2 2 0 0 1-1.886 0L3 2.032V20.5a.5.5 0 0 0 .5.5h17a.5.5 0 0 0 .5-.5V2.033l-8.057 4.309zm-.471-.882l8.056-4.31A1 1 0 0 1 22 2.034V20.5a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 20.5V2.033a1 1 0 0 1 1.472-.882l8.056 4.31a1 1 0 0 0 .944 0z">
 				</path>
 			</svg>
 		</div>
-		<strong>내코디</strong>
-		</p>
+		<strong>스크랩북</strong>
+		</a>
 		</div>
 	</div>
 	
@@ -134,46 +154,43 @@
 
 </div>
 
+
+
+
+
 <div style="width: 750px; display: inline-block; vertical-align: top;">
-	<c:if test="${empty lists }">
-		<div  class="post__upload">
-			아직 포스팅이 없습니다.
+
+<div style="width: 100%; overflow: visible; border-bottom: solid 1px #dbdbdb; text-align: center;">
+	<ul>
+		<li class="page-navigation__item" style=" color: #8080FF"><a href="myPage/following.action">팔로잉<div style="height: 4px; background-color: #8080FF"/></div></a></li>
+		<li class="page-navigation__item"><a href="myPage/follower.action">팔로워</a></li>
+	</ul>
+</div>
+
+<div id="content3">
+	<div class="title">팔로잉</div>
+	<div>
+		<div id="empty_message" style="display: none;">팔로잉한 사용자가 없습니다.</div>
+		
+		<c:forEach var="dto" items="${lists }">
+		<div class="user">
+			<a href="/users/3625073">
+				<img style="border:1px solid #F6F6F6; width: 36px; height: 36px; border-radius: 18px; display: inline-block;" src="../upload/profile/${dto.mImage}"/>
+				<span class="name">${dto.userId}</span>
+			</a>
 		</div>
+		</c:forEach>
+
+	</div>
+</div>
+
+<div style="height:100px; text-align: center;">
+	<c:if test="${dataCount!=0 }">
+		<font style="font-size: 20px">${pageIndexList}</font>
+	</c:if> 
+	<c:if test="${dataCount==0 }">
+		등록된 게시물이 없습니다.
 	</c:if>
-	
-	<c:if test="${!empty lists }">
-	<%int cnt = 0;%>
-	<c:forEach var="dto" items="${lists }">
-
-	<%
-		if (cnt == 0) {
-			out.print("<dl>");
-		}
-	%>
-	<dd style="display: inline-block; margin-right: 5px; margin-bottom: 30px;">
-	<a href="<%=cp%>/pr/codiDetailList.action?iNum=${dto.iNum}">
-		<img alt="" src="${imagePath }/${dto.iImage}.png" width="240" height="210" style="border:1px solid #d4d4d4; border-radius: 7px;"><br/>
-		<p align="left" style="font-size: 15px; margin-top: 5px;">${dto.iSubject }</p>
-	</a>
-	</dd>
-
-
-	<%cnt++;%>
-	
-	<%
-		if (cnt == 3) {
-			out.print("</dl>");
-			cnt = 0;
-		}
-	%>
-	</c:forEach>
-	</c:if>
-	
-	<div style="text-align: center; margin-top: 25px; margin-bottom: 50px;">
-		<c:if test="${dataCount!=0 }">
-			<font style="font-size: 20px">${pageIndexList}</font>
-		</c:if>
-	</div>	
 </div>
 
 </div>

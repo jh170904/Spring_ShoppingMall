@@ -121,8 +121,8 @@
 	<div class="profile-info__name"><strong>${userId }</strong></div>
 	
 	<div style="color: #bdbdbd; font-size: 13px;">
-		<a href="<%=cp %>/myPage/myStoreHeartLists.action" style="display: inline-block; margin-left: 10px; ">팔로워 ${follower}</a>&nbsp;&nbsp;&nbsp;
-		<a href="<%=cp %>/myPage/myStoreHeartLists.action" style="display: inline-block; ">팔로잉 ${following}</a>
+		<a href="<%=cp %>/myPage/follower.action" style="display: inline-block; margin-left: 10px; ">팔로워 ${follower}</a>&nbsp;&nbsp;&nbsp;
+		<a href="<%=cp %>/myPage/following.action" style="display: inline-block; ">팔로잉 ${following}</a>
 	</div>
 	
 	<div style="border-bottom: 1px solid #ebebeb; margin-bottom: 20px; margin-top: 20px;"  ></div>

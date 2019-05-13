@@ -143,4 +143,60 @@ public class MyPageController {
 		return "mypage/storeGood";
 	}
 	
+	@RequestMapping(value = "myPage/following.action", method = RequestMethod.GET)
+	public String following(HttpServletRequest req,HttpSession session) {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo"); 
+		
+		String userId="";
+
+		if(info!=null) {
+			userId = info.getUserId();
+		}
+		
+		String cp = req.getContextPath();
+
+		String pageNum = req.getParameter("pageNum");
+
+		int currentPage = 1;
+
+		if (pageNum != null)
+			currentPage = Integer.parseInt(pageNum);
+
+		int dataCount = dao.following(userId);
+
+		int numPerPage = 2;
+		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+
+		if (currentPage > totalPage)
+			currentPage = totalPage;
+
+		int start = (currentPage - 1) * numPerPage + 1;
+		int end = currentPage * numPerPage;
+
+		//팔로잉들의 프로필과 아이디
+		List<MemberDTO> lists = dao.followingList(start, end,userId);
+		//내프로필과 상메
+		MemberDTO userInfo = instardao.getUserInfo(userId);
+		//나를 팔루우한 사람
+		int follower = dao.follower(info.getUserId());
+		//내가 팔로우한 사람
+		int following = dao.following(info.getUserId());
+		
+		// 페이징을 위한 값들 보내주기
+		String listUrl = cp + "/myPage/following.action";
+
+		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+
+		req.setAttribute("listUrl", listUrl);
+		req.setAttribute("lists", lists);
+		req.setAttribute("follower", follower);
+		req.setAttribute("following", following);
+		req.setAttribute("userInfo", userInfo);
+		req.setAttribute("pageIndexList", pageIndexList);
+		req.setAttribute("pageNum", pageNum);
+		
+		return "mypage/following";
+	}
+	
 }

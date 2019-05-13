@@ -173,7 +173,7 @@ $(function(){
 	</p>
 	
 	<div style="width: 260px;" >
-	<a href="<%=cp%>/pr/instarView.action?iNum=${dto.iNum}">
+	<a href="<%=cp%>/pr/codiDetailList.action?iNum=${dto.iNum}">
 		<img style="border:1px solid #C2C2C2; border-radius:15px; width: 256px; height: 236px; margin-left:2px; margin-top:5px; margin-bottom:5px; display: inline-block;" src="../upload/makecodi/${dto.iImage }.png"/>
 	</a>
 	</div>

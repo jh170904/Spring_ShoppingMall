@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.codi.dto.MemberDTO;
 import com.codi.dto.ProductDTO;
 
 
@@ -58,6 +59,20 @@ public class MyPageDAO {
 		result = sessionTemplate.selectOne("mypageMapper.following",userId);
 
 		return result;
+	}
+	
+	public List<MemberDTO> followingList(int start, int end,String userId){
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("start", start);
+		params.put("end",end);
+		params.put("userId",userId);
+		
+		List<MemberDTO> lists = 
+				sessionTemplate.selectList("mypageMapper.followingList",params);
+		
+		return lists;
 	}
 	
 }
