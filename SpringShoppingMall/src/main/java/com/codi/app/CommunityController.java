@@ -132,10 +132,34 @@ public class CommunityController {
 		return map;
 	}
 	
-	@RequestMapping(value = "pr/commuMain1.action", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "pr/commuMain.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String commuHome(HttpServletRequest request,HttpSession session) {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		String myId="";
+		if(info!=null) {
+			myId = info.getUserId();
+		}
+
+		CommunityDTO commuMain = dao.commuMain();
+		List<CommunityDTO> todayCodi = dao.selectTodayCodi();
+		List<CommunityDTO> followNews = null;
+		
+		if(myId!=null && !myId.equals("")) {
+			followNews = dao.followNews(myId);
+		}
+		else {
+			followNews = null;
+		}
+				
+		request.setAttribute("commuMain", commuMain);
+		request.setAttribute("todayCodi", todayCodi);
+		request.setAttribute("followNews", followNews);
+		request.setAttribute("myId", myId);
+		request.setAttribute("imagePath", "../upload/makecodi");
 		
 		return "community/commuHome";
 		
 	}
+	
 }

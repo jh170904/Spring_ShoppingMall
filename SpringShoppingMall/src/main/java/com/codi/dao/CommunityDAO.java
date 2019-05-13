@@ -109,4 +109,21 @@ public class CommunityDAO {	@Autowired
 	
 		return lists;
 	}
+	
+	//commuHome.jsp ºÎºÐ
+	public CommunityDTO commuMain(){
+		CommunityDTO dto = sessionTemplate.selectOne("commuMapper.commuMain");
+		return dto;
+	}
+	
+	
+	public List<CommunityDTO> selectTodayCodi(){
+		List<CommunityDTO> lists = sessionTemplate.selectList("commuMapper.selectTodayCodi");
+		return lists;
+	}
+	
+	public List<CommunityDTO> followNews(String myId){
+		List<CommunityDTO> lists = sessionTemplate.selectList("commuMapper.followNews",myId);
+		return lists;
+	}
 }

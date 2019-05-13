@@ -19,10 +19,24 @@ public class CommunityDTO {
 	private String mImage;
 	private String mMessage;
 	
-	private String productId;
+	private String productId;	
 	
+	private String myId;
+	private String myFriendId;
 	
-
+	public String getMyId() {
+		return myId;
+	}
+	public void setMyId(String myId) {
+		this.myId = myId;
+	}
+	public String getMyFriendId() {
+		return myFriendId;
+	}
+	public void setMyFriendId(String myFriendId) {
+		this.myFriendId = myFriendId;
+	}
+	
 	public String getProductId() {
 		return productId;
 	}
