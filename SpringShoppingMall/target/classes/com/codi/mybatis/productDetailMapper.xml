@@ -15,6 +15,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	from product where productId=#{productId} and filecategory='list'
 </select>
 
+<select id="getUpdateData" parameterType="String" resultType="com.codi.dto.ProductDetailDTO" >
+	select productId,productCategory,productName,productSize,state,price,
+	to_char(productDate,'yyyy-mm-dd') productDate,amount,color,
+	originalName,saveFileName,filecategory,superProduct,
+	storeName,storeUrl 
+	from product where productId=#{productId}
+</select>
+
+<update id="updateData" parameterType="com.codi.dto.ProductDTO">
+	update product set 
+	productCategory=#{productCategory},
+	productName=#{productName},
+	productSize=#{productSize},
+	price=#{price},
+	color=#{color},
+	state=#{state},
+	fileCategory=#{fileCategory,jdbcType=VARCHAR},
+	originalName=#{originalName},
+	saveFileName=#{saveFileName},
+	superProduct=#{superProduct},
+	storeName=#{storeName},
+	storeUrl=#{storeUrl}
+	where productId=#{productId}
+</update>
+
 <!-- 상세상품 색상옵션 -->
 <select id="getColorList" parameterType="String" resultType="String" >
 	select DISTINCT color from product where superProduct=#{superProduct}

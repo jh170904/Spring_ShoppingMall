@@ -42,7 +42,10 @@
 					<td >${dto.state }</td>
 					<td >${dto.price}</td>	
 					<td >${dto.productDate }</td>				
-					<td ><a href="<%=cp %>/productAdminDelete.action?productId=${dto.productId}&originalName=${dto.originalName}">삭제</a></td>
+					<td >
+					<a href="<%=cp %>/productAdminUpdate.action?productId=${dto.productId}">수정</a>
+					<a href="<%=cp %>/productAdminDelete.action?productId=${dto.productId}&originalName=${dto.originalName}">삭제</a>
+					</td>
 				</tr>
 			</c:forEach>
 			</table>

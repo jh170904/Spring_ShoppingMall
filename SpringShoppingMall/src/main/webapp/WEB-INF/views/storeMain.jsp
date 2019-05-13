@@ -24,14 +24,14 @@ $(function(){
             async: true,
             type : 'POST',
             data : superProduct,
-            url : "../good.action",
+            url : "../storeGood.action",
             dataType : "json",
             contentType: "application/json; charset=UTF-8",
             success : function(data) {
             	if(data.cnt > 0) {
-            		$(".goodDiv" + superProduct).html('♡');
+            		$(".goodDiv" + superProduct).html('<img src="../resources/image/heart1.PNG" style="height: 25px;"/> ');
                 } else {
-            		$(".goodDiv" + superProduct).html('♥');
+            		$(".goodDiv" + superProduct).html('<img src="../resources/image/heart2.PNG" style="height: 25px;"/> ');
                 }
                 
             },
@@ -508,7 +508,7 @@ p {
 			<div class="product-item">
 				<div class="product-item__image">
 				<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">
-					<img src="../upload/list/${dto.originalName}" style="width: 280px; height: 280px;">
+					<img src="../upload/list/${dto.originalName}" style="width: 280px; height: 280px; border-radius: 15px;" >
 				</a>
 				</div>
 					<div class="product-item__info">
@@ -532,11 +532,12 @@ p {
 									<c:set var="k" value="0" />
 									<c:forEach var="good" items="${good }">
 									<c:if test="${dto.superProduct eq good}">
-										♥<c:set var="k" value="1" />
+										<img src="../resources/image/heart2.PNG" style="height: 25px;"/> 
+										<c:set var="k" value="1" />
 									</c:if>
 									</c:forEach>
 									<c:if test="${k==0 }">
-										♡
+										<img src="../resources/image/heart1.PNG" style="height: 25px;"/> 
 									</c:if>
 								</div>
 								</button>
@@ -551,7 +552,7 @@ p {
 </section>
 
 <section class="container">
-<h1>추가할 내용 반영 - 베스트 상품??</h1>
+<h1></h1>
 </section>
 
 <%@include file="./layout/footer.jsp"  %>
