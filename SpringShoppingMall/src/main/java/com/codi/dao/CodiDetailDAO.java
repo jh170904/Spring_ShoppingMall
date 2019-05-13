@@ -100,4 +100,12 @@ public class CodiDetailDAO {
 		hMap.put("end", end);
 		return sessionTemplate.selectList("codiDetailMapper.getReplyListData", hMap);	
 	}
+	
+	//작성자 팔로우 여부 확인
+	public int followCheck(String followerId, String followingId) {
+		HashMap<String, Object> hMap = new HashMap<String, Object>();
+		hMap.put("followerId", followerId);
+		hMap.put("followingId", followingId);	
+		return sessionTemplate.selectOne("codiDetailMapper.followCheck", hMap);	
+	}
 }

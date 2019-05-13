@@ -135,8 +135,9 @@
 		});
 	}
 	
-	
+
 	$(function(){
+		
 		$(".goodButton").click(function(){
 			var iNum = $(this).attr('value');
 			alert(iNum);
@@ -162,9 +163,7 @@
 	            }
 	        });
 		});
-	});
-	
-	$(function(){
+		
 		$(".itemGoodButton").click(function(){
 			var superProduct = $(this).attr('value');
 	        var info = '<%=(MemberDTO)session.getAttribute("customInfo")%>';
@@ -190,6 +189,50 @@
 	            },
 	            error : function(error) {
 	            	alert("로그인이 필요합니다.");
+	            }
+	        });
+		});
+		
+		
+		
+		$(".followButton").click(function(){
+			var dtoId = $(this).attr('value');
+	        
+	        $.ajax({
+	            async: true,
+	            type : 'POST',
+	            data : dtoId,
+	            url : "../follow.action",
+	            dataType : "json",
+	            contentType: "application/json; charset=UTF-8",
+	            success : function(data) {
+	            	$(".followDiv" + dtoId).html(data.str);
+	            },
+	            error : function(jqXHR, exception) {
+	                if (jqXHR.status === 0) {
+	                    alert('Not connect.\n Verify Network.');
+	                }else if (jqXHR.status == 400) {
+	                    alert('Server understood the request, but request content was invalid. [400]');
+	                }else if (jqXHR.status == 401) {
+	                    alert('Unauthorized access. [401]');
+	                }else if (jqXHR.status == 403) {
+	                    alert('Forbidden resource can not be accessed. [403]');
+	               	}else if (jqXHR.status == 404) {
+	                    alert('Requested page not found. [404]');
+	                }else if (jqXHR.status == 500) {
+	                	alert("로그인이 필요합니다.");
+	                }else if (jqXHR.status == 503) {
+	                    alert('Service unavailable. [503]');
+	                }else if (exception === 'parsererror') {
+	                    alert('Requested JSON parse failed. [Failed]');
+	                }else if (exception === 'timeout') {
+	                    alert('Time out error. [Timeout]');
+	                }else if (exception === 'abort') {
+	                    alert('Ajax request aborted. [Aborted]');
+	                }else {
+	                    alert('Uncaught Error.n' + jqXHR.responseText);
+	                }
+
 	            }
 	        });
 				
@@ -579,10 +622,21 @@ table {
 						<div class="profile_image">
 						<img alt="profile image" width="90" height="90"	src="<%=cp %>/upload/profile/${userInfo.mImage}">
 						</div>
-						<div class="nick_name">${dto.userId }</div>
+						<div class="nick_name">${dto.userId }</div>	
 						<div class="btn follow_wrapper requireLogin">
-							+팔로우
+							<button class="followButton" value="${dto.userId}" class="btn follow_wrapper requireLogin">
+							<div class="followDiv${dto.userId}">
+								<c:if test="${follow eq 1}">
+									팔로우 취소
+								</c:if>
+								<c:if test="${follow eq 0 }">
+									+팔로우
+								</c:if>
+							</div>
+						</button>
 						</div>
+										
+						
 					</div>
 					
 					<!-- 동일아이디 등록코디 -->
@@ -662,7 +716,7 @@ table {
 			
 		</div>
 	</c:forEach>
-	
+
 </div>
 
 

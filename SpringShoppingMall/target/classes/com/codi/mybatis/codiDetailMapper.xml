@@ -109,4 +109,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>	
 </select>
 
+<!-- 작성자 팔로우 체크 -->
+<select id="followCheck" parameterType="HashMap" resultType="int" >
+	select count(*) from follow where MyId=#{followerId} and MyFriendId=#{followingId} 
+</select>
+
 </mapper>

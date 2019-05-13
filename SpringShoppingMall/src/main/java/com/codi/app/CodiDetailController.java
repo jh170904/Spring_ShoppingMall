@@ -2,10 +2,7 @@ package com.codi.app;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.codi.dao.CodiDetailDAO;
+import com.codi.dao.CommunityDAO;
 import com.codi.dao.ProductDetailDAO;
-import com.codi.dto.CodiDTO;
 import com.codi.dto.CommunityDTO;
 import com.codi.dto.MemberDTO;
 import com.codi.dto.ProductDetailDTO;
@@ -51,7 +48,8 @@ public class CodiDetailController {
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		MemberDTO loginUserInfo = null;	
 		List<String> good = null;
-
+		int follow = 0;
+		
 		//코디 게시글 조회수 증가
 		dao.updateHitCount(iNum);
 		
@@ -64,6 +62,7 @@ public class CodiDetailController {
 			loginUserInfo = dao.getUserInfo(loginUserId);
 			dto.setHeartCount(dao.getMyCodiHeart(loginUserId, iNum));
 			good = dao.storeHeartList(info.getUserId());
+			follow = dao.followCheck(loginUserId,dto.getUserId());
 		}
 		
 		//게시물 작성자 프로필 정보
@@ -94,6 +93,7 @@ public class CodiDetailController {
 		
 		request.setAttribute("dto", dto);
 		request.setAttribute("good", good);
+		request.setAttribute("follow", follow);
 		request.setAttribute("userInfo",userInfo);
 		request.setAttribute("loginUserInfo",loginUserInfo);
 		request.setAttribute("codiLists", codiLists);
