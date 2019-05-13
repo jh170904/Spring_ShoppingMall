@@ -50,13 +50,6 @@ public class ProductController {
 	
 	@Autowired
 	MyUtil myUtil;// Bean 객체 생성
-
-	@RequestMapping(value = "pr/commuMain.action", method = { RequestMethod.GET, RequestMethod.POST })
-	public String commuHome(HttpServletRequest request,HttpSession session) {
-		
-		return "commuMain";
-		
-	}
 	
 	//스토어홈 메인페이지
 	@RequestMapping(value = "pr/storeMain.action", method = RequestMethod.GET)

@@ -59,4 +59,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	delete codiHeart where iNum=#{iNum} and userId = #{userId}
 </delete>
 
+
+<!-- commuHome.jsp 부분 -->
+
+<!-- 커뮤 메인 -->
+<select id="commuMain" resultType="com.codi.dto.CommunityDTO">
+		select iNum,iImage,codiList.userId userId,iSubject,iContent,iDate,mImage,mMessage 
+		from codiList,member 
+		where rownum=1 and codiList.userId=member.userId 
+		order by iHitCount desc
+</select>
+
+<!-- 오늘의 인기 코디 -->
+<select id="selectTodayCodi" resultType="com.codi.dto.CommunityDTO">
+	select heartCount,codiList.*,mImage,mMessage 
+	from codiList, member,
+	(select iNum, nvl(count(iNum),0) heartCount from codiHeart group by iNum order by heartCount desc) codiHeart
+<![CDATA[
+	where codiHeart.iNum=codiList.iNum and codiList.userId=member.userId and rownum<=8
+]]>
+</select>
+
+<!-- 팔로워 소식 -->
+<select id="followNews" parameterType="String" resultType="com.codi.dto.CommunityDTO">
+	select myId,myFriendId,userName,mImage,mMessage,iNum,iImage,iDate,iSubject from follow,member,codiList 
+<![CDATA[
+	where follow.myFriendId=member.userId and codiList.userId=follow.myFriendId and myId=#{myId} and rownum<=8 order by iDate desc
+]]>
+</select>
+
 </mapper>
