@@ -24,7 +24,7 @@
 						<li><a href="#">커뮤니티홈</a></li>
 						<li><a href="<%=cp4 %>/pr/commuList.action">코디</a></li>
 						<li><a href="#">테마</a></li>
-						<li><a href="#">질문과 답변</a></li>
+						<li><a href="<%=cp%>/qna/questionMain.action">질문과 답변</a></li>
 					</ul>
 				</div>
 				</td>
