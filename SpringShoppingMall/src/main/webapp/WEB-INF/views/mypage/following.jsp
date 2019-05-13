@@ -24,6 +24,18 @@
     margin-right: auto;
 }
 
+#empty_message {
+    margin: 30px 0 50px;
+    font-size: 14px;
+    color: #757575;
+    text-align: center;
+}
+
+.profile-image img {
+    width: 250px;
+    height: 250px;
+}
+
 .profile-info__name {
     font-size: 30px;
     line-height: 40px;
@@ -162,22 +174,22 @@
 
 <div style="width: 100%; overflow: visible; border-bottom: solid 1px #dbdbdb; text-align: center;">
 	<ul>
-		<li class="page-navigation__item" style=" color: #8080FF"><a href="myPage/following.action">팔로잉<div style="height: 4px; background-color: #8080FF"/></div></a></li>
-		<li class="page-navigation__item"><a href="myPage/follower.action">팔로워</a></li>
+		<li class="page-navigation__item" style=" color: #8080FF"><a href="<%=cp %>/myPage/following.action">팔로잉<div style="height: 4px; background-color: #8080FF"/></div></a></li>
+		<li class="page-navigation__item"><a href="<%=cp %>/myPage/follower.action">팔로워</a></li>
 	</ul>
 </div>
 
 <div id="content3">
 	<div class="title">팔로잉</div>
 	<div>
-		<div id="empty_message" style="display: none;">팔로잉한 사용자가 없습니다.</div>
+		<c:if test="${empty lists }">
+			<div id="empty_message">팔로잉한 사용자가 없습니다.</div>
+		</c:if>
 		
 		<c:forEach var="dto" items="${lists }">
 		<div class="user">
-			<a href="/users/3625073">
-				<img style="border:1px solid #F6F6F6; width: 36px; height: 36px; border-radius: 18px; display: inline-block;" src="../upload/profile/${dto.mImage}"/>
-				<span class="name">${dto.userId}</span>
-			</a>
+			<img style="border:1px solid #F6F6F6; width: 36px; height: 36px; border-radius: 18px; display: inline-block;" src="../upload/profile/${dto.mImage}"/>
+			<span class="name">${dto.userId}</span>
 		</div>
 		</c:forEach>
 

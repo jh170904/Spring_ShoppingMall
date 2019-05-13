@@ -15,29 +15,6 @@
     padding-top: 60px;
 }
 
-.post__upload {
-    display: -webkit-box;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;	
-    -ms-flex-pack: center;
-    -moz-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -moz-align-items: center;
-    align-items: center;
-    width: 100%;
-    padding: 220px 0;
-    border: 1px dashed #dbdbdb;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    color: #757575;
-    font-weight: 700;
-    font-size: 15px;
-}
-
 .profile-image {
     top: 20px;
     width: 250px;
@@ -72,6 +49,57 @@
 	text-align: center;
 }
 
+.page-navigation__item{
+    display: block;
+    padding: 0 10px;
+    font-weight: bold;
+    height: 60px;
+    line-height: 60px;
+    transition: color .15s ease;
+    font-size: 13px;
+    display: inline-block; 
+    position: relative;
+}
+
+#empty_message {
+    margin: 30px 0 50px;
+    font-size: 14px;
+    color: #757575;
+    text-align: center;
+}
+
+#content3 {
+    max-width: 1030px;
+    width: 100%;
+    min-height: 170px;
+    margin: 30px auto;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2);
+    overflow: hidden;
+    padding: 40px 50px 50px;
+    color: #424242;
+}
+
+#content3>.title {
+    font-size: 24px;
+    font-weight: 700;
+    padding: 0 0 20px;
+}
+
+.user {
+    overflow: hidden;
+    padding: 30px 0;
+    border-top: solid 1px #dcdcdc;
+}
+
+.name {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 30px;
+    display: inline-block;
+}
+
 </style>
 
 <div class="container2">
@@ -80,32 +108,31 @@
 
 <div style="display: block; ">
 	<div class="profile-image" >
-	<img alt="" src="${memberPath }/${memberInfo.mImage }" style="border-radius: 100%;">
+	<img alt="" src="../upload/profile/${userInfo.mImage }" style="border-radius: 100%;">
 	</div>
 	
 	<div style="border-bottom: 1px solid #ebebeb; margin-bottom: 20px; margin-top: 20px;"  ></div>
 	
-	<div class="profile-info__name"><strong>${userId }</strong></div>
-	
+	<div class="profile-info__name"><strong>${userInfo.userId }</strong></div>
 	
 	<div style="color: #bdbdbd; font-size: 13px;">
-		<a href="<%=cp %>/myPage/follower.action" style="display: inline-block; margin-left: 10px; ">팔로워 ${follower }</a>&nbsp;&nbsp;&nbsp;
-		<a href="<%=cp %>/myPage/following.action" style="display: inline-block; ">팔로잉 ${following }</a>
+		<a href="<%=cp %>/myPage/follower.action" style="display: inline-block; margin-left: 10px; ">팔로워 ${follower}</a>&nbsp;&nbsp;&nbsp;
+		<a href="<%=cp %>/myPage/following.action" style="display: inline-block;">팔로잉 ${following}</a>
 	</div>
 	
 	<div style="border-bottom: 1px solid #ebebeb; margin-bottom: 20px; margin-top: 20px;"  ></div>
 	
 	<div style="margin-top:20px;">
 		<div class="short-cut__item">
-		<p>
+		<a href="<%=cp %>/myPage/myStoreHeartLists.action">
 		<div class="short-cut__icon">
 			<svg width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
-			<path fill="#8080ff" stroke="#8080ff" d="M22.971 7.638c-.548-5.17-7.119-7.135-10.57-2.488a.5.5 0 0 1-.802 0C8.148.503 1.577 2.469 1.029 7.625.642 12.451 3.897 17.183 12 21.436c8.104-4.252 11.36-8.984 10.972-13.798zm.996-.093c.428 5.319-3.137 10.446-11.738 14.899a.5.5 0 0 1-.46 0C3.169 17.99-.395 12.864.034 7.532.656 1.67 7.904-.683 12 4.052 16.096-.683 23.344 1.67 23.967 7.545z">
+			<path fill="currentColor" d="M22.971 7.638c-.548-5.17-7.119-7.135-10.57-2.488a.5.5 0 0 1-.802 0C8.148.503 1.577 2.469 1.029 7.625.642 12.451 3.897 17.183 12 21.436c8.104-4.252 11.36-8.984 10.972-13.798zm.996-.093c.428 5.319-3.137 10.446-11.738 14.899a.5.5 0 0 1-.46 0C3.169 17.99-.395 12.864.034 7.532.656 1.67 7.904-.683 12 4.052 16.096-.683 23.344 1.67 23.967 7.545z">
 			</path>
 			</svg>
 		</div>
 		<strong>관심 상품</strong>
-		</p>
+		</a>
 		</div>
 		
 		<div class="short-cut__item ">
@@ -121,14 +148,14 @@
 		</div>
 		
 		<div class="short-cut__item">
-		<a href="<%=cp%>/myPage/myInstarLists.action">
+		<a href="#">
 		<div class="short-cut__icon">
 			<svg width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
 				<path fill="#000" fill-opacity=".74" fill-rule="evenodd" transform="matrix(1 0 0 -1 0 23.033)" d="M12.943 6.342a2 2 0 0 1-1.886 0L3 2.032V20.5a.5.5 0 0 0 .5.5h17a.5.5 0 0 0 .5-.5V2.033l-8.057 4.309zm-.471-.882l8.056-4.31A1 1 0 0 1 22 2.034V20.5a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 20.5V2.033a1 1 0 0 1 1.472-.882l8.056 4.31a1 1 0 0 0 .944 0z">
 				</path>
 			</svg>
 		</div>
-		<strong>내코디</strong>
+		<strong>스크랩북</strong>
 		</a>
 		</div>
 	</div>
@@ -139,59 +166,44 @@
 
 </div>
 
+
+
+
+
 <div style="width: 750px; display: inline-block; vertical-align: top;">
-	<c:if test="${empty lists }">
-		<div  class="post__upload">
-			아직 좋아요 누른 상품이 없습니다.
-		</div>
-	</c:if>
-	
-	<c:if test="${!empty lists }">
-	<%int cnt = 0;%>
-	<c:forEach var="dto" items="${lists }">
 
-	<%
-		if (cnt == 0) {
-			out.print("<dl>");
-		}
-	%>
-	<dd style="display: inline-block; margin-right: 5px; margin-bottom: 30px;">
-	<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">
-		<img alt="" src="${imagePath }/${dto.saveFileName}" width="240" height="210" style="border:1px solid #d4d4d4; border-radius: 7px;"><br/>
-		<p align="left" style="font-size: 14px; margin-top: 5px;">${dto.storeName }</p>
-		<p align="left" style="font-size: 15px; margin-top: 5px;">${dto.productName }</p>
-		<p align="left" style="font-size: 17pt; margin-top: 10px; margin-left: 3px; color: black;">${dto.price}원</p>
-		<p align="left" style="margin-top: 5px;; height: 20px">
-			<span style="font-size: 14pt;  color: #8080FF" >★</span>
-			<span>평점 ${dto.reviewRate}</span>
-			<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;${dto.reviewCount}</span>
-								
-			<span style="font-size: 14pt;  color: #8080FF; margin-left: 90px;">
-				<input type="hidden" id="superProduct" value="${dto.superProduct}" >
-				<button class="goodButton" value="${dto.superProduct}"></button>
-			</span>				
-		</p>
-	</a>
-	</dd>
+<div style="width: 100%; overflow: visible; border-bottom: solid 1px #dbdbdb; text-align: center;">
+	<ul>
+		<li class="page-navigation__item"><a href="<%=cp %>/myPage/following.action">팔로잉</a></li>
+		<li class="page-navigation__item" style=" color: #8080FF"><a href="<%=cp %>/myPage/follower.action">팔로워<div style="height: 4px; background-color: #8080FF"/></div></a></li>
+	</ul>
+</div>
 
-
-	<%cnt++;%>
+<div id="content3">
+	<div class="title">팔로워</div>
+	<div>
 	
-	<%
-		if (cnt == 3) {
-			out.print("</dl>");
-			cnt = 0;
-		}
-	%>
-	</c:forEach>
-	</c:if>
-	
-	<div style="text-align: center; margin-top: 25px; margin-bottom: 50px;"">
-		<c:if test="${dataCount!=0 }">
-			<font style="font-size: 20px">${pageIndexList}</font>
+		<c:if test="${empty lists}">
+			<div id="empty_message">팔로워한 사용자가 없습니다.</div>
 		</c:if>
+		
+		<c:forEach var="dto" items="${lists }">
+		<div class="user">
+			<img style="border:1px solid #F6F6F6; width: 36px; height: 36px; border-radius: 18px; display: inline-block;" src="../upload/profile/${dto.mImage}"/>
+			<span class="name">${dto.userId}</span>
+		</div>
+		</c:forEach>
+
 	</div>
-	
+</div>
+
+<div style="height:100px; text-align: center;">
+	<c:if test="${dataCount!=0 }">
+		<font style="font-size: 20px">${pageIndexList}</font>
+	</c:if> 
+	<c:if test="${dataCount==0 }">
+		등록된 게시물이 없습니다.
+	</c:if>
 </div>
 
 </div>

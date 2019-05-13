@@ -47,6 +47,12 @@
     margin-right: auto;
 }
 
+
+.profile-image img {
+    width: 250px;
+    height: 250px;
+}
+
 .profile-info__name {
     font-size: 30px;
     line-height: 40px;

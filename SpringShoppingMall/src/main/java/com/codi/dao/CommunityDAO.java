@@ -105,8 +105,6 @@ public class CommunityDAO {	@Autowired
 		List<String> lists = 
 				sessionTemplate.selectList("commuMapper.myFollowList",userId);
 		
-		System.out.println(lists);
-	
 		return lists;
 	}
 	

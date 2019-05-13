@@ -96,8 +96,6 @@ public class CommunityController {
 		req.setAttribute("totalPage", totalPage);
 		req.setAttribute("pageNum", pageNum);
 
-		System.out.println(lists);
-		
 		return "/community/commuList";
 	}
 	

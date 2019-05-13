@@ -75,4 +75,17 @@ public class MyPageDAO {
 		return lists;
 	}
 	
+	public List<MemberDTO> followerList(int start, int end,String userId){
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("start", start);
+		params.put("end",end);
+		params.put("userId",userId);
+		
+		List<MemberDTO> lists = 
+				sessionTemplate.selectList("mypageMapper.followerList",params);
+		
+		return lists;
+	}
 }

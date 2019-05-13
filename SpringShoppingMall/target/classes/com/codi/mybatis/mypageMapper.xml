@@ -49,4 +49,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>
 </select>
 
+<select id="followerList" parameterType="hashMap" resultType="com.codi.dto.MemberDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select a.mimage, a.userid 
+	from member a, follow b 
+	where a.userid=b.myid and b.myfriendid=#{userId}
+	)data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
 </mapper>
