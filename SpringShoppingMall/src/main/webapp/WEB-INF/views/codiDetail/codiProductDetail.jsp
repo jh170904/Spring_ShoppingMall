@@ -183,9 +183,9 @@
 	            contentType: "application/json; charset=UTF-8",
 	            success : function(data) {
 	            	if(data.cnt > 0) {
-	            		$(".itemGoodDiv" + superProduct).html('<img src="../resources/image/heart2.PNG" style="height: 25px;"/> ');
-	                } else {
 	            		$(".itemGoodDiv" + superProduct).html('<img src="../resources/image/heart1.PNG" style="height: 25px;"/> ');
+	                } else {
+	            		$(".itemGoodDiv" + superProduct).html('<img src="../resources/image/heart2.PNG" style="height: 25px;"/> ');
 	                } 
 	            },
 	            error : function(error) {
