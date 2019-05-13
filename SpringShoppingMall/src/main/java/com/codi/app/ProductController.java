@@ -66,11 +66,9 @@ public class ProductController {
 
 		List<String> good = null;
 
-		System.out.println(info);
 
 		if(info!=null) {
 			good = dao.storeHeartList(info.getUserId());
-			System.out.println(good);
 		}
 		
 		String cp = req.getContextPath();
@@ -112,17 +110,16 @@ public class ProductController {
 		 
 		 List<String> good = null;
 		 
-		 System.out.println(info);
-		 
 		 if(info!=null) {
 			 good = dao.storeHeartList(info.getUserId());
-			 System.out.println(good);
 		 }
 		 
 
 		String order = req.getParameter("order");
 		if (order != null) {
 			order = URLDecoder.decode(req.getParameter("order"), "UTF-8");
+		}else {
+			order="null";
 		}
 
 		String cp = req.getContextPath();
@@ -209,6 +206,8 @@ public class ProductController {
 		String order = req.getParameter("order");
 		if (order != null) {
 			order = URLDecoder.decode(req.getParameter("order"), "UTF-8");
+		}else {
+			order="null";
 		}
 
 		String productCategory = req.getParameter("productCategory");
@@ -298,11 +297,9 @@ public class ProductController {
 
 		List<String> good = null;
 
-		System.out.println(info);
 
 		if(info!=null) {
 			good = dao.storeHeartList(info.getUserId());
-			System.out.println(good);
 		}
 		
 		String cp = req.getContextPath();
@@ -413,7 +410,6 @@ public class ProductController {
 
 		if(info!=null) {
 			good = dao.storeHeartList(info.getUserId());
-			System.out.println(good);
 		}
 		
 		String cp = req.getContextPath();

@@ -101,7 +101,7 @@ $(function(){
 						<c:set var="count" value="1" />
 					</c:when>
 					<c:otherwise>
-						<c:set var="count" value="${(pageNum-1)*10+1}" />
+						<c:set var="count" value="${(pageNum-1)*3+1}" />
 					</c:otherwise>
 				</c:choose>
 				
