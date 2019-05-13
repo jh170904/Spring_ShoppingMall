@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.codi.dto.ProductDTO;
-import com.codi.dto.TestDTO;
 
 @Component("productDAO")
 public class ProductDAO {
