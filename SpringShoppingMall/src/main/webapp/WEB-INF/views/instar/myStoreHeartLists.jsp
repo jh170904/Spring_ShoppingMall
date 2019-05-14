@@ -164,12 +164,7 @@
 		<p align="left" style="margin-top: 5px;; height: 20px">
 			<span style="font-size: 14pt;  color: #8080FF" >★</span>
 			<span>평점 ${dto.reviewRate}</span>
-			<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;${dto.reviewCount}</span>
-								
-			<span style="font-size: 14pt;  color: #8080FF; margin-left: 90px;">
-				<input type="hidden" id="superProduct" value="${dto.superProduct}" >
-				<button class="goodButton" value="${dto.superProduct}"></button>
-			</span>				
+			<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;${dto.reviewCount}</span>	
 		</p>
 	</a>
 	</dd>

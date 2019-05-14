@@ -1,6 +1,112 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="../layout/top3.jsp" %>
 <%@ include file="../layout/mypage.jsp" %>
+
+<style>
+#dest_form {
+	max-width: 700px;
+	width: 100%;
+	margin: 30px auto;
+	background-color: #ffffff;
+	padding: 40px 50px;
+	box-sizing: border-box;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+	color: #424242;
+}
+
+.sub_title {
+	float: left;
+	width: 100px;
+	line-height: 40px;
+}
+
+input[type=text] {
+	padding: 0 15px;
+	border: solid 1px #dcdcdc;
+	box-sizing: border-box;
+	width: 350px;
+	height: 40px;
+	line-height: 40px;
+}
+
+form {
+	display: block;
+	margin-top: 0em;
+}
+
+.field {
+	margin-top: 20px;
+	overflow: hidden;
+	clear: both;
+}
+
+.title {
+	color : #000000;
+	margin-bottom: 25px;
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.notice {
+	margin-top: 10px;
+	font-size: 12px;
+	color: #757575;
+}
+
+label {
+	color: #424242;
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#sendButton {
+	margin-top: 15px;
+	width: 50%;
+	height: 40px;
+	background-color: #8080ff;
+	border: none;
+	border-radius: 4px;
+	color: #ffffff;
+	font-size: 18px;
+	font-weight: 700;
+	text-align: center;
+	cursor: pointer;
+}
+
+input {
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	*font-size: 100%;
+}
+
+.zip_button {
+	color : #ffffff;
+	font-size: 18px;
+	min-width: 160px;
+	height: 40px;
+	padding: 0 20px;
+	font-weight: 500;
+	border: 0;
+	outline: 0 color:#fff;
+	background: #999;
+}
+
+.sendButton {
+	display : inline-block;
+    margin-top: 15px;
+    width: 295px;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+}
+</style>
+
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
     // 우편번호 찾기 화면을 넣을 element
@@ -168,100 +274,94 @@
 <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 </div>
 
-<table class="page_title_area" style="margin-top: 80px; margin-bottom: 50px;">
-<tr class="page_title">
-	<td colspan="2" align="center">
-		<h2 class="h_title page">배송지 추가</h2>
-		<p class="text font_lg"></p>
-	</td>
-</tr>
-</table>
-
 <div class="ap_contents mypage" style="position: relative;">
-<div class="address_list">
-
-<hr class="div m20"/>
-<table class="clear" style="width: 600px;" align="center">
-
-<tr style="width: 700px;">
-	<td colspan="2">
-		<p class="text bullet_dot">자주 사용하시는 배송지를 등록 및 관리하실 수 있습니다./</p>
-	</td>
-</tr>
-
-<tr>
-	<td colspan="2" style="color: #6E6E6E;" width="500px;">
-		<p class="text bullet_dot">배송지는 최대 5개까지 추가하실 수 있습니다.</p>
-	</td>
-</tr>
-
-</table>
-<hr class="div m20"/>
-
-
-<table width="600" align="center">
-
-<tr>
-	<td width="100" height="50">배송지명</td>
-	<td style="padding-left: 20px;">
-		<input type="text" name="destNickname" maxlength="50" placeholder="배송지명을 입력해 주세요" 
-			class="input_wrap w100p" style="padding: 10px 0px;">
-	</td>
-</tr>
-
-<tr>
-	<td width="100" height="50">받는사람</td>
-	<td style="padding-left: 20px;">
-		<input type="text" name="destName" maxlength="50" placeholder="받는 분 성함을 입력해 주세요" 
-			class="input_wrap w100p" style="padding: 10px 0px;">
-	</td>
-</tr>
-
-<tr>
-	<td width="100" height="50">휴대전화</td>
-	<td style="padding-left: 20px;">
-		<input type="text" name="destPhone" maxlength="50" placeholder="010-1234-5678" 
-			class="input_wrap w100p" style="padding: 10px 0px;">
-	</td>
-</tr>
-
-<tr>
-	<td width="100" height="50">일반 전화번호</td>
-	<td style="padding-left: 20px;">
-		<input type="text" name="destTel" maxlength="50" placeholder="02-123-4567" 
-			class="input_wrap w100p" style="padding: 10px 0px;">
-	</td>
-</tr>
-
-<tr>
-	<td width="100" rowspan="3" height="50">주소</td>
-	<td style="padding-left: 20px;">
-	<input type="text" name="zip" id="zip" readonly="readonly" placeholder="우편번호" class="input_wrap w65p" style="padding: 10px 0px;">
-		<input type="button" size="20" class="btn_md_form btn_address_fins" onclick="sample2_execDaumPostcode()" value="찾기">
-	</td>
-</tr>
-
-<tr>
-	<td style="padding-left: 20px;" height="50">
-		<input type="text" name="addr1" id="addr1" readonly="readonly" placeholder="기본주소" class="input_wrap w100p" style="padding: 10px 0px;">
-	</td>
-</tr>
-<tr>
-	<td style="padding-left: 20px;" height="50">
-		<input type="text" name="addr2" id="addr2" placeholder="상세주소" class="input_wrap w100p" style="padding: 10px 0px;">
-	</td>
-</tr>
-
-<tr align="center">
-	<td colspan="2">
-		<input type="button" class="btn_blg_secondary" value="취소" onclick="javascript:location.href='<%=cp%>/dest/destlist.action';">
-		<input type="button" class="btn_blg_primary" value="등록" onclick="writeDest();">
-	</td>
-</tr>
-
-</table>
-
-</div>
+	<div id="dest_form">
+	
+	<div class="title">배송지 추가</div>
+	
+	<hr class="div m20"/>
+	<table class="clear" style="width: 600px;" align="center">
+	
+	<tr style="width: 700px;">
+		<td colspan="2">
+			<p class="text bullet_dot">자주 사용하시는 배송지를 등록 및 관리하실 수 있습니다.</p>
+		</td>
+	</tr>
+	
+	<tr>
+		<td colspan="2" style="color: #6E6E6E;" width="500px;">
+			<p class="text bullet_dot">배송지는 최대 5개까지 추가하실 수 있습니다.</p>
+		</td>
+	</tr>
+	
+	</table>
+	<hr class="div m20"/>
+	
+	
+	<table width="600" align="center">
+	
+	<tr>
+		<td width="100" height="50">배송지명</td>
+		<td style="padding-left: 20px;">
+			<input type="text" name="destNickname" maxlength="50" placeholder="배송지명을 입력해 주세요" 
+				class="input_wrap w100p">
+		</td>
+	</tr>
+	
+	<tr>
+		<td width="100" height="50">받는사람</td>
+		<td style="padding-left: 20px;">
+			<input type="text" name="destName" maxlength="50" placeholder="받는 분 성함을 입력해 주세요" 
+				class="input_wrap w100p">
+		</td>
+	</tr>
+	
+	<tr>
+		<td width="100" height="50">휴대전화</td>
+		<td style="padding-left: 20px;">
+			<input type="text" name="destPhone" maxlength="50" placeholder="010-1234-5678" 
+				class="input_wrap w100p">
+		</td>
+	</tr>
+	
+	<tr>
+		<td width="100" height="50">일반 전화번호</td>
+		<td style="padding-left: 20px;">
+			<input type="text" name="destTel" maxlength="50" placeholder="02-123-4567" 
+				class="input_wrap w100p">
+		</td>
+	</tr>
+	
+	<tr>
+		<td width="100" rowspan="3" height="50">주소</td>
+		<td style="padding-left: 20px;">
+		<input type="text" name="zip" id="zip" readonly="readonly" placeholder="우편번호" class="input_wrap w65p">
+			<input type="button" size="20" class="zip_button" onclick="sample2_execDaumPostcode()" value="찾기">
+		</td>
+	</tr>
+	
+	<tr>
+		<td style="padding-left: 20px;" height="50">
+			<input type="text" name="addr1" id="addr1" readonly="readonly" placeholder="기본주소" class="input_wrap w100p">
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-left: 20px;" height="50">
+			<input type="text" name="addr2" id="addr2" placeholder="상세주소" class="input_wrap w100p">
+		</td>
+	</tr>
+	</table>
+	
+	<table width="600" align="center" style="margin-top: 20px;">
+	<tr align="center">
+		<td>
+			<input type="button" class="btn_blg_secondary sendButton" value="취소" onclick="javascript:location.href='<%=cp%>/dest/destlist.action';">
+			<input type="button" class="btn_blg_primary sendButton" value="등록" onclick="writeDestNew();">
+		</td>
+	</tr>
+	</table>
+	
+	</div>
 </div>
 
 </form>

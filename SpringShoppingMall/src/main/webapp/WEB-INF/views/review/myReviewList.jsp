@@ -12,7 +12,10 @@
 }
 
 .review_on {
-	background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;
+	background:#8080ff; 
+	border:1px solid #8080ff; 
+	color:#ffffff; 
+	font-weight: bold;
 }
 	
 </style>
@@ -91,7 +94,7 @@
 								<td class="check_wrap check_only" style="vertical-align: top;">${dto.reviewDate_view }</td>
 								<td style="vertical-align: top;"><a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">${dto.productName }</a></td>
 								<td align="left" style="vertical-align: top;">${dto.subject }
-									<p id="${dto.reviewDate }" style="display: none; font-size: 13px;" ><br/>
+									<p id="${dto.reviewDate }" style="display: none; font-size: 13px;"><br/>
 									<c:if test="${dto.originalName ne null }">
 										<img alt="" src="../upload/review/${dto.originalName }" height="100px;"><br/>
 									</c:if>

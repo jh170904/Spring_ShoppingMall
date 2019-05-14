@@ -83,6 +83,7 @@ public class ReviewController {
 		while(it.hasNext()){
 			ReviewDTO reviewDTO = it.next();
 			reviewDTO.setReviewDate_view(reviewDTO.getReviewDate().substring(0,10));
+			reviewDTO.setContent(reviewDTO.getContent().replaceAll("\n", "<br/>"));
 		}
 		
 		String listUrl = cp + "/review/reviewList.action?order="+order;
@@ -109,8 +110,9 @@ public class ReviewController {
 		
 		int currentPage = 1;
 		
-		if(pageNum!=null)
+		if(pageNum!=null && !pageNum.equals(""))
 			currentPage = Integer.parseInt(pageNum);
+		
 		int dataCount_yes = dao.getDataCount(info.getUserId(),"yes");
 		int dataCount_no = dao.getDataCount(info.getUserId(), "no");
 		
@@ -165,6 +167,7 @@ public class ReviewController {
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		
+		dto.setRate(Integer.parseInt(request.getParameter("rate")));
 		dto.setUserId(info.getUserId());
 		dto.setOriginalName("");
 		dto.setSavefileName("");

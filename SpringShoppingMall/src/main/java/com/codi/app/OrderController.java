@@ -154,6 +154,10 @@ public class OrderController {
 		//사용자 이메일
 		String userEmail = destinationDTO.getUserEmail();
 		
+		//사용자 휴대전화
+		String destPhone = destinationDTO.getDestPhone();
+		destPhone = destPhone.substring(0,3) + destPhone.substring(4,8) + destPhone.substring(9);
+		
 		//상점ID
 		String storeID = "tdacomst7";
 		
@@ -208,7 +212,8 @@ public class OrderController {
 		request.setAttribute("orderProdudct", orderProdudct);
 		request.setAttribute("totalOrderPrice", totalOrderPrice);
 		request.setAttribute("userEmail", userEmail);
-		request.setAttribute("storeID", storeID);
+		request.setAttribute("destPhone", destPhone);
+		request.setAttribute("storeID", storeID);		
 		request.setAttribute("currentTime", currentTime);
 		request.setAttribute("hashData", hashData);
 		request.setAttribute("destAddr", destAddr);
@@ -229,6 +234,7 @@ public class OrderController {
 			redirectAttributes.addAttribute("destAddrKey",destinationDTO.getAddrKey());
 			redirectAttributes.addAttribute("orderNum",orderNum);
 			redirectAttributes.addAttribute("userEmail",userEmail);
+			redirectAttributes.addAttribute("destPhone",destPhone);
 			redirectAttributes.addAttribute("totalOrderPrice",totalOrderPrice);
 			redirectAttributes.addAttribute("discount",discount);
 

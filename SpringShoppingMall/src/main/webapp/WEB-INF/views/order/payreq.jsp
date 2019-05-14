@@ -43,7 +43,7 @@ function getLocalUrl(mypage)
 <input type='hidden' name='sndGoodname' value='${orderProdudct}' size='30'>
 <input type='hidden' name='sndAmount' value='${totalOrderPrice}' size='15' maxlength='9'>
 <input type='hidden' name='sndEmail' value='${userEmail}' size='30'>
-<input type='hidden' name='sndMobile' value='01112341234' size='12' maxlength='12'>
+<input type='hidden' name='sndMobile' value='${destPhone }' size='12' maxlength='12'>
 <input type="hidden" name="sndPayMethod" value="1000000000">
 <input type='hidden' name='destAddr' id='destAddr' value='${destAddr }'>
 <input type='hidden' name='destZip' id='destZip' value='${destZip }'>

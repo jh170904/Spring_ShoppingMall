@@ -16,6 +16,8 @@
 }
 
 .payment_div {
+	width : 535px;
+	height : 150px;
 	display: inline-block;
 	padding: 5px 30px;
 	border: 1px black solid;
@@ -23,6 +25,26 @@
 
 .active {
 	background-color: #8080ff;
+} 
+
+.payment {
+	font-size : 20px;
+	font-weight : bold;
+	text-align: center;
+	margin: 10px 0px;
+}
+
+.creditFirst {
+	margin-right: 20px; 
+	background-color: #b2adff; 
+	color: #ffffff; 
+	border: 1px solid #b2adff;
+}
+
+.withoutFirst {
+	background-color: #ffffff; 
+	color: #000000; 
+	border: 1px solid #000000;
 }
 
 </style>
@@ -257,14 +279,29 @@
 		document.orderForm.addr1.value = addr1;
 		document.orderForm.addr2.value = addr2;
 		document.orderForm.addrKey.value = 'no';
-		
-		
-		
+
 		
 	}
 	
-	
-	
+</script>
+
+<script type="text/javascript">
+	function order_payment_ok(payment_yes,payment_no){
+		
+		var change = document.getElementById(eval("'" + payment_yes + "'"));
+		change.style.backgroundColor = "#b2adff";	
+		change.style.color = "#ffffff";
+		change.style.border = "1px solid #b2adff";
+		
+		change = document.getElementById(eval("'" + payment_no + "'"));
+		change.style.backgroundColor = "#ffffff";		
+		change.style.color = "#000000";
+		change.style.border = "1px solid #000000";
+		
+		document.orderForm.order_payment.value = payment_yes;
+		
+	}
+
 </script>
 
 <!-- 배송지 입력 -->
@@ -563,24 +600,21 @@
 					<img alt="" src="<%=cp%>/resources/image/orderButton.PNG" height="20px;">
 				</button>
 			</dt>
+		
 			<dd class="on" id = "4" style="display: none">
 				<div class="cont">
 					<div class="pqyment">
-						<div class="payment_div">	
-						<input type="radio" value="creditCard" checked="checked" name="order_payment" id="order_payment_creditCard">		
-						<label class="creditCard " for="order_payment_creditCard">
-							<div><img alt="" src="<%=cp%>/resources/image/credit_card.png" height="100px"></div>
-							<div class="creditCard">신용카드</div>
-						</label>
+						<div class="payment_div creditFirst"  id="creditCard" onclick="order_payment_ok('creditCard','without_bankbook')">	
+							<div style="text-align: center;"><img src="<%=cp%>/resources/image/credit_card.png" height="100px"></div>
+							<div class="payment">신용카드</div>
 						</div>
 						
-						<div class="payment_div">	
-						<input type="radio" value="without_bankbook" name="order_payment" id="order_payment_without_bankbook"> 
-						<label class="without_bankbook" for="order_payment_without_bankbook">
-							<div><img alt="" src="<%=cp%>/resources/image/without_bankbook.png" height="100px"></div>
-							<div class=payment_without_bankbook>무통장 입금</div>
-						</label>
+						<div class="payment_div withoutFirst" id="without_bankbook" onclick="order_payment_ok('without_bankbook','creditCard')">	
+							<div style="text-align: center;"><img src="<%=cp%>/resources/image/without_bankbook.png" height="100px"></div>
+							<div class="payment">무통장 입금</div>
 						</div>
+						
+						<input type="hidden" name="order_payment" value="creditCard">
 					</div>
 				</div>
 			</dd>	
