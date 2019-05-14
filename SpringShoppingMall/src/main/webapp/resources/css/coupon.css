@@ -23,7 +23,7 @@
 .coupon-section__title--v2{margin-top:50px;}
 .coupon-section_list{margin-left:-80px}
 .coupon-section_list__item{float:left;margin:50px 0 0 80px;}
-.coupon-section-coupon{width:422px;height:223px;background:url('../images/common/coupon.PNG') no-repeat;}
+.coupon-section-coupon{width:422px;height:223px;background:url('../image/coupon.png') no-repeat;}
 .coupon-section-coupon__desc-area{float:left;width:76%;height:100%;padding-top:20px;text-align:center;letter-spacing:-.7px;}
 .coupon-section-coupon__flag{
     border:1px solid #959595;

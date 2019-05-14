@@ -59,6 +59,7 @@
 	<!-- 로그인 인터셉터(멤버 마이페이지) -->
 	<interceptors>
 	 <interceptor>
+	  <mapping path="/coupon/**" />
 	  <mapping path="/con/**" />
 	  <mapping path="/cart/**" />
 	  <mapping path="/dest/**" />

@@ -25,6 +25,7 @@
 						<li><a href="<%=cp2 %>/pr/listNew.action">카테고리</a></li>
 						<li><a href="<%=cp2 %>/pr/listBest.action">랭킹</a></li>
 						<li><a href="#">코디속BEST</a></li>
+						<li><a href="<%=cp2 %>/couponA/couponAllList.action">쿠폰</a></li>
 					</ul>
 				</div>
 				</td>

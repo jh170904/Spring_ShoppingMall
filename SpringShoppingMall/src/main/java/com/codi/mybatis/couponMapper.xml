@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="couponMapper">
+
+<insert id="insertData" parameterType="com.codi.dto.CouponDTO">
+	insert into coupon (couponKey,couponName,discount,couponGrade,couponScore,couponEndDate,couponStartDate)
+	values (#{couponKey},#{couponName},#{discount},#{couponGrade},#{couponScore},#{couponEndDate},sysdate)
+</insert>
+
+<select id="getMaxNum" resultType="int">
+	select nvl(max(couponkey),0) from coupon
+</select>
+
+<select id="getDataCount" resultType="int">
+	select nvl(count(*),0) from coupon
+</select>
+
+
+<select id="getLists" parameterType="hashMap" resultType="com.codi.dto.CouponDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select couponKey,couponName,discount,couponGrade,couponScore,couponEndDate,couponStartDate 
+	from coupon order by couponStartDate desc)data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<select id="getList" resultType="com.codi.dto.CouponDTO">
+select couponKey,couponName,discount,couponGrade,couponScore,couponEndDate,couponStartDate from coupon
+</select>
+
+<select id="couponGetLists" resultType="com.codi.dto.IssueDTO">
+select couponKey,userId from issue
+</select>
+
+<insert id="couponInsertData" parameterType="com.codi.dto.IssueDTO">
+	insert into issue (userId,couponKey,issueDate)
+	values (#{userId},#{couponKey},sysdate)
+</insert>
+
+</mapper>
