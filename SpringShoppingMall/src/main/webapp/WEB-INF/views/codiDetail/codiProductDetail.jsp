@@ -443,7 +443,7 @@ body {
 }
 .set .thumb_wrapper img.item.thumb {
     margin-top: 15px;
-    max-width: 70%;
+    max-width: 200px;
     max-height: 300px;
 }
 
@@ -571,7 +571,7 @@ table {
 				<!-- 해쉬태그 -->
 				<div class="description">				
 					<c:forTokens var='item' items="${dto.iHashTag }" delims="#" >
-					<a href="/codi?style=${item}">#${item}</a> 
+					<a href="<%=cp %>/pr/codiHashTagList.action?iHashtag=${item}">#${item}</a> 
 					</c:forTokens>
 				</div>
 				
@@ -676,7 +676,7 @@ table {
 			<div class="set item" >
 				<a href="<%=cp%>/pr/detail.action?superProduct=${vo.superProduct}">
 				<div class="thumb_wrapper">
-				<img class="thumb item" alt="" src="<%=cp %>/upload/codi/${vo.saveFileName}" >
+				<img class="thumb item" alt="" src="<%=cp %>/upload/codi/${vo.saveFileName}" width="" >
 				</div>
 				<div class="profile_wrapper">
 					<div class="profile_info">

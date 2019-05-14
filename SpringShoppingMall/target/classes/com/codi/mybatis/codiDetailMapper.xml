@@ -39,6 +39,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select superProduct from storeHeart where userId = #{userId}
 </select>
 
+<!-- 코디 좋아요 리스트 -->
+<select id="codiHeartList" parameterType="String" resultType="String">
+	select iNum from codiheart where userId = #{userId}
+</select>
+
 <!--  동일아이디 코디 정보 가져오기-->
 <select id="getReadCodiLists" parameterType="HashMap" resultType="com.codi.dto.CommunityDTO">
 	select * from (
@@ -112,6 +117,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 작성자 팔로우 체크 -->
 <select id="followCheck" parameterType="HashMap" resultType="int" >
 	select count(*) from follow where MyId=#{followerId} and MyFriendId=#{followingId} 
+</select>
+
+<!-- 동일 해시태그 갯수 카운트 -->
+<select id="getCodiHashTagDataCount" parameterType="String" resultType="int" >
+	select count(*) from codiList where iHashTag like '%'||#{iHashTag}||'%' 
+</select>
+
+<!-- 동일 해시태그가 있는 리스트 출력 getCodiHashTagLists  -->
+<select id="getCodiHashTagLists" parameterType="HashMap" resultType="com.codi.dto.CodiHashTagDTO">	
+	select * from (
+	select rownum rnum, data.* from(
+	select iNum,iImage,iDate,iHashTag,productId 
+	from codiList where iHashTag like '%'||#{iHashTag}||'%' 
+	order by idate desc) data) a,
+	(select inum, count(iNum) heartCount from codiheart group by iNum) b
+<![CDATA[
+	where a.iNum=b.iNum and rnum>=#{start} and rnum<=#{end}
+]]>	
+</select>
+
+<!-- 인기해시태그 상위 10개 --> 
+<select id="getPopularHashTagLists" resultType="String">
+	select iHashTag from
+	(select tagcontent iHashTag, count(tagcontent) cnt 
+	from hashtag 
+	group by tagcontent 
+	order by cnt desc)
+	<![CDATA[
+	WHERE ROWNUM <= 10
+	]]>	
 </select>
 
 </mapper>

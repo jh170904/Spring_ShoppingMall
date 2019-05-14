@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.codi.dto.CodiHashTagDTO;
 import com.codi.dto.CommunityDTO;
 import com.codi.dto.MemberDTO;
 import com.codi.dto.ProductDetailDTO;
@@ -48,9 +49,14 @@ public class CodiDetailDAO {
 		return sessionTemplate.selectOne("codiDetailMapper.getCodiProductItem", productId);	
 	}
 	
-	//개발상품 좋아요 조회
+	//개별상품 좋아요 조회
 	public List<String> storeHeartList(String userId){
 		return sessionTemplate.selectList("codiDetailMapper.storeHeartList", userId);	
+	}
+	
+	//개별코디 좋아요 조회
+	public List<String> codiHeartList(String userId){
+		return sessionTemplate.selectList("codiDetailMapper.codiHeartList", userId);	
 	}
 	
 	//좋아요 명수 카운트
@@ -107,5 +113,24 @@ public class CodiDetailDAO {
 		hMap.put("followerId", followerId);
 		hMap.put("followingId", followingId);	
 		return sessionTemplate.selectOne("codiDetailMapper.followCheck", hMap);	
+	}
+	
+	//동일 해시태그 코디 카운트
+	public int getCodiHashTagDataCount(String hashtag) {
+		return sessionTemplate.selectOne("codiDetailMapper.getCodiHashTagDataCount", hashtag);	
+	}
+	
+	//동일 해시태그 코디 검색
+	public List<CodiHashTagDTO> getCodiHashTagLists(String iHashTag, int start,int end){
+		HashMap<String, Object> hMap = new HashMap<String, Object>();
+		hMap.put("iHashTag", iHashTag);
+		hMap.put("start", start);
+		hMap.put("end", end);
+		return sessionTemplate.selectList("codiDetailMapper.getCodiHashTagLists", hMap);	
+	}
+	
+	//인기 해시태그 출력
+	public List<String> getPopularHashTagLists(){
+		return sessionTemplate.selectList("codiDetailMapper.getPopularHashTagLists");	
 	}
 }

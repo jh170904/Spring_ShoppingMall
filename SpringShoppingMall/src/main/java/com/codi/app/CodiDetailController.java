@@ -1,7 +1,10 @@
 package com.codi.app;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.codi.dao.CodiDetailDAO;
 import com.codi.dao.CommunityDAO;
 import com.codi.dao.ProductDetailDAO;
+import com.codi.dto.CartDTO;
+import com.codi.dto.CodiHashTagDTO;
 import com.codi.dto.CommunityDTO;
 import com.codi.dto.MemberDTO;
 import com.codi.dto.ProductDetailDTO;
@@ -188,7 +193,7 @@ public class CodiDetailController {
 		
 		//페이징처리는 자바스크립트로 진행
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage);
-		
+
 		//페이징 정보
 		HashMap<String,Object> pageHashMap = new HashMap<String,Object>();
 		pageHashMap.put("pageIndexList", pageIndexList);
@@ -205,5 +210,96 @@ public class CodiDetailController {
         return new ResponseEntity<Object>(json.toString(), responseHeaders, HttpStatus.OK);
 		
 	}
+	
+	@RequestMapping(value = "pr/codiHashTagList.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String codiHashTaglList(String iHashtag, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		List<String> good = null;
+		List<String> hashTagLists = dao.getPopularHashTagLists();
+		String pageNum = request.getParameter("pageNum");
+		
+		//검색 해시태그 없을 경우 가장 많이 사용된 해시태그 사용
+		if(iHashtag==null) {
+			iHashtag= hashTagLists.get(0);
+		}else {
+			//읽을때
+			iHashtag = URLDecoder.decode(iHashtag,"UTF-8");			
+		}
+		
+		//사용자 로그온시 좋아요 리스트 가져오기
+		if(info!=null) {
+			good = dao.codiHeartList(info.getUserId());
+		}
+		
+		//코디 해시태그 리스트
+		int numPerPage = 8;
+		int totalPage = 0;
+		int totalCodiHashTagDataCount =0;
+		
+		int currentPage = 1;
+		if(pageNum!=null&&pageNum!=""){
+			currentPage = Integer.parseInt(pageNum);
+		}else{
+			pageNum = "1";
+		}
+		
+		//동일 해시태그 코디 카운트
+		totalCodiHashTagDataCount = dao.getCodiHashTagDataCount(iHashtag);
+		
+		if(totalCodiHashTagDataCount!=0){
+			totalPage = myUtil.getPageCount(numPerPage, totalCodiHashTagDataCount);
+		}
 
+		//삭제 진행되어 현재페이지 없어질경우
+		if(currentPage>totalPage)
+			currentPage = totalPage;
+
+		int start = (currentPage-1)*numPerPage+1;
+		int end = currentPage*numPerPage;
+		
+		//동일 해시태그 코디 리스트
+		List<CodiHashTagDTO> codiHashTagLists = dao.getCodiHashTagLists(iHashtag, start, end);
+		
+		String cp = session.getServletContext().getContextPath();
+		
+		//보낼때
+		iHashtag = URLEncoder.encode(iHashtag,"UTF-8");
+		String listUrl = cp +"/pr/codiHashTagList.action?iHashtag="+iHashtag;
+		
+		//페이징처리는 자바스크립트로 진행
+		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+				
+		//코디별 적용 상품 출력 위해 iterator사용
+		Iterator<CodiHashTagDTO> it = codiHashTagLists.iterator();
+		
+		while(it.hasNext()){
+			
+			CodiHashTagDTO vo = (CodiHashTagDTO)it.next();
+			//코디 구성 상품id
+			String usedProductId = vo.getProductId();
+			String[] arrProductId = usedProductId.split(",");
+			List<ProductDetailDTO> usedProductLists = new ArrayList<ProductDetailDTO>();
+			
+			//구성 상품 출력은 3개로 제한
+			for(int i=0; i<3; i++) {
+				ProductDetailDTO usedItemDTO = null;
+				String str = arrProductId[i];
+				if(str!="" && !str.equals(null)) {
+					usedItemDTO = dao.getCodiProductItem(str);
+					usedProductLists.add(usedItemDTO);	
+				}
+			}
+			vo.setItemLists(usedProductLists);
+		}	
+		
+		request.setAttribute("good", good);
+		request.setAttribute("hashTagLists",hashTagLists);
+		request.setAttribute("codiHashTagLists", codiHashTagLists);
+		request.setAttribute("pageIndexList", pageIndexList);
+		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("totalCodiHashTagDataCount", totalCodiHashTagDataCount);
+		return "codiDetail/codiHashtagList";
+	}
+		
 }
