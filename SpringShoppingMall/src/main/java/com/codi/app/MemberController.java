@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.mail.Message;
+import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
@@ -323,7 +324,7 @@ public class MemberController {
 		
         session.setAttribute("customInfo", dto);
         
-		return "redirect:/con/update_ok.action";
+		return "redirect:/con/update_ok_pwd.action";
 	}
 	
 	//팔로우 /con/follow.action
@@ -361,13 +362,18 @@ public class MemberController {
 		
 		MultipartFile file = request.getFile("imageUpdate");
 		
+		String preImage = request.getParameter("preImage");
+		String changeImage = request.getParameter("changeImage");
 
 		MemberDTO info=(MemberDTO)session.getAttribute("customInfo");
 		
 		
 		//파일이 존재한다면 업로드 하기
 		
-		if(file!=null && file.getSize()>0) {
+		if(changeImage==null || changeImage.equals("")) {
+			dto.setmImage(preImage);
+		}
+		else if(file!=null && file.getSize()>0) {
 
 			System.out.println(file);
 			
@@ -409,6 +415,7 @@ public class MemberController {
 		dto.setUserId(info.getUserId());
 		
 		dao.updateData(dto);
+		dto.setUserPwd(info.getUserPwd());
 		
         session.setAttribute("customInfo", dto);
         
