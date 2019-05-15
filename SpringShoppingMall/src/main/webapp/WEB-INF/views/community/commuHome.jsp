@@ -38,7 +38,10 @@
   width : 100%;
   height : 610px;
   overflow: hidden;
+  display: inline-block;
+  position: relative;
 }
+
 
 .scale img {
 	width : 100%;
@@ -141,12 +144,12 @@
 	<div>
 		<dl>
 			<dt style="width: 70%; height:610px; display: inline-block; position: relative;">
-				<div class="scale" style="border-radius:10px;">
-					<img src="../resources/image/commuImage/commuImage.jpg">
+				<div class="scale effect" style="border-radius:10px;">
+					<img src="${imagePath }/${commuMain.iImage}.png">
 				</div>
 				<img src="../upload/profile/${commuMain.mImage }" width="40px"; height="40px;" style="border-radius:50px; position: absolute; top: 520px; left: 50px;">
-				<p style="position: absolute; top: 460px; left: 55px; font-size: 40px; color: #ffffff;">${commuMain.iSubject }</p>
-				<p style="position: absolute; top: 532px; left: 97px; color: #ffffff;">${commuMain.userId }</p>
+				<p style="position: absolute; top: 460px; left: 55px; font-size: 40px; color: #000000;">${commuMain.iSubject }</p>
+				<p style="position: absolute; top: 532px; left: 97px; color: #000000;">${commuMain.userId }</p>
 				<button class="btn_commu_main" style="position: absolute; top: 515px; left: 600px;" onclick="location.href='<%=cp%>/pr/codiDetailList.action?iNum=${commuMain.iNum}';">보러가기</button>
 			</dt>
 		
