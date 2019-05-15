@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="questionMapper">
+
+<!-- QnA insert -->
+<insert id="insertQuestion" parameterType="com.codi.dto.QuestionDTO">
+	insert into questionBoard(qNum,qSubject,qContent,userId,originalName,saveFileName,qHashTag) 
+	values (#{qNum},#{qSubject},#{qContent},#{userId},#{originalName},#{saveFileName},#{qHashTag})
+</insert>
+
+<!-- QNUM 가져옴 -->
+<select id="maxNum" resultType="int">
+	select nvl(max(qNum),0) from questionBoard
+</select>
+
+<!-- QnA dataCount -->
+<select id="getDataCount" resultType="int">
+	select nvl(count(*),0) from questionBoard
+</select>
+
+<!-- 기본 list -->
+<select id="getLists" parameterType="hashMap" resultType="com.codi.dto.QuestionDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select qNum,qSubject,qContent,A.userId,originalName,saveFileName,to_char(qDate,'YYYY/MM/DD') qDate,qHitCount,qHashTag,mImage
+	from questionBoard A,member B where A.userId=B.userId order by qNum desc)data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- 사용자 정보 -->
+<select id="getUserInfo" parameterType="String" resultType="com.codi.dto.MemberDTO">
+	select userId,mImage,mMessage from member where userId=#{userId}
+</select>
+
+<!-- 조회수 증가 -->
+<update id="updateHitCount" parameterType="int">
+	update questionBoard set qHitCount=qHitCount+1 where qNum=#{qNum}
+</update>
+
+<!-- QnA 상세페이지 -->
+<select id="getOne" parameterType="int" resultType="com.codi.dto.QuestionDTO">
+	select qNum,qSubject,qContent,A.userId,originalName,saveFileName,to_char(qDate,'YYYY/MM/DD') qDate,qHitCount,qHashTag,mImage
+	from questionBoard A,member B where qNum=#{qNum} and A.userId=B.userId
+</select>
+
+<!-- commentSQL -->
+<!-- 댓글 최대 번호 -->
+<select id="getReplyMaxNum" resultType="Integer">
+	select nvl(max(replyNum),0) from qreply 
+</select>
+
+<!-- 게시물 댓글 데이터 카운트 -->
+<select id="getReplyDataCount" parameterType="int" resultType="int" >
+	select count(*) from qreply where qNum=#{qNum}
+</select>
+
+<!-- 댓글 입력 -->
+<insert id="insertReplyData" parameterType="com.codi.dto.QreplyDTO">
+	insert into qreply (replyNum, userId, qNum, content, replyDate)
+	values (#{replyNum},#{userId},#{qNum},#{content},sysdate)
+</insert>
+
+<!-- 댓글 삭제 -->
+<delete id="deleteReplyData" parameterType="int">
+	delete qreply where replyNum=#{replyNum}
+</delete>
+
+<!-- 댓글 조회  -->
+<select id="getReplyListData" parameterType="HashMap" resultType="com.codi.dto.QreplyDTO">
+	select * from(
+	select rownum rnum, data.* from(
+	select replyNum, a.userId userId, qNum, content, to_char(replyDate,'YYYY-MM-DD') replyDate , mImage
+	from qreply a, member b where qNum=#{qNum} and a.userId=b.userId 
+	order by replyNum desc) data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>	
+</select>
+
+
+</mapper>

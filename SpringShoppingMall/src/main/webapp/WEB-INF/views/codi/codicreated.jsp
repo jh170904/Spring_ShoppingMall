@@ -38,8 +38,8 @@
 .selected {
 	/*div끼리 영향 안받게*/
 	position: absolute;
-	top:250px;
-	left:100px;
+	top:300px;
+	left:300px;
 }
 
 .selected img {
@@ -72,7 +72,6 @@
 			revert : true,
 			scroll : false
 		});
-		
         
 		//한번씩만 복사되게
 		var chk = 0;
@@ -112,7 +111,6 @@
 			 
 		}); 
 
-		 
 		//drop된 객체 30개 까지
 		for(var i=1;i<=30;i++){
 			//clone된 객체 
