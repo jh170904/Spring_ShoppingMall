@@ -205,11 +205,11 @@
 					</td>
 					<!-- 상품이미지 -->
 					<td width="160px" rowspan="2">
-						<img src="../upload/list/${dto.originalName}" width="140" height="140" style="margin-right: 10px;" >
+						<img src="../upload/list/${dto.originalName}" width="140" height="140" style="margin-right: 10px; border-radius: 10px;" >
 					</td>
 					
 					<td width="640px" style="padding-left: 30px;font-size: 20px;color: #000;" align="left" >
-						<a href="<%=cp%>/detail.action?superProduct=${dto.superProduct}">
+						<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">
 						<span id="amendItem_productName_${status.count}">${dto.productName }</span>
 						</a>
 					</td>

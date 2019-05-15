@@ -133,7 +133,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	order by idate desc) data) a,
 	(select inum, count(iNum) heartCount from codiheart group by iNum) b
 <![CDATA[
-	where a.iNum=b.iNum and rnum>=#{start} and rnum<=#{end}
+	where a.iNum=b.iNum(+) and rnum>=#{start} and rnum<=#{end}
 ]]>	
 </select>
 

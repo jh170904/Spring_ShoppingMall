@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.codi.dao.CouponDAO;
 import com.codi.dao.ProductDetailDAO;
 import com.codi.dao.ReviewDAO;
+import com.codi.dto.CouponDTO;
+import com.codi.dto.MemberDTO;
+import com.codi.dto.MyCouponDTO;
 import com.codi.dto.ProductDTO;
 import com.codi.dto.ProductDetailDTO;
 import com.codi.dto.ReviewDTO;
@@ -35,15 +40,23 @@ public class ProductDetailController {
 	ReviewDAO reviewDAO;
 	
 	@Autowired
+	@Qualifier("couponDAO")
+	CouponDAO couponDAO;
+	
+	@Autowired
 	MyUtil myUtil;//Bean 객체 생성
 	
 	@RequestMapping(value = "/pr/detail.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String detail(String superProduct, HttpServletRequest request, HttpServletResponse response) {
+	public String detail(String superProduct, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		
 		String cp = request.getContextPath();
 		ProductDetailDTO dto = dao.getReadData(superProduct);
 		List<String> colorList = dao.getColorList(dto.getSuperProduct());
 		List<String> sizeList = dao.getProductSizeList(dto.getSuperProduct());
+
+		List<CouponDTO> couponlists = couponDAO.getList();
 		
+
 		// 이미지파일경로
 		String imagePath = cp + "/upload/list";
 		request.setAttribute("imagePath", imagePath);
@@ -60,6 +73,7 @@ public class ProductDetailController {
 
 		int dataCount_yes = reviewDAO.getProductDataCount(superProduct);
 		
+		request.setAttribute("couponlists", couponlists);
 		request.setAttribute("dataCount_yes", dataCount_yes);
 		request.setAttribute("detailImagelists", detailImagelists);
 		request.setAttribute("dto", dto);

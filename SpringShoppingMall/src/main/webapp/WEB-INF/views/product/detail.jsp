@@ -3,7 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="../layout/storeNav.jsp"%>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
 <style>
 ul.tabs {
 	margin: 0px;
@@ -93,7 +95,7 @@ div.amount {
 	font-size: 17pt;
 }
 
-.cover__info__coupon__btn {
+#cover__info__coupon__btn {
 	width: 100%;
 	height: 40px;
 	margin-top: 20px;
@@ -123,11 +125,83 @@ tr {
 }
 
 .cover__info__product__price {
-	font-weight: bold;
+	color: #8080ff;
+	font-weight : 700;
 	background-color: transparent;
 	font-size: 32px;
 	margin-right: -8px;
 }
+
+.coupon-section_list {
+    margin-left: -50px;
+}
+
+.modal-content {
+	width: 600px;
+	font-size: 16px;
+    position: relative;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 6px;
+    outline: 0;
+}
+
+.modal-header {
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-body {
+    position: relative;
+    padding: 15px;
+}
+
+.modal-footer {
+    padding: 15px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+
+.fade.in {
+    opacity: 1;
+}
+
+.modal {
+    position: fixed;
+    top: 20%;
+    right: 0;
+    left: 35%;
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+}
+
+.fade {
+    opacity: 0;
+    transition: opacity .15s linear;
+}
+
+.coupon-section_list__item {
+    margin: 0 0 0 90px;
+}
+
+.ui-widget-overlay {
+    background-color: #000;
+    opacity: .6;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.ui-front{
+    z-index: 100;
+}
+
 </style>
 
 <script type="text/javascript" src="<%=cp%>/resources/js/httpRequest.js"></script>
@@ -342,7 +416,6 @@ tr {
 		$("#tab-2").show(); //display:block의 역할 - 보여지는거(none의 반대)
 		
 	}
-
 </script>
 <div class="ap_contents product detail">
 	<form method="post" name="detailForm">
@@ -353,57 +426,53 @@ tr {
 
 					<div class="prd_img_wrap">
 						<div class="slide goods_slide ix-slide-max-apply">
-							<img style="width: 500px; height: 500px;"
-								alt="${dto.originalName}"
-								src="../upload/list/${dto.saveFileName }">
+							<img style="width: 100%; height: 100%; border-radius: 20px;" alt="${dto.originalName}" src="../upload/list/${dto.saveFileName }">
 						</div>
 					</div>
 
 					<div class="prd_info_wrap">
 						<table>
 							<tr>
-								<td><input type="hidden" id="productId" name="productId"
-									value=""></td>
+								<td><input type="hidden" id="productId" name="productId" value=""></td>
 							</tr>
 							<tr>
-								<td><a href="${dto.storeUrl }"
-									style="font-weight: bold; color: #8080ff; font-size: 16pt;">${dto.storeName }</a><br>
-									카테고리 ${dto.productCategory }</td>
+								<td>
+									<a href="${dto.storeUrl }" style="font-weight: bold;">${dto.storeName }</a><br>
+									카테고리 ${dto.productCategory }
+								</td>
 							</tr>
 							<tr>
-								<td style="margin-top: 10px; height: 70px;"><input
-									type="hidden" value="${dto.productName}" name="productName"
-									id="productName">
-									<h3
-										style="font-size: 34px; color: #333; font-weight: 300; word-break: keep-all;">${dto.productName}
-									</h3></td>
+								<td style="margin-top: 10px; height: 70px;">
+								<input type="hidden" value="${dto.productName}" name="productName" id="productName">
+								<h3 style="font-size: 34px; color: #333; font-weight: 900; word-break: keep-all;">${dto.productName} </h3>
+								</td>
 							</tr>
 							<tr>
-								<td style="font-size: 26px; height: 80px;"><span
-									class="cover__info__product__price"> <input
-										type="hidden" value="${dto.price}" name="price" id="price">
-										<b><fmt:formatNumber value="${dto.price}"
-												groupingUsed="true" />원</b>
+								<td style="font-size: 26px; height: 80px;">
+								<span class="cover__info__product__price"> 
+									<input	type="hidden" value="${dto.price}" name="price" id="price">
+									<fmt:formatNumber value="${dto.price}" groupingUsed="true" />원
 								</span>
-
+								
 									<div class="cover__info__coupon">
-										<button class="cover__info__coupon__btn">
-											<span class="icon-common-etc__m-10"
-												style="vertical-align: middle;"></span> ????원 할인쿠폰
-										</button>
-									</div></td>
+										  <!-- Trigger the modal with a button -->
+										  <button type="button" class="btn btn-info btn-lg"  id="cover__info__coupon__btn" data-toggle="modal" data-target="#myModal">
+										  사용가능한 할인쿠폰을 확인하세요
+										  </button>
+									</div>
+								</td>
 							</tr>
 
 							<!-- 수량선택 -->
 							<tr height="40">
-								<td style="padding: 2px 0px 0px 0px">수량 <span
-									style="float: right;"> <select name="amount"
-										class="selling-option" id="amount">
-											<option value="0">수량선택</option>
-											<c:forEach var="cnt" begin="1" end="9" step="1">
-												<option onclick="totSet(${cnt});" value="${cnt}">${cnt}</option>
-											</c:forEach>
-									</select>
+								<td style="padding: 2px 0px 0px 0px">수량
+								<span	style="float: right;"> 
+								<select name="amount" class="selling-option" id="amount">
+									<option value="0">수량선택</option>
+									<c:forEach var="cnt" begin="1" end="9" step="1">
+										<option onclick="totSet(${cnt});" value="${cnt}">${cnt}</option>
+									</c:forEach>
+								</select>
 								</span>
 								</td>
 							</tr>
@@ -488,32 +557,6 @@ tr {
 								</td>
 							</tr>
 						</table>
-
-
-						<%-- <section class="selected-options text-caption-1">
-							<div class="item hide">
-								<p class="name">${dto.productName}- ${dto.color} -
-									${dto.productSize}</p>
-								<div class="detail" style="width: 550px; display: flex;">
-									<div class="amount">
-										<span class="icon icon-etc-button-minus" role="button">
-											<img src="<%=cp%>/resources/image/minus_icon.png" onclick="">
-										</span> <input style="height: 13px;" type="number" value="1">
-										<span class="icon icon-etc-button-plus" role="button">
-											<img src="<%=cp%>/resources/image/plus_icon.png" onclick="">
-										</span>
-									</div>
-									<p class="price bold" style="float: right;">
-										<span class="amount">${dto.price}</span>
-									</p>
-								</div>
-								<span class="icon icon-pointer-x-dark btn-remove" role="button"
-									aria-hidden="false"> <img
-									src="<%=cp%>/resources/image/x_icon.png"
-									onclick="removeItem();">
-								</span>
-							</div>
-						</section> --%>
 					</div>
 				</div>
 			</div>
@@ -546,8 +589,9 @@ tr {
 						<!-- 상세이미지 출력 -->
 						<c:forEach var="detailDTO" items="${detailImagelists}">
 							<div class="contenteditor-image">
-								<a href="${detailImagePath }/${detailDTO.saveFileName}"><img
-									src="${detailImagePath }/${detailDTO.saveFileName}" /></a>
+								<a href="${detailImagePath }/${detailDTO.saveFileName}">
+								<img src="${detailImagePath }/${detailDTO.saveFileName}" />
+								</a>
 							</div>
 						</c:forEach>
 					</div>
@@ -572,6 +616,62 @@ tr {
 	</form>
 </div>
 
+ <!-- Coupon Modal -->
+ <div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="myModalLabel" > <!-- style="display: none;" -->
+   <div class="modal-dialog" role="document">
+   
+     <!-- Modal content-->
+     <div class="modal-content">
+       <div class="modal-header">
+         <h4 class="modal-title">발급 가능 할인쿠폰</h4>
+       </div>
+       <div class="modal-body">
+		<div align="center" style="text-align: center;">
+		<ul class="coupon-section_list clear" style="position: relative; width: 100%; padding-top: 0;">
+		<!-- 쿠폰 하나씩 출력 -->
+			<c:forEach var="couponDTO" items="${couponlists }">
+				<c:if test="${sessionScope.customInfo.userGrade eq couponDTO.couponGrade}">
+				<li class="coupon-section_list__item" style="width: 100%; padding-left: 20px;">
+					<div class="coupon-section-coupon clear">
+						<div class="coupon-section-coupon__desc-area">
+							<span class="coupon-section-coupon__flag">온라인 전용</span>
+							
+							<div class="coupon-section-coupon__unit-block">
+								<span class="coupon-section-coupon__unit coupon-section-coupon__unit--v2 coupon-section-coupon__unit--point"  style="font-size: 30pt; color: #8080FF;">${couponDTO.discount }</span>
+								<span class="coupon-section-coupon__unit coupon-section-coupon__unit--v3"  style="font-size: 30pt; color: #8080FF;">원 할인 </span>
+							</div>
+							<div class="coupon-section-coupon__guide-block" style="width: 200px;" >
+								<span class="coupon-section-coupon__guide" style="font-size: 11pt;">[${couponDTO.couponGrade }] ${couponDTO.couponScore }원 이상 구매시 ${couponDTO.discount }원 할인쿠폰</span> 
+								<span class="coupon-section-coupon__subtext" style="font-size: 11pt;">${couponDTO.couponScore }원 이상 구매 시</span>
+							</div>
+							
+						</div>
+						<div class="coupon-section-coupon__btn-area">
+							<form action="<%=cp %>/coupon/couponIssue_ok.action" class="coupon-section-coupon__btn-area" method="post">
+								<input type="hidden" name="couponKey" value="${couponDTO.couponKey }"/>
+								<input type="hidden" name="couponGrade" value="${couponDTO.couponGrade }"/>
+								<input type="submit" value="" style="width: 90px; height: 220px; border: none; background-color: rgba( 255, 255, 255, 0 );"></input>
+							</form>
+						</div>
+							
+					</div>
+				</li>
+				</c:if>
+			</c:forEach>
+		</ul>
+		<c:if test="${empty sessionScope.customInfo.userGrade }">
+			로그인 후 확인이 가능합니다.
+		</c:if>
+		</div>
+       </div>
+    
+       <div class="modal-footer">
+         <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+       </div>
+     </div>
+     
+   </div>
+ </div>
 
 <!-- ap_contents product detail -->
 <%@include file="../layout/footer.jsp"%>
