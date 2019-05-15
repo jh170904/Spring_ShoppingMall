@@ -567,11 +567,14 @@ table {
 						</button>
 					</div>
 				</div>
-				
+			
 				<!-- 해쉬태그 -->
 				<div class="description">				
-					<c:forTokens var='item' items="${dto.iHashTag }" delims="#" >
-					<a href="<%=cp %>/pr/codiHashTagList.action?iHashtag=${item}">#${item}</a> 
+					<c:forTokens var="item" items="${dto.iHashTag }" delims="#" >
+						<c:url value="codiHashTagList.action" var="toURL">
+				        	<c:param name="iHashtag" value="${item}"/>
+						</c:url>
+						<a href="${toURL}">#${item}</a> 
 					</c:forTokens>
 				</div>
 				

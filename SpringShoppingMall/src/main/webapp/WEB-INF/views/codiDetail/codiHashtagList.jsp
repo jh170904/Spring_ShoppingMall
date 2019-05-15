@@ -239,8 +239,11 @@ button {
 		<div class="menu_container">
 			<div class="menu"><strong>인기 스타일</strong> &nbsp;› &nbsp;</div>
 			<div class="menu selector">
-			<c:forEach var="item" items="${hashTagLists}">
-				<a class="tagger" href="<%=cp%>/pr/codiHashTagList.action?iHashtag=${item}">#${item }</a>
+			<c:forEach var="item" items="${hashTagLists}" varStatus="status">
+				<c:url value="codiHashTagList.action" var="toURL">
+		        	<c:param name="iHashtag" value="${item}"/>
+				</c:url>
+				<a class="tagger" href="${toURL}">#${item }</a>
 			</c:forEach>
 			</div>
 			<div class="clear_both"></div>
@@ -330,12 +333,12 @@ button {
 	<!-- 해시태그 코디 end -->
 </c:forEach>
 
+	<!-- 페이징 -->
 	<div id="content_foot">
 		<div class="paging" >
 			${pageIndexList}
 		</div>
 	</div>
-	
 </div>
 
 </div><!-- set_container end -->
