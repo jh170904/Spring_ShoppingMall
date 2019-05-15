@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +30,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.codi.dao.QuestionDAO;
 import com.codi.dto.CommunityDTO;
 import com.codi.dto.MemberDTO;
+import com.codi.dto.ProductDTO;
 import com.codi.dto.QuestionDTO;
 import com.codi.dto.QreplyDTO;
 import com.codi.util.MyUtil;
@@ -68,6 +70,30 @@ public class QuestionController {
 		int end = currentPage * numPerPage;
 
 		List<QuestionDTO> lists=dao.getLists(start, end);
+		
+		//각각의 dto에 reviewCount 와 reviewRate 추가
+		ListIterator<QuestionDTO> it = lists.listIterator();
+		
+		while(it.hasNext()){
+			QuestionDTO vo = (QuestionDTO)it.next();
+			
+			//해시태그 잘라서 보내주기
+			String hashStr = vo.getqHashTag();
+			ArrayList<String> hash=new ArrayList<String>();
+			
+			if(hashStr!=null) {
+				String[] array = hashStr.split("#");
+				
+				for(String temp:array) {
+					hash.add(temp);
+				}
+				
+				hash.remove(0);//첫번째는 공백이라 삭제
+			}
+			
+			vo.setqHash(hash);
+
+		}
 
 		//MemberDTO memberInfo = dao.getUserInfo(info.getUserId());
 
@@ -75,7 +101,8 @@ public class QuestionController {
 		String listUrl = cp + "/qna/questionMain.action";
 
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
-
+		
+	
 		request.setAttribute("listUrl", listUrl);
 		request.setAttribute("imagePath", "../upload/qna");
 		request.setAttribute("memberPath", "../upload/profile");
@@ -164,16 +191,27 @@ public class QuestionController {
 		//코디 게시글 detail 정보 가져오기
 		QuestionDTO dto = dao.getReadOne(qNum);
 		
+		//해시태그 잘라서 보내주기
 		String hashStr = dto.getqHashTag();
-
-		String[] array = hashStr.split("#");
-		//ArrayList<String> hash[]=
-		for(int i=0;i<array.length;i++) {
-			System.out.println(array[i]);
+		ArrayList<String> hash=new ArrayList<String>();
+		
+		if(hashStr!=null) {
+			String[] array = hashStr.split("#");
+			
+			for(String temp:array) {
+				hash.add(temp);
+			}
+			
+			hash.remove(0);//첫번째는 공백이라 삭제
 		}
-
+		/*
+		System.out.println(hash.size());
+		for(int i=0;i<hash.size();i++) {
+			System.out.println(hash);
+		}
+		*/
 		request.setAttribute("dto", dto);
-		request.setAttribute("hashArray", array);
+		request.setAttribute("hashArray", hash);
 		request.setAttribute("imagePath", "../upload/qna");
 		request.setAttribute("memberPath", "../upload/profile");
 		request.setAttribute("loginUserInfo",loginUserInfo);

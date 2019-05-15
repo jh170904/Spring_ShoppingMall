@@ -66,18 +66,9 @@
 				</span>
 				</span>
 				<ul class="questions-item__footer__tags keyword-list">
-					<li
-						class="keyword-item questions-item__footer__tags__tag
-                  "
-						role="button">리모델링/올수리</li>
-					<li
-						class="keyword-item questions-item__footer__tags__tag
-                  "
-						role="button">견적</li>
-					<li
-						class="keyword-item questions-item__footer__tags__tag
-                  "
-						role="button">셀프인테리어</li>
+					<c:forEach var="hash" items="${dto.qHash}">
+					<li class="keyword-item questions-item__footer__tags__tag" role="button">${hash}</li>
+					</c:forEach>
 				</ul>
 			</footer>
 		</article>

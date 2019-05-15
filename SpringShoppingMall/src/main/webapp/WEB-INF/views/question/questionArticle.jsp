@@ -313,6 +313,7 @@ pre{
 									</td>
 									<td class="comment_write">
 										<textarea rows="20" id="content" name="content" readonly="readonly" placeholder="로그인 하시면 댓글 작성이 가능합니다." ></textarea>
+										<input type="button" id="writeBtn" value="작성"></button>
 									<% } %>
 									</td>
 								</tr>

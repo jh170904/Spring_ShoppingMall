@@ -1,5 +1,7 @@
 package com.codi.dto;
 
+import java.util.ArrayList;
+
 public class QuestionDTO {
 	
 	private int qNum;
@@ -12,9 +14,15 @@ public class QuestionDTO {
 	private int qHitCount;
 	private String qHashTag;
 	
+	private ArrayList<String> qHash;//hashtag 끊어서 여기에 List로 저장
 	private String mImage;
-	
-	
+
+	public ArrayList<String> getqHash() {
+		return qHash;
+	}
+	public void setqHash(ArrayList<String> qHash) {
+		this.qHash = qHash;
+	}
 	public String getmImage() {
 		return mImage;
 	}
