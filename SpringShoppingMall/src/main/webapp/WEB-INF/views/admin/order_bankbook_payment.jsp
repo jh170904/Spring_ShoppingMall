@@ -18,7 +18,7 @@
 		
 		var searchOrderName = document.search.searchOrderName.value.trim();
 		
-		searchOrderName.action = "<%=cp%>/order/bankbookPaymentAdmin.action";
+		searchOrderName.action = "<%=cp%>/admin/bankbookPaymentAdmin.action";
 		searchOrderName.submit();
 		
 	}
@@ -86,7 +86,7 @@
 								<button onclick="showOrder('${dto.orderNum }')" class="btn_sm_bordered">상품보기</button>
 							</td>
 							<td style="vertical-align: top;">
-								<a href="<%=cp%>/order/without_bankbook_paymentYes.action?orderNum=${dto.orderNum}&price=${dto.price}" class="btn_sm_bordered">입금완료</a>
+								<a href="<%=cp%>/admin/without_bankbook_paymentYes.action?orderNum=${dto.orderNum}&price=${dto.price}" class="btn_sm_bordered">입금완료</a>
 							</td>
 						</tr>
 					</c:forEach>

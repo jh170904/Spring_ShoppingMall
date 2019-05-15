@@ -40,74 +40,7 @@ public class CouponController {
 	
 	@Autowired
 	MyUtil myUtil;// Bean 객체 생성
-	
-	@RequestMapping(value = "couponA/couponAdminCreated_ok.action", method = RequestMethod.POST)
-	public String couponAdminCreated_ok(HttpServletRequest req, HttpSession session,CouponDTO dto,int period) {
-
-		Calendar cal = Calendar.getInstance();
-	    cal.setTime(new Date());
-	    cal.add(Calendar.DATE, period);
-	     
-	    // 특정 형태의 날짜로 값을 뽑기
-	    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	    String strDate = df.format(cal.getTime());
-		
-		int maxNum = dao.getMaxNum();
-		
-		dto.setCouponEndDate(strDate);
-		dto.setCouponKey(maxNum+1);
-		dao.insertData(dto);
-		
-		
-		return "redirect:/couponA/couponAdminList.action";
-	}	
-	
-	@RequestMapping(value = "couponA/couponAdminCreated.action", method = RequestMethod.GET)
-	public String couponAdminCreated(HttpServletRequest req, HttpSession session) {
-		
-		return "admin/couponAdminCreate";
-	}
-	
-	@RequestMapping(value = "couponA/couponAdminList.action", method = RequestMethod.GET)
-	public String couponAdminList(HttpServletRequest req, HttpSession session) {
-		
-		String cp = req.getContextPath();
-
-		String pageNum = req.getParameter("pageNum");
-
-		int currentPage = 1;
-
-		if (pageNum != null)
-			currentPage = Integer.parseInt(pageNum);
-
-		int dataCount = dao.getDataCount();
-
-		int numPerPage = 5;
-		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
-
-		if (currentPage > totalPage)
-			currentPage = totalPage;
-
-		int start = (currentPage - 1) * numPerPage + 1;
-		int end = currentPage * numPerPage;
-
-		List<CouponDTO> lists = dao.getList(start, end);
-
-		// 페이징을 위한 값들 보내주기
-		String listUrl = cp + "/couponA/couponAdminList.action";
-
-		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
-
-		System.out.println(lists);
-		
-		req.setAttribute("listUrl", listUrl);
-		req.setAttribute("lists", lists);
-		req.setAttribute("pageIndexList", pageIndexList);
-		req.setAttribute("pageNum", pageNum);
-
-		return "admin/couponAdminList";
-	}
-	
+			
 	@RequestMapping(value = "couponA/couponAllList.action", method = RequestMethod.GET)
 	public String couponAllList(HttpServletRequest req) {
 		
@@ -117,7 +50,7 @@ public class CouponController {
 		
 		return "coupon/couponAllList";
 	}
-			
+	
 	@RequestMapping(value = "/coupon/couponIssue_ok.action", method = RequestMethod.POST)
 	public String couponIssue_ok(HttpServletRequest req,HttpServletResponse response,HttpSession session,CouponDTO coupondto) throws IOException{
 		

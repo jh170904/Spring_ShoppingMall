@@ -46,6 +46,7 @@ function changePrivateInfo(){
 	
 	function deleteImg() {
 		$('#showImage').attr('src','../upload/profile/default.jpg');	
+		$("#changeImage").val("default.jpg'");
 		$("#attach_file").val("");
 
 	}

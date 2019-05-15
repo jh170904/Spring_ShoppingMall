@@ -192,7 +192,7 @@ input {
 </script>
 
 <script type="text/javascript">
-	function writeDest() {
+	function writeDestNew() {
 		
 		var f = document.dest;
 	    
