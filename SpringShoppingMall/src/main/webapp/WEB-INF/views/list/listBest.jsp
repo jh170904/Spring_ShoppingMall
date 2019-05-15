@@ -113,13 +113,12 @@ $(function(){
 						<tr>
 						<c:set var="j" value="0" />
 					</c:if>
-
-					<td align="center">
 					
-						<table width="400">
+					<td align="center" style="border: 1px solid #ededed; padding: 5px;" >
+						<table>
 							<tr>
-								<td align="center" style="position: relative;">
-									<div style="position: absolute; top: 10px; left:85px; z-index: 2; font-size: 17pt; color: #000000;">
+								<td style="position: relative;">
+									<div style="position: absolute; top: 10px; left:11px; z-index: 2; font-size: 17pt; color: #000000;">
 										<h1>
 										${count}
 										</h1>										
@@ -130,84 +129,76 @@ $(function(){
 										<c:set var="count" value="${count+1 }" />
 									</div>
 									<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">
-									<img style="background-color: #f5f5f5; width: 268px; height: 268px; margin-left : 10px; margin-right: 10px" alt="" src="../upload/list/${dto.originalName}" />
+										<img style="max-width: 250px;" src="../upload/list/${dto.originalName}" />
 									</a>
 								</td>
 							</tr>
 							<tr>
 								<td>
-								<a href="${dto.storeUrl }" >
-									<p align="left" style="font-size: 11pt; margin-bottom: 10px; margin-left: 62px;">${dto.storeName }</p>
+									<a href="${dto.storeUrl }" >
+									<p align="left" style="font-size: 11pt; margin-bottom: 10px; margin-top: 2px;">${dto.storeName }</p>
 									</a>
 								</td>
 							</tr>
 							<tr height="16px">
 								<td>
-									<p align="left" style="font-size: 11pt; margin-bottom: 10px; margin-left: 62px;">${dto.productName }</p>
+									<p align="left" style="font-size: 13pt; margin-bottom: 10px;">${dto.productName }</p>
 								</td>
 							</tr>
 							<tr height="25px">
 								<td>
-									<p align="left" style="font-size: 17pt; margin-bottom: 10px; margin-left: 62px; color: black;">${dto.price }원</p>
+									<p align="left" style="border-top: 1px solid #ededed; padding-top:5px; width:250px; font-size: 17pt; margin-bottom: 10px; color: black;">${dto.price}원</p>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<p align="left" style="margin: 0px 0px 10px 62px;">
-										<span style="font-size: 11pt;  color: #8080FF" >★</span>
-										<span>평점 ${dto.reviewRate}</span>
-										<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;${dto.reviewCount}</span>
-
-										<span style="font-size: 14pt;  color: #8080FF; margin-left: 112px;">
-											<input type="hidden" id="superProduct" value="${dto.superProduct}" >
-											<button class="goodButton" value="${dto.superProduct}">
-												<div class="goodDiv${dto.superProduct}">
-													<c:set var="k" value="0" />
-													<c:forEach var="good" items="${good }">
-														<c:if test="${dto.superProduct eq good}">
-															♥
-															<c:set var="k" value="1" />
-														</c:if>
-													</c:forEach>
-													<c:if test="${k==0 }">
-														♡
-													</c:if>
-												</div>
-											</button>
-										</span>
+									<p align="left" style="margin: 0px 10px 10px 0px; height: 20px">
+									<span style="font-size: 14pt;  color: #8080FF" >★</span>
+									<span>평점 ${dto.reviewRate}</span>
+									<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;${dto.reviewCount}</span>
 									
+									<span style="font-size: 14pt;  color: #8080FF; margin-left: 98px;">
+										<input type="hidden" id="superProduct" value="${dto.superProduct}" >
+										<button class="goodButton" value="${dto.superProduct}">
+											<div class="goodDiv${dto.superProduct}">
+												<c:set var="k" value="0" />
+												<c:forEach var="good" items="${good }">
+													<c:if test="${dto.superProduct eq good}">
+														♥
+														<c:set var="k" value="1" />
+													</c:if>
+												</c:forEach>
+												<c:if test="${k==0 }">
+													♡
+												</c:if>
+											</div>
+										</button>
+									</span>
 									</p>
 								</td>
 							</tr>
 						</table>
 						
-						
 						<c:set var="j" value="${j+1 }" /> 
 						<c:set var="i" value="1" />
-
 					</td>
-
-					<c:if test="${j==3 }">
+					<c:if test="${j==4 }">
 						</tr>
 						<c:set var="j" value="0" />
 						<c:set var="i" value="0" />
 					</c:if>
-
 				</c:forEach>
 
-
-
-				<c:if test="${j!=3 }">
-					<c:forEach begin="${j }" end="2" step="1">
+				<c:if test="${j!=4 }">
+					<c:forEach begin="${j }" end="3" step="1">
 						<td width="400"></td>
 						<c:set var="j" value="${j+1 }" />
 					</c:forEach>
 					</tr>
 				</c:if>
-				
 
 				<tr height="100">
-					<td align="center" colspan="3">
+					<td align="center" colspan="4">
 						<c:if test="${dataCount!=0 }">
 							<font style="font-size: 20px">${pageIndexList}</font>
 						</c:if> 
