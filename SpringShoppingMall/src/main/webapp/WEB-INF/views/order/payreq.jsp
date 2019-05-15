@@ -16,8 +16,7 @@
 <script type="text/javascript">
 function _pay(_frm) {
 	
-	_frm.sndReply.value = getLocalUrl("orderComplete.action?orderNum=${orderNum}&discount=${discount}&destZip=${destZip}&destAddr1=${destAddr1}&destAddr2=${destAddr2}&destAddrKey=${destAddrKey}&userEmail=${userEmail}&userName=${userName}&totalOrderPrice=${totalOrderPrice}&mode=card&totalPoint=${totalPoint}") ;
-
+	_frm.sndReply.value = getLocalUrl("backOrder.action?orderNum=${orderNum}&discount=${discount}&zip=${destZip}&addr1=${destAddr1}&addr2=${destAddr2}&addrKey=${destAddrKey}&eMail=${userEmail}&userName=${userName}&price=${totalOrderPrice}&mode=card&point=${totalPoint}");
 	_frm.action ='https://kspay.ksnet.to/store/KSPayFlashV1.3/KSPayPWeb.jsp?sndCharSet=utf-8';
 	//_frm.action ='http://210.181.28.116/store/KSPayFlashV1.3/KSPayPWeb.jsp?sndCharSet=utf-8';
 	_frm.submit();
@@ -34,7 +33,11 @@ function getLocalUrl(mypage)
 
 </head>
 <body onload="_pay(document.LGD_PAYINFO)">
-<form method="post" name="LGD_PAYINFO" id="LGD_PAYINFO" action="<%=cp%>/order/orderComplete.action">
+<form method="post" name="LGD_PAYINFO" id="LGD_PAYINFO" action="<%=cp%>/order/backOrder.action">
+
+<input type="hidden" name="result" value="'orderNum=' + ${orderNum} + '&discount=' + ${discount} + '&zip=' + ${destZip} + '&addr1=' + ${destAddr1}
+										 + '&addr2' + ${destAddr2} + '&addrKey=' + ${destAddrKey} + '&eMail=' + ${userEmail} + '&userName=' + ${userName}
+										 + '&price=' + ${totalOrderPrice} + '&mode=card&point=' +${totalPoint}">
 
 <input type="hidden" name="sndReply" value="file:///C:/Users/itwill/Downloads/%ED%86%B5%ED%95%A9%EB%AA%A8%EB%93%88(PC)/Web/jsp_utf8/kspay_wh_rcv.jsp">
 <input type="hidden" name='sndStoreid' value='2999199999' size='15' maxlength='10'>

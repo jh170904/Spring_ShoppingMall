@@ -95,7 +95,7 @@ public class ProductController {
 		return "storeMain";
 	}
 
-	@RequestMapping(value = "pr/listNew.action", method = RequestMethod.GET)
+	@RequestMapping(value = "pr/listNew.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String listNew(HttpServletRequest req, HttpSession session) throws IOException {
 		
 		

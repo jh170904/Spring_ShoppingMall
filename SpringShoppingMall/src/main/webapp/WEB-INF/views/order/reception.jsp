@@ -81,11 +81,6 @@
 		    
 		var f = document.orderForm;
 		
-		f.action = "<%=cp%>/order/payReq.action";
-		f.submit();
-		
-
-/* 		
 		var str = f.userEmail.value;
 		str = str.trim();
 		if(!str) {
@@ -93,7 +88,25 @@
 			f.userEmail.focus();
 			return;
 		}	
-	*/	
+		
+		str = document.orderForm.order_payment.value;
+		
+		if(str == "without_bankbook"){
+			f.action = "<%=cp%>/order/payReq.action";
+			f.submit();
+		}
+		
+		else {
+			 window.open("<%=cp%>/order/payReq.action", "pay", "width=500 height=650 left=600, top=200");
+			 document.orderForm.target = "pay";
+			 document.orderForm.action = "<%=cp%>/order/payReq.action";
+			 document.orderForm.submit();			 
+		}
+		
+		
+		
+		
+
 	}
 	
 	$(document).ready(function(){
@@ -407,7 +420,7 @@
 		</ul>
 	</div>
 	
-	<form class="order-validate" id="order-recept-info" name="orderForm" method="post">
+	<form class="order-validate" id="orderForm" name="orderForm" method="post">
 	<div class="ui_accordion cart_list ＠accordion-apply">		
 		<dl>
 			<dt>

@@ -14,6 +14,20 @@
 	background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;
 }
 
+.button_payment {
+	display:inline-block; 
+	padding:0 10px; 
+	vertical-align: middle; 
+	text-align: center; 
+	line-height:1 !important;
+	font-size:14px; 
+	min-width:80px; 
+	height:30px;
+	background:#8080ff; 
+	border:1px solid #8080ff; 
+	color:#ffffff;
+}
+
 </style>
 
 <script>
@@ -99,6 +113,7 @@
 						<c:set var= "number" value="0"/>
 						<c:set var= "productNum" value="0"/>
 						<c:forEach var="orderNum" items="${userOrderNum }">
+						<c:set var= "price" value="0"/>
 						<tr>
 							<td class="check_wrap check_only" style="vertical-align: top;">
 								${orderNum }<br/><p style="color: #8080ff">(${orderDateYMD[number] })</p>
@@ -129,7 +144,13 @@
 								<button onclick="showOrderList('${orderNum}')" class="btn_sm_bordered_review">상품보기</button>
 							</td>
 							<td style="vertical-align: top;">
-								<button class="btn_sm_bordered_review">결제완료</button>
+								<c:if test="${userOrderlist[number].payment eq 'no'}">
+									<button class="button_payment">입금대기</button>
+								</c:if>
+								
+								<c:if test="${userOrderlist[number].payment eq 'yes'}">
+									<button class="btn_sm_bordered_review">결제완료</button>
+								</c:if>				
 							</td>
 							<c:set var= "number" value="${number+1 }"/>
 							</tr>

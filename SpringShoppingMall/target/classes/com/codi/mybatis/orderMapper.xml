@@ -130,10 +130,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select * from (
 	select rownum rnum, data.*, originalName,saveFileName  from (
 	select orderNum,to_char(orderDate,'yyyy-mm-dd') orderDate,userId,ordertable.productId productId,productName,zip,addr1,addr2,addrKey,ordertable.amount amount,
-	ordertable.price price,eMail,superProduct
+	ordertable.price price,eMail,superProduct,payment
 	from ordertable,product 
 	where ordertable.productId = product.productId 
-	and userId=#{userId} and payment='yes' 
+	and userId=#{userId}
 	and to_char(orderDate,'yyyy-mm-dd')>=(select to_char(sysdate-(interval '${num}' ${searchPeriod}),'yyyy-mm-dd') 
 	from dual group by orderNum) 
 	order by orderNum desc) 
@@ -149,7 +149,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select rownum rnum, data.* from (
 	select distinct orderNum
 	from ordertable
-	where userId=#{userId} and payment='yes' 
+	where userId=#{userId}
 	and to_char(orderDate,'yyyy-mm-dd')>=(select to_char(sysdate-(interval '${num}' ${searchPeriod}),'yyyy-mm-dd') 
 	from dual) order by orderNum desc) data) 
 <![CDATA[
@@ -160,9 +160,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 사용자 기간별 주문 양 -->
 <select id="getNumUserOrderLists" parameterType="hashMap" resultType="int">
 	select nvl(count(distinct orderNum),0)
-	from ordertable where userId=#{userId} and payment='yes' 
+	from ordertable where userId=#{userId}
 	and to_char(orderDate,'yyyy-mm-dd')>=(select to_char(sysdate-(interval '${num}' ${searchPeriod}),'yyyy-mm-dd') from dual)
 </select>
+
+<!-- 사용자 등급 조정 -->
+<select id="gradePoint" parameterType="String" resultType="int">
+	select nvl(sum(price*amount),0) sum 
+	from orderTable where to_char(orderDate,'yyyy-mm-dd')>=(select to_char(sysdate-(interval '2' year),'yyyy-mm-dd') from dual) 
+	and userId=#{userId} and payment='yes'
+</select>
+
+<update id="updateGrade" parameterType="hashMap">
+	update member set userGrade=#{userGrade} where userId=#{userId}
+</update>
 
 <!-- 관리자 무통장입금 확인(주문번호,예금주,가격,주문 개수) -->
 <select id="adminPaymentCheck" parameterType="hashMap" resultType="com.codi.dto.AdminPaymentDTO">

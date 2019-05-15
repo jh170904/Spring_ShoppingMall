@@ -5,6 +5,7 @@ public class OrderDTO {
 	private String orderNum;
 	private String orderDate;
 	private String userId;
+	private String userName;
 	private String productId;
 	private String productName;
 	private String productName2;
@@ -15,12 +16,36 @@ public class OrderDTO {
 	private int amount;
 	private int price;
 	private int deliveryFee;
+	private float point;
 	private String eMail;
 	private String originalName;
 	private String saveFileName;
 	private String payment;
 	private String superProduct;
 	private int discount;
+	
+	private String mode;
+		
+	public String getMode() {
+		return mode;
+	}
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	public float getPoint() {
+		return point;
+	}
+	public void setPoint(float point) {
+		this.point = point;
+	}
 	
 	public String getOrderNum() {
 		return orderNum;

@@ -176,6 +176,18 @@ public class OrderDAO {
 		return result;
 	}
 	
+	public int gradePoint(String userId) {
+		int result = sessionTemplate.selectOne("orderMapper.gradePoint",userId);
+		return result;
+	}
+	
+	public void updateGrade(String userId, String userGrade) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("userId", userId);
+		params.put("userGrade", userGrade);
+		sessionTemplate.update("orderMapper.updateGrade",params);
+	}
+	
 	public List<AdminPaymentDTO> adminPaymentCheck(int start, int end, String searchOrderName){
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("start", start);

@@ -228,14 +228,14 @@ public class OrderController {
 			
 			redirectAttributes.addAttribute("mode","without_bankbook");
 			redirectAttributes.addAttribute("userName", userName);
-			redirectAttributes.addAttribute("destZip", destinationDTO.getZip());
-			redirectAttributes.addAttribute("destAddr1",destinationDTO.getAddr1());
-			redirectAttributes.addAttribute("destAddr2",destinationDTO.getAddr2());
-			redirectAttributes.addAttribute("destAddrKey",destinationDTO.getAddrKey());
+			redirectAttributes.addAttribute("zip", destinationDTO.getZip());
+			redirectAttributes.addAttribute("addr1",destinationDTO.getAddr1());
+			redirectAttributes.addAttribute("addr2",destinationDTO.getAddr2());
+			redirectAttributes.addAttribute("addrKey",destinationDTO.getAddrKey());
 			redirectAttributes.addAttribute("orderNum",orderNum);
-			redirectAttributes.addAttribute("userEmail",userEmail);
+			redirectAttributes.addAttribute("eMail",userEmail);
 			redirectAttributes.addAttribute("destPhone",destPhone);
-			redirectAttributes.addAttribute("totalOrderPrice",totalOrderPrice);
+			redirectAttributes.addAttribute("price",totalOrderPrice);
 			redirectAttributes.addAttribute("discount",discount);
 
 			return "redirect:/order/orderComplete.action";
@@ -244,6 +244,16 @@ public class OrderController {
 		
 		return "order/payreq";
 		
+	}
+	
+	@RequestMapping(value = "/order/backOrder.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String backOrder(OrderDTO dto, HttpServletRequest request,HttpServletResponse response) throws Exception {
+		
+		dto.setAddr1(URLEncoder.encode(dto.getAddr1(),"UTF-8"));
+		dto.setAddr2(URLEncoder.encode(dto.getAddr2(),"UTF-8"));
+		dto.setUserName(URLEncoder.encode(dto.getUserName(),"UTF-8"));
+		request.setAttribute("dto",dto);
+		return "order/backOrder";
 	}
 	
 	@RequestMapping(value = "/order/orderComplete.action", method = {RequestMethod.GET, RequestMethod.POST})
@@ -255,22 +265,19 @@ public class OrderController {
 		String mode = request.getParameter("mode");
 		
 		//할인
-		int discount = Integer.parseInt(request.getParameter("discount"));
+		String minus = request.getParameter("discountAll");
+		int discount=0;
+		if(minus!=null && !minus.equals("")) {
+			discount = Integer.parseInt(request.getParameter("discountAll"));
+		}
 		
 		//배송지
-		orderDTO.setZip(request.getParameter("destZip"));
-		orderDTO.setAddr1(URLDecoder.decode(request.getParameter("destAddr1"),"UTF-8"));
-		orderDTO.setAddr2(URLDecoder.decode(request.getParameter("destAddr2"),"UTF-8"));
-		orderDTO.setAddrKey(request.getParameter("destAddrKey"));
+		orderDTO.setAddr1(URLDecoder.decode(orderDTO.getAddr1(),"UTF-8"));
+		orderDTO.setAddr2(URLDecoder.decode(orderDTO.getAddr2(),"UTF-8"));
 
-		String orderNum = (request.getParameter("orderNum"));
-		String userEmail = request.getParameter("userEmail");
 		String userName = URLDecoder.decode(request.getParameter("userName"),"UTF-8");
-		int	totalPrice = Integer.parseInt(request.getParameter("totalOrderPrice"));
-	
-		
-		orderDTO.setOrderNum(orderNum);
-		orderDTO.seteMail(userEmail);
+		int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
+		float totalPoint = Float.parseFloat(request.getParameter("totalPoint"));
 		
 		//사용자
 		orderDTO.setUserId(info.getUserId());
@@ -301,7 +308,7 @@ public class OrderController {
 			}
 			
 			dao.insertOrderDataProduct(orderDTO);
-			dao.insertOrderPayment(orderNum,info.getUserId(),totalPrice,discount);
+			dao.insertOrderPayment(orderDTO.getOrderNum(),info.getUserId(),totalPrice,discount);
 			dao.updateProductAcount(dto.getAmount(), dto.getSuperProduct());
 			
 			//장바구니 데이터 삭제
@@ -315,7 +322,7 @@ public class OrderController {
 		String orderDate ="";
 		String orderDest="";
 		
-		List<OrderDTO> orderCompleteList = dao.getCompleteOrder(info.getUserId(),orderNum);
+		List<OrderDTO> orderCompleteList = dao.getCompleteOrder(info.getUserId(),orderDTO.getOrderNum());
 		Iterator<OrderDTO> orderCompleteLists = orderCompleteList.iterator();
 		if(orderCompleteLists.hasNext()){
 			OrderDTO dto = orderCompleteLists.next();
@@ -340,7 +347,19 @@ public class OrderController {
 		}
 		
 		//사용자 포인트 적립
-		dao.updateMemberPoint(info.getUserId(), (int)Float.parseFloat(request.getParameter("totalPoint")));
+		dao.updateMemberPoint(info.getUserId(),(int)totalPoint);
+		
+		int gradePoint = dao.gradePoint(info.getUserId());
+		String userGrade = "SILVER";
+		if(gradePoint<500000) 
+			userGrade = "SILVER";
+		else if (gradePoint>=500000 && gradePoint<1000000) {
+			userGrade = "GOLD";
+		}
+		else if(gradePoint>=1000000)
+			userGrade = "VIP";
+			
+		dao.updateGrade(info.getUserId(), userGrade);
 		return "order/orderComplete";
 		
 	}
@@ -497,6 +516,18 @@ public class OrderController {
 		
 		//포인트 적립
 		dao.updateMemberPoint(userId,(int)(price*0.01));
+		
+		int gradePoint = dao.gradePoint(userId);
+		String userGrade = "SILVER";
+		if(gradePoint<500000) 
+			userGrade = "SILVER";
+		else if (gradePoint>=500000 && gradePoint<1000000) {
+			userGrade = "GOLD";
+		}
+		else if(gradePoint>=1000000)
+			userGrade = "VIP";
+			
+		dao.updateGrade(userId, userGrade);
 		
 		return "redirect:/order/bankbookPaymentAdmin.action";
 	}
