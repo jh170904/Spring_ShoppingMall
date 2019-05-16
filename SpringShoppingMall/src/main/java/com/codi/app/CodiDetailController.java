@@ -129,6 +129,23 @@ public class CodiDetailController {
 	}
 	
 	//댓글 삭제
+	@RequestMapping(value = "pr/replyIdCheck.action", method = {RequestMethod.GET, RequestMethod.POST}, produces="application/json; charset=utf8")
+	@ResponseBody
+	public boolean replyIdCheck(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws Exception {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		int replyNum = Integer.parseInt(request.getParameter("replyNum"));
+		
+		if(info==null)
+			return false;
+		
+		if(dao.deleteReplyDataCheck(replyNum, info.getUserId())>0) {
+			return true;
+		}
+		return false;
+	}
+	
+	//댓글 삭제 아이디 체크
 	@RequestMapping(value = "pr/replyDeleted.action", method = {RequestMethod.GET, RequestMethod.POST}, produces="application/json; charset=utf8")
 	@ResponseBody
 	public ResponseEntity<Object> replyDeleted(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws Exception {

@@ -93,6 +93,15 @@ public class CodiDetailDAO {
 		sessionTemplate.delete("codiDetailMapper.deleteReplyData", replyNum);	
 	}
 	
+	//댓글 작성자 확인
+	public int deleteReplyDataCheck(int replyNum, String userId) {
+		
+		HashMap<String, Object> hMap = new HashMap<String, Object>();
+		hMap.put("replyNum", replyNum);
+		hMap.put("userId", userId);
+		return sessionTemplate.selectOne("codiDetailMapper.deleteReplyDataCheck", hMap);
+	}
+	
 	//코디게시물 댓글카운트
 	public int getReplyDataCount(int iNum) {
 		return sessionTemplate.selectOne("codiDetailMapper.getReplyDataCount", iNum);	

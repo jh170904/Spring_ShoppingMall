@@ -102,6 +102,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	delete reply where replyNum=#{replyNum}
 </delete>
 
+<!-- 댓글 작성자 여부 확인 -->
+<select id="deleteReplyDataCheck" parameterType="HashMap" resultType="int">
+	select nvl(count(*),0) from reply where replyNum=#{replyNum} and userId=#{userId}
+</select>
+
 <!-- 댓글 조회  -->
 <select id="getReplyListData" parameterType="HashMap" resultType="com.codi.dto.ReplyDTO">
 	select * from(

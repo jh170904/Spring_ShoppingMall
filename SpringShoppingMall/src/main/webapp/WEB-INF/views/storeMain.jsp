@@ -46,14 +46,16 @@ $(function(){
 
 
 $(function(){
-	
+
     $(".featured-banner__scroller__item").click(function(){
     	
 	   	$(".featured-banner__scroller__item").removeClass("active");	// active 클래스를 삭제.
 		$(this).addClass("active");										// 클릭한 클래스에 (active)클래스 삽입.
-		
+				
 		var imgSrc = $(this).find("img").attr("src");					// 이미지 src 추출
 		$(".featured-content__cover-image img").attr("src",imgSrc);		// 메인 이미지 반영
+		
+		$(".featured-content__cover-image").slideDown(5000);
 		
 		var itemText = $(this).find(".featured-banner__scroller__item__text").text(); 
 		var splitText = itemText.split(",");
@@ -62,8 +64,10 @@ $(function(){
 	    }
 		var subText = $(this).find(".featured-banner__scroller__item__subtext").text();
 		$(".featured-content__sub-title").text(subText);			//서브타이틀 메인 반영
+
 		
     });
+    
     
 });
 
@@ -132,6 +136,8 @@ $(function(){
 	height: 300px;
 	margin: 0 0 200px 200px;
 	display: inline-block;
+	-webkit-transition:width 2s, height 2s, background-color 2s, -webkit-transform 2s;
+    transition:width 2s, height 2s, background-color 2s, transform 2s;
 }
 
 .featured-banner__scroller__item.active {
@@ -358,18 +364,22 @@ a * {
     font-weight: 700;
     margin-right: 6px;
 }
+
 .product-item__info__price>.discount-rate {
     margin-right: 4px;
     font-weight:bold;
     color: #8080ff;
 }
+
 .product-item__info__price>strong {
     margin-right: 4px;
     color: #000;
 }
+
 .product-item__info__title>p {
     max-height: 32px;
 }
+
 p {
     display: block;
     margin-inline-start: 0px;
@@ -377,9 +387,11 @@ p {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
 .product-item__info__title>p {
     max-height: 32px;
 }
+
 .featured-banner__scroller__item__subtext{
 	display:none;
 }
@@ -523,8 +535,8 @@ p {
 
 						<div class="product-item__info__col">
 							<span style="font-size: 11pt;  color: #8080FF" >★</span>
-							<span>평점 ${dto.reviewRate}</span>
-							<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;${dto.reviewCount}</span>
+							<span>평점 <fmt:formatNumber value="${dto.reviewRate}" pattern=".0"/></span>
+							<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;<fmt:formatNumber value="${dto.reviewCount}" pattern=".0"/></span>
 							<span style="font-size: 14pt;  color: #8080FF; float: right; padding-right: 20px;" >
 								<input type="hidden" id="superProduct" value="${dto.superProduct}" >
 								<button class="goodButton" value="${dto.superProduct}">

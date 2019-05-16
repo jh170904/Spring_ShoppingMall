@@ -97,7 +97,7 @@
 		//삭제 후 페이지 이동 필요
 		var replyPageNum = $(".pageNum").val();
 				
-		$.ajax({
+		var xhr = $.ajax({
 			type:"POST",
 			url:"<%=cp%>/pr/replyDeleted.action",
 			dataType : "json",
@@ -105,7 +105,9 @@
 					replyNum:replyNum,
 					pageNum:replyPageNum,
 					iNum:'${dto.iNum}'
-			},				
+			},
+			traditional : true, 
+   		    async : false,
 			contentType:"application/x-www-form-urlencoded; charset=UTF-8", 
 			//콜백함수
 			success:function(data){
@@ -129,12 +131,51 @@
 	             $("#listData").show();
 	             
 			},
+			beforeSend:function(xhr){
+				
+				var checkedIdFlag = checkId(replyNum);
+				
+				if(!checkedIdFlag){
+					xhr.abort();
+				}
+			},
 			error:function(e){
 				alert(e.responseText);
 			}	
 		});
 	}
 	
+	function checkId(replyNum){
+		
+		var flag = false;		
+
+   		$.ajax({
+   			type:"POST",
+   			url:"<%=cp%>/pr/replyIdCheck.action",
+   			dataType : "json",
+   			data: {	
+   					replyNum:replyNum,
+   					iNum:'${dto.iNum}'
+   			},	
+   			traditional : true, 
+   		    async : false,
+   			contentType:"application/x-www-form-urlencoded; charset=UTF-8", 
+   			success:function(data){
+   				
+   				if(data){
+   					flag = true;
+   				}else{
+   					alert("\n 작성한 사용자만 댓글을 삭제할 수 있습니다.");
+   				}
+   			},
+   			error:function(e){
+   				alert(e.responseText);
+   			}	
+   		});
+   		
+   		return flag;
+	}
+  	
 
 	$(function(){
 		
