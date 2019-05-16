@@ -66,9 +66,10 @@ public class ProductController {
 		
 		String cp = req.getContextPath();
 
-		List<ProductDTO> lists;
-
-		lists = dao.getListOrder(1, 4, "amount desc");
+		List<ProductDTO> lists = dao.getListOrder(1, 4, "amount desc");
+		
+		List<ProductDTO> codiBestlists = dao.getListOrder(1, 4, "codiCount desc");
+		
 
 		//각각의 dto에 reviewCount 와 reviewRate 추가
 		ListIterator<ProductDTO> it = lists.listIterator();
@@ -91,7 +92,8 @@ public class ProductController {
 		req.setAttribute("good", good);
 		req.setAttribute("imagePath", imagePath);
 		req.setAttribute("lists", lists);
-
+		req.setAttribute("codiBestlists", codiBestlists);
+		
 		return "storeMain";
 	}
 

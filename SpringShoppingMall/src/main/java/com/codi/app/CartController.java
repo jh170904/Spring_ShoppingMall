@@ -149,4 +149,15 @@ public class CartController {
 		}
 		return "redirect:/cart/cartList.action";
 	}
+	
+	//바로주문하기
+	@RequestMapping(value = "/cart/cartAdd_directOrder.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String cartAdd_directOrder(CartDTO dto, HttpServletRequest request, HttpServletResponse response) {
+		
+		//장바구니 상품추가
+		cartAddItem(dto, request, response);
+		//리다이렉트
+		return "redirect:/order/orderList.action";
+	}
+	
 }

@@ -46,31 +46,39 @@ $(function(){
 
 
 $(function(){
-
+	
     $(".featured-banner__scroller__item").click(function(){
     	
-	   	$(".featured-banner__scroller__item").removeClass("active");	// active 클래스를 삭제.
-		$(this).addClass("active");										// 클릭한 클래스에 (active)클래스 삽입.
-				
-		var imgSrc = $(this).find("img").attr("src");					// 이미지 src 추출
-		$(".featured-content__cover-image img").attr("src",imgSrc);		// 메인 이미지 반영
-		
-		$(".featured-content__cover-image").slideDown(5000);
-		
+	   	$(".featured-banner__scroller__item").removeClass("active");			// active 클래스를 삭제.
+		$(this).addClass("active");												// 클릭한 클래스에 (active)클래스 삽입.
+		var imgSrc = $(this).find("img").attr("src");							// 이미지 src 추출
 		var itemText = $(this).find(".featured-banner__scroller__item__text").text(); 
 		var splitText = itemText.split(",");
-		for ( var i in splitText ) {
-			$(".featured-content__title."+i).text(splitText[i]);	//타이틀 메인 반영
-	    }
 		var subText = $(this).find(".featured-banner__scroller__item__subtext").text();
-		$(".featured-content__sub-title").text(subText);			//서브타이틀 메인 반영
-
 		
+    	$(".featured-content__cover-image").fadeOut(400,'swing',function(){
+    		$(".featured-content__cover-image img").attr("src",imgSrc);		// 메인 이미지 반영
+    		$(".featured-content__cover-image").fadeIn(800);
+    	});
+    	
+    	$(".featured-content__sub-title").fadeOut(400,'swing',function(){
+    		$(".featured-content__sub-title").text(subText);				//서브타이틀 메인 반영
+    		$(".featured-content__sub-title").fadeIn(800);
+		});
+		
+    	$(".featured-content__title.0").fadeOut(400,'swing',function(){
+			$(".featured-content__title.0").text(splitText[0]);				//타이틀1 메인 반영
+			$(".featured-content__title.0").fadeIn(800);
+		});
+	
+    	$(".featured-content__title.1").fadeOut(400,'swing',function(){
+			$(".featured-content__title.1").text(splitText[1]);				//타이틀2 메인 반영
+			$(".featured-content__title.1").fadeIn(800);
+		});
+
     });
     
-    
 });
-
 
 </script>
 
@@ -535,8 +543,8 @@ p {
 
 						<div class="product-item__info__col">
 							<span style="font-size: 11pt;  color: #8080FF" >★</span>
-							<span>평점 <fmt:formatNumber value="${dto.reviewRate}" pattern=".0"/></span>
-							<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;<fmt:formatNumber value="${dto.reviewCount}" pattern=".0"/></span>
+							<span>평점 <fmt:formatNumber value="${dto.reviewRate}" pattern="0.0"/></span>
+							<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;<fmt:formatNumber value="${dto.reviewCount}" pattern="0.0"/></span>
 							<span style="font-size: 14pt;  color: #8080FF; float: right; padding-right: 20px;" >
 								<input type="hidden" id="superProduct" value="${dto.superProduct}" >
 								<button class="goodButton" value="${dto.superProduct}">
@@ -563,8 +571,56 @@ p {
 </table>
 </section>
 
-<section class="container">
-<h1></h1>
+<section class="container" style="padding-bottom: 30px;">
+<h1>코디속 BEST</h1>
+<table>
+	<tr>
+	<c:forEach var="dto" items="${codiBestlists }">
+		<td width="275" style="padding: 10px;">
+			<div class="product-item">
+				<div class="product-item__image">
+				<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">
+					<img src="../upload/list/${dto.originalName}" style="width: 280px; height: 280px; border-radius: 15px;" >
+				</a>
+				</div>
+					<div class="product-item__info">
+						<div class="product-item__info__title">
+						<p class="product-item__info__title__brand" style="font-weight: bold; color: #8080ff; font-size: 12pt;"><a href="${dto.storeUrl }" >${dto.storeName}</a></p>
+						<p>${dto.productName}</p>
+						</div>
+						
+						<div class="product-item__info__price" style="float: left;">
+						<strong><fmt:formatNumber value="${dto.price}" groupingUsed="true" />원</strong>
+						</div>
+
+						<div class="product-item__info__col">
+							<span style="font-size: 11pt;  color: #8080FF" >★</span>
+							<span>평점 <fmt:formatNumber value="${dto.reviewRate}" pattern="0.0"/></span>
+							<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;<fmt:formatNumber value="${dto.reviewCount}" pattern="0.0"/></span>
+							<span style="font-size: 14pt;  color: #8080FF; float: right; padding-right: 20px;" >
+								<input type="hidden" id="superProduct" value="${dto.superProduct}" >
+								<button class="goodButton" value="${dto.superProduct}">
+								<div class="goodDiv${dto.superProduct}" >
+									<c:set var="k" value="0" />
+									<c:forEach var="good" items="${good }">
+									<c:if test="${dto.superProduct eq good}">
+										<img src="../resources/image/heart2.PNG" style="height: 25px;"/> 
+										<c:set var="k" value="1" />
+									</c:if>
+									</c:forEach>
+									<c:if test="${k==0 }">
+										<img src="../resources/image/heart1.PNG" style="height: 25px;"/> 
+									</c:if>
+								</div>
+								</button>
+							</span>
+						</div>
+					</div>
+			</div>
+		</td>
+		</c:forEach>
+	</tr>
+</table>
 </section>
 
 <%@include file="./layout/footer.jsp"  %>

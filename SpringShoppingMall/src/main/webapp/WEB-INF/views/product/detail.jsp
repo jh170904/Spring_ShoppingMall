@@ -188,20 +188,6 @@ tr {
     margin: 0 0 0 90px;
 }
 
-.ui-widget-overlay {
-    background-color: #000;
-    opacity: .6;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.ui-front{
-    z-index: 100;
-}
-
 </style>
 
 <script type="text/javascript" src="<%=cp%>/resources/js/httpRequest.js"></script>
@@ -248,7 +234,7 @@ tr {
 			if(!str){
 				alert("\n 사이즈를 선택하세요.");
 				f.productSize.focus();
-				return;
+				return false;
 			}
 		}
 		f.productSize.value = str;
@@ -260,7 +246,7 @@ tr {
 			if(!str){
 				alert("\n 색상을 선택하세요.");
 				f.color.focus();
-				return;
+				return false;
 			}
 		}
 		f.color.value = str;
@@ -275,9 +261,9 @@ tr {
 		str = f.amount.value;
 		str = str.trim();
 		if(str==0){
-			alert("\n 수량을 선택하세요.");
+			alert("\n 구매할 수량을 선택하세요.");
 			f.amount.focus();
-			return;
+			return false;
 		}
 		f.amount.value = str;
 		
@@ -288,7 +274,7 @@ tr {
 			if(!str){
 				alert("\n 사이즈를 선택하세요.");
 				f.productSize.focus();
-				return;
+				return false;
 			}
 		}
 		f.productSize.value = str;
@@ -300,12 +286,12 @@ tr {
 			if(!str){
 				alert("\n 색상을 선택하세요.");
 				f.color.focus();
-				return;
+				return false;
 			}
 		}
 		f.color.value = str;
 		
-		f.action = "<%=cp%>/cart/cartAdd_directOrder.do";
+		f.action = "<%=cp%>/cart/cartAdd_directOrder.action";
 		f.submit();
 				
 	}
@@ -483,7 +469,7 @@ tr {
 									<td style="padding: 2px 0px 0px 0px">사이즈 <span
 										style="float: right;"> <select name="productSize"
 											class="selling-option" id="productSize">
-												<option value="0">사이즈 선택</option>
+												<option value="">사이즈 선택</option>
 												<c:forEach var="option" items="${sizeList }">
 													<option value="${option }">${option }</option>
 												</c:forEach>
@@ -499,7 +485,7 @@ tr {
 									<td style="padding: 2px 0px 0px 0px">색상 <span
 										style="float: right;"> <select name="color"
 											class="selling-option" id="color">
-												<option value="0">색상 선택</option>
+												<option value="">색상 선택</option>
 												<c:forEach var="option" items="${colorList }">
 													<option value="${option }">${option }</option>
 												</c:forEach>
@@ -548,11 +534,16 @@ tr {
 								<td>
 									<!-- 구매버튼,장바구니버튼 -->
 									<div class="purchase_button_set">
-										<span><button id="btn_buy_now"
-												class="btn_lg_bordered emp btn_buy_now" type="button"
-												onclick="addDirectOrder();">바로구매</button></span> <span><button
-												id="btn_basket" class="btn_lg_primary btn_basket"
-												type="button">장바구니 담기</button></span>
+										<span>
+											  <button id="btn_buy_now" class="btn_lg_bordered emp btn_buy_now" type="button" onclick="addDirectOrder();">
+											  바로구매
+											  </button>
+										</span>
+										<span>
+											  <button id="btn_basket" class="btn_lg_primary btn_basket"	type="button">
+											  장바구니 담기
+											  </button>
+										</span>
 									</div>
 								</td>
 							</tr>
@@ -617,7 +608,7 @@ tr {
 </div>
 
  <!-- Coupon Modal -->
- <div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="myModalLabel" > <!-- style="display: none;" -->
+ <div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="myModalLabel" > 
    <div class="modal-dialog" role="document">
    
      <!-- Modal content-->
