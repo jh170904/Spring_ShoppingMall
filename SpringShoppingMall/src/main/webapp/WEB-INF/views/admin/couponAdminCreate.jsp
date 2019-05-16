@@ -67,7 +67,7 @@
 		
 		
 		
-		f.action = "<%=cp %>/couponA/couponAdminCreated_ok.action";
+		f.action = "<%=cp %>/admin/couponAdminCreated_ok.action";
 		f.submit();
 		
 	}
@@ -147,7 +147,7 @@
 			<td colspan="2" align="center">
 				<div class="purchase_button_set" style="padding-left: 200px;">
 					<span><button class="btn_lg_bordered emp btn_buy_now" type="button" onclick="couponSendIt();">쿠폰 등록</button></span>
-					<span><button class="btn_lg_bordered emp btn_buy_now" type="button" onclick="javascript:location.href='<%=cp %>/couponA/adminList.action';">쿠폰 리스트</button></span>
+					<span><button class="btn_lg_bordered emp btn_buy_now" type="button" onclick="javascript:location.href='<%=cp %>/admin/adminList.action';">쿠폰 리스트</button></span>
 					<span><button class="btn_lg_primary btn_basket" type="reset" onclick="document.couponMyForm.productId.focus();">다시입력</button></span>
 				</div>
 			</td>
