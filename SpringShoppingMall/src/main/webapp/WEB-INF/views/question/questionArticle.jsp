@@ -404,6 +404,13 @@ pre{
 	
 		<!-- 댓글여기까지 -->
 		
+		<div class="question__aside__section" style="width: 100px; text-align: center; margin: 10px auto;">
+	    <p>
+	      <a class="btn btn-md btn-priority question__aside__section__new-question" 
+	      href="<%=cp%>/qna/questionMain.action">게시글 목록</a>
+	    </p>
+		</div>
+		
 	</section>
 	
 	<nav id="question__sidebar" class="page-2col__sidebar sticky-top"
@@ -456,41 +463,6 @@ pre{
 	</nav>
 </article>
 
-<section id="question__floating" class="floating-bar sticky-bottom"
-	style="height: auto;">
-	<div class="floating-bar__content sticky-content question__floating"
-		data-sticky-enabled="false" style="position: relative; bottom: 0px;">
-		<div class="question__floating__actions question__actions">
-			<div class="question__actions__action__wrap">
-				<div class="question__actions__action question-share-btn"
-					role="button" data-target="10126"
-					data-path="/questions/10126/increase_share">
-					<span class="icon-common-action__j-8" aria-hidden="true"></span> <span
-						class="question__actions__action__caption">공유</span> <span
-						class="question__actions__action__count">0</span>
-				</div>
-				<div id="" class="tooltip-share-sns hidden" style="right:">
-					<!--data-title="" data-username=""-->
-					<a class="btn-share-sns facebook"
-						href="https://www.facebook.com/sharer.php?u=https://ohou.se/questions/10126?affect_id=0&amp;affect_type=QuestionIndex&amp;query="
-						target="_blank"><span class="icon icon-sns-square-facebook"></span></a>
-					<div class="btn-share-sns kakaostory" href="#" target="_blank">
-						<span class="icon icon-sns-square-kakao-story"></span><a
-							href="https://story.kakao.com/s/share?url=https%3A%2F%2Fohou.se%2Fquestions%2F10126%3Faffect_id%3D0%26affect_type%3DQuestionIndex%26query%3D&amp;text=%EC%A3%BC%EB%B0%A9%EA%B3%BC%20%EB%B6%99%EC%96%B4%EC%9E%88%EB%8A%94%20%EB%B2%BD%20%ED%97%88%EB%AC%BC%EA%B8%B0.%0A%0A%EC%98%A4%EB%8A%98%EC%9D%98%EC%A7%91%EC%97%90%EC%84%9C%20%EC%9D%B8%ED%85%8C%EB%A6%AC%EC%96%B4%20%EA%B3%A0%EC%88%98%EB%93%A4%EA%B3%BC%20%EC%A0%84%EB%AC%B8%EA%B0%80%EB%93%A4%EC%97%90%EA%B2%8C%20%EC%A1%B0%EC%96%B8%EC%9D%84%20%EB%B0%9B%EC%95%84%EB%B3%B4%EC%84%B8%EC%9A%94!&amp;kakao_agent=sdk%2F1.29.1%20os%2Fjavascript%20lang%2Fko-KR%20device%2FWin32%20origin%2Fhttps%253A%252F%252Fohou.se&amp;app_key=3019c756ec77dd7e0a24e56d9d784f77"
-							target="_blank"><img
-							src="//dev.kakao.com/sdk/js/resources/story/icon_small.png"
-							width="24" height="24"></a>
-					</div>
-
-					<a class="btn-share-sns naver"
-						href="http://share.naver.com/web/shareView.nhn?url=https://ohou.se/questions/10126?affect_id=0&amp;affect_type=QuestionIndex&amp;query=&amp;title=오늘의집에서 보기"
-						target="_blank"><span class="icon icon-sns-square-naver"></span></a>
-				</div>
-			</div>
-		</div>
-
-	</div>
-</section>
 
 </main>
 
