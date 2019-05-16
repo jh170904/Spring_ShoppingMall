@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -179,11 +180,43 @@ textarea {
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" >
 
+	function sendIt(){		
+		f = document.myForm;
+		
+		str = f.qSubject.value;
+		str = str.trim();//util.js에 있는 trim함수 호출
+		if(!str){
+			alert("\n제목을 입력하세요.");//공백제거후 내용이 없으면
+			f.qSubject.focus();
+			return;
+		}
+		f.qSubject.value = str;
+	
+		str = f.qContent.value;
+		str = str.trim();
+		if(!str){
+			alert("\n제목을 입력하세요.");
+			f.qContent.focus();
+			return;
+		}
+		f.qContent.value = str;
+
+		if(f.mode.value=="created"){
+			f.action = "questionCreated_ok.action" ;
+		}else if(f.mode.value=="updated"){
+			f.action = "updated.action" ;
+		}
+		
+		f.submit();
+	}
+	
+</script>
 </head>
 <body>
 	<div class="question-form container">
-		<form name="myForm" method="post" enctype="multipart/form-data" action="questionCreated_ok.action">
+		<form name="myForm" method="post" enctype="multipart/form-data" >
 
 			<header class="question-form__header">
 				<h2 class="question-form__header__heading text-black bold">질문하기</h2>
@@ -195,12 +228,12 @@ textarea {
 				 -->
 				<div class="question-form__header__title">
 					<input placeholder="제목" class="form-control" maxlength="61"
-						size="1" type="text" name="qSubject" id="qSubject">
+						size="1" type="text" name="qSubject" id="qSubject" value="${dto.qSubject }">
 				</div>
 			</header>
 
 			<div class="question-form__body__content__placeholder">
-				<textarea rows="20" name="qContent" ></textarea>
+				<textarea rows="20" name="qContent">${dto.qContent }</textarea>
 			</div>
 
 			<div class="file_input">
@@ -212,15 +245,29 @@ textarea {
 			</div>
 
 			<div class="question-form__header__title form-group error">
-				<input placeholder="해시태그" class="form-control" maxlength="61"
+				<input placeholder="해시태그" class="form-control" maxlength="61" value="${dto.qHashTag }"
 					size="1" type="text" name="qHashTag" id="qHashTag">
 			</div>
 
 			<footer class="question-form__footer">
-				<div class="question-form__footer__submit row">
-					<input type="submit" name="commit" value="질문 저장하기"
-						class="btn btn-lg btn-priority col-6 offset-3">
-				</div>
+				
+				<input type="hidden" name="mode" value="${mode }">
+		
+				<c:if test="${mode=='created' }">	
+					<div class="question-form__footer__submit row">
+						<input type="button" name="commit" value="질문 저장하기" onclick="sendIt()"
+							class="btn btn-lg btn-priority col-6 offset-3">
+					</div>
+				</c:if>	
+				
+				<c:if test="${mode=='updated' }">	
+					<div class="question-form__footer__submit row">
+						<input type="button" name="commit" value="수정하기" onclick="sendIt()"
+							class="btn btn-lg btn-priority col-6 offset-3">
+					</div>
+					<!-- update 필요한 파라미터 -->
+					<input type="hidden" name="qNum" value="${dto.qNum }"/>
+				</c:if>	
 			</footer>
 
 		</form>

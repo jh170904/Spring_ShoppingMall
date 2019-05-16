@@ -103,13 +103,48 @@ pre{
 	border: 1px solid #8080ff;
 }
 
+.updateBtn{
+	width: 50px; 
+	height:30px; 
+	background-color: #8080ff; 
+	border:1px solid #8080ff; 
+	color: white;
+}
+
+#followButton{
+	background-color: #8080ff; 
+	border:1px solid #8080ff; 
+	color: white;
+}
 </style>
 <link rel="stylesheet" type="text/css" href="<%=cp%>/resources/css/bucket.css?ver=1">
-<link rel="stylesheet" type="text/css" href="<%=cp%>/resources/css/show.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/resources/css/show.css?ver=2">
 <script type="text/javascript" src="<%=cp%>/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	
+	function updateData(){
+		
+		var qNum="${dto.qNum}";
+		
+		url="<%=cp%>/qna/updated.action";
+		url+="?qNum="+qNum;
+		location.replace(url);
+	}
+	
+	function deleteData(){
+		var qNum="${dto.qNum}";
+		
+		url="<%=cp%>/qna/deleted.action";
+		url+="?qNum="+qNum;
+
+		location.replace(url);
+	}
+</script>
+
 <script type="text/javascript">
   	$(function(){
 		listPage(1);//첫 실행시 페이지=1로 실행
+
 	}); 
 
 	function insertComment(){
@@ -242,6 +277,48 @@ pre{
 	}
 	
 </script>
+
+<script type="text/javascript">
+
+	$(function() {
+		$("#followButton").click(function(){
+			
+	
+	        $.ajax({
+	            type : 'POST',
+				data:{userid:'${dto.userId}'},
+	            url : "<%=cp%>/qna/follow.ajax",
+	            dataType : "json",
+	            contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+	            success : function(data) {
+	                //alert(data.cnt);
+	                
+	                $("#followButton").html(data.str);
+	                
+	            },
+	            beforeSend:showRequest,
+	            error : function(error) {
+	                alert("error : " + error);
+	            }
+	        });
+			
+		});
+	});
+	
+	function showRequest() {
+        
+		var chk='${sessionScope.customInfo.userId}';
+		
+		if(chk==""){
+			alert("로그인을 해주세요!");
+			return false;
+		}
+		else if(chk=='${dto.userId}'){
+			alert("자기 자신입니다.")
+			return false;
+		}
+	}
+</script>
 <main role="main" id="root">
 <article id="page" class="page-2col container" data-question-id="10126">
 	<section id="question__content" class="page-2col__content">
@@ -272,15 +349,17 @@ pre{
 
 			<div class="question__content__footer__meta text-caption-1">
 				<time datetime="2019-05-14T09:30:14+09:00"
-					class="question__content__footer__date text-gray"> 2019년 05월
-					14일 09:30 </time>
+					class="question__content__footer__date text-gray"> ${dto.qDate } </time>
 				<span class="question__content__footer__views text-gray"> 조회
-					<span class="question__content__footer__views__content">19</span>
-				</span> <span class="question__content__footer__bookmarks text-gray">
-					스크랩 <span class="question__content__footer__bookmarks__content">
-						0 </span>
-				</span> <a class="question__content__footer__report text-gray-light"
-					data-remote="true" href="/questions/10126/report">신고</a>
+					<span class="question__content__footer__views__content">${dto.qHitCount }</span>
+					<c:if test="${sessionScope.customInfo.userId==dto.userId}">
+					<div style="float: right; ">
+						<input class="updateBtn"
+						type="button" value="수정" onclick="updateData();">
+						<input class="updateBtn" type="button" value="삭제" onclick="deleteData();">
+					</div>
+					</c:if>
+				</span> 
 			</div>
 		</footer>
 
@@ -347,46 +426,30 @@ pre{
 					</div>
 				</a>
 				<div class="question__author__follow">
-					<div
+					<div id="followButton"
 						class="question__author__follow__button question-follow-btn btn btn-xs
-                btn-simple"
+                btn-simple "
 						role="button" data-target="4183264"
 						data-path="/users/4183264/follow"
 						data-cancel-path="/users/4183264/unfollow">
-						<span class="active"><span
-							class="icon icon-etc-check-white-sm"></span>팔로잉</span><span
-							class="inactive">팔로우</span>
+						<c:if test="${cnt==0}">
+						<span class="inactive" style="width:100px;" >팔로우</span>
+						</c:if>
+						<c:if test="${cnt==1}">
+						<span class="inactive" style="width:100px;" >팔로우 취소</span>
+						</c:if>		
+						</div>
+							
 					</div>
 				</div>
 			</address>
-			<div class="question__sidebar__actions question__actions">   
-				<div class="question__actions__action__wrap">
-					<div class="question__actions__action question-share-btn"
-						role="button" data-target="10126"
-						data-path="/questions/10126/increase_share">
-						<span class="icon icon-action-share-alt-gray-sm inactive"></span>
-						<span class="icon icon-action-share-alt-white-sm active"></span> <span
-							class="question__actions__action__caption">공유</span> <span
-							class="question__actions__action__count">0</span>
-					</div>
-					<div id="" class="tooltip-share-sns hidden" style="right:">
-						<!--data-title="" data-username=""-->
-						<a class="btn-share-sns facebook"
-							href="https://www.facebook.com/sharer.php?u=https://ohou.se/questions/10126?affect_id=0&amp;affect_type=QuestionIndex&amp;query="
-							target="_blank"><span class="icon icon-sns-square-facebook"></span></a>
-						<div class="btn-share-sns kakaostory" href="#" target="_blank">
-							<span class="icon icon-sns-square-kakao-story"></span><a
-								href="https://story.kakao.com/s/share?url=https%3A%2F%2Fohou.se%2Fquestions%2F10126%3Faffect_id%3D0%26affect_type%3DQuestionIndex%26query%3D&amp;text=%EC%A3%BC%EB%B0%A9%EA%B3%BC%20%EB%B6%99%EC%96%B4%EC%9E%88%EB%8A%94%20%EB%B2%BD%20%ED%97%88%EB%AC%BC%EA%B8%B0.%0A%0A%EC%98%A4%EB%8A%98%EC%9D%98%EC%A7%91%EC%97%90%EC%84%9C%20%EC%9D%B8%ED%85%8C%EB%A6%AC%EC%96%B4%20%EA%B3%A0%EC%88%98%EB%93%A4%EA%B3%BC%20%EC%A0%84%EB%AC%B8%EA%B0%80%EB%93%A4%EC%97%90%EA%B2%8C%20%EC%A1%B0%EC%96%B8%EC%9D%84%20%EB%B0%9B%EC%95%84%EB%B3%B4%EC%84%B8%EC%9A%94!&amp;kakao_agent=sdk%2F1.29.1%20os%2Fjavascript%20lang%2Fko-KR%20device%2FWin32%20origin%2Fhttps%253A%252F%252Fohou.se&amp;app_key=3019c756ec77dd7e0a24e56d9d784f77"
-								target="_blank"><img
-								src="//dev.kakao.com/sdk/js/resources/story/icon_small.png"
-								width="24" height="24"></a>
-						</div>
-
-						<a class="btn-share-sns naver"
-							href="http://share.naver.com/web/shareView.nhn?url=https://ohou.se/questions/10126?affect_id=0&amp;affect_type=QuestionIndex&amp;query=&amp;title=오늘의집에서 보기"
-							target="_blank"><span class="icon icon-sns-square-naver"></span></a>
-					</div>
-				</div>
+			<div class="question__aside__section" style="width: 330px;">
+			    <h2 class="text-heading-5">궁금한 것을 직접 질문해보세요!</h2>
+			    <p>
+			      <a class="btn btn-md btn-priority question__aside__section__new-question" 
+			      href="<%=cp%>/ques/questionCreated.action">질문하러 가기</a>
+			    </p>
+			</div>
 			</div>
 			
 		</div>

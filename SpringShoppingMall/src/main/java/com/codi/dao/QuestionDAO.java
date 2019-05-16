@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.codi.dto.CommunityDTO;
 import com.codi.dto.MemberDTO;
+import com.codi.dto.ProductDTO;
 import com.codi.dto.QreplyDTO;
 import com.codi.dto.QuestionDTO;
 import com.codi.dto.ReplyDTO;
@@ -63,6 +64,45 @@ public class QuestionDAO {
 		
 	}
 	
+	//list order에 맞게 정렬
+	public List<QuestionDTO> getListOrder(int start, int end,String order){
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("start", start);
+		params.put("end",end);
+		params.put("order",order);
+		
+
+		List<QuestionDTO> lists = 
+				sessionTemplate.selectList("questionMapper.getListsOrder",params);
+
+		return lists;
+	}
+	
+	public List<QuestionDTO> getListNotyet(int start, int end,String order){
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("start", start);
+		params.put("end", end);
+		params.put("order",order);
+		
+		List<QuestionDTO> lists = sessionTemplate.selectList("questionMapper.getListNotyet",params);
+		return lists;
+		
+	}
+	
+	//답변달리지않은 갯수 가져옴
+	public int countNotyet(){
+			
+		int count = 0;
+			
+		count=sessionTemplate.selectOne("questionMapper.countNotyet");
+		
+		return count;
+		
+	}
+
 	//회원프로필 정보
 	public MemberDTO getUserInfo(String userId){
 		MemberDTO dto = sessionTemplate.selectOne("questionMapper.getUserInfo",userId);
@@ -77,6 +117,47 @@ public class QuestionDAO {
 	//게시글 조회
 	public QuestionDTO getReadOne(int qNum){
 		return sessionTemplate.selectOne("questionMapper.getOne", qNum);	
+	}
+	
+	//글 수정 
+	public void updateData(QuestionDTO dto){
+		sessionTemplate.update("questionMapper.updateData",dto);	
+	}
+	
+	//글 삭제 
+	public void deleteData(QuestionDTO dto){	
+		sessionTemplate.update("questionMapper.deleteData",dto);
+	}
+	
+	//작성자 팔로우 여부 확인
+	public int followCheck(String followerId, String followingId) {
+		HashMap<String, Object> hMap = new HashMap<String, Object>();
+		hMap.put("MyId", followerId);
+		hMap.put("MyFriendId", followingId);	
+		
+		return sessionTemplate.selectOne("questionMapper.followCheck", hMap);	
+	}
+	
+	//follow
+	public void insertFollow(String myId,String myFriendId){
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("myId", myId);
+		params.put("myFriendId",myFriendId);
+		
+		sessionTemplate.insert("questionMapper.insertFollow",params);
+		
+	}
+	
+	//follow
+	public void deleteFollow(String myId,String myFriendId){
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("myId", myId);
+		params.put("myFriendId",myFriendId);
+		
+		sessionTemplate.insert("questionMapper.deleteFollow",params);
+		
 	}
 	
 	//댓글

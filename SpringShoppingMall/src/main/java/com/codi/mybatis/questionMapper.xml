@@ -32,6 +32,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>
 </select>
 
+<!-- select order에 맞게 -->
+<select id="getListsOrder" parameterType="hashMap" resultType="com.codi.dto.QuestionDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select qNum,qSubject,qContent,A.userId,originalName,saveFileName,qDate,qHitCount,qHashTag,mImage
+	,(select count(*) from QREPLY C where C.qnum=A.qnum) replyCount
+	from questionBoard A,member B where A.userId=B.userId order by ${order})data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- 답변을 기다리는 게시글 select -->
+<select id="getListNotyet" parameterType="hashMap" resultType="com.codi.dto.QuestionDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select * from questionBoard where qnum
+	not in (select distinct qNum from qreply) order by ${order})data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- 답변 기다리는 게시글 count -->
+<select id="countNotyet" resultType="int">
+	select nvl(count(*),0) from questionBoard where 
+	qnum not in (select distinct qNum from qreply)
+</select>
+
 <!-- 사용자 정보 -->
 <select id="getUserInfo" parameterType="String" resultType="com.codi.dto.MemberDTO">
 	select userId,mImage,mMessage from member where userId=#{userId}
@@ -44,9 +73,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- QnA 상세페이지 -->
 <select id="getOne" parameterType="int" resultType="com.codi.dto.QuestionDTO">
-	select qNum,qSubject,qContent,A.userId,originalName,saveFileName,to_char(qDate,'YYYY/MM/DD') qDate,qHitCount,qHashTag,mImage
+	select qNum,qSubject,qContent,A.userId,originalName,saveFileName,qDate,qHitCount,qHashTag,mImage
 	from questionBoard A,member B where qNum=#{qNum} and A.userId=B.userId
 </select>
+
+<!-- 글 수정 -->
+<update id="updateData" parameterType="com.codi.dto.QuestionDTO">
+	update questionBoard set qSubject=#{qSubject},qContent=#{qContent},qHashTag=#{qHashTag} 
+	where qNum=#{qNum}
+</update>
+
+<!-- 글 삭제 -->
+<delete id="deleteData" parameterType="int">
+	delete questionBoard where qNum=#{qNum}
+</delete>
+
+<!-- follow 정보 가져오기 -->
+<select id="followCheck" parameterType="HashMap" resultType="int" >
+	select count(*) from follow where MyId=#{MyId} and MyFriendId=#{MyFriendId} 
+</select>
+
+<insert id="insertFollow" parameterType="hashMap">
+	insert into follow(myId,myFriendId)
+	values (#{myId},#{myFriendId})
+</insert>
+
+<delete id="deleteFollow" parameterType="hashMap">
+	delete follow where myId=#{myId} and myFriendId=#{myFriendId}
+</delete>
 
 <!-- commentSQL -->
 <!-- 댓글 최대 번호 -->

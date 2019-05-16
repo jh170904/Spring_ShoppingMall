@@ -16,7 +16,23 @@ public class QuestionDTO {
 	
 	private ArrayList<String> qHash;//hashtag 끊어서 여기에 List로 저장
 	private String mImage;
+	private int replyCount;
+	
+	private String mode;
+	
 
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
+	public String getMode() {
+		return mode;
+	}
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
 	public ArrayList<String> getqHash() {
 		return qHash;
 	}

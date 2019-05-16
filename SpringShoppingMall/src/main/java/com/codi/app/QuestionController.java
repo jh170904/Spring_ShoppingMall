@@ -2,12 +2,14 @@ package com.codi.app;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,6 +54,7 @@ public class QuestionController {
 		//MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		String cp = request.getContextPath();
 		String pageNum = request.getParameter("pageNum");
+		String status=request.getParameter("status");
 
 		int currentPage = 1;
 
@@ -60,7 +63,7 @@ public class QuestionController {
 
 		int dataCount = dao.getDataCount();
 
-		int numPerPage = 3;
+		int numPerPage = 5;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
 
 		if (currentPage > totalPage)
@@ -95,15 +98,37 @@ public class QuestionController {
 
 		}
 
-		//MemberDTO memberInfo = dao.getUserInfo(info.getUserId());
-
 		// 페이징을 위한 값들 보내주기
 		String listUrl = cp + "/qna/questionMain.action";
 
-		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		//String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
+		String order = request.getParameter("order");
+		if (order != null) {
+			order = URLDecoder.decode(order, "UTF-8");
+		}else {
+			order="qNum desc";
+		}
+		
+		String pageIndexList=null;
+		String notyet="";
+		
+		if(status==null) {
+			lists = dao.getListOrder(start, end, order);
+		}
+		else {
+			totalPage=myUtil.getPageCount(numPerPage, dao.countNotyet());
+			lists = dao.getListNotyet(start, end, order);
+			listUrl = cp + "/qna/questionMain.action";
+			notyet="status=notyet";
+		}
+
+		
+		pageIndexList = myUtil.listPageIndexList(currentPage, totalPage, listUrl, order);
+
 	
 		request.setAttribute("listUrl", listUrl);
+		request.setAttribute("notyet", notyet);
 		request.setAttribute("imagePath", "../upload/qna");
 		request.setAttribute("memberPath", "../upload/profile");
 		//request.setAttribute("memberInfo", memberInfo);
@@ -115,12 +140,25 @@ public class QuestionController {
 
 		return "question/questionMain";
 	}
+	
+	
 
 	//글 작성하기
 	@RequestMapping(value = "/ques/questionCreated.action", method = {RequestMethod.POST, RequestMethod.GET})
-	public String questionCreated() throws IOException{
-
+	public String questionCreated(QuestionDTO dto,HttpServletRequest request) throws IOException{
+		
+		if(dto==null||dto.getMode()==null||dto.getMode().equals("")){
+			
+			request.setAttribute("mode", "created");
+			
+		}else {
+			request.setAttribute("mode", "updated");
+			request.setAttribute("dto",dto);
+		}
+		
 		return "question/questionCreated";
+
+		
 	}
 
 	@RequestMapping(value = "/ques/questionCreated_ok.action", method = {RequestMethod.POST, RequestMethod.GET})
@@ -210,6 +248,14 @@ public class QuestionController {
 			System.out.println(hash);
 		}
 		*/
+		
+		int cnt=0;
+		//follow체크
+		if(info!=null) {
+			cnt=dao.followCheck(info.getUserId(),dto.getUserId());
+		}
+		
+		request.setAttribute("cnt", cnt);
 		request.setAttribute("dto", dto);
 		request.setAttribute("hashArray", hash);
 		request.setAttribute("imagePath", "../upload/qna");
@@ -217,6 +263,71 @@ public class QuestionController {
 		request.setAttribute("loginUserInfo",loginUserInfo);
 
 		return "question/questionArticle";
+	}
+	
+
+	@RequestMapping(value = "/qna/follow.ajax", method = {RequestMethod.POST, RequestMethod.GET})
+	@ResponseBody
+    public Map<Object, Object> follow(HttpServletRequest request,HttpSession session,String userid) throws IOException{
+        
+        int count=0;
+        String str="";
+        Map<Object, Object> map = new HashMap<Object, Object>();
+ 
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		//System.out.println(info.getUserId());
+		//System.out.println(userid);
+		
+        count =dao.followCheck(info.getUserId(),userid);
+        
+        if(count==0) {
+    		dao.insertFollow(info.getUserId(), userid);
+    		str="팔로잉 취소";
+        }
+        else {
+        	dao.deleteFollow(info.getUserId(), userid);
+        	str="팔로우";
+        }
+        
+        map.put("str", str);
+
+        
+        return map;
+    }
+	
+	@RequestMapping(value = "/qna/updated.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String updated(QuestionDTO dto,HttpServletRequest request) throws IOException{
+		
+		int qNum=Integer.parseInt(request.getParameter("qNum"));
+		//수정창이 뜸
+		if(dto==null||dto.getMode()==null||dto.getMode().equals("")){
+		
+			dto= dao.getReadOne(qNum);
+			
+			if(dto==null)
+				return "read-error";
+			
+			//request.setAttribute("pageNum", pageNum);
+			request.setAttribute("mode", "updated");
+			request.setAttribute("dto",dto);
+			
+			return "question/questionCreated";
+		}
+		
+		//수정한 내용 update
+		dao.updateData(dto);
+		
+		//request.setAttribute("qNum", dto.getqNum());
+		
+		return "redirect:/qna/questionAticle.action?qNum="+dto.getqNum();
+	}
+	
+	@RequestMapping(value = "/qna/deleted.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String deleted(QuestionDTO dto,HttpServletRequest request) throws IOException{
+		
+		dao.deleteData(dto);
+		
+		return "redirect:/qna/questionMain.action";
 	}
 
 

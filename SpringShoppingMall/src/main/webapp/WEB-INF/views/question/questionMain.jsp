@@ -14,7 +14,15 @@
 					<dt class="filter-select__header__name">
 						정렬<span class="icon icon-pointer-angle-down-dark-sm"></span>
 					</dt>
-					<dd class="filter-select__header__value">최신순</dd>
+					<dd class="filter-select__header__value">
+					
+						<select id="order" name="order" style="width: 100px;">
+							<option onclick="javascript:location.href='${listUrl}?order=qNum desc&${notyet }';">최신순</option>
+							<option onclick="javascript:location.href='${listUrl}?order=qHitCount desc&${notyet }';">인기순</option>
+						</select>
+					
+					</dd>
+					
 				</dl>
 				<ul class="filter-select__list">
 					<li class="filter-select__list__entry "><a
@@ -26,7 +34,9 @@
 		</div>
 		<div class="questions-filter__actions">
 			<a class="set-reply btn btn-normal btn-sm"
-				href="/questions?page=1&amp;reply=not_yet"> 답변을 기다리는 질문 </a> <a
+				href="<%=cp%>/qna/questionMain.action"> 전체 게시글 보기 </a>
+			<a class="set-reply btn btn-normal btn-sm"
+				href="<%=cp%>/qna/questionMain.action?status=notyet"> 답변을 기다리는 질문 </a> <a
 				class="questions-filter__actions__new-question btn btn-priority btn-sm"
 				href="<%=cp%>/ques/questionCreated.action">질문하기</a>
 		</div>
@@ -60,7 +70,12 @@
 				</span> <span class="questions-item__footer__meta text-caption-1"> <time
 						datetime="${dto.qDate}"
 						class="questions-item__footer__date text-gray"> ${dto.qDate } </time>
-						
+						<span class="questions-item__footer__comments text-gray">
+		                답글
+		                <span class="questions-item__footer__comments__content ">
+		                 ${dto.replyCount }
+		                </span>
+		              	</span>
 						<span class="questions-item__footer__views text-gray"> 조회 <span
 						class="questions-item__footer__views__content">${dto.qHitCount }</span>
 				</span>

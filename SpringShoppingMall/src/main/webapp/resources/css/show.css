@@ -73,7 +73,7 @@
 .page-2col__sidebar {
 	position: relative;
 	display: none;
-	width: 280px;
+	width: 330px;
 	border-left: 1px solid #ededed;
 	margin-left: 40px;
 	padding-left: 40px
@@ -466,7 +466,7 @@
 }
 
 .question__author__follow__button {
-	width: 50px;
+	width: 100px;
 	text-align: center
 }
 
