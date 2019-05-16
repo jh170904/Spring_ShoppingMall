@@ -192,10 +192,10 @@
 				<%
 					if(flag<4){
 				%>
-				<div style="position: absolute; left: 15px; top: 0px;">
-					<img src="../resources/image/commuImage/flag.png" width="30px" height="35px">
+				<div style="position: absolute; top: 0px;">
+					<img src="../resources/image/commuImage/gold-medal.png" width="50px" height="55px">
 				</div>
-				<div style="position: absolute; left: 26px; top: 6px; font-size: 17px; font-weight: bolder; color: #ffffff">
+				<div style="position: absolute; left: 21px; top: 25px; font-size: 17px; font-weight: bolder; color: #000000">
 					<%=flag %>
 				</div>
 				<% }%>

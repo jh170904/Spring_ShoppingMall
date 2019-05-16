@@ -73,7 +73,7 @@ $(function(){
 
 	<div class="page_title_area">
 		<div class="page_title">
-			<h1 class="h_title page">BEST</h1>
+			<h1 class="h_title page">CODIBEST</h1>
 			<p class="text font_lg"></p>
 		</div>
 	</div>

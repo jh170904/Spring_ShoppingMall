@@ -363,6 +363,86 @@ public class ProductController {
 		return "list/listBest";
 	}
 
+	@RequestMapping(value = "pr/listCodiBest.action", method = RequestMethod.GET)
+	public String listCodiBest(HttpServletRequest req,HttpSession session) throws IOException {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo"); 
+
+		List<String> good = null;
+
+
+		if(info!=null) {
+			good = dao.storeHeartList(info.getUserId());
+		}
+		
+		String cp = req.getContextPath();
+
+		String pageNum = req.getParameter("pageNum");
+
+		int currentPage = 1;
+
+		if (pageNum != null)
+			currentPage = Integer.parseInt(pageNum);
+
+		int dataCount = dao.getDataCount();
+
+		int numPerPage = 12;
+		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+
+		if (currentPage > totalPage)
+			currentPage = totalPage;
+
+		int start = (currentPage - 1) * numPerPage + 1;
+		int end = currentPage * numPerPage;
+
+		List<ProductDTO> lists;
+
+		lists = dao.getListOrder(start, end, "codiCount desc");
+		
+		
+
+		//각각의 dto에 reviewCount 와 reviewRate 추가
+		
+		ListIterator<ProductDTO> it = lists.listIterator();
+		
+		while(it.hasNext()){
+			ProductDTO vo = (ProductDTO)it.next();
+			
+			//dao.getReviewCount(vo.productId)
+			int reviewCount =  reviewDAO.getProductDataCount(vo.getSuperProduct());
+			//dao.getReviewRate(vo.productId)
+			float avgReviewRate = reviewDAO.productGetList_heart(vo.getSuperProduct());
+			
+			vo.setReviewCount(reviewCount);
+			vo.setReviewRate(avgReviewRate);
+		}
+		
+		
+		
+
+		// 이미지저장 경로 보내주기
+		String imagePath = req.getSession().getServletContext().getRealPath("/upload");
+
+		// String imagePath =
+		// req.getSession().getServletContext().getRealPath("/WEB-INF/files");
+
+		// 페이징을 위한 값들 보내주기
+		String listUrl = cp + "/pr/listCodiBest.action";
+
+		String pageIndexList = myUtil.listPageIndexList(currentPage, totalPage, listUrl, "codiCount desc");
+
+		req.setAttribute("good", good);
+		req.setAttribute("listUrl", listUrl);
+		req.setAttribute("imagePath", imagePath);
+		req.setAttribute("lists", lists);
+		req.setAttribute("pageIndexList", pageIndexList);
+		req.setAttribute("dataCount", dataCount);
+		req.setAttribute("totalPage", totalPage);
+		req.setAttribute("pageNum", pageNum);
+
+		return "list/listCodiBest";
+	}
+	
 	@RequestMapping(value = "/pr/listSearch.action", method = RequestMethod.GET)
 	public String listSearch(String searchHeader, HttpServletRequest req,HttpSession session) throws IOException {
 		
