@@ -411,8 +411,8 @@ tr {
 				<div class="prd_detail_default">
 
 					<div class="prd_img_wrap">
-						<div class="slide goods_slide ix-slide-max-apply">
-							<img style="width: 100%; height: 100%; border-radius: 20px;" alt="${dto.originalName}" src="../upload/list/${dto.saveFileName }">
+						<div class="slide goods_slide ix-slide-max-apply" style="text-align: center;">
+							<img style="height: 500px; border-radius: 20px;" alt="${dto.originalName}" src="../upload/list/${dto.saveFileName }">
 						</div>
 					</div>
 
