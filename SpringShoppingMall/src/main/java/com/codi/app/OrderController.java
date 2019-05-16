@@ -2,6 +2,7 @@ package com.codi.app;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
@@ -21,10 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.codi.dao.CouponDAO;
 import com.codi.dao.OrderDAO;
 import com.codi.dto.AdminPaymentDTO;
+import com.codi.dto.CouponDTO;
 import com.codi.dto.DestinationDTO;
 import com.codi.dto.MemberDTO;
+import com.codi.dto.MyCouponDTO;
 import com.codi.dto.OrderDTO;
 import com.codi.dto.OrderListDTO;
 import com.codi.dto.ProductDetailDTO;
@@ -37,6 +41,10 @@ public class OrderController {
 	@Autowired
 	@Qualifier("orderDAO")
 	OrderDAO dao;
+
+	@Autowired
+	@Qualifier("couponDAO")//Bean 객체 생성 
+	CouponDAO couponDAO;
 	
 	@Autowired
 	MyUtil myUtil;
@@ -67,12 +75,10 @@ public class OrderController {
 			totalAmount += dto.getAmount();
 		}
 		
-		/*
-		//만표쿠폰 변경하기---------------------------------------------------------------------------
-		List<MyCouponDTO> lists = dao2.couponGetLists(info.getUserId());
 		
-
-
+		//만표쿠폰 변경하기---------------------------------------------------------------------------
+		List<MyCouponDTO> lists = couponDAO.couponGetList(info.getUserId());
+		
 		//날짜비교
 		SimpleDateFormat dateFormat = new  SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
 		long now = System.currentTimeMillis();
@@ -108,13 +114,11 @@ public class OrderController {
 	        boolean re = date1.after(date2);
 	        
 	        if(re!=true){
-	        	dao2.couponInsertM(dto.getCouponKey(),info.getUserId());
+	        	couponDAO.couponInsertM(dto.getCouponKey(),info.getUserId());
 	        }
         }
 		
-		//사용 가능한 쿠폰 정보 가져오기
-		List<CouponDTO> couponList = dao.getUserCoupon(info.getUserId(), totalPrice);
-		*/
+		List<MyCouponDTO> couponLists = couponDAO.canUseCoupon(info.getUserId());
 		
 		String imagePath = "../upload/list";
 		int deliveryFee = 2500;
@@ -127,6 +131,7 @@ public class OrderController {
 		request.setAttribute("memberPoint", memberPoint);
 		request.setAttribute("imagePath", imagePath);
 		request.setAttribute("deliveryFee", deliveryFee);
+		request.setAttribute("couponLists", couponLists);
 				
 		return "order/reception";
 	}
@@ -224,6 +229,9 @@ public class OrderController {
 		request.setAttribute("totalPoint", totalPoint);
 		request.setAttribute("discount", discount);
 		
+		//사용쿠폰 변경
+		couponDAO.usedCounpon(Integer.parseInt(request.getParameter("useCouponKey")),info.getUserId());
+		
 		if(order_payment.equals("without_bankbook")) {
 			
 			redirectAttributes.addAttribute("mode","without_bankbook");
@@ -235,7 +243,8 @@ public class OrderController {
 			redirectAttributes.addAttribute("orderNum",orderNum);
 			redirectAttributes.addAttribute("eMail",userEmail);
 			redirectAttributes.addAttribute("destPhone",destPhone);
-			redirectAttributes.addAttribute("price",totalOrderPrice);
+			redirectAttributes.addAttribute("totalPrice",totalOrderPrice);
+			redirectAttributes.addAttribute("totalPoint",totalPoint);
 			redirectAttributes.addAttribute("discount",discount);
 
 			return "redirect:/order/orderComplete.action";

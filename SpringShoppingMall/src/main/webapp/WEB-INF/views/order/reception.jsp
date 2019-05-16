@@ -101,11 +101,7 @@
 			 document.orderForm.target = "pay";
 			 document.orderForm.action = "<%=cp%>/order/payReq.action";
 			 document.orderForm.submit();			 
-		}
-		
-		
-		
-		
+		}	
 
 	}
 	
@@ -164,29 +160,24 @@
 	}
 		
     function closeCoupon() {
-        // iframe을 넣은 element를 안보이게 한다.
-        document.getElementById('layer').style.display = 'none';
+        document.getElementById('couponLayer').style.display = 'none';
     }
-    
-    function couponLayer() {
+
+	function openCoupon(){
+		
+		document.getElementById('couponLayer').style.display = 'block';
+		
+        var width = 500; 
+        var height = 700; 
+        var borderWidth = 1;
+
+        document.getElementById('couponLayer').style.width = width + 'px';
+        document.getElementById('couponLayer').style.height = height + 'px';
+        document.getElementById('couponLayer').style.border = borderWidth + 'px solid';
         
-        document.getElementById('layer').style.display = 'block';
-        // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
-        initLayerPosition();
-    }
+        document.getElementById('couponLayer').style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
+        document.getElementById('couponLayer').style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px'; 
 
-	function initLayerPosition(){
-        var width = 500; //우편번호서비스가 들어갈 element의 width
-        var height = 700; //우편번호서비스가 들어갈 element의 height
-        var borderWidth = 1; //샘플에서 사용하는 border의 두께
-
-        // 위에서 선언한 값들을 실제 element에 넣는다.
-        document.getElementById('layer').style.width = width + 'px';
-        document.getElementById('layer').style.height = height + 'px';
-        document.getElementById('layer').style.border = borderWidth + 'px solid';
-        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
-        document.getElementById('layer').style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
-        document.getElementById('layer').style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px'; 
     }
 	
 	function couponUse(price,name,key){
@@ -195,7 +186,7 @@
 		var couponName = name;
 		var couponKey = key;
 		
-		document.getElementById('layer').style.display = 'none';
+		document.getElementById('couponLayer').style.display = 'none';
 		document.orderForm.couponDiscount.value = couponPrice;
 		
 		var total1 = ${totalPrice} + ${deliveryFee} - point - couponPrice ;
@@ -214,30 +205,26 @@
 	
 	//배송지 정보 조회
 	function destClose() {
-        // iframe을 넣은 element를 안보이게 한다.
         document.getElementById('destLayer').style.display = 'none';
     }
     
     function destLayer() {
         
         document.getElementById('destLayer').style.display = 'block';
-        // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
-        var width = 700; //우편번호서비스가 들어갈 element의 width
-        var height = 700; //우편번호서비스가 들어갈 element의 height
-        var borderWidth = 1; //샘플에서 사용하는 border의 두께
+        var width = 700;
+        var height = 700;
+        var borderWidth = 1; 
 
-        // 위에서 선언한 값들을 실제 element에 넣는다.
         document.getElementById('destLayer').style.width = width + 'px';
         document.getElementById('destLayer').style.height = height + 'px';
         document.getElementById('destLayer').style.border = borderWidth + 'px solid';
-        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+        
         document.getElementById('destLayer').style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
         document.getElementById('destLayer').style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px'; 
     }
 
 	
-	function destUse(destName,destPhone,zip,addr1,addr2,addrKey){
-		
+	function destUse(destName,destPhone,zip,addr1,addr2,addrKey){	
 		
 		document.getElementById('destLayer').style.display = 'none';
 		
@@ -363,7 +350,7 @@
 </div>
 
 <!-- 쿠폰 페이지 -->
-<div id="layer" style="display:none;position:fixed; overflow:hidden;z-index:3;-webkit-overflow-scrolling:touch; background-color: #ffffff;">
+<div id="couponLayer" style="display:none;position:fixed; overflow:hidden;z-index:3;-webkit-overflow-scrolling:touch; background-color: #ffffff;">
 <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeCoupon()" alt="닫기 버튼">
 
 <table class="ui_table_striped data_table thead_colored align_center @table-striped-apply" id="shpiTable">
@@ -383,14 +370,14 @@
 	</thread>
 	
 	<tbody id="paging">
-	<c:forEach var="couponDto" items="${couponList }">
+	<c:forEach var="couponDto" items="${couponLists }">
 		<tr>
 			<td>
-				<button type="button" class="btn_sm_neutral" id="b_mobileVoucher" name="${couponDto.couponKey }" value="${couponDto.couponKey }" 
+				<button type="button" class="btn_sm_neutral" name="${couponDto.couponKey }" value="${couponDto.couponKey }" 
 					onclick="couponUse('${couponDto.discount}','${couponDto.couponName }','${couponDto.couponKey }');">사용</button>
 			</td>
 			<td>${couponDto.couponName }</td>
-			<td><font color="#f54a7e">${couponDto.discount}원 할인</font></td>
+			<td><font color="#8080ff">${couponDto.discount}원 할인</font></td>
 		</tr>
 	</c:forEach>
 	</tbody>
@@ -561,7 +548,7 @@
 										<input type="text" readonly="readonly" style="text-align: right; background-color: #ffffff; border:0" name="couponName" value="">
 										&nbsp;&nbsp;&nbsp;
 									</span>
-									<button type="button" class="btn_sm_neutral" id="b_mobileVoucher" onclick="couponLayer();">쿠폰조회</button>
+									<button type="button" class="btn_sm_neutral" onclick="openCoupon();">쿠폰조회</button>
 								</td>
 							</tr>
 							<tr>
@@ -572,7 +559,7 @@
 									</span>
 									<b>P</b>
 									<span>/보유 ${memberPoint }P</span>
-									<button type="button" class="btn_sm_neutral" id="b_mobileVoucher" onclick="addPoind();">적용하기</button>
+									<button type="button" class="btn_sm_neutral" onclick="addPoind();">적용하기</button>
 									<button type="button" class="btn_sm_neutral" onclick="removePoind();">적용취소</button>
 								</td>
 							</tr>
@@ -588,24 +575,6 @@
 			</dd>
 		</dl>
 
-<!-- 
-						<table style="border: 1px solid #cacaca; width: 1118px;" class="panel_cont">
-							<tr>
-								<td style="padding: 40px; border-bottom: 1px dotted #cacaca"><b>모바일 상품권</b></td>
-								<td style="padding: 40px; border-bottom: 1px dotted #cacaca" align="right">
-									<span class="price">0원</span>
-									<button type="button" class="btn_sm_neutral" id="b_mobileVoucher">등록/사용</button>
-								</td>
-							</tr>
-							<tr>
-								<td style="padding: 40px;"><b>PINK MONEY</b></td>
-								<td style="padding: 40px;" align="right">
-									<span class="price">0원</span>
-									<button type="button" class="btn_sm_neutral" id="b_mobileVoucher">조회</button>
-								</td>
-							</tr>
-						</table>
- -->
 		<dl>
 			<dt> 
 				<span>결제수단 선택</span>

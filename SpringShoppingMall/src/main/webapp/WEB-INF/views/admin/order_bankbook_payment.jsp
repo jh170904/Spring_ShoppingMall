@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@include file="../layout/top.jsp"  %>
+<%@include file="../layout/adminNav.jsp"  %>
 
 <script>
 	function showOrder(order) {

@@ -95,4 +95,23 @@ public class CouponDAO {
 		
 		sessionTemplate.update("couponMapper.couponInsertM",params);
 	}
+	
+	public void usedCounpon(int couponKey,String userId){
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("couponKey", couponKey);
+		params.put("userId",userId);
+		
+		sessionTemplate.update("couponMapper.usedCounpon",params);
+	}
+	
+	public List<MyCouponDTO> canUseCoupon(String userId){
+
+		List<MyCouponDTO> lists = 
+				sessionTemplate.selectList("couponMapper.canUseCoupon",userId);
+
+		return lists;
+	}
+	
 }
