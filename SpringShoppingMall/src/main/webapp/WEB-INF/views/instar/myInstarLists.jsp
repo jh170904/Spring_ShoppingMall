@@ -158,8 +158,11 @@
 	%>
 	<dd style="display: inline-block; margin-right: 5px; margin-bottom: 30px;">
 	<a href="<%=cp%>/pr/codiDetailList.action?iNum=${dto.iNum}">
-		<img alt="" src="${imagePath }/${dto.iImage}.png" width="240" height="210" style="border:1px solid #d4d4d4; border-radius: 7px;"><br/>
-		<p align="left" style="font-size: 15px; margin-top: 5px;">${dto.iSubject }</p>
+		<img alt="" src="${imagePath }/${dto.iImage}.png" width="240" height="220" style="border:1px solid #d4d4d4; border-radius: 7px;"><br/>
+		<p align="left" style="display:inline-block; font-size: 15px; width: 210px; margin-top: 8px; height:23px; overflow: hidden; ">${dto.iSubject }</p>
+	</a>
+	<a href="<%=cp%>/codi/deleteBoard.action?iNum=${dto.iNum}" style="display:inline; ">
+		<img src="../resources/image/delete.png" style="vertical-align: top; width: 22px; margin-top: 5px;" />
 	</a>
 	</dd>
 

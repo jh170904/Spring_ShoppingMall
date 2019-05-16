@@ -95,7 +95,8 @@ $(function(){
 			<table style="width: 1200">
 				<c:set var="i" value="0" />
 				
-				<%int cnt = 0; int flag = 1;%>
+				<%int cnt = 0;%>
+				<c:set var="flag" value="1" />
 				
 				<!-- list 출력 -->
 				<c:forEach var="dto" items="${lists }">
@@ -110,16 +111,14 @@ $(function(){
 						<table>
 							<tr>
 								<td style="position: relative;">
-									<%
-										if(flag<4){
-									%>
-									<div style="position: absolute;">
-										<img src="../resources/image/commuImage/gold-medal.png" width="50px" height="55px">
-									</div>
-									<div style="position: absolute; left: 21px; top: 25px; font-size: 17px; font-weight: bolder; color: #000000">
-										<%=flag %>
-									</div>
-									<% }%>
+									<c:if test="${flag<4 && (empty pageNum || pageNum==1)}">
+										<div style="position: absolute;">
+											<img src="../resources/image/commuImage/gold-medal.png" width="50px" height="55px">
+										</div>
+										<div style="position: absolute; left: 21px; top: 25px; font-size: 17px; font-weight: bolder; color: #000000">
+											${flag}
+										</div>
+									</c:if>
 									<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">
 										<img style="max-width: 250px;" src="../upload/list/${dto.originalName}" />
 									</a>
@@ -180,8 +179,10 @@ $(function(){
 						<c:set var="i" value="0" />
 					</c:if>
 					
-					<%cnt++; flag++;%>
-						
+					<%cnt++; %>
+					
+					<c:set var="flag" value="${flag+1 }" />
+					
 					<%
 						if (cnt == 4) {
 							out.print("</dl>");

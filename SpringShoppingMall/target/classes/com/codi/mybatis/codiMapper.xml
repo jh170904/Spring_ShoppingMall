@@ -46,4 +46,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select nvl(max(inum),0) from codiList
 </select>
 
+<select id="getCodiCount" parameterType="String" resultType="int">
+	select codiCount from product where productId=#{productId}
+</select>
+
+<update id="updateCodiCount" parameterType="hashMap">
+	update product set codiCount = #{codiCount} where productId = #{productId}
+</update>
+
+<delete id="deleteBoard" parameterType="int">
+	delete codiList where iNum=#{iNum}
+</delete>
+
+<select id="getiImage" parameterType="int" resultType="String">
+	select iImage from codiList where iNum=#{iNum}
+</select>
+
+<select id="getProductList" parameterType="int" resultType="String">
+	select productid from codiList where iNum=#{iNum}
+</select>
+
 </mapper>

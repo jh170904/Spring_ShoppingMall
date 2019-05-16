@@ -1,5 +1,6 @@
 package com.codi.app;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -154,14 +155,13 @@ public class CodiController {
 	@RequestMapping(value = "/codi/insertBoard.action", method = {RequestMethod.POST, RequestMethod.GET})
 	public String insertBoard(HttpServletRequest request,HttpSession session,String str,RedirectAttributes redirectAttributes) throws Exception{
 		
-		// , 로 구분
-		/*String[] array = str.split(",");
+		
+		String[] array = str.split(",");
 	
 		for(int i=0;i<array.length;i++) {
-			System.out.println(array[i]);
-		
-			dao.insertCodi(bnum+1, array[i]);
-		}*/
+			int codiCount = dao.getCodiCount(array[i]);
+			dao.updateCodiCount(array[i],codiCount+1);
+		}
 
 		MemberDTO info = (MemberDTO)session.getAttribute("customInfo"); 
 		
@@ -179,5 +179,37 @@ public class CodiController {
 		return "redirect:/myPage/instarWrited.action";
 	}
 	
+	@RequestMapping(value = "/codi/deleteBoard.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String deleteBoard(HttpServletRequest request,HttpSession session,int iNum,RedirectAttributes redirectAttributes) throws Exception{
+
+		String pageNum = request.getParameter("pageNum");
+		String path = request.getSession().getServletContext().getRealPath("/upload/makecodi");
+
+		//폴더에서 삭제
+		String deleteImage = dao.getiImage(iNum);
+		
+		String deleteFile = path +"\\"+ deleteImage+".png";
+		System.out.println(deleteFile);
+		File deletefile = new File(deleteFile);
+        deletefile.delete();
+
+		//codiCount-1		
+        String productList = dao.getProductList(iNum);
+        
+        String[] array = productList.split(",");
+	
+		for(int i=0;i<array.length;i++) {
+			int codiCount = dao.getCodiCount(array[i]);
+			dao.updateCodiCount(array[i],codiCount-1);
+		}
+		
+		//DB에서 삭제
+		dao.deleteBoard(iNum);
+		
+		
+		redirectAttributes.addAttribute("pageNum",pageNum);
+		
+		return "redirect:/myPage/myInstarLists.action";
+	}
 
 }

@@ -27,6 +27,7 @@ public class CodiDAO {
 		return result;
 	}
 	
+	
 	public int getDataCountSel(String category){
 		int result = 0;
 
@@ -82,4 +83,41 @@ public class CodiDAO {
 	}
 	
 
+	public int getCodiCount(String productId){
+		int result = 0;
+
+		result = sessionTemplate.selectOne("codiMapper.getCodiCount",productId);
+
+		return result;
+	}
+	
+	public void updateCodiCount(String productId,int codiCount){
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("productId", productId);
+		params.put("codiCount",codiCount);
+		
+
+		sessionTemplate.update("codiMapper.updateCodiCount",params);
+	}
+	
+	public void deleteBoard(int iNum) {
+		sessionTemplate.delete("codiMapper.deleteBoard",iNum);
+	}
+	
+	public String getiImage(int iNum){
+		
+		String iImage=sessionTemplate.selectOne("codiMapper.getiImage",iNum);
+		
+		return iImage;
+	}
+	
+	public String getProductList(int iNum){
+		
+		String productList = sessionTemplate.selectOne("codiMapper.getProductList",iNum);
+		
+		return productList;
+	}
+	
 }
