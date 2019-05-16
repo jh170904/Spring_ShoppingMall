@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.net.URLDecoder"%>
 <%@page import="com.codi.dto.MemberDTO"%>
 <%@page import="java.net.URLEncoder"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
@@ -231,7 +233,49 @@ button {
 	padding-right:10px;
 	padding-left: 10px;
 }
+
+.set_container .set:hover {
+    outline: 1px solid #8080ff;
+}
+
+.menu.selector :hover {
+    outline: 1px solid #8080ff;
+}
+
+#floating_create a {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#floating_create a img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+#floating_create {
+    border-radius: 50%;
+    border: none;
+    bottom: 24px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.3), 0 0 1px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.25), inset 0 -1px 0 rgba(0,0,0,.15);
+    cursor: pointer;
+    height: 60px;
+    position: relativeS;
+    transition-duration: .25s;
+    transition-property: background-color,box-shadow;
+    background: #8080ff;
+	right:0;
+	float: right;
+    width: 60px;
+}
+
 </style>
+
 
 <div class="codi_view" id="container">
 <div id="content_menu_container">
@@ -240,12 +284,27 @@ button {
 			<div class="menu"><strong>인기 스타일</strong> &nbsp;› &nbsp;</div>
 			<div class="menu selector">
 			<c:forEach var="item" items="${hashTagLists}" varStatus="status">
-				<c:url value="codiHashTagList.action" var="toURL">
+ 				<c:url value="codiHashTagList.action" var="toURL">
 		        	<c:param name="iHashtag" value="${item}"/>
 				</c:url>
 				<a class="tagger" href="${toURL}">#${item }</a>
-			</c:forEach>
+<%-- <%
+	ArrayList<String> hashTagLists = (ArrayList<String>)request.getAttribute("hashTagLists");
+	String encHashtag[] = new String[hashTagLists.size()];
+	
+	for(int i=0; i<hashTagLists.size();i++){
+		encHashtag[i] = URLEncoder.encode(hashTagLists.get(i), "UTF-8");
+		out.println("<a class='tagger' href='codiHashTagList.action?"+encHashtag[i]+"'>#"+hashTagLists.get(i)+"</a>");
+	}
+%>	 --%>
+ 			</c:forEach>
 			</div>
+				
+	<div id="floating_create">
+		<a href="<%=cp %>/codi/codicreated.action" data-hasqtip="0" title="로그인하시면 코디 만들기가 가능해요" aria-describedby="qtip-0">
+		<img src="https://s1.codibook.net/images/header/btn_editor.png" alt="코디 만들기">
+		</a>
+	</div>
 			<div class="clear_both"></div>
 		</div>
 	</div>
@@ -339,6 +398,7 @@ button {
 			${pageIndexList}
 		</div>
 	</div>
+
 </div>
 
 </div><!-- set_container end -->
