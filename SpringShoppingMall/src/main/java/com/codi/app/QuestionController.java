@@ -54,7 +54,11 @@ public class QuestionController {
 		//MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		String cp = request.getContextPath();
 		String pageNum = request.getParameter("pageNum");
+		//답변을 기다리는 게시글
 		String status=request.getParameter("status");
+		
+		//최신순,인기순 받아와서 selected로 고정
+		String orderStd=request.getParameter("orderStd");
 
 		int currentPage = 1;
 
@@ -76,8 +80,9 @@ public class QuestionController {
 		
 		//각각의 dto에 reviewCount 와 reviewRate 추가
 		ListIterator<QuestionDTO> it = lists.listIterator();
-		
+
 		while(it.hasNext()){
+
 			QuestionDTO vo = (QuestionDTO)it.next();
 			
 			//해시태그 잘라서 보내주기
@@ -92,11 +97,14 @@ public class QuestionController {
 				}
 				
 				hash.remove(0);//첫번째는 공백이라 삭제
+			
+				vo.setqHash(hash);
+				System.out.println(vo.getqHash());
+			
 			}
 			
-			vo.setqHash(hash);
-
 		}
+		
 
 		// 페이징을 위한 값들 보내주기
 		String listUrl = cp + "/qna/questionMain.action";
@@ -122,17 +130,16 @@ public class QuestionController {
 			listUrl = cp + "/qna/questionMain.action";
 			notyet="status=notyet";
 		}
-
 		
 		pageIndexList = myUtil.listPageIndexList(currentPage, totalPage, listUrl, order);
 
-	
 		request.setAttribute("listUrl", listUrl);
 		request.setAttribute("notyet", notyet);
+		request.setAttribute("orderStd", orderStd);
 		request.setAttribute("imagePath", "../upload/qna");
 		request.setAttribute("memberPath", "../upload/profile");
-		//request.setAttribute("memberInfo", memberInfo);
 		request.setAttribute("lists", lists);
+
 		request.setAttribute("pageIndexList", pageIndexList);
 		request.setAttribute("dataCount", dataCount);
 		request.setAttribute("totalPage", totalPage);

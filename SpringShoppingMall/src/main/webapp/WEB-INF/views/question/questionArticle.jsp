@@ -159,15 +159,25 @@ pre{
 			success:function(data){
 				 var html = "";
 				 var cCnt = data.length;
+				 
+				 var me="${sessionScope.customInfo.userId}";
+				 
 				 $.each(data, function(index, item){ 
 					 
-	            	  if(index!=(cCnt-1)){
+					 var writer=item.userId;
+					 
+	            	 if(index!=(cCnt-1)){
 	            		 html += "<div class='reply_content_wrapper'>"; 
 	            		 html += "<div class='pf'>"; 
 	            		 html += "<img src='<%=cp%>/upload/profile/" +item.mImage +"' width='30' height='30' style='border-radius: 50px;' >";
 	                     html += "<strong style='padding-left:10px;'>"+item.userId+"</strong>&nbsp;</div>";
 	                     html += "<pre>"+item.content +"</pre><span class='reply_content_wrapper_date'>("+item.replyDate+")";
-	                     html += "<a href='javascript:deleteReplyData("+item.replyNum+");'>&nbsp;삭제&nbsp;</a></span></div>";
+	                     
+	                     if(writer==me){
+	                      html += "<a href='javascript:deleteReplyData("+item.replyNum+");'>&nbsp;삭제&nbsp;</a>";
+	                     }
+	                     
+	                     html+="</span></div>";
 	            	  }else if(index==(cCnt-1)){
 	            		 html += "<span class='paging'>"+item.pageIndexList+"</span>";
 	            		 $(".totalReplyDataCount").val(item.totalReplyDataCount);
@@ -209,14 +219,25 @@ pre{
 	        success : function(data){
 	        	 var html = "";
 	             var cCnt = data.length;
+	             
+	             var me="${sessionScope.customInfo.userId}";
+	             
 	             $.each(data, function(index, item){
+	            	 
+	            	 var writer=item.userId;
+	            	 
 	            	 if(index!=(cCnt-1)){
 	            		 html += "<div class='reply_content_wrapper'>";
 	            		 html += "<div class='pf'>"; 
 	            		 html += "<img src='<%=cp%>/upload/profile/" +item.mImage +"' width='30' height='30' style='border-radius: 50px;' >";
 	                     html += "<strong style='padding-left:10px;'>"+item.userId+"</strong>&nbsp;</div>";
 	                     html += "<pre>"+item.content +"</pre><span class='reply_content_wrapper_date'>("+item.replyDate+")";
-	                     html += "<a href='javascript:deleteReplyData("+item.replyNum+");'>&nbsp;삭제&nbsp;</a></span></div>";
+	                     if(writer==me){
+	                      html += "<a href='javascript:deleteReplyData("+item.replyNum+");'>&nbsp;삭제&nbsp;</a>";
+	                     }
+	                     
+	                     html+="</span></div>";
+                     
 	            	 }else if(index==(cCnt-1)){
 	            		 html += "<span class='paging'>"+item.pageIndexList+"</span>";
 	            		 $(".totalReplyDataCount").val(item.totalReplyDataCount);
@@ -251,15 +272,25 @@ pre{
 			success:function(data){
 				 var html = "";
 				 var cCnt = data.length;
+				 
+				 var me="${sessionScope.customInfo.userId}";
+
 				 $.each(data, function(index, item){ 
 					 
+					 var writer=item.userId;
+
 	            	  if(index!=(cCnt-1)){
 	            		 html += "<div class='reply_content_wrapper'>";
 	            		 html += "<div class='pf'>"; 
 	            		 html += "<img src='<%=cp%>/upload/profile/" +item.mImage +"' width='30' height='30' style='border-radius: 50px;' >";
 	                     html += "<strong style='padding-left:10px;'>"+item.userId+"</strong>&nbsp;</div>";
 	                     html += "<pre>"+item.content +"</pre><span class='reply_content_wrapper_date'>("+item.replyDate+")";
-	                     html += "<a href='javascript:deleteReplyData("+item.replyNum+");'>&nbsp;삭제&nbsp;</a></span></div>";
+	                     
+	                    if(writer==me){
+	                     html += "<a href='javascript:deleteReplyData("+item.replyNum+");'>&nbsp;삭제&nbsp;</a>";
+	                    }
+	                     
+	                    html+="</span></div>";
 	            	  }else if(index==(cCnt-1)){
 	            		  html += "<span class='paging'>"+item.pageIndexList+"</span>";
 	            		 $(".totalReplyDataCount").val(item.totalReplyDataCount);
@@ -296,7 +327,7 @@ pre{
 	                $("#followButton").html(data.str);
 	                
 	            },
-	            beforeSend:showRequest,
+	            beforeSend:showRequest2,
 	            error : function(error) {
 	                alert("error : " + error);
 	            }
@@ -305,7 +336,7 @@ pre{
 		});
 	});
 	
-	function showRequest() {
+	function showRequest2() {
         
 		var chk='${sessionScope.customInfo.userId}';
 		
@@ -314,7 +345,7 @@ pre{
 			return false;
 		}
 		else if(chk=='${dto.userId}'){
-			alert("자기 자신입니다.")
+			alert("자기 자신은 팔로우할 수 없습니다.")
 			return false;
 		}
 	}
