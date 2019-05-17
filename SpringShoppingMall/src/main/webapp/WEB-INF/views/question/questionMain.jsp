@@ -2,7 +2,32 @@
 
 <%@include file="../layout/commuNav.jsp"%>
 
+<style>
+select {
+border: 1px solid #999;
+font-family: inherit;
+background: url('<%=cp%>/resources/images/question/arrow.jpg') no-repeat 95% 50%;
+border-radius: 0px;
+}
+</style>
+
 <link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/bucket.css?ver=2">
+<script type="text/javascript" src="<%=cp%>/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+$(function(){
+	
+	var orderStd='${orderStd}';
+	if(orderStd=='hit'){
+		$("#selectBox").val("인기순").prop("selected", true);
+	}
+	else{
+		$("#selectBox").val("최신순").prop("selected", true);
+	}
+	
+}); 
+</script>
+
 
 <div class="questions-filter__float sticky-content open"
 	data-sticky-enabled="false" style="position: relative;" data-offset="131.979166">
@@ -15,21 +40,13 @@
 						정렬<span class="icon icon-pointer-angle-down-dark-sm"></span>
 					</dt>
 					<dd class="filter-select__header__value">
-					
-						<select id="order" name="order" style="width: 100px;">
-							<option onclick="javascript:location.href='${listUrl}?order=qNum desc&${notyet }';">최신순</option>
-							<option onclick="javascript:location.href='${listUrl}?order=qHitCount desc&${notyet }';">인기순</option>
+						<select id="selectBox" name="selectBox" style="width: 100px;">
+							<option onclick="javascript:location.href='${listUrl}?order=qNum desc&orderStd=new&${notyet }';" value="최신순">최신순</option>
+							<option onclick="javascript:location.href='${listUrl}?order=qHitCount desc&orderStd=hit&${notyet }';" value="인기순" >인기순</option>
 						</select>
-					
 					</dd>
 					
 				</dl>
-				<ul class="filter-select__list">
-					<li class="filter-select__list__entry "><a
-						href="/questions?order=popular&amp;page=1">인기순</a></li>
-					<li class="filter-select__list__entry active"><a
-						href="/questions?order=recent&amp;page=1">최신순</a></li>
-				</ul>
 			</div>
 		</div>
 		<div class="questions-filter__actions">
@@ -44,7 +61,7 @@
 </div>
 
 <section id="questions-list" class="container">
-	<c:forEach var="dto" items="${lists}">
+	<c:forEach var="dto" items="${lists}" varStatus="status">
 	
 	<a class="questions-item__link"
 		href="<%=cp%>/qna/questionAticle.action?qNum=${dto.qNum}">
@@ -81,10 +98,10 @@
 				</span>
 				</span>
 				<ul class="questions-item__footer__tags keyword-list">
-					<c:forEach var="hash" items="${dto.qHash}">
-					<li class="keyword-item questions-item__footer__tags__tag" role="button">${hash}</li>
-					</c:forEach>
+				<li class="keyword-item questions-item__footer__tags__tag" role="button">${dto.qHashTag}</li>
+
 				</ul>
+				
 			</footer>
 		</article>
 	</a>
