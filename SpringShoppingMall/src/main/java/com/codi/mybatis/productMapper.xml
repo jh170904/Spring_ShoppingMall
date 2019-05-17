@@ -50,6 +50,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>
 </select>
 
+<select id="getListsOrderHeart" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select a.count, b.productid, b.productname, b.price, b.savefilename, b.storeName, b.storeUrl, b.originalName, b.superProduct from(
+	select count(*) count, SUPERPRODUCT From STOREHEART group by superproduct) a, product b 
+	where a.superproduct(+) = b.superproduct and b.FILECATEGORY='list'
+	order by a.count desc nulls last)data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<select id="getListsOrderRate" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select a.avg, b.productid, b.productname, b.price, b.savefilename, b.storeName, b.storeUrl, b.originalName, b.superProduct from(
+	select product.superProduct c,avg(rate) avg
+	from review,product 
+	where review.productId = product.productid and WRITED='yes'
+	GROUP by product.SUPERPRODUCT) a, product b
+	where a.c (+) = b.productid and b.FILECATEGORY='list'
+	order by a.avg desc nulls last) data)
+	<![CDATA[
+		where rnum>=#{start} and rnum<=#{end}
+	]]>
+</select>
+
+<select id="getListsOrderReview" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select a.count, b.productid, b.productname, b.price, b.savefilename, b.storeName, b.storeUrl, b.originalName, b.superProduct from(
+	select count(*) count,product.superProduct c
+	from review,product 
+	where review.productId = product.productid and WRITED='yes'
+	GROUP by product.SUPERPRODUCT) a, product b
+	where a.c (+) = b.productid and b.FILECATEGORY='list'
+	order by a.count desc nulls last) data)
+	<![CDATA[
+		where rnum>=#{start} and rnum<=#{end}
+	]]>
+</select>
+
 <!-- listCategory list -->
 <select id="getListsCategory" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
 	select * from (
@@ -72,6 +114,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>
 </select>
 
+<select id="getListsCategoryOrderHeart" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select a.count, b.productid, b.productname, b.price, b.savefilename, b.storeName, b.storeUrl, b.originalName, b.superProduct from(
+	select count(*) count, SUPERPRODUCT From STOREHEART group by superproduct) a, product b 
+	where a.superproduct(+) = b.superproduct and b.FILECATEGORY='list' and b.productCategory=#{productCategory}
+	order by a.count desc nulls last)data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<select id="getListsCategoryOrderRate" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select a.avg, b.productid, b.productname, b.price, b.savefilename, b.storeName, b.storeUrl, b.originalName, b.superProduct from(
+	select product.superProduct c,avg(rate) avg
+	from review,product 
+	where review.productId = product.productid and WRITED='yes'
+	GROUP by product.SUPERPRODUCT) a, product b
+	where a.c (+) = b.productid and b.FILECATEGORY='list' and b.productCategory=#{productCategory}
+	order by a.avg desc nulls last) data)
+	<![CDATA[
+		where rnum>=#{start} and rnum<=#{end}
+	]]>
+</select>
+
+<select id="getListsCategoryOrderReview" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select a.count, b.productid, b.productname, b.price, b.savefilename, b.storeName, b.storeUrl, b.originalName, b.superProduct from(
+	select count(*) count,product.superProduct c
+	from review,product 
+	where review.productId = product.productid and WRITED='yes'
+	GROUP by product.SUPERPRODUCT) a, product b
+	where a.c (+) = b.productid and b.FILECATEGORY='list' and b.productCategory=#{productCategory}
+	order by a.count desc nulls last) data)
+	<![CDATA[
+		where rnum>=#{start} and rnum<=#{end}
+	]]>
+</select>
+
 <!-- listSearch -->
 <select id="getListsSearch" parameterType="hashMap" resultType="com.codi.dto.ProductDTO">
 	select * from (
@@ -92,6 +176,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select nvl(count(*),0) from storeHeart
 	where superProduct=#{superProduct} and userId = #{userId}
 </select>
+
+<!-- 하나의 상품이 받은 하트 수 -->
+<select id="storeHeartCount2" parameterType="String" resultType="int">
+	select nvl(count(*),0) From storeHeart where superProduct=#{superProduct} GROUP by superProduct
+</select>
+	
 
 <!-- storeHeart insert -->
 <insert id="insertHeart" parameterType="hashMap">

@@ -13,14 +13,11 @@ $(function(){
 
 		var superProduct = $(this).attr('value');
 
-        var info = '<%=(MemberDTO)session.getAttribute("customInfo")%>';
-        
-        if(info=="" || info==null){
+		var chk='${sessionScope.customInfo.userId}';
+		if(chk==""){
         	alert("로그인이 필요합니다.");
-           	alert(id);
         	return;
-        }
-        
+        }    
         
         $.ajax({
             async: true,
@@ -38,7 +35,7 @@ $(function(){
                 
             },
             error : function(error) {
-            	alert("로그인이 필요합니다.");
+            	alert(error);
             }
         });
 			

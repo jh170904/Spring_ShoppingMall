@@ -19,12 +19,27 @@ public class ProductDTO {
 	private String storeName;
 	private String storeUrl;
 	private String superProduct;
-	
+	//실제 옵션 값이 저장되 있는 컬럼
+	private String productOption;
+	//리스트 용도 인지 아닌지 확인하기 위한 컬럼
+	private String fileCategory;
 	//해당 상품의 리뷰수 저장
 	private int reviewCount;
 	//해당 상품의 평점 저장
 	private float reviewRate;
+	//해당 상품의 좋아요 수 저장
+	private int heartCount;
+	//옵션들을 넣어놀 리스트변수(컬럼x)
+	private List<String> optionList;
 	
+	
+	
+	public int getHeartCount() {
+		return heartCount;
+	}
+	public void setHeartCount(int heartCount) {
+		this.heartCount = heartCount;
+	}
 	public float getReviewRate() {
 		return reviewRate;
 	}
@@ -37,29 +52,18 @@ public class ProductDTO {
 	public void setReviewCount(int reviewCount) {
 		this.reviewCount = reviewCount;
 	}
-
-	//실제 옵션 값이 저장되 있는 컬럼
-	private String productOption;
-	
-	//리스트 용도 인지 아닌지 확인하기 위한 컬럼
-	private String fileCategory;
 	public String getFileCategory() {
 		return fileCategory;
 	}
 	public void setFileCategory(String fileCategory) {
 		this.fileCategory = fileCategory;
 	}
-	
-	//옵션들을 넣어놀 리스트변수(컬럼x)
-	private List<String> optionList;
 	public List<String> getOptionList() {
 		return optionList;
 	}
 	public void setOptionList(List<String> optionList) {
 		this.optionList = optionList;
 	}
-	
-	
 	public String getProductId() {
 		return productId;
 	}

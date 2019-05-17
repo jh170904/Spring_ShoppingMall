@@ -141,7 +141,7 @@ public class ProductController {
 
 		if (order != null && !order.equals("")) {
 			lists = dao.getListOrder(start, end, order);
-		} else {
+		}else {
 			lists = dao.getList(start, end);
 		}
 		
@@ -251,8 +251,11 @@ public class ProductController {
 			//dao.getReviewRate(vo.productId)
 			float avgReviewRate = reviewDAO.productGetList_heart(vo.getSuperProduct());
 			
+			//int heartCount = dao.storeHeartCount2(vo.getSuperProduct());
+			
 			vo.setReviewCount(reviewCount);
 			vo.setReviewRate(avgReviewRate);
+			//vo.setHeartCount(heartCount);
 		}
 		
 		

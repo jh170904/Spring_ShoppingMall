@@ -69,13 +69,21 @@ public class ProductDAO {
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
 
+		List<ProductDTO> lists= null;
+		
 		params.put("start", start);
 		params.put("end",end);
 		params.put("order",order);
-		
 
-		List<ProductDTO> lists = 
-				sessionTemplate.selectList("productMapper.getListsOrder",params);
+		if(order.equals("storeheart")) {
+			lists = sessionTemplate.selectList("productMapper.getListsOrderHeart",params);
+		}else if(order.equals("review")){
+			lists = sessionTemplate.selectList("productMapper.getListsOrderReview",params);
+		}else if(order.equals("rate")){
+			lists = sessionTemplate.selectList("productMapper.getListsOrderRate",params);
+		}else {
+			lists = sessionTemplate.selectList("productMapper.getListsOrder",params);
+		}
 
 		return lists;
 	}
@@ -100,6 +108,8 @@ public class ProductDAO {
 	//listCategory 정렬 / listBest 
 	public List<ProductDTO> getListsCategoryOrder(int start, int end, String productCategory,String order) {
 
+		List<ProductDTO> lists = null;
+		
 		HashMap<String, Object> params = new HashMap<String, Object>();
 
 		params.put("start", start);
@@ -107,10 +117,15 @@ public class ProductDAO {
 		params.put("productCategory",productCategory);
 		params.put("order",order);
 		
-		
-
-		List<ProductDTO> lists = 
-				sessionTemplate.selectList("productMapper.getListsCategoryOrder",params);
+		if(order.equals("storeHeart")) {
+			lists = sessionTemplate.selectList("productMapper.getListsCategoryOrderHeart",params);
+		}else if(order.equals("review")){
+			lists = sessionTemplate.selectList("productMapper.getListsCategoryOrderReview",params);
+		}else if(order.equals("rate")){
+			lists = sessionTemplate.selectList("productMapper.getListsCategoryOrderRate",params);
+		}else {
+			lists = sessionTemplate.selectList("productMapper.getListsCategoryOrder",params);
+		}
 		
 
 		return lists;
@@ -147,6 +162,14 @@ public class ProductDAO {
 		return result;
 	}
 	
+	//storeHeartCount2 : 하나의 상품이 받은 하트수
+	public int storeHeartCount2(String superProduct){
+
+		int result = 
+				sessionTemplate.selectOne("productMapper.storeHeartCount2",superProduct);
+
+		return result;
+	}
 	
 	//insertHeart
 	public void insertHeart(String superProduct,String userId){

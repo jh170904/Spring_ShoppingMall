@@ -12,15 +12,12 @@ $(function(){
 	
 	$(".goodButton").click(function(){
 
-
 		var chk='${sessionScope.customInfo.userId}';
 		
 		if(chk==""){
         	alert("로그인이 필요합니다.");
         	return;
         }  
-        
-        
         
         $.ajax({
             async: true,
@@ -114,9 +111,9 @@ $(function(){
 					<option onclick="javascript:location.href='${listUrl}&order=price desc';">가격이 높은 순</option>
 					<option onclick="javascript:location.href='${listUrl}&order=price asc';">가격이 낮은 순</option>
 					<!-- 하트 많이 받은 순 -->
-					<option>인기순</option>
-					<option>리뷰 순</option>
-					<option>평점 순</option>
+					<option onclick="javascript:location.href='${listUrl}&order=storeHeart';">인기순</option>
+					<option onclick="javascript:location.href='${listUrl}&order=review';">리뷰 순</option>
+					<option onclick="javascript:location.href='${listUrl}&order=rate';">평점 순</option>
 				</select>
 			</div>
 		</div>
