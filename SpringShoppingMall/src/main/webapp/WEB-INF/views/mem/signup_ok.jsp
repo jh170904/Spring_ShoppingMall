@@ -31,7 +31,7 @@
 					</p>
 				</div>
 				<div class="page_btns">
-					<button class="btn_lg_primary" onclick="location.replace('<%=cp%>/commuMain.action')" type="button">홈으로
+					<button class="btn_lg_primary" onclick="location.replace('<%=cp%>/pr/commuMain.action')" type="button">홈으로
 						이동</button>
 				</div>
 			</div>
