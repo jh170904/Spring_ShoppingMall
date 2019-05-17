@@ -99,7 +99,7 @@ public class QuestionController {
 				hash.remove(0);//첫번째는 공백이라 삭제
 			
 				vo.setqHash(hash);
-				System.out.println(vo.getqHash());
+				//System.out.println(vo.getqHash());
 			
 			}
 			
