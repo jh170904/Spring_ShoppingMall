@@ -1,3 +1,4 @@
+<%@page import="com.codi.dto.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -52,6 +53,11 @@
 
 </style>
 
+<script type="text/javascript">
+
+</script>
+
+
 <c:if test="${dataCount_yes==0 }">
 	<div class="prd_detail_wrap">
 		<div class="contenteditor-root">작성된 리뷰가 없습니다.</div>
@@ -103,9 +109,9 @@
 				
 				<div style="margin-bottom: 15px; float: left;">
 					<dl>
-						<dd class="inLine_review"><a onclick="changeReviewOption('recent','${pageNum}');" style="<c:if test='${order eq "recent"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" class="btn_sm_bordered_review">최신순</a></dd>
-						<dd class="inLine_review"><a onclick="changeReviewOption('worst','${pageNum}');" style="<c:if test='${order eq "worst"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" class="btn_sm_bordered_review">낮은 평점순</a></dd>
-						<dd class="inLine_review"><a onclick="changeReviewOption('best','${pageNum}');" style="<c:if test='${order eq "best"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" class="btn_sm_bordered_review">높은 평점순</a></dd>
+						<dd class="inLine_review"><a onclick="changeReviewOption('recent');" style="<c:if test='${order eq "recent"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" class="btn_sm_bordered_review">최신순</a></dd>
+						<dd class="inLine_review"><a onclick="changeReviewOption('worst');" style="<c:if test='${order eq "worst"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" class="btn_sm_bordered_review">낮은 평점순</a></dd>
+						<dd class="inLine_review"><a onclick="changeReviewOption('best');" style="<c:if test='${order eq "best"}'>background:#8080ff; border:1px solid #8080ff; color:#ffffff; font-weight: bold;</c:if>" class="btn_sm_bordered_review">높은 평점순</a></dd>
 					</dl>			
 				</div>
 
@@ -139,8 +145,27 @@
 											<img alt="" src="${imagePath_review }/${dto.savefileName}" width="70" height="70">
 										</a><br/>
 									</c:if>
-									<span class="text reduce">${dto.content }</span><br /> 
 									
+									<span class="text reduce">${dto.content }</span><br/><br/>
+									 
+									
+									<span style="font-size: 10pt;">
+										<input type="hidden" id="reviewNum" value="${dto.reviewNum}" >
+										<a class="reviewGood" value="${dto.reviewNum}" onclick="clickReviewGood('${order}','${pageNum}','${dto.reviewNum}')">
+											<div class="goodDiv${dto.reviewNum}">
+												<c:set var="k" value="0" />
+												<c:forEach var="good" items="${good }">
+													<c:if test="${dto.reviewNum eq good}">
+														<span style="border: 1px solid #8080ff; color: #ffffff; background-color:#8080ff ; padding: 5px 10px;">도움이 돼요</span>&nbsp;&nbsp;${dto.goodCount}명에게 도움이 되었습니다.
+														<c:set var="k" value="1" />
+													</c:if>
+												</c:forEach>
+												<c:if test="${k==0 }">
+													<span style="border: 1px solid #8080ff; color: #8080ff; padding: 5px 10px;">도움이 돼요</span>&nbsp;&nbsp;${dto.goodCount}명에게 도움이 되었습니다.
+												</c:if>
+											</div>
+										</a>
+									</span>
 								</td>
 							</tr>
 						</c:forEach>

@@ -2,8 +2,11 @@ package com.codi.app;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.lang.reflect.Member;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,8 +15,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -86,13 +91,28 @@ public class ProductDetailController {
 	}
 	
 	@RequestMapping(value = "/pr/detailReview.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String detailReview(HttpServletRequest request, HttpServletResponse response) {
+	public String detailReview(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		
 		String cp = request.getContextPath();
 		String superProduct = request.getParameter("superProduct");
 		ProductDetailDTO dto = dao.getReadData(superProduct);
 		
 		String order = request.getParameter("order");	
+		
+		String reviewNum = request.getParameter("reviewNum");
+		if(reviewNum!=null && !reviewNum.equals("")) {
+			if(info!=null && !info.equals("")) {
+				int result = reviewDAO.reviewGoodCount(reviewNum, info.getUserId());
+				
+				if (result == 0) {
+					reviewDAO.insertReviewGood(reviewNum, info.getUserId());
+				} else {
+					reviewDAO.deleteReviewGood(reviewNum, info.getUserId());
+				}
+			}			
+		}
 		
 		if(order==null)
 			order="recent";
@@ -105,6 +125,11 @@ public class ProductDetailController {
 		else
 			orderBy = "rate desc";
 		
+		List<String> good = null;
+		if(info!=null) {
+			good = reviewDAO.reviewGoodList(info.getUserId());
+		}
+		
 		// 이미지파일경로
 		String imagePath = cp + "/pds/productImageFile";
 		request.setAttribute("imagePath", imagePath);
@@ -114,7 +139,7 @@ public class ProductDetailController {
 		
 		int currentPage = 1;
 		
-		if(pageNum!=null)
+		if(pageNum!=null && !pageNum.equals(""))
 			currentPage = Integer.parseInt(pageNum);
 
 		int dataCount_yes = reviewDAO.getProductDataCount(superProduct);
@@ -131,6 +156,11 @@ public class ProductDetailController {
 			int end = currentPage*numPerPage;
 			
 			List<ReviewDTO> lists = reviewDAO.productGetList(superProduct, start, end,orderBy);
+			Iterator<ReviewDTO> it = lists.iterator();
+			while(it.hasNext()) {
+				ReviewDTO reviewdto = it.next();
+				reviewdto.setGoodCount(reviewDAO.reviewAllCount(reviewdto.getReviewNum()));
+			}
 			
 
 			//평점 별 리뷰 개수
@@ -138,10 +168,10 @@ public class ProductDetailController {
 		 			reviewDAO.getProductDataCountHeart(superProduct, 3),reviewDAO.getProductDataCountHeart(superProduct, 2),reviewDAO.getProductDataCountHeart(superProduct, 1)}; 
 		 	
 			//평점 평균 
-		 	float avgReviewRate = reviewDAO.productGetList_heart(superProduct);
+		 	float avgReviewRate = (float) (Math.round(reviewDAO.productGetList_heart(superProduct)*10)/10.0);
 		 	
 			String pageIndexList = myUtil.reviewPageIndexList(currentPage, totalPage,order);
-			String imagePath_review = "./upload/review";
+			String imagePath_review = "../upload/review";
 
 			//포워딩 데이터
 			request.setAttribute("lists", lists);
@@ -152,11 +182,12 @@ public class ProductDetailController {
 			request.setAttribute("avgReviewRate", avgReviewRate);
 			request.setAttribute("rate", rate);
 		}
-		request.setAttribute("dataCount_yes", dataCount_yes);
 		
+		request.setAttribute("dataCount_yes", dataCount_yes);
+		request.setAttribute("good", good);
 		request.setAttribute("dto", dto);
 		
 		return "product/productReview";
 	}
-		
+	
 }

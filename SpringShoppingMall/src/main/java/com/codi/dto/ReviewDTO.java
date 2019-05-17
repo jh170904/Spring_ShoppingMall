@@ -3,6 +3,7 @@ package com.codi.dto;
 public class ReviewDTO {
 	
 	//리뷰 작성시 필요한 데이터
+	private int reviewNum;
 	private String userId;
 	private String productId;
 	private String productCategory;
@@ -26,6 +27,16 @@ public class ReviewDTO {
 	
 	//상품 이동시 필요
 	private String superProduct;
+	
+	//도움이 돼요 출력시 필요
+	private int goodCount;
+	
+	public int getReviewNum() {
+		return reviewNum;
+	}
+	public void setReviewNum(int reviewNum) {
+		this.reviewNum = reviewNum;
+	}
 	
 	public String getUserId() {
 		return userId;
@@ -146,7 +157,11 @@ public class ReviewDTO {
 		this.superProduct = superProduct;
 	}
 	
-	
-	
+	public int getGoodCount() {
+		return goodCount;
+	}
+	public void setGoodCount(int goodCount) {
+		this.goodCount = goodCount;
+	}
 
 }

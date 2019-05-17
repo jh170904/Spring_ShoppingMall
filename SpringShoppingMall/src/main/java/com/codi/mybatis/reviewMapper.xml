@@ -66,7 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="productGetList" parameterType="hashMap" resultType="com.codi.dto.ReviewDTO">
 	select * from (
 	select rownum rnum, data.* from (
-	select userId,review.productId productId,superProduct,productSize,color,rate,subject,content,to_char(reviewDate,'yyyy-mm-dd hh24:mi:ss') reviewDate,review.originalName originalName,review.saveFileName saveFileName
+	select reviewNum,userId,review.productId productId,superProduct,productSize,color,rate,subject,content,to_char(reviewDate,'yyyy-mm-dd hh24:mi:ss') reviewDate,review.originalName originalName,review.saveFileName saveFileName
 	from review,product where review.productId = product.productId and superProduct=#{superProduct} and writed='yes'
 	order by ${orderBy}) data) 
 <![CDATA[
@@ -91,5 +91,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where review.productId = product.superProduct 
 	and superProduct=#{superProduct}) and rate=#{rate}
 </select>
+
+<!-- 도움이 돼요 클릭시 필요 -->
+<!-- reviewGood count -->
+<select id="reviewGoodCount" parameterType="hashMap" resultType="int">
+	select nvl(count(*),0) from reviewGood
+	where reviewNum=#{reviewNum} and userId = #{userId}
+</select>
+
+<!-- reviewGood insert -->
+<insert id="insertReviewGood" parameterType="hashMap">
+	insert into reviewGood (reviewNum,userId)
+	values (#{reviewNum},#{userId})
+</insert>
+
+<!-- reviewGood delete -->
+<delete id="deleteReviewGood" parameterType="hashMap">
+	delete reviewGood where reviewNum=#{reviewNum} and userId = #{userId}
+</delete>
+
+<!-- reviewGood count list -->
+<select id="reviewGoodList" parameterType="String" resultType="String">
+	select reviewNum from reviewGood where userId = #{userId}
+</select>
+
+<!-- reviewGood count All -->
+<select id="reviewAllCount" parameterType="int" resultType="int">
+	select nvl(count(*),0) goodCount from reviewGood where reviewNum=#{reviewNum}
+</select>
+
 
 </mapper>

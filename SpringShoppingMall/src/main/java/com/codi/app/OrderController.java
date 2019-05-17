@@ -293,6 +293,8 @@ public class OrderController {
 		reviewDTO.setUserId(info.getUserId());
 				
 		//주문 리스트
+		int reviewCount = dao.reviewCount()+1;
+		
 		List<OrderListDTO> orderList = dao.getOrderList(info.getUserId());
 		Iterator<OrderListDTO> orderLists = orderList.iterator();
 		int totalAmount=0;		
@@ -313,7 +315,10 @@ public class OrderController {
 				
 				//리뷰데이터 입력
 				reviewDTO.setProductId(dto.getProductId());
+				reviewDTO.setReviewNum(reviewCount);
 				dao.insertReview(reviewDTO);
+				
+				reviewCount++;
 			}
 			
 			dao.insertOrderDataProduct(orderDTO);

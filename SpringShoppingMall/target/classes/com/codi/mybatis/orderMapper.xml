@@ -22,7 +22,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="getMemberPoint" parameterType="String" resultType="int">
 	select point from member where userId=#{userId}
 </select>
-
  
 <!-- 사용자 주문 목록 가져오기 -->
 <select id="getOrderList" parameterType="String" resultType="com.codi.dto.OrderListDTO">
@@ -42,16 +41,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select nvl(count(*),0) from cart 
 	where userId=#{userId} and orderSelect='yes'
 </select>	
-
-<!-- 사용 가능한 쿠폰 정보 가져오기 -->
-<!-- 
-<select id="getUserCoupon" parameterType="hashMap" resultType="com.codi.dto.CouponDTO">
-	select userId,issueDate,coupon.couponKey couponKey,couponName,couponScore,discount,couponStartDay,couponEndDay,couponGrade,used
-	from coupon,issue
-	where issue.couponKey = coupon.couponKey
-	and userId=? and used='N' and ?>=couponScore
-</select>
--->
 
 <!-- orderTable에서 오늘 주문한 상품 개수 가져오기 -->
 <select id="getMaxNum" resultType="int">
@@ -88,12 +77,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	update orderTable set payment='yes'
 	where userId=#{userId} and orderNum=#{orderNum}
 </update>
-<!-- 주문 성공시 issue 테이블에 사용쿠폰 업데이트 -->
-<!-- 
-<update id="useCouponUpdate" parameterMap="hashMap">
-	update issue set used='Y' where userId=#{userId} and couponKey=#{couponKey}
-</update>
- -->
+
+<!-- 무통장 입금 완료시 리뷰 추가 위한 주문 정보 가져오기 -->
+ <select id="getOrderNumData" parameterType="String" resultType="com.codi.dto.OrderDTO">
+ 	select productId from orderTable where orderNum=#{orderNum}
+ </select>
+ 
  
 <!-- 주문 성공시 장바구니에서 구매품목 삭제 -->
 <delete id="deleteCartProduct" parameterType="hashMap">
@@ -119,10 +108,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where a.superProduct = b.productId
 </select>
 
+<!-- 리뷰 총 개수 -->
+<select id="reviewCount" resultType="int">
+	select nvl(count(*),0) from review
+</select>
+
 <!-- 리뷰 추가 -->
 <insert id="insertReview" parameterType="com.codi.dto.OrderDTO">
-	insert into review (userId,productId,reviewDate,writed)
-	values (#{userId},#{productId},sysdate,'no')
+	insert into review (reviewNum,userId,productId,reviewDate,writed)
+	values (#{reviewNum},#{userId},#{productId},sysdate,'no')
 </insert>
 	
 <!-- 사용자 기간별 주문조회 -->

@@ -31,6 +31,7 @@ import com.codi.dao.ReviewDAO;
 import com.codi.dto.AdminPaymentDTO;
 import com.codi.dto.CouponDTO;
 import com.codi.dto.DestinationDTO;
+import com.codi.dto.MemberDTO;
 import com.codi.dto.OrderDTO;
 import com.codi.dto.OrderListDTO;
 import com.codi.dto.ProductDTO;
@@ -464,11 +465,28 @@ public class AdminController {
 	
 	@RequestMapping(value = "/admin/without_bankbook_paymentYes.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String without_bankbook_paymentYes(OrderDTO orderDTO, OrderListDTO orderListDTO, DestinationDTO destinationDTO, ReviewDTO reviewDTO,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+			HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		
 		String orderNum = request.getParameter("orderNum");
 		int price = Integer.parseInt(request.getParameter("price"));
 		String userId = orderDAO.searchUserId(orderNum);
+		
+		//리뷰 입력
+		int reviewCount = orderDAO.reviewCount()+1;
+		
+		reviewDTO.setUserId(userId);
+		
+		List<OrderDTO> orderList = orderDAO.getOrderNumData(orderNum);		
+		Iterator<OrderDTO> orderLists = orderList.iterator();
+		while(orderLists.hasNext()){
+			reviewDTO.setProductId(orderLists.next().getProductId().toString());
+			reviewDTO.setReviewNum(reviewCount);
+			orderDAO.insertReview(reviewDTO);		
+			
+			reviewCount++;
+		}	
 		
 		//주문 데이터 변경
 		orderDAO.updateOrderDataProduct(userId, orderNum);
@@ -485,8 +503,8 @@ public class AdminController {
 		}
 		else if(gradePoint>=1000000)
 			userGrade = "VIP";
-			
-		orderDAO.updateGrade(userId, userGrade);
+		
+		orderDAO.updateGrade(userId, userGrade);	
 		
 		return "redirect:/admin/bankbookPaymentAdmin.action";
 	}

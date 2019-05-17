@@ -1,4 +1,5 @@
 <%-- <%@page import="com.member.MemberDTO"%> --%>
+<%@page import="com.codi.dto.MemberDTO"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -402,6 +403,28 @@ tr {
 		$("#tab-2").show(); //display:block의 역할 - 보여지는거(none의 반대)
 		
 	}
+	
+	function clickReviewGood(order,pageNum,reviewNum){
+		
+		var chk='${sessionScope.customInfo.userId}';
+		
+		if(chk==""){
+        	alert("로그인이 필요합니다.");
+        	return;
+        }  
+		
+		var url = "detailReview.action";
+		var superProduct = "<c:out value="${superProduct}" />";
+		
+		$.post(url,{superProduct:superProduct,reviewNum:reviewNum,order:order,pageNum:pageNum},function(args){
+			$("#tab-2").html(args);
+			
+		});
+		
+		$("#tab-2").show();
+		
+	}
+	
 </script>
 <div class="ap_contents product detail">
 	<form method="post" name="detailForm">

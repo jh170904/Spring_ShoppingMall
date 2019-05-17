@@ -14,7 +14,7 @@ public class ReviewDAO {
 	
 	@Autowired
 	private SqlSessionTemplate sessionTemplate;
-
+	
 	public void setSessionTemplate(SqlSessionTemplate sessionTemplate) throws Exception{
 		this.sessionTemplate = sessionTemplate;
 	}
@@ -100,6 +100,52 @@ public class ReviewDAO {
 		
 		int result = sessionTemplate.selectOne("reviewMapper.getProductDataCountHeart",params);
 		return result;
+	}
+	/*
+	reviewGoodCount 
+	insertReviewGood
+	deleteReviewGood
+	reviewGoodList
+	 */
+	//도움이 돼요 클릭시 필요
+	public int reviewGoodCount(String reviewNum,String userId) {
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("reviewNum", reviewNum);
+		params.put("userId",userId);
+		
+		int result = sessionTemplate.selectOne("reviewMapper.reviewGoodCount",params);
+		return result;
+	}
+	
+	public void insertReviewGood(String reviewNum,String userId) {
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("reviewNum", reviewNum);
+		params.put("userId",userId);
+		
+		sessionTemplate.insert("reviewMapper.insertReviewGood",params);
+
+	}
+
+	public void deleteReviewGood(String reviewNum,String userId) {
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("reviewNum", reviewNum);
+		params.put("userId",userId);
+		
+		sessionTemplate.delete("reviewMapper.deleteReviewGood",params);
+	
+	}
+	
+	public List<String> reviewGoodList(String userId){
+		List<String> lists = sessionTemplate.selectList("reviewMapper.reviewGoodList",userId);
+		return lists;		
+	}
+	
+	public int reviewAllCount(int reviewNum) {
+		int lists = sessionTemplate.selectOne("reviewMapper.reviewAllCount",reviewNum);
+		return lists;
 	}
 	
 }

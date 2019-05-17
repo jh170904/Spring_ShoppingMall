@@ -50,16 +50,6 @@ public class OrderDAO {
 		int result = sessionTemplate.selectOne("orderMapper.getOrderCount",userId);
 		return result;
 	}
-/*	
-	public List<CouponDTO> getUserCoupon(String userId, int couponScore){
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("userId", userId);
-		params.put("couponScore", couponScore);
-		
-		List<CouponDTO> lists = sessionTemplate.selectList("orderMapper.getUserCoupon",params);
-		return lists;
-	}
-*/
 	
 	public int getMaxNum() {
 		int result = sessionTemplate.selectOne("orderMapper.getMaxNum");
@@ -98,15 +88,12 @@ public class OrderDAO {
 		params.put("orderNum", orderNum);
 		sessionTemplate.update("orderMapper.updateOrderDataProduct",params);
 	}
-/*	
-	public void useCouponUpdate(String userId, String couponKey) {
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("userId", userId);
-		params.put("couponKey", couponKey);
-		
-		sessionTemplate.update("orderMapper.useCouponUpdate",params);
+
+	public List<OrderDTO> getOrderNumData(String orderNum) {
+		List<OrderDTO> lists = sessionTemplate.selectList("orderMapper.getOrderNumData",orderNum);
+		return lists;
 	}
-*/	
+	
 	public void deleteCartProduct(String userId,String productId) {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("userId", userId);
@@ -138,6 +125,11 @@ public class OrderDAO {
 		
 		List<OrderDTO> lists = sessionTemplate.selectList("orderMapper.getCompleteOrder",params);
 		return lists;
+	}
+	
+	public int reviewCount() {
+		int result = sessionTemplate.selectOne("orderMapper.reviewCount");
+		return result;
 	}
 	
 	public void insertReview(ReviewDTO reviewDTO) {
