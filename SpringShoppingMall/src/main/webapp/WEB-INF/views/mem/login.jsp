@@ -21,7 +21,6 @@
 	}
 %>
 
-<script src="../js/js.cookie.js"></script>
 
 <script type="text/javascript">
 function sendIt(){
