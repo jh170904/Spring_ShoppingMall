@@ -154,7 +154,7 @@ public class ReviewController {
 		
 		String pageNum = request.getParameter("pageNum");
 		
-		ReviewDTO writeDTO = (ReviewDTO)dao.getProductList(info.getUserId(), dto.getProductId(),dto.getReviewDate());
+		ReviewDTO writeDTO = (ReviewDTO)dao.getProductList(dto.getReviewNum());
 		
 		request.setAttribute("dto", writeDTO);
 		request.setAttribute("pageNum", pageNum);
@@ -217,7 +217,7 @@ public class ReviewController {
         
         file.delete();
 		
-		dao.deleteData(info.getUserId(), dto.getProductId(), dto.getReviewDate());
+		dao.deleteData(dto.getReviewNum());
 		
 		return "redirect:/review/reviewList.action";
 	}

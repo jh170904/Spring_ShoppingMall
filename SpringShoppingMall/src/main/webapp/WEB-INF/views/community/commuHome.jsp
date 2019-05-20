@@ -13,8 +13,8 @@
 	min-width: 140px;
 	height: 50px;
 	font-weight: bold;
-	border: 1px solid #ffffff;
-	color: #ffffff;
+	border: 1px solid #000000;
+	color: #000000;
 }
 
 .today_codi {

@@ -101,15 +101,26 @@ public class ProductDetailController {
 		
 		String order = request.getParameter("order");	
 		
+		String mode = request.getParameter("mode");
 		String reviewNum = request.getParameter("reviewNum");
 		if(reviewNum!=null && !reviewNum.equals("")) {
 			if(info!=null && !info.equals("")) {
-				int result = reviewDAO.reviewGoodCount(reviewNum, info.getUserId());
+				if(mode=="good" || mode.equals("good")) {
+					int result = reviewDAO.reviewGoodCount(reviewNum, info.getUserId());
 				
-				if (result == 0) {
-					reviewDAO.insertReviewGood(reviewNum, info.getUserId());
-				} else {
-					reviewDAO.deleteReviewGood(reviewNum, info.getUserId());
+					if (result == 0) {
+						reviewDAO.insertReviewGood(reviewNum, info.getUserId());
+					} else {
+						reviewDAO.deleteReviewGood(reviewNum, info.getUserId());
+					}
+				}
+				else {
+					int result = reviewDAO.reviewReportCount(reviewNum, info.getUserId());					
+					if (result == 0) {
+						reviewDAO.insertReviewReport(reviewNum, info.getUserId(),request.getParameter("checkedValue"));
+					} else {
+						reviewDAO.deleteReviewReport(reviewNum, info.getUserId());
+					}
 				}
 			}			
 		}
@@ -128,6 +139,11 @@ public class ProductDetailController {
 		List<String> good = null;
 		if(info!=null) {
 			good = reviewDAO.reviewGoodList(info.getUserId());
+		}
+		
+		List<String> report = null;
+		if(info!=null) {
+			report = reviewDAO.reviewReportList(info.getUserId());
 		}
 		
 		// 이미지파일경로
@@ -185,6 +201,7 @@ public class ProductDetailController {
 		
 		request.setAttribute("dataCount_yes", dataCount_yes);
 		request.setAttribute("good", good);
+		request.setAttribute("report", report);
 		request.setAttribute("dto", dto);
 		
 		return "product/productReview";

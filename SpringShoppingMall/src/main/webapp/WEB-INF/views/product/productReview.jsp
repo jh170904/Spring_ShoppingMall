@@ -53,11 +53,6 @@
 
 </style>
 
-<script type="text/javascript">
-
-</script>
-
-
 <c:if test="${dataCount_yes==0 }">
 	<div class="prd_detail_wrap">
 		<div class="contenteditor-root">작성된 리뷰가 없습니다.</div>
@@ -78,7 +73,7 @@
 								<c:forEach var="j" begin="${avgReviewRate+1 }" end="5" step="1">
 									<img alt="" src="<%=cp%>/resources/image/heart_off.png" height="25px;">
 								</c:forEach>
-							</span><br/><small>(${avgReviewRate })</small>
+							</span><br/><small>(${avgReviewRate }점 : ${dataCount_yes }명)</small>
 						</td>
 						<td>
 							<ul class="rating_list">
@@ -132,7 +127,20 @@
 										<c:forEach var="j" begin="${dto.rate+1 }" end="5" step="1">
 											<img alt="" src="<%=cp%>/resources/image/heart_off.png" height="15px;">
 										</c:forEach>
-									</span> 
+									</span>
+									<a class="reportReview" style="float: right; font-size: 12px;" onclick="reviewReport('${order}','${pageNum}','${dto.reviewNum}')">
+										<div class="reportDiv${dto.reviewNum}">
+											<c:set var="k" value="0" />
+											<c:forEach var="report" items="${report }">
+												<c:if test="${dto.reviewNum eq report}">
+													<c:set var="k" value="1" />
+												</c:if>
+											</c:forEach>
+											<c:if test="${k==0 }">
+												<span style="color: #000000;">신고</span>
+											</c:if>
+										</div>
+									</a> 
 									<span class="user_id">${dto.userId }</span> <small>${dto.reviewDate }</small>
 								</td>
 
@@ -151,7 +159,7 @@
 									
 									<span style="font-size: 10pt;">
 										<input type="hidden" id="reviewNum" value="${dto.reviewNum}" >
-										<a class="reviewGood" value="${dto.reviewNum}" onclick="clickReviewGood('${order}','${pageNum}','${dto.reviewNum}')">
+										<a class="reviewGood" value="${dto.reviewNum}" onclick="clickReview('${order}','${pageNum}','${dto.reviewNum}','good')">
 											<div class="goodDiv${dto.reviewNum}">
 												<c:set var="k" value="0" />
 												<c:forEach var="good" items="${good }">

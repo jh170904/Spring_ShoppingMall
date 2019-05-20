@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="getList" parameterType="hashMap" resultType="com.codi.dto.ReviewDTO">
 	select * from (
 	select rownum rnum, data.* from (
-	select review.productId productId,productName,rate,subject,content,review.originalName originalName, review.saveFileName saveFileName,
+	select reviewNum, review.productId productId,productName,rate,subject,content,review.originalName originalName, review.saveFileName saveFileName,
 	to_char(reviewDate,'yyyy-mm-dd hh24:mi:ss') reviewDate, superProduct
 	from review,product where review.productId=product.productId and userId=#{userId} and writed=#{writed}
 	order by ${orderBy}) data) 
@@ -28,16 +28,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 리뷰작성시 작성할 상품 정보 가져오기  -->
 <select id="getProductList" parameterType="hashMap" resultType="com.codi.dto.ReviewDTO">
-	select review.productId productId, productCategory,productName,productSize,color,to_char(reviewDate,'yyyy-mm-dd hh24:mi:ss') reviewDate
+	select reviewNum, review.productId productId, productCategory,productName,productSize,color,to_char(reviewDate,'yyyy-mm-dd hh24:mi:ss') reviewDate
 	from review,product
-	where review.productId=product.productId and userId=#{userId} and review.productId=#{productId} and writed='no' and reviewDate=to_date(#{reviewDate},'yyyy-mm-dd hh24:mi:ss')
+	where review.productId=product.productId and reviewNum=#{reviewNum} and writed='no'
 </select>
 
 <!-- 리뷰 등록 -->
 <update id="insertData" parameterType="com.codi.dto.ReviewDTO">
 	update review set rate=#{rate},subject=#{subject},content=#{content},reviewDate=sysdate,
 	originalName=#{originalName},savefileName=#{savefileName},writed='yes'
-	where userId=#{userId} and productId=#{productId} and reviewDate=to_date(#{reviewDate},'yyyy-mm-dd hh24:mi:ss')
+	where reviewNum=#{reviewNum}
 </update>
 
 <!-- 삭제할 리뷰의 데이터 파일 정보 -->
@@ -47,9 +47,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select>
 	
 <!-- 리뷰 삭제 -->
-<delete id="deleteData" parameterType="hashMap">
+<delete id="deleteData" parameterType="int">
 	update review set rate='',subject='',content='',reviewDate=sysdate,originalname='',savefilename='',writed='no' 
-	where userId=#{userId} and productId=#{productId} and reviewDate=to_date(#{reviewDate},'yyyy-mm-dd hh24:mi:ss')	
+	where reviewNum=#{reviewNum}
 </delete>
 
 <!-- 특정 상품 리뷰 갯수 -->
@@ -120,5 +120,65 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select nvl(count(*),0) goodCount from reviewGood where reviewNum=#{reviewNum}
 </select>
 
+<!-- 후기 신고에서 필요 -->
+<!-- reviewReport count -->
+<select id="reviewReportCount" parameterType="hashMap" resultType="int">
+	select nvl(count(*),0) from reviewReport
+	where reviewNum=#{reviewNum} and userId = #{userId}
+</select>
+
+<!-- reviewReport insert -->
+<insert id="insertReviewReport" parameterType="hashMap">
+	insert into reviewReport (reviewNum,userId,reportContent)
+	values (#{reviewNum},#{userId},#{reportContent})
+</insert>
+
+<!-- reviewReport delete -->
+<delete id="deleteReviewReport" parameterType="hashMap">
+	delete reviewReport where reviewNum=#{reviewNum} and userId = #{userId}
+</delete>
+
+<!-- reviewReport count list -->
+<select id="reviewReportList" parameterType="String" resultType="String">
+	select reviewNum from reviewReport where userId = #{userId}
+</select>
+
+<!-- reviewReport count All -->
+<select id="reviewReportAllCount" parameterType="int" resultType="int">
+	select nvl(count(*),0) reportCount from reviewReport where reviewNum=#{reviewNum}
+</select>
+
+<!-- 관리자에서 필요 -->
+<!-- 신고리뷰 개수 -->
+<select id="countReportReview" resultType="int">
+	select nvl(count(distinct reviewNum),0) from reviewReport
+</select>
+
+<!-- 신고리뷰 번호 및 신고횟수 -->
+<select id="reviewNumAndCount"  parameterType="hashMap"  resultType="com.codi.dto.ReviewDTO">
+	select * from (
+	select rownum rnum, data.* from (
+	select reviewReport.reviewNum, review.userId userId, nvl(count(reviewReport.reviewNum),0) reportCount, subject,content 
+	from reviewReport,review 
+	where reviewReport.reviewNum=review.reviewNum 
+	group by reviewReport.reviewNum,review.userId,subject,content 
+	order by reportCount desc) data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+
+<!-- 신고리뷰 목록 -->
+<select id="reportedReview" resultType="com.codi.dto.ReviewDTO">
+	select review.reviewNum reviewNum, review.userId userId, subject, content, reviewReport.userId reportedUserId, reportContent
+	from review, reviewReport
+	where review.reviewNum = reviewReport.reviewNum
+</select>
+
+<!-- 리뷰 삭제 -->
+<delete id="deleteReviewAdmin" parameterType="int">
+	delete review where reviewNum=#{reviewNum}
+</delete>
 
 </mapper>

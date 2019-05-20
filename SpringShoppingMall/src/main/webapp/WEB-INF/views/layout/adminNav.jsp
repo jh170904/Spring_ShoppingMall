@@ -72,7 +72,7 @@
 			</li> 
 			
 			<li>
-				<a class="menuLink" href="#" id="review">리뷰관리</a>
+				<a class="menuLink" href="<%=cp %>/admin/reviewAdmin.action" id="reviewAdmin.action">리뷰관리</a>
 			</li> 
 			
 			<li>

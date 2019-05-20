@@ -189,6 +189,34 @@ tr {
     margin: 0 0 0 90px;
 }
 
+.reportDiv {
+	border-top:1px solid #e4e4e4; 
+	padding: 20px; 
+	line-height: 25px;
+	margin: 10px 0px;
+}
+
+.reportRadio {
+	color : #000000;
+	border-top:1px solid #e4e4e4; 
+	padding: 20px; 
+	margin: 10px 0px;
+	line-height: 25px;
+}
+
+.repotButton {
+	color : #000000;
+	border-top:1px solid #e4e4e4; 
+	padding: 20px; 
+	margin: 10px 0px;
+	line-height: 25px;
+	text-align: center;
+}
+
+a {
+	cursor: pointer;
+}
+
 </style>
 
 <script type="text/javascript" src="<%=cp%>/resources/js/httpRequest.js"></script>
@@ -425,7 +453,100 @@ tr {
 		
 	}
 	
+	function clickReview(order,pageNum,reviewNum,mode){
+		
+		var chk='${sessionScope.customInfo.userId}';
+		
+		if(chk==""){
+        	alert("로그인이 필요합니다.");
+        	return;
+        }  
+		
+		var url = "detailReview.action";
+		var superProduct = "<c:out value="${superProduct}" />";
+		var checkedValue = $("input[type=radio][name=report]:checked").val()
+		$("input[type=radio][name=report]").prop("checked",false);
+
+		
+		$("#reportContent").css('display','none');
+		
+		$.post(url,{superProduct:superProduct,reviewNum:reviewNum,order:order,pageNum:pageNum,mode:mode,checkedValue:checkedValue},function(args){
+			$("#tab-2").html(args);
+			
+		});
+		
+		$("#tab-2").show();
+		
+	}
+	
 </script>
+
+<script type="text/javascript">
+	function reviewReport(order,pageNum,reviewNum){
+		
+		var chk='${sessionScope.customInfo.userId}';
+		
+		if(chk==""){
+        	alert("로그인이 필요합니다.");
+        	$("#reportContent").css('display','none');
+        	return;
+        }  
+		
+		$("#reportContent").css('display','block');
+		
+        document.getElementById("orderReport").value = order;
+        document.getElementById("pageNumReport").value = pageNum;
+        document.getElementById("reviewNumReport").value = reviewNum;
+		
+        var width = 500;
+        var height = 500;
+        var borderWidth = 2;
+        
+		document.getElementById('reportContent').style.width = width + 'px';
+	    document.getElementById('reportContent').style.height = height + 'px';
+	    document.getElementById('reportContent').style.border = borderWidth + 'px solid';
+		document.getElementById('reportContent').style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
+        document.getElementById('reportContent').style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';    
+   
+	}
+	
+	function cancelReport() {
+		$("#reportContent").css('display','none');
+		
+		var checkedValue = $("input[type=radio][name=report]:checked").val()
+		$("input[type=radio][name=report]").prop("checked",false);
+    }
+</script>
+
+<div id="reportContent" style="display: none; position:fixed; overflow:hidden; z-index:3; -webkit-overflow-scrolling:touch; background-color: #ffffff;">
+<img src="//t1.daumcdn.net/postcode/resource/images/close.png" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="cancelReport()" alt="닫기 버튼">
+	<div style="margin: auto;">
+		<div style="margin: 20px; text-align:center; font-size: 20px; color: #000000;">후기/리뷰 신고</div>
+		<div class="reportDiv">
+			※ 허위신고일 경우, 신고자의 서비스 활동이 제한될 수 있으니<br/> 신중하게 신고해주세요.
+		</div>
+		<div class="reportRadio">
+			신고 사유를 선택해주세요
+			<dl>
+				<dt><label><input type="radio" name="report" value="광고/음란성 후기"> 광고/음란성 후기</label></dt>
+				<dt><label><input type="radio" name="report" value="욕설/반말/부적잘한 언어"> 욕설/반말/부적잘한 언어</label></dt>
+				<dt><label><input type="radio" name="report" value="회원 분란 유도"> 회원 분란 유도</label></dt>
+				<dt><label><input type="radio" name="report" value="회원 비방"> 회원 비방</label></dt>
+				<dt><label><input type="radio" name="report" value="지나친 정치 논쟁"> 지나친 정치 논쟁</label></dt>
+				<dt><label><input type="radio" name="report" value="도배성 후기"> 도배성 후기</label></dt>
+			</dl>
+		</div>
+		<div class="repotButton">
+			<input type="hidden" id="orderReport" name="orderReport">
+			<input type="hidden" id="pageNumReport" name="pageNumReport">
+			<input type="hidden" id="reviewNumReport" name="reviewNumReport">		
+			
+			<a style="border: 1px solid #8080ff; color: #ffffff; background-color:#8080ff; padding: 5px 10px;" onclick="clickReview(orderReport.value,pageNumReport.value,reviewNumReport.value,'report')">신고하기</a>
+			<a style="border: 1px solid #000000; color: #000000; padding: 5px 10px;" onclick="cancelReport()">취소하기</a>
+		</div>
+	</div>
+</div>
+
 <div class="ap_contents product detail">
 	<form method="post" name="detailForm">
 		<!-- product 정보 -->

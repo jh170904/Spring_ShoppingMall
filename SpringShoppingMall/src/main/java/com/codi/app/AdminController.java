@@ -11,12 +11,15 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -64,7 +67,7 @@ public class AdminController {
 	
 	@Autowired
 	MyUtil myUtil;
-	
+
 	
 	//惑前殿废
 	@RequestMapping(value = "/admin/productAdminCreate.action", method = {RequestMethod.GET, RequestMethod.POST})
@@ -405,13 +408,13 @@ public class AdminController {
 	//林巩包府
 	@RequestMapping(value = "/admin/bankbookPaymentAdmin.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String bankkbookPaymentAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+			
 		String cp = request.getContextPath();
 		
 		String pageNum = request.getParameter("pageNum");
-		
+			
 		int currentPage = 1;
-		
+			
 		if(pageNum!=null)
 			currentPage = Integer.parseInt(pageNum);
 		
@@ -426,10 +429,10 @@ public class AdminController {
 		
 		if(currentPage>totalPage)
 			currentPage = totalPage;
-		
+			
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
-		
+			
 		List<AdminPaymentDTO> adminPaymentCheckList = orderDAO.adminPaymentCheck(start, end, searchOrderName);
 		List<AdminPaymentDTO> adminPaymentCheck2List = orderDAO.adminPaymentCheck2();
 		List<AdminPaymentDTO> adminDiscountPrice = orderDAO.adminDiscountPrice();
@@ -447,9 +450,9 @@ public class AdminController {
 			}
 			
 		}
-		
+			
 		searchOrderName = URLEncoder.encode(searchOrderName, "UTF-8");
-		
+			
 		String listUrl = cp + "/admin/bankbookPaymentAdmin.action?searchOrderName=" + searchOrderName;
 		
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
@@ -508,5 +511,81 @@ public class AdminController {
 		
 		return "redirect:/admin/bankbookPaymentAdmin.action";
 	}
+	
+	//府轰 包府
+	@RequestMapping(value = "/admin/reviewAdmin.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String reviewAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			
+		String cp = request.getContextPath();
+		
+		String pageNum = request.getParameter("pageNum");
+			
+		int currentPage = 1;
+			
+		if(pageNum!=null)
+			currentPage = Integer.parseInt(pageNum);
+		
+		int numPerPage = 3;
+		int totalPage = myUtil.getPageCount(numPerPage, reviewDAO.countReportReview());
 
+		if(currentPage>totalPage)
+			currentPage = totalPage;
+		
+		int start = (currentPage-1)*numPerPage+1;
+		int end = currentPage*numPerPage;
+		
+		List<ReviewDTO> reviewNumAndCount = reviewDAO.reviewNumAndCount(start, end);
+		List<ReviewDTO> adminReportReview= reviewDAO.reportedReview();
+			
+		String listUrl = cp + "/admin/reviewAdmin.action";
+			
+		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		
+		request.setAttribute("adminReportReview", adminReportReview);
+		request.setAttribute("reviewNumAndCount", reviewNumAndCount);
+		request.setAttribute("pageIndexList", pageIndexList);
+		request.setAttribute("pageNum", currentPage);
+		request.setAttribute("dataCount", reviewDAO.countReportReview());
+			
+		return "admin/reportReview";
+	}
+	
+	@RequestMapping(value = "/admin/reviewAdminDelete.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String reviewAdminDelete(int reviewNum, HttpServletRequest request, HttpServletResponse response) throws Exception {
+			
+		reviewDAO.deleteReviewAdmin(reviewNum);
+		
+		String cp = request.getContextPath();
+				
+		String pageNum = request.getParameter("pageNum");
+			
+		int currentPage = 1;
+			
+		if(pageNum!=null)
+			currentPage = Integer.parseInt(pageNum);
+		
+		int numPerPage = 3;
+		int totalPage = myUtil.getPageCount(numPerPage, reviewDAO.countReportReview());
+
+		if(currentPage>totalPage)
+			currentPage = totalPage;
+		
+		int start = (currentPage-1)*numPerPage+1;
+		int end = currentPage*numPerPage;
+		
+		List<ReviewDTO> reviewNumAndCount = reviewDAO.reviewNumAndCount(start, end);
+		List<ReviewDTO> adminReportReview= reviewDAO.reportedReview();
+			
+		String listUrl = cp + "/admin/reviewAdmin.action";
+			
+		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		
+		request.setAttribute("adminReportReview", adminReportReview);
+		request.setAttribute("reviewNumAndCount", reviewNumAndCount);
+		request.setAttribute("pageIndexList", pageIndexList);
+		request.setAttribute("dataCount", reviewDAO.countReportReview());
+			
+		return "admin/reportReview";
+	}
+	
 }

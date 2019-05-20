@@ -94,7 +94,7 @@
 								<td class="check_wrap check_only" style="vertical-align: top;">${dto.reviewDate_view }</td>
 								<td style="vertical-align: top;"><a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">${dto.productName }</a></td>
 								<td align="left" style="vertical-align: top;">${dto.subject }
-									<p id="${dto.reviewDate }" style="display: none; font-size: 13px;"><br/>
+									<p id="${dto.reviewNum }" style="display: none; font-size: 13px;"><br/>
 									<c:if test="${dto.originalName ne null }">
 										<img alt="" src="../upload/review/${dto.originalName }" height="100px;"><br/>
 									</c:if>
@@ -110,10 +110,10 @@
 									</c:forEach>
 								</td>
 								<td style="vertical-align: top;">
-									<button onclick="showReview('${dto.reviewDate }')" class="btn_sm_bordered">리뷰보기</button>
+									<button onclick="showReview('${dto.reviewNum }')" class="btn_sm_bordered">리뷰보기</button>
 								</td>
 								<td style="vertical-align: top;">
-									<button onclick="javascript:location.href='<%=cp%>/review/reviewDeleted.action?productId=${dto.productId }&reviewDate=${dto.reviewDate }&originalName=${dto.originalName }';" class="btn_sm_bordered">삭제하기</button>
+									<button onclick="javascript:location.href='<%=cp%>/review/reviewDeleted.action?reviewNum=${dto.reviewNum }';" class="btn_sm_bordered">삭제하기</button>
 								</td>
 							</tr>
 						</c:forEach>

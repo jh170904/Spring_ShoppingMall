@@ -48,7 +48,7 @@
 								<td class="check_wrap check_only">${dto.productId }</td>
 								<td><a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">${dto.productName }</a></td>
 								<td>
-									<button onclick="javascript:location.href='<%=cp%>/review/reviewWrited.action?productId=${dto.productId }&reviewDate=${dto.reviewDate }&pageNum=${pageNum }'" class="btn_sm_bordered">작성하기</button>
+									<button onclick="javascript:location.href='<%=cp%>/review/reviewWrited.action?reviewNum=${dto.reviewNum }'" class="btn_sm_bordered">작성하기</button>
 								</td>
 							</tr>
 						</c:forEach>

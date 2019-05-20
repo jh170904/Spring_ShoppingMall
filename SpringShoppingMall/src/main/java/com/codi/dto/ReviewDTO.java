@@ -31,6 +31,13 @@ public class ReviewDTO {
 	//도움이 돼요 출력시 필요
 	private int goodCount;
 	
+	//신고에서 필요
+	private String reportContent;
+	private int reportCount;
+	
+	//관리자에서 필요
+	private String reportedUserId;
+	
 	public int getReviewNum() {
 		return reviewNum;
 	}
@@ -163,5 +170,27 @@ public class ReviewDTO {
 	public void setGoodCount(int goodCount) {
 		this.goodCount = goodCount;
 	}
+	
+	public String getReoprtContent() {
+		return reportContent;
+	}
+	public void setReoprtContent(String reportContent) {
+		this.reportContent = reportContent;
+	}
+	
+	public int getReportCount() {
+		return reportCount;
+	}
+	public void setReportCount(int reportCount) {
+		this.reportCount = reportCount;
+	}
+	
+	public String getReportedUserId() {
+		return reportedUserId;
+	}
+	public void setReportedUserId(String reportedUserId) {
+		this.reportedUserId = reportedUserId;
+	}
+	
 
 }

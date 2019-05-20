@@ -414,8 +414,7 @@ input[type=radio] {
 		</div>
 		
 		<div class="button">	
-			<input type="hidden" name="productId" value="${dto.productId }">
-			<input type="hidden" name="reviewDate" value="${dto.reviewDate }">
+			<input type="hidden" name="reviewNum" value="${dto.reviewNum }">
 			<input type="button" class="btn_blg_secondary" value="취소" onclick="javascript:location.href='<%=cp%>/review/reviewPossibleList.action?pageNum=${pageNum}';">
 			<input type="button" class="btn_blg_primary" value="등록" onclick="writeReview()">
 		</div>
