@@ -36,11 +36,6 @@
 <script type="text/javascript" src="<%=cp%>/resources//js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="<%=cp%>/resources//js/jquery-ui.js"></script>
 
-<link href="<%=cp %>/project/member/css/layout.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<%=cp %>/project/member/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="<%=cp %>/project/member/js/jquery.leanModal.min.js"></script>
-
-
 <style type="text/css">
 .
 #fonts-loaded body { /* 웹 폰트 다운로드 전에는 화면을 보여주지 않음 */

@@ -181,7 +181,6 @@
 		
 		$(".goodButton").click(function(){
 			var iNum = $(this).attr('value');
-			alert(iNum);
 	        var info = '<%=(MemberDTO)session.getAttribute("customInfo")%>';
 	        $.ajax({
 	            async: true,
