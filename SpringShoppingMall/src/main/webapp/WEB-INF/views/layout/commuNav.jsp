@@ -5,7 +5,14 @@
 	String cp4 = request.getContextPath();
 %>
 <%@include file="./top2.jsp"  %>
-		
+<style>
+.gnb>li:hover {
+	background-color: #DAD9FF;
+	border-color: #DAD9FF;
+	border-radius: 4px;
+}
+</style>
+
 		<table style="width: 1200px; margin-left: auto; margin-right: auto; ">
 			<tr>
 				<td>
@@ -32,7 +39,5 @@
 		</table>
 
 
-
-		
 		
 		</div>

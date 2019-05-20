@@ -5,6 +5,13 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp2 = request.getContextPath();
 %>
+<style>
+.gnb>li:hover {
+	background-color: #DAD9FF;
+	border-color: #DAD9FF;
+	border-radius: 4px;
+}
+</style>
 		
 		<table style="width: 1200px; margin-left: auto; margin-right: auto; ">
 			<tr>
