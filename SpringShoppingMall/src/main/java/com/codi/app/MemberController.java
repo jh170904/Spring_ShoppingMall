@@ -369,13 +369,9 @@ public class MemberController {
 		
 		
 		//파일이 존재한다면 업로드 하기
-		
 		if(changeImage==null || changeImage.equals("")) {
 			dto.setmImage(preImage);
-		}
-		else if(file!=null && file.getSize()>0) {
-
-			System.out.println(file);
+		}else if(file!=null && file.getSize()>0) {
 			
 			try {
 				
@@ -390,11 +386,11 @@ public class MemberController {
 
 				dto.setmImage(fimeName);
 				
-				
 				//기존 물리적 파일에 있는 이미지 삭제
 				//1.기존 물리적 파일의 이미지 가져오기(id로) - dao생성
 				//물리적 파일의 이미지 이름이 default.jpg가 아니면 물리적 파일 삭제
 				String deleteImage = dao.originalProfile(info.getUserId());
+				
 				
 				if(!deleteImage.equals("default.jpg")) {					
 					String deleteFile = path + "/" + deleteImage;
@@ -410,6 +406,20 @@ public class MemberController {
 			dto.setmImage("default.jpg");
 		}
 
+		
+		
+		try {
+			if(changeImage.equals("default.jpg'")&&!dao.originalProfile(info.getUserId()).equals("default.jpg")){
+				String deleteFile = path + "/" + dao.originalProfile(info.getUserId());
+				File deletefile = new File(deleteFile);
+		        deletefile.delete();
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
 		dto.setmMessage(request.getParameter("mMessage"));
 		dto.setEmail(request.getParameter("email"));
 		dto.setUserId(info.getUserId());

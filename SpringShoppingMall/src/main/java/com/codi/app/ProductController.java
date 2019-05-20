@@ -80,7 +80,7 @@ public class ProductController {
 			//dao.getReviewCount(vo.productId)
 			int reviewCount =  reviewDAO.getProductDataCount(vo.getSuperProduct());
 			//dao.getReviewRate(vo.productId)
-			float avgReviewRate = reviewDAO.productGetList_heart(vo.getSuperProduct());
+			float avgReviewRate = (float) (Math.round(reviewDAO.productGetList_heart(vo.getSuperProduct())*10)/10.0);
 			
 			vo.setReviewCount(reviewCount);
 			vo.setReviewRate(avgReviewRate);
@@ -156,8 +156,7 @@ public class ProductController {
 			//dao.getReviewCount(vo.productId)
 			int reviewCount =  reviewDAO.getProductDataCount(vo.getSuperProduct());
 			//dao.getReviewRate(vo.productId)
-			float avgReviewRate = reviewDAO.productGetList_heart(vo.getSuperProduct());
-			
+			float avgReviewRate =(float) (Math.round(reviewDAO.productGetList_heart(vo.getSuperProduct())*10)/10.0);
 			vo.setReviewCount(reviewCount);
 			vo.setReviewRate(avgReviewRate);
 		}
@@ -249,7 +248,7 @@ public class ProductController {
 			//dao.getReviewCount(vo.productId)
 			int reviewCount =  reviewDAO.getProductDataCount(vo.getSuperProduct());
 			//dao.getReviewRate(vo.productId)
-			float avgReviewRate = reviewDAO.productGetList_heart(vo.getSuperProduct());
+			float avgReviewRate = (float) (Math.round(reviewDAO.productGetList_heart(vo.getSuperProduct())*10)/10.0);
 			
 			//int heartCount = dao.storeHeartCount2(vo.getSuperProduct());
 			
@@ -336,7 +335,7 @@ public class ProductController {
 			//dao.getReviewCount(vo.productId)
 			int reviewCount =  reviewDAO.getProductDataCount(vo.getSuperProduct());
 			//dao.getReviewRate(vo.productId)
-			float avgReviewRate = reviewDAO.productGetList_heart(vo.getSuperProduct());
+			float avgReviewRate = (float) (Math.round(reviewDAO.productGetList_heart(vo.getSuperProduct())*10)/10.0);
 			
 			vo.setReviewCount(reviewCount);
 			vo.setReviewRate(avgReviewRate);
@@ -416,7 +415,7 @@ public class ProductController {
 			//dao.getReviewCount(vo.productId)
 			int reviewCount =  reviewDAO.getProductDataCount(vo.getSuperProduct());
 			//dao.getReviewRate(vo.productId)
-			float avgReviewRate = reviewDAO.productGetList_heart(vo.getSuperProduct());
+			float avgReviewRate = (float) (Math.round(reviewDAO.productGetList_heart(vo.getSuperProduct())*10)/10.0);
 			
 			vo.setReviewCount(reviewCount);
 			vo.setReviewRate(avgReviewRate);
@@ -524,7 +523,7 @@ public class ProductController {
 			//dao.getReviewCount(vo.productId)
 			int reviewCount =  reviewDAO.getProductDataCount(vo.getSuperProduct());
 			//dao.getReviewRate(vo.productId)
-			float avgReviewRate = reviewDAO.productGetList_heart(vo.getSuperProduct());
+			float avgReviewRate = (float) (Math.round(reviewDAO.productGetList_heart(vo.getSuperProduct())*10)/10.0);
 			
 			vo.setReviewCount(reviewCount);
 			vo.setReviewRate(avgReviewRate);
