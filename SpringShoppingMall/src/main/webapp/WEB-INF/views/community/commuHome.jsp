@@ -36,7 +36,7 @@
 
 .scale {
   width : 100%;
-  height : 610px;
+  height : 656px;
   overflow: hidden;
   display: inline-block;
   position: relative;
@@ -124,7 +124,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-
 <script>
 
 	$(document).ready(function() {
@@ -135,6 +134,7 @@
 			mode : 'fade',
 			autoControls : true,
 			pager : true,
+			controls : false,
 		});
 	});
 
@@ -143,23 +143,27 @@
 <div class="ap_container home-header" style="width: 1250px; margin: auto; margin-bottom: 50px;">
 	<div>
 		<dl>
-			<dt style="width: 70%; height:610px; display: inline-block; position: relative;">
+			<dt style="width: 60%; height:656px; display: inline-block; position: relative;">
 				<div class="scale effect" style="border-radius:10px;">
 					<img src="${imagePath }/${commuMain.iImage}.png">
 				</div>
 				<img src="../upload/profile/${commuMain.mImage }" width="40px"; height="40px;" style="border-radius:50px; position: absolute; top: 520px; left: 50px;">
 				<p style="position: absolute; top: 460px; left: 55px; font-size: 40px; color: #000000;">${commuMain.iSubject }</p>
 				<p style="position: absolute; top: 532px; left: 97px; color: #000000;">${commuMain.userId }</p>
-				<button class="btn_commu_main" style="position: absolute; top: 515px; left: 600px;" onclick="location.href='<%=cp%>/pr/codiDetailList.action?iNum=${commuMain.iNum}';">보러가기</button>
+				<button class="btn_commu_main" style="position: absolute; top: 500px; left: 550px;" onclick="location.href='<%=cp%>/pr/codiDetailList.action?iNum=${commuMain.iNum}';">보러가기</button>
 			</dt>
 		
-			<dt style="width:27%; height:610px; display: inline-block; vertical-align: top;">
+			<dt style="width:37%; height:656px; display: inline-block; vertical-align: top;">
 				<div>
 					<ul class="commu_main_slider">
-						<li><a href="#"><img src="../resources/image/commuImage/none1.jpg" style="height: 610px; border-radius: 10px;"></a></li>
-						<li><a href="#"><img src="../resources/image/commuImage/none2.jpg" style="height: 610px; border-radius: 10px;"></a></li>
-						<li><a href="#"><img src="../resources/image/commuImage/none3.jpg" style="height: 610px; border-radius: 10px;"></a></li>
-						<li><a href="#"><img src="../resources/image/commuImage/none4.jpg" style="height: 610px; border-radius: 10px;"></a></li>				
+						<li>
+							<a href="#"><img src="../resources/image/commuImage/none1.jpg" style="height: 320px; width:460px; border-radius: 10px;"></a><br/>
+							<a href="#"><img src="../resources/image/commuImage/none2.jpg" style="height: 320px; width:460px; border-radius: 10px;"></a>
+						</li>
+						<li>
+							<a href="#"><img src="../resources/image/commuImage/none3.jpg" style="height: 320px; width:460px; border-radius: 10px;"></a><br/>
+							<a href="#"><img src="../resources/image/commuImage/none4.jpg" style="height: 320px; width:460px; border-radius: 10px;"></a>
+						</li>		
 					</ul>
 				</div>
 			</dt>

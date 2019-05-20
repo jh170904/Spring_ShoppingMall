@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.codi.dao.CouponDAO;
+import com.codi.dao.MemberDAO;
 import com.codi.dao.OrderDAO;
 import com.codi.dao.ProductDAO;
 import com.codi.dao.ProductDetailDAO;
@@ -64,6 +65,10 @@ public class AdminController {
 	@Autowired
 	@Qualifier("orderDAO")
 	OrderDAO orderDAO;
+	
+	@Autowired
+	@Qualifier("memberDAO")
+	MemberDAO memberDAO;
 	
 	@Autowired
 	MyUtil myUtil;
@@ -586,6 +591,37 @@ public class AdminController {
 		request.setAttribute("dataCount", reviewDAO.countReportReview());
 			
 		return "admin/reportReview";
+	}
+	
+	//회원관리
+	@RequestMapping(value = "/admin/memberList.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String memberList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		String cp = request.getContextPath();
+				
+		String pageNum = request.getParameter("pageNum");
+			
+		int currentPage = 1;
+			
+		if(pageNum!=null)
+			currentPage = Integer.parseInt(pageNum);
+		
+		int numPerPage = 3;
+		int totalPage = myUtil.getPageCount(numPerPage, reviewDAO.countReportReview());
+
+		if(currentPage>totalPage)
+			currentPage = totalPage;
+		
+		int start = (currentPage-1)*numPerPage+1;
+		int end = currentPage*numPerPage;
+		
+		List<MemberDTO> memberList = (List<MemberDTO>) memberDAO.getAllData();
+		
+		String listUrl = cp + "/admin/memberList.action";
+		
+		request.setAttribute("memberList", memberList);
+			
+		return "admin/memberAdminList";
 	}
 	
 }

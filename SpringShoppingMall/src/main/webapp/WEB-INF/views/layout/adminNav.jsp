@@ -65,14 +65,14 @@
 	<nav id="myPageMenu"> 
 		<ul> 
 			<li>
-				<a class="menuLink" href="#" id="myPage">회원관리</a>
+				<a class="menuLink" href="<%=cp1%>/admin/memberList.action" id="memberList.action">회원관리</a>
 			</li> 
 			<li>
 				<a class="menuLink" href="<%=cp1%>/admin/productAdminList.action" id="productAdminList.action">상품관리</a>
 			</li> 
 			
 			<li>
-				<a class="menuLink" href="<%=cp %>/admin/reviewAdmin.action" id="reviewAdmin.action">리뷰관리</a>
+				<a class="menuLink" href="<%=cp1%>/admin/reviewAdmin.action" id="reviewAdmin.action">리뷰관리</a>
 			</li> 
 			
 			<li>

@@ -26,19 +26,19 @@
 
 <div class="ap_contents product detail" style="padding-left: 70px;">
 
-	<div style="width:1100px;margin:30px auto;text-align:left;">
-		<div style="width: 1100px; padding-left:20px;height:40px;text-align:left;line-height:40px;" class="btn_sm_bordered">
-		무통장입금 관리 (admin)	
+	<div style="width:1200px;margin:30px auto;text-align:left;">
+		<div style="width: 1100px; height:100px; text-align:center; line-height:50px; font-size: 30px; color:#000000; border: none">
+			무통장입금 관리
 		</div>
 		
 		<div style="padding: 10px 0px; float: right;">
 			<form action="" method="post" name="search">
-			<input type="text;" style="width: 200px; text-align: left;" class="btn_sm_bordered" name="searchOrderName">
+			<input type="text" style="width: 200px; text-align: left;" class="btn_sm_bordered" name="searchOrderName">
 			<button class="btn_sm_bordered" onclick="searchOrderName()">검색</button>
 			</form>
 		</div>
 		
-		<div style="width: 1100px;">
+		<div style="width: 1200px;">
 			<table class="ui_table_striped data_table thead_colored align_center @table-striped-apply" >
 			
 				<colgroup>

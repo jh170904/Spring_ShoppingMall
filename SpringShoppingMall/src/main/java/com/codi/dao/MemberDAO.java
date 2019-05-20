@@ -130,6 +130,13 @@ public class MemberDAO {
 		sessionTemplate.insert("memberMapper.deleteFollow",params);
 		
 	}
+	
+	public List<MemberDTO> getAllData(){
+
+		List<MemberDTO> lists = sessionTemplate.selectList("memberMapper.getAllData");
+		
+		return lists;
+	}
 
 
 }

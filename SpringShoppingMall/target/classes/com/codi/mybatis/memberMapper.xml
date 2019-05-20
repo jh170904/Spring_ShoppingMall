@@ -69,4 +69,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	delete follow where myId=#{myId} and myFriendId=#{myFriendId}
 </delete>
 
+<select id="getAllData" resultType="com.codi.dto.MemberDTO">
+	select userId,userPwd,userName,email,point,userGrade,mImage,mMessage
+	from member
+</select>
+
 </mapper>
