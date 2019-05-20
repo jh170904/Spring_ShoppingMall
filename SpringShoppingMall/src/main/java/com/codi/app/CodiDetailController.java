@@ -234,6 +234,7 @@ public class CodiDetailController {
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		List<String> good = null;
 		List<String> hashTagLists = dao.getPopularHashTagLists();
+				
 		String pageNum = request.getParameter("pageNum");
 		
 		//검색 해시태그 없을 경우 가장 많이 사용된 해시태그 사용
@@ -282,6 +283,7 @@ public class CodiDetailController {
 		
 		//보낼때
 		iHashtag = URLEncoder.encode(iHashtag,"UTF-8");
+		
 		String listUrl = cp +"/pr/codiHashTagList.action?iHashtag="+iHashtag;
 		
 		//페이징처리는 자바스크립트로 진행

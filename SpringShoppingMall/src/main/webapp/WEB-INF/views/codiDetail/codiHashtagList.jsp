@@ -1,17 +1,9 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.net.URLDecoder"%>
 <%@page import="com.codi.dto.MemberDTO"%>
-<%@page import="java.net.URLEncoder"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../layout/commuNav.jsp"  %>
-<script type="text/javascript" src="<%=cp%>/resources/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
 
-	$(function(){
-		listPage(1); //첫 실행시 페이지=1로 실행
-	}); 
-	
+<script type="text/javascript">
 	$(function(){
 		$(".goodButton").click(function(){
 			var iNum = $(this).attr('value');
@@ -65,8 +57,8 @@ div#content_menu_container {
 }
 
 #container div#content_menu_container div#content_menu {
-    border: 1px solid rgba(0,0,0,.12);
-    background: #fff;
+    border: 1px solid rgba(0,0,0,0.0);
+    background: #F6F6F6;
 }
 
 .clear_both {
@@ -235,11 +227,11 @@ button {
 }
 
 .set_container .set:hover {
-    outline: 1px solid #8080ff;
+    outline: 2px solid #8080ff;
 }
 
 .menu.selector :hover {
-    outline: 1px solid #8080ff;
+    outline: 2px solid #8080ff;
 }
 
 #floating_create a {
@@ -288,15 +280,6 @@ button {
 		        	<c:param name="iHashtag" value="${item}"/>
 				</c:url>
 				<a class="tagger" href="${toURL}">#${item }</a>
-<%-- <%
-	ArrayList<String> hashTagLists = (ArrayList<String>)request.getAttribute("hashTagLists");
-	String encHashtag[] = new String[hashTagLists.size()];
-	
-	for(int i=0; i<hashTagLists.size();i++){
-		encHashtag[i] = URLEncoder.encode(hashTagLists.get(i), "UTF-8");
-		out.println("<a class='tagger' href='codiHashTagList.action?"+encHashtag[i]+"'>#"+hashTagLists.get(i)+"</a>");
-	}
-%>	 --%>
  			</c:forEach>
 			</div>
 				

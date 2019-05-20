@@ -131,7 +131,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 동일 해시태그가 있는 리스트 출력 getCodiHashTagLists  -->
 <select id="getCodiHashTagLists" parameterType="HashMap" resultType="com.codi.dto.CodiHashTagDTO">	
-	select * from (
+	select rnum,a.iNum,iImage,iDate,iHashTag,productId,nvl(heartCount,0) heartCount from (
 	select rownum rnum, data.* from(
 	select iNum,iImage,iDate,iHashTag,productId 
 	from codiList where iHashTag like '%'||#{iHashTag}||'%' 
@@ -145,7 +145,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 인기해시태그 상위 10개 --> 
 <select id="getPopularHashTagLists" resultType="String">
 	select iHashTag from
-	(select tagcontent iHashTag, count(tagcontent) cnt 
+	(select trim(tagcontent) iHashTag, count(tagcontent) cnt 
 	from hashtag 
 	group by tagcontent 
 	order by cnt desc)
