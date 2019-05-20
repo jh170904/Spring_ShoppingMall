@@ -1185,8 +1185,6 @@ textarea.form-control {
 
 html, body {
 	line-height: 1;
-	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕",
-		"Malgun Gothic", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	letter-spacing: -0.4px;
 	font-size: 13px
