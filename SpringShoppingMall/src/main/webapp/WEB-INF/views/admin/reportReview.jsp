@@ -2,6 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../layout/adminNav.jsp"  %>
 
+
 <script>
 	function showReview(review) {
 
@@ -21,14 +22,14 @@
 	}
 </script>
 
-<div class="ap_contents product detail" style="padding-left: 70px;">
+<div class="ap_contents product detail">
 
-	<div style="width:1100px;margin:30px auto;text-align:left;">
-		<div style="width: 1100px; padding-left:20px;height:40px;text-align:left;line-height:40px;" class="btn_sm_bordered">
-		신고리뷰 관리 (admin)	
+	<div style="width:1200px;margin:30px auto;text-align:center;">
+		<div style="width: 1100px; height:100px; text-align:center; line-height:50px; font-size: 30px; color:#000000; border: none">
+			신고리뷰관리
 		</div>
 		
-		<div style="width: 1100px; margin-top: 50px;">
+		<div style="width: 1200px; margin-top: 50px;">
 			<table class="ui_table_striped data_table thead_colored align_center @table-striped-apply" >
 			
 				<colgroup>

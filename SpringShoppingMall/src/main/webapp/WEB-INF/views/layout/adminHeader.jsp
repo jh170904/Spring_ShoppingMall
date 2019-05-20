@@ -123,7 +123,7 @@
 			</ul>
 			<h1 class="logo">
 				<a href="<%=cp %>/pr/commuMain.action">
-					<img style="padding: 20px;" alt="" src="<%=cp %>/resources/image/logo.PNG"/>
+					<img style="padding-top:12px;  width: 230px;" alt="" src="<%=cp %>/resources/image/logo3.png"/>
 				</a>
 			</h1>
 		</div>

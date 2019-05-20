@@ -24,9 +24,9 @@
 	}
 </script>
 
-<div class="ap_contents product detail" style="padding-left: 70px;">
+<div class="ap_contents product detail">
 
-	<div style="width:1200px;margin:30px auto;text-align:left;">
+	<div style="width:1200px;margin:30px auto;text-align:center;">
 		<div style="width: 1100px; height:100px; text-align:center; line-height:50px; font-size: 30px; color:#000000; border: none">
 			무통장입금 관리
 		</div>

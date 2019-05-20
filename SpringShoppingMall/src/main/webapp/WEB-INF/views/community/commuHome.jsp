@@ -150,7 +150,7 @@
 				<img src="../upload/profile/${commuMain.mImage }" width="40px"; height="40px;" style="border-radius:50px; position: absolute; top: 520px; left: 50px;">
 				<p style="position: absolute; top: 460px; left: 55px; font-size: 40px; color: #000000;">${commuMain.iSubject }</p>
 				<p style="position: absolute; top: 532px; left: 97px; color: #000000;">${commuMain.userId }</p>
-				<button class="btn_commu_main" style="position: absolute; top: 500px; left: 550px;" onclick="location.href='<%=cp%>/pr/codiDetailList.action?iNum=${commuMain.iNum}';">보러가기</button>
+				<button class="btn_commu_main" style="position: absolute; top: 530px; left: 550px;" onclick="location.href='<%=cp%>/pr/codiDetailList.action?iNum=${commuMain.iNum}';">보러가기</button>
 			</dt>
 		
 			<dt style="width:37%; height:656px; display: inline-block; vertical-align: top;">
