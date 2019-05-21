@@ -1,14 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
-%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<%@include file="../layout/commuNav.jsp"%>
+
 <style>
 header, footer, main {
 	box-sizing: border-box;
@@ -18,11 +11,14 @@ header, footer, main {
 
 html, body {
 	line-height: 1;
-	font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕",
-		"Malgun Gothic", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	letter-spacing: -0.4px;
-	font-size: 13px;
+}
+
+h2{
+	font-size: 18pt;
+	margin-bottom: 10px;
+	font-weight: 3;
 }
 
 .question-form__cs {
@@ -169,7 +165,7 @@ textarea {
 .file_input input[type=text] {
 	vertical-align: middle;
 	display: inline-block;
-	width: 613px;
+	width: 587px;
 	height: 28px;
 	line-height: 28px;
 	font-size: 11px;
@@ -245,11 +241,11 @@ textarea {
 			</div>
 
 			<div class="question-form__header__title form-group error">
-				<input placeholder="해시태그" class="form-control" maxlength="61" value="${dto.qHashTag }"
+				<input placeholder="#해시태그" class="form-control" maxlength="61" value="${dto.qHashTag }"
 					size="1" type="text" name="qHashTag" id="qHashTag">
 			</div>
 
-			<footer class="question-form__footer">
+			<footer class="question-form__footer" style="margin-bottom: 30px;">
 				
 				<input type="hidden" name="mode" value="${mode }">
 		
@@ -273,5 +269,4 @@ textarea {
 		</form>
 	</div>
 
-</body>
-</html>
+	<%@include file="../layout/footer.jsp"%>

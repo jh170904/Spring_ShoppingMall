@@ -6,7 +6,7 @@
 select {
 border: 1px solid #999;
 font-family: inherit;
-background: url('<%=cp%>/resources/images/question/arrow.jpg') no-repeat 95% 50%;
+background: url('<%=cp%>/resources/images/question/sort-down.png') no-repeat 95% 50%;
 border-radius: 0px;
 }
 </style>
