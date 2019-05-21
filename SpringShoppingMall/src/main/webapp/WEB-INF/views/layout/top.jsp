@@ -80,6 +80,7 @@
 	font-weight: 900; 
 	font-size: 16px;
 	display:block; position:relative; margin:0 auto 7px; text-align: center; height: 50px; vertical-align: bottom;  padding-top: 15px; margin-left: 25px;
+	cursor:pointer;
 }
 
 .gnb>li:hover {
