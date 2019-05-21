@@ -89,7 +89,7 @@
 }
 
 .gnb>li{width: 135px;text-align: center;}
-.active{color: #8080ff;}
+.menuLink.active{color: #8080ff; background-color: #fff;}
 #smallMenu1{width: 1200px; margin-left: auto; margin-right: auto;}
 #smallMenu2{width: 1200px; margin-left: auto; margin-right: auto;}
 </style>

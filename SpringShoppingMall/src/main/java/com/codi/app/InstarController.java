@@ -67,11 +67,11 @@ public class InstarController {
 		String hashTag[] = dto.getiHashTag().split("#");
 
 		for(int i=1;i<hashTag.length;i++) {
-			dao.deleteHashtag(dto.getiNum(), hashTag[i]);
+			dao.deleteHashtag(dto.getiNum(), hashTag[i].replaceAll("\\p{Z}", ""));
 		}
 		
 		for(int i=1;i<hashTag.length;i++) {
-			dao.insertHashtag(dto.getiNum(), hashTag[i]);
+			dao.insertHashtag(dto.getiNum(), hashTag[i].replaceAll("\\p{Z}", ""));
 		}
 		
 		return "redirect:/myPage/myInstarLists.action";
