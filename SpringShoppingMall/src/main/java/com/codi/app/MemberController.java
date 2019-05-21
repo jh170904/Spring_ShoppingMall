@@ -348,8 +348,6 @@ public class MemberController {
 			str = "ÆÈ·Î¿ì";
 		}
 		
-		System.out.println(str);
-		
 		map.put("str", str);
 		return map;
 	}
