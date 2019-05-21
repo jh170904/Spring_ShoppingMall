@@ -2,7 +2,7 @@
 <%@page import="java.net.URLEncoder"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@include file="../layout/commuNav.jsp"  %>
+<%@include file="../layout/top.jsp"  %>
 <script type="text/javascript" src="<%=cp%>/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
   	$(function(){
@@ -443,9 +443,6 @@
 }
 body {
     background: #fff;
-    font-size: 12px;
-    font-family: 'Noto Sans Regular','Spoqa Han Sans JP','맑은 고딕',Dotum,'Apple SD Gothic Neo',Sans-serif;
-    color: #333;
     margin: 0;
 }
 .set_container {

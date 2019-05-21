@@ -1,7 +1,7 @@
 <%@page import="com.codi.dto.MemberDTO"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@include file="../layout/commuNav.jsp"  %>
+<%@include file="../layout/top.jsp"  %>
 
 <script type="text/javascript">
 	$(function(){

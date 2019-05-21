@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file="../layout/top3.jsp" %>
+<%@ include file="../layout/top.jsp" %>
 <%@ include file="../layout/mypage.jsp" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>

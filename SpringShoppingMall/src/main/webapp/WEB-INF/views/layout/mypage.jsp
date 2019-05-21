@@ -7,10 +7,11 @@
 <style>
 
 .myPageCategory{ 
-	width : 840px;
+	width : 100%;
 	margin-left: auto; 
 	margin-right: auto;
-	margin-top: 20px;
+	background-color: #eeeeee;
+	/* margin-top: 20px; */
 }
 
 #myPage_category{ 
@@ -18,7 +19,7 @@
 	height:50px;
 	margin-left: auto; 
 	margin-right: auto;
-	margin-top: 20px;
+	margin-top: 5px;
 }
 
 #con_category{ 
@@ -30,10 +31,13 @@
 }
 
 #myPageMenu {
-	height:40px;  
+	width: 1200px;
+	height:50px;  
 	margin-left: auto; 
 	margin-right: auto;
 	text-align:center;
+	vertical-align: middle;
+
 }
 
 .myPageCategory ul li {
@@ -59,7 +63,7 @@
 }
 
 .myPageMenuCategory {
-	height:40px;  
+	height:50px;  
 	width:1000px;
 	margin-left: auto; 
 	margin-right: auto;
@@ -71,6 +75,7 @@
 	float:left;
 	color:#000000;
 	line-height:30px;
+	width: 130px;
 	vertical-align:middle;
 	text-align:center;	
 }
@@ -78,8 +83,9 @@
 .myPageCategory2 .menuLink {
 	text-decoration:none;
 	display:block; 
-	width:130px;
+	width:100px;
 	font-size:16px;
+
 }
 
 .myPageCategory2 .menuLink:hover { 

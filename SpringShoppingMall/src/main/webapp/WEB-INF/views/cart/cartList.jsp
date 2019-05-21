@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@include file="../layout/storeNav.jsp"  %>
+<%@include file="../layout/top.jsp"  %>
 <style>
 .btn_sm_neutral{
 	color:#8080ff; 

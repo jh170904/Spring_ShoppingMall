@@ -48,7 +48,7 @@ html{min-width:1200px;}
 	.search_form .color_chip.rounded button{display:inline-block; width:50px; height:50px; border-radius:10px; -webkit-box-shadow: 0 5px 10px 0 #e7e7e7; box-shadow: 0 5px 10px 0 #e7e7e7;}
 	.search_form .color_chip.rounded input:checked + label{background-image:url(../images/search/bg_color_check.png); background-repeat:no-repeat; background-size:100%;}
 /* �ㅻ뜑 �곷떒 硫붾돱*/
-.ap_header .header_menu{float:right; margin-top:35px;}
+.ap_header .header_menu{float:right; margin-top:35px; padding-right: 15px;}
 .ap_header .header_menu>li{float:left; text-align:center; font-size:12px;}
 .ap_header .header_menu>li a{display:block; position:relative;}
 .ap_header .header_menu>li a:before{content:''; display:block; width:20px; height:20px; margin:0 auto 7px; background:url(../image/navi.PNG) no-repeat;}
@@ -58,7 +58,7 @@ html{min-width:1200px;}
 .ap_header .header_menu>li a.history:before{background-position:0 -80px;}
 .ap_header .header_menu>li a.logout:before{background-position:0 -100px;}
 .ap_header .header_menu>li a.mypage:before{background-position:0 -160px;}
-.ap_header .header_menu>li + li{margin-left:50px;}
+.ap_header .header_menu>li + li{margin-left:35px;}
 .ap_header .header_menu>li .num{position:absolute; top:-7px; left:50%; padding:0 6px; background:#f54a7e; color:#fff; font-size:12px; line-height: 18px; border-radius: 9px;}
 /*�쇳븨�덉뒪�좊━*/
 .ap_header .shopping_history_wrap{display:none; position:absolute; top:110px; left:0; z-index: 20; width:100%; height:210px; padding-top:9px; border-top:1px solid #d2d2d2; background:#fff; -webkit-box-shadow: 0 5px 10px 0 rgba(0,0,0,0.1); box-shadow: 0 5px 10px 0 rgba(0,0,0,0.1); }
@@ -83,7 +83,7 @@ html{min-width:1200px;}
 	.shopping_history .panel.notice{padding:0 !important}
 	.shopping_history .panel.notice .ico{width:60px; height:60px; background-size:100%; margin-bottom:10px;}
 /*gnb*/
-.ap_header .gnb_area{position:relative; border-top:1px solid #ebebeb; font-size:16px; color:#000;}
+.ap_header .gnb_area{position:relative; font-size:16px; color:#000;}
 .ap_header .gnb_area .btn_category{float:left; position:relative; width:100px; height:48px; padding:5px 0 0 0;}
 .ap_header .gnb_area .btn_category:before{content:''; display:inline-block; width:20px; height:20px; margin-right:5px; background:url(../images/common/ico_header.png) no-repeat 0 -140px; vertical-align: middle;}
 .gnb{float:left;}

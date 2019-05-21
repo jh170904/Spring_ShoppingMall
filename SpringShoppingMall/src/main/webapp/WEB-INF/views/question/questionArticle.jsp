@@ -1,7 +1,7 @@
 <%@page import="com.codi.dto.MemberDTO"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 
-<%@include file="../layout/commuNav.jsp"%>
+<%@include file="../layout/top.jsp"%>
 <style type="text/css">
 .comment_list {
     border-top: 1px solid #000;
@@ -23,8 +23,6 @@ form {
 }
 
 table {
-    border-collapse: separate;
-    border-spacing: 2px;
     padding-left: 3px;
 }
 

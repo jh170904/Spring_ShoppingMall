@@ -1,6 +1,6 @@
 <%@page import="com.codi.dto.MemberDTO"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@include file="./layout/storeNav.jsp"  %>
+<%@include file="./layout/top.jsp"  %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script type="text/javascript">
 
