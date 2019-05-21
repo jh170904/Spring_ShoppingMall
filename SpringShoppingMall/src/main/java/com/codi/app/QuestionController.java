@@ -108,8 +108,6 @@ public class QuestionController {
 
 		// 페이징을 위한 값들 보내주기
 		String listUrl = cp + "/qna/questionMain.action";
-
-		//String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
 		String order = request.getParameter("order");
 		if (order != null) {
@@ -282,8 +280,6 @@ public class QuestionController {
         Map<Object, Object> map = new HashMap<Object, Object>();
  
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
-		//System.out.println(info.getUserId());
-		//System.out.println(userid);
 		
         count =dao.followCheck(info.getUserId(),userid);
         
@@ -441,4 +437,86 @@ public class QuestionController {
 		return new ResponseEntity<Object>(json.toString(), responseHeaders, HttpStatus.OK);
 
 	}
+	
+	//QnA 마이페이지
+	@RequestMapping(value = "/myPage/questionMypage.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String QnaMypage(QuestionDTO dto,HttpServletRequest request,HttpSession session) throws IOException{
+
+		String cp = request.getContextPath();
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+		MemberDTO loginUserInfo = null;	
+		
+		dto.setUserId(info.getUserId());
+		String status = request.getParameter("status");
+		String on=request.getParameter("on");
+		
+		//로그인 사용자 
+		if(info!=null) {
+			String loginUserId = info.getUserId();
+			loginUserInfo = dao.getUserInfo(loginUserId);
+		}
+		int currentPage = 1;
+		String pageNum = request.getParameter("pageNum");
+		
+		if (pageNum != null)
+			currentPage = Integer.parseInt(pageNum);
+
+		
+		int dataCount = 0;
+		
+		if(status==null) {
+			dataCount=dao.countOneUser(info.getUserId());
+			
+		}else {
+			dataCount=dao.countOneUserReply(info.getUserId());
+		}
+		
+		int numPerPage = 3;
+		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+
+		if (currentPage > totalPage)
+			currentPage = totalPage;
+
+		int start = (currentPage - 1) * numPerPage + 1;
+		int end = currentPage * numPerPage;
+		
+		List<QuestionDTO> lists=null;
+		
+		// 페이징을 위한 값들 보내주기
+		String listUrl ="";
+		
+		if(status==null) {
+			lists=dao.getListsUser(start, end, info.getUserId());
+			listUrl= cp + "/myPage/questionMypage.action?on=me";
+			dataCount=dao.countOneUser(info.getUserId());
+			
+		}else {
+			lists=dao.getListsUserReply(start, end, info.getUserId());
+			listUrl= cp + "/myPage/questionMypage.action?status=reply&on=other";
+			dataCount=dao.countOneUserReply(info.getUserId());
+		}
+		
+		String pageIndexList=null;
+		
+		pageIndexList = myUtil.pageIndexList(currentPage, totalPage,listUrl);
+		
+		//나를 팔루우한 사람
+		int follower = dao.follower(info.getUserId());
+		//내가 팔로우한 사람
+		int following = dao.following(info.getUserId());
+
+		request.setAttribute("on", on);
+		request.setAttribute("follower", follower);
+		request.setAttribute("following", following);
+		request.setAttribute("dto", dto);
+		request.setAttribute("lists", lists);
+		request.setAttribute("loginUserInfo", loginUserInfo);
+		request.setAttribute("imagePath", "../upload/qna");
+		request.setAttribute("memberPath", "../upload/profile");
+		request.setAttribute("pageIndexList", pageIndexList);
+		
+		return "question/questionMypage";
+	}
+	
+	
 }

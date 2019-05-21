@@ -44,6 +44,56 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>
 </select>
 
+<!-- select 한명의 User -->
+<select id="getListsUser" parameterType="hashMap" resultType="com.codi.dto.QuestionDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select qNum,qSubject,qContent,A.userId,originalName,saveFileName,qDate,qHitCount,qHashTag,mImage
+	,(select count(*) from QREPLY C where C.qnum=A.qnum) replyCount
+	from questionBoard A,member B where A.userId=B.userId and A.userId=#{userId} order by qNum desc)data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- 한명의 User datacount -->
+<select id="countOneUser" parameterType="hashMap" resultType="int">
+	select nvl(count(*),0) from questionBoard where 
+	userId=#{userId}
+</select>
+
+
+<!-- select 한명의 User(내가 답변한) -->
+<select id="getListsUserReply" parameterType="hashMap" resultType="com.codi.dto.QuestionDTO">
+	select * from (
+	select rownum rnum, data.* from(
+	select distinct A.qNum,qSubject,qContent,A.userId,originalName,saveFileName,qDate,qHitCount,qHashTag,mImage
+	,(select count(*) from QREPLY C where C.qnum=A.qnum) replyCount
+	from questionBoard A,member B,qreply C 
+	where A.userId=B.userId and A.qnum in
+	(select qnum from QREPLY where userId=#{userId}) order by qNum desc)data)
+	<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+]]>
+</select>
+
+<!-- 한명의 User datacoun(내가 답변한) -->
+<select id="countOneUserReply" parameterType="hashMap" resultType="int">
+	select nvl(count(*),0) from questionBoard where 
+	qnum in (select qnum from QREPLY where userId=#{userId})
+</select>
+
+<select id="follower" parameterType="String" resultType="int">
+	select nvl(count(*),0) from follow
+	where myFriendId=#{userId}
+</select>
+
+<select id="following" parameterType="String" resultType="int">
+	select nvl(count(*),0) from follow
+	where myId=#{userId}
+</select>
+
+
 <!-- 답변을 기다리는 게시글 select -->
 <select id="getListNotyet" parameterType="hashMap" resultType="com.codi.dto.QuestionDTO">
 	select * from (

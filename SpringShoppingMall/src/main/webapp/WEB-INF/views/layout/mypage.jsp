@@ -170,7 +170,7 @@
 			</li> 
 			
 			<li>
-				<a class="menuLink" href="#" id="">질문과답변</a>
+				<a class="menuLink" href="<%=cp1%>/myPage/questionMypage.action" id="questionMypage.action">질문과답변</a>
 			</li> 
 			
 			<li>
