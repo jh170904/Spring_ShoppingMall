@@ -58,8 +58,6 @@
     display: inline-block;
     text-align: start;
     margin: 0em;
-    font: 400 13.3333px Arial;
-    font-family: 'Noto Sans Regular','Spoqa Han Sans JP','맑은 고딕',Dotum,'Apple SD Gothic Neo',Sans-serif;
     font-size: 14px;
     letter-spacing: 1px;
     padding-bottom: 10px;
