@@ -61,4 +61,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	from issue a, coupon b where a.couponKey = b.couponKey and a.userid=#{userId} and used='N'
 </select>
 
+<delete id="deleteCoupon" parameterType="int">
+	delete coupon where couponKey=#{couponKey}
+</delete>
+
 </mapper>

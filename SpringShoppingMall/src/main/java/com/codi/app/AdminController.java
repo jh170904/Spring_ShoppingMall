@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.codi.dao.CouponDAO;
 import com.codi.dao.MemberDAO;
@@ -384,7 +385,7 @@ public class AdminController {
 
 		int dataCount = couponDAO.getDataCount();
 
-		int numPerPage = 5;
+		int numPerPage = 7;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
 
 		if (currentPage > totalPage)
@@ -410,7 +411,22 @@ public class AdminController {
 		return "admin/couponAdminList";
 	}
 	
-	//林巩包府
+	@RequestMapping(value = "admin/couponAdminDeleted.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String couponAdminDeleted(int couponKey, HttpServletRequest req, RedirectAttributes redirectAttributes, HttpSession session) {
+
+		String pageNum = req.getParameter("pageNum");
+		
+		if(pageNum==null || pageNum.equals(""))
+			pageNum = "1";
+
+		couponDAO.deleteCoupon(couponKey);		
+		
+		redirectAttributes.addAttribute("pageNum", pageNum);
+
+		return "redirect:/admin/couponAdminList.action";
+	}
+	
+	//林巩包府 
 	@RequestMapping(value = "/admin/bankbookPaymentAdmin.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String bankkbookPaymentAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			

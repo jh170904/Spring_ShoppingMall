@@ -114,4 +114,8 @@ public class CouponDAO {
 		return lists;
 	}
 	
+	public void deleteCoupon(int couponKey) {		
+		sessionTemplate.delete("couponMapper.deleteCoupon",couponKey);
+	}
+	
 }

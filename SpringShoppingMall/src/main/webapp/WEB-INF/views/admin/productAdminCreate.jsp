@@ -1,6 +1,160 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@include file="../layout/adminNav.jsp"  %>
 
+<style>
+#productAdmin_form {
+	max-width: 1000px;
+	width: 100%;
+	margin: 30px auto;
+	background-color: #ffffff;
+	padding: 40px 50px;
+	box-sizing: border-box;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+	color: #424242;
+}
+
+.sub_title {
+	float: left;
+	width: 100px;
+	line-height: 40px;
+}
+
+input[type=text] {
+	padding: 0 15px;
+	border: solid 1px #dcdcdc;
+	box-sizing: border-box;
+	width: 350px;
+	height: 40px;
+	line-height: 40px;
+}
+
+select {
+	padding: 0 15px;
+	border: solid 1px #dcdcdc;
+	box-sizing: border-box;
+	width: 350px;
+	height: 40px;
+	line-height: 40px;
+	/* background: url('arrow.jpg') no-repeat 80% 50%; */
+}
+/* 
+select::-ms-expand {
+	display: none;
+}
+ */
+form {
+	display: block;
+	margin-top: 0em;
+}
+
+.field {
+	margin-top: 20px;
+	overflow: hidden;
+	clear: both;
+}
+
+.title {
+	color : #000000;
+	margin-bottom: 25px;
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.notice {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	font-size: 12px;
+	color: #757575;
+}
+
+label {
+	color: #424242;
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#sendButton {
+	margin-top: 15px;
+	width: 50%;
+	height: 40px;
+	background-color: #8080ff;
+	border: none;
+	border-radius: 4px;
+	color: #ffffff;
+	font-size: 18px;
+	font-weight: 700;
+	text-align: center;
+	cursor: pointer;
+}
+
+input {
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	*font-size: 100%;
+}
+
+.sendButton {
+	display : inline-block;
+    margin-top: 15px;
+    width: 195px;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+}
+
+.file_table {
+	padding-top : 10px;
+	padding-bottom : 10px;
+	border-bottom: 1px solid #333;
+}
+
+.attach_form {
+	width: 100px;
+	height: 100px;
+	background-color: #5D5D5D;
+	color: #ffffff;
+	text-align: center;
+	line-height: 100px;
+	font-size: 16px;
+	font-weight: 700;
+}
+
+input[type=file] {
+	padding: 0px;
+	border: solid 1px #dcdcdc;
+	box-sizing: border-box;
+	width: 350px;
+	height: 40px;
+	line-height: 40px;
+}
+
+.review_showImg {
+	border: 1px solid #EAEAEA;
+	width: 300px;
+}
+
+.review_detail {
+	border: 1px solid #EAEAEA;
+	width: 700px;
+}
+
+.review_img {
+	width: 300px;
+}
+
+.detail_img {
+	width: 700px;
+}
+
+</style>
+
 <script type="text/javascript">
 	String.prototype.trim = function() {
 		var TRIM_PATTERN = /(^\s*)|(\s*$)/g;
@@ -104,71 +258,80 @@
 	}
 </script>
 
-
-	<div class="ap_contents product detail" style="padding-left: 150px;">
-		<table width="600" border="1" bordercolor="#eeeeee" align="center" >
-		<tr height="40">
-			<td style="padding-left: 20px; border-color: #AD8EDB;">
-			<b>상품등록(ADMIN)</b>
-			</td>
-		</tr>
-		</table>
-		<br/><br/>
+<!-- 이미지 미리보기 -->
+<script type="text/javascript">
+	function showImg(value,img) {
 		
+		
+		if(value.files && value.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$(eval("'#" +img + "'")).attr('src',e.target.result);
+				$(eval("'#" +img + "_div'")).css('display', 'block');
+			}
+			reader.readAsDataURL(value.files[0]);
+		}
+		
+	}
+</script>
+
+
+<div class="ap_contents mypage" style="position: relative;">
+	<div id="productAdmin_form">
+	
+	<div class="title">상품 등록</div>
+
 		<form name="myForm" method="post" enctype="multipart/form-data">
-		<table border="0" align="center">
-		<tr><td colspan="2" height="1" bgcolor="#dbdbdb" align="center"></td></tr>
+		<table  width="900" align="center">
+		
 		<tr>
-			<td width="140" height="30" style="padding-left: 20px;">
-			상품id
-			</td>
-			<td width="460" style="padding-left: 10px;">
-			<input type="text" name="productId" maxlength="20" class="boxTF">
+			<td width="100" height="50">상품id</td>
+			<td style="padding-left: 20px;">
+				<input type="text" name="productId" size="30" maxlength="20" placeholder="상품ID를 입력해 주세요" 
+					class="input_wrap w100p">
 			</td>
 		</tr>
+
 		<tr>
-			<td width="140" height="30" style="padding-left: 20px;">
-			상위상품id (superProduct)
-			</td>
-			<td width="460" style="padding-left: 10px;">
-			<input type="text" name="superProduct" maxlength="20" class="boxTF">
+			<td width="100" height="50">상위상품id (superProduct)</td>
+			<td style="padding-left: 20px;">
+				<input type="text" name="superProduct" size="30" maxlength="20" placeholder="상위상품ID를 입력해 주세요" 
+					class="input_wrap w100p">
 			</td>
 		</tr>
+		
 		<tr>
-			<td width="140" height="30" style="padding-left: 20px;">
-			상품카테고리
-			</td>
-			<td width="460" style="padding-left: 10px;">
-			<select name="productCategory" style="width: 300px; height: 20px;" >
-	  			<option value="">카테고리 선택</option>
-	  			<c:forTokens var='item' items="OUTER,TOP,BOTTOM,DRESS,SHOES,BAG,ACC" delims="," >
-					<option value="${item}" >${item}</option>
-				</c:forTokens>
-			</select>
+			<td width="100" height="50">상품카테고리</td>
+			<td style="padding-left: 20px;">
+				<select name="productCategory" class="input_wrap w100p">
+	  				<option value="">카테고리 선택</option>
+	  				<c:forTokens var='item' items="OUTER,TOP,BOTTOM,DRESS,SHOES,BAG,ACC" delims="," >
+						<option value="${item}" >${item}</option>
+					</c:forTokens>
+				</select>
 			</td>
 		</tr>
+		
 		<tr>
-			<td width="140" height="30" style="padding-left: 20px;">
-			상품명
-			</td>
-			<td width="460" style="padding-left: 10px;">
-			<input type="text" name="productName" maxlength="100" class="boxTF">
+			<td width="100" height="50">상품명</td>
+			<td style="padding-left: 20px;">
+				<input type="text" name="productName" size="30" maxlength="100" placeholder="상품명 입력해 주세요" 
+					class="input_wrap w100p">
 			</td>
 		</tr>
+		
 		<tr>
-			<td width="140" height="30" style="padding-left: 20px;">
-			상품사이즈
-			</td>
-			<td width="460" style="padding-left: 10px;">
-			<input type="text" name="productSize" maxlength="100" class="boxTF">
+			<td width="100" height="50">상품사이즈</td>
+			<td style="padding-left: 20px;">
+			<input type="text" name="productSize" size="30" maxlength="100" placeholder="상품사이즈를 입력해 주세요" 
+					class="input_wrap w100p">
 			</td>
 		</tr>
+		
 		<tr>
-			<td width="140" height="30" style="padding-left: 20px;">
-			색상
-			</td>
-			<td width="460" style="padding-left: 10px;">
-				<select name="color" style="width: 350px; height: 20px;" class="boxTF">
+			<td width="100" height="50">색상</td>
+			<td style="padding-left: 20px;">
+				<select name="color" class="input_wrap w100p">
 					<option value="">색상 선택</option>
 					<c:forTokens var='item' items="핑크,레드,오렌지,보라,블랙,그레이,브라운,그린,블루,옐로우,베이지,화이트,실버" delims="," >
 					<option value="${item}">${item}</option>
@@ -176,28 +339,27 @@
 				</select>
 			</td>
 		</tr>
+		
 		<tr>
-			<td width="140" height="30" style="padding-left: 20px;">
-			판매처
-			</td>
-			<td width="460" style="padding-left: 10px;">
-			<input type="text" name="storeName" maxlength="100" class="boxTF">
+			<td width="100" height="50">판매처</td>
+			<td style="padding-left: 20px;">
+				<input type="text" name="storeName" size="30" maxlength="100" placeholder="판매처를 입력해 주세요" 
+					class="input_wrap w100p">
 			</td>
 		</tr>
+		
 		<tr>
-			<td width="140" height="30" style="padding-left: 20px;">
-			판매처Url
-			</td>
-			<td width="460" style="padding-left: 10px;">
-			<input type="text" name="storeUrl" maxlength="100" class="boxTF">
+			<td width="100" height="50">판매처Url</td>
+			<td style="padding-left: 20px;">
+			<input type="text" name="storeUrl" size="30" maxlength="100" placeholder="판매처url을 입력해 주세요" 
+					class="input_wrap w100p">
 			</td>
 		</tr>
+		
 		<tr>
-			<td width="140" height="30" style="padding-left: 20px;">
-			판매상태
-			</td>
-			<td width="460" style="padding-left: 10px;">
-				<select name="state" style="width: 350px; height: 20px;" class="boxTF">
+			<td width="100" height="50">판매상태</td>
+			<td style="padding-left: 20px;">
+				<select name="state" class="input_wrap w100p">
 					<option value="">판매상태 선택</option>
 					<c:forTokens var='item' items="판매중,일시품절,판매중지" delims="," >
 					<option value="${item}">${item}</option>
@@ -205,63 +367,87 @@
 				</select>
 			</td>
 		</tr>
+		
 		<tr>
-			<td width="140" height="30" style="padding-left: 20px;">
-			상품가격
+			<td width="100" height="50">상품가격</td>
+			<td style="padding-left: 20px;">
+				<input type="text" name="price" size="30" maxlength="100" placeholder="상품가격을 입력해 주세요" 
+					class="input_wrap w100p">
 			</td>
-			<td width="460" style="padding-left: 10px;">
-			<input type="text" name="price" maxlength="100" class="boxTF">
+		</tr>
+		
+		<tr>
+			<td height="10" colspan="2" style="padding-left: 120px;">
+				<div class="notice">금액은 원을 제외한 숫자만 입력가능합니다.</div>
 			</td>
 		</tr>
 		
 		<tr><td colspan="2" height="1" bgcolor="#dbdbdb" align="center"></td></tr>
 		<tr>
-			<td width="140" height="30" style="padding-left: 20px;">
-			리스트사진
-			</td>
-			<td width="460" style="padding-left: 10px;">
-			<input type="file" name="productListImage" maxlength="100" class="boxTF"/>
-			메인 이미지
-			<input type="checkbox" name="fileCategory" value="" /> 
+			<td width="100" height="50">리스트사진</td>
+			<td style="padding-left: 20px;">
+				<input type="file" name="productListImage" onchange="showImg(this,'showImage')" class="input_wrap w100p attach_file">		
 			</td>
 		</tr>
+		<tr>
+			<td height="10" colspan="2" style="padding-left: 120px;">
+				<div class="review_showImg" style="display: none;" id="showImage_div"><img class="review_img" id="showImage"></div>	
+			</td>
+		</tr>
+		<tr>
+			<td height="10" colspan="2" style="padding-left: 120px;">
+				<div style="margin: 10px 0px; font-size: 17px;">메인 이미지&nbsp;&nbsp;<input type="checkbox" name="fileCategory" value="" />
+			</td>
+		</tr>
+		
 		<tr><td colspan="2" height="1" bgcolor="#dbdbdb" align="center"></td></tr>
 		<tr>
-			<td width="140" height="30" style="padding-left: 20px;">
-			상세사진1
-			</td>
-			<td width="460" style="padding-left: 10px;">
-			<input type="file" name="productDetailImage1" maxlength="100" class="boxTF"/>
+			<td width="100" height="50">상세사진1</td>
+			<td style="padding-left: 20px;">
+				<input type="file" name="productDetailImage1" onchange="showImg(this,'detail1')" class="input_wrap w100p detailImg">		
 			</td>
 		</tr>
 		<tr>
-			<td width="140" height="30" style="padding-left: 20px;">
-			상세사진2
-			</td>
-			<td width="460" style="padding-left: 10px;">
-			<input type="file" name="productDetailImage2" maxlength="100" class="boxTF"/>
+			<td width="100" height="50">상세사진2</td>
+			<td style="padding-left: 20px;">
+				<input type="file" name="productDetailImage2" onchange="showImg(this,'detail2')" class="input_wrap w100p detailImg">		
 			</td>
 		</tr>
 		<tr>
-			<td width="140" height="30" style="padding-left: 20px;">
-			상세사진3
-			</td>
-			<td width="460" style="padding-left: 10px;">
-			<input type="file" name="productDetailImage3" maxlength="100" class="boxTF"/>
+			<td width="100" height="50">상세사진3</td>
+			<td style="padding-left: 20px;">
+				<input type="file" name="productDetailImage3" onchange="showImg(this,'detail3')" class="input_wrap w100p detailImg">		
 			</td>
 		</tr>
-		<tr><td colspan="2" height="1" bgcolor="#dbdbdb" align="center"></td></tr>
+		
 		<tr>
-			<td colspan="2" align="center">
-			<div class="purchase_button_set" style="padding-left: 200px;">
-			<span><button class="btn_lg_bordered emp btn_buy_now" style="color: #AD8EDB; border-color: #AD8EDB" type="button" onclick="sendIt();">상품등록</button></span>
-			<span><button class="btn_lg_bordered emp btn_buy_now" style="color: #AD8EDB; border-color: #AD8EDB" type="button" onclick="javascript:location.href='<%=cp %>/admin/productAdminList.action';">제품리스트</button></span>
-			<span><button class="btn_lg_primary btn_basket" type="reset" style="color: #FFFFFF; background-color : #AD8EDB;"  onclick="document.myForm.productId.focus();">다시입력</button></span>
-		</div>
+			<td height="10" colspan="2" style="padding-left: 120px;">
+				<div class="review_detail" style="display: none;" id="detail1_div"><img class="detail_img" id="detail1"></div>	
+			</td>
+		</tr>
+		<tr>
+			<td height="10" colspan="2" style="padding-left: 120px;">
+				<div class="review_detail" style="display: none;" id="detail2_div"><img class="detail_img" id="detail2"></div>	
+			</td>
+		</tr>		
+		<tr>
+			<td height="10" colspan="2" style="padding-left: 120px;">
+				<div class="review_detail" style="display: none;" id="detail3_div"><img class="detail_img" id="detail3"></div>	
+			</td>
+		</tr>
+		</table>
+		
+		<table width="900" align="center" style="margin-top: 20px;">
+		<tr align="center">
+			<td  align="center">
+				<button class="btn_blg_primary sendButton" type="button" onclick="sendIt();">상품등록</button>
+				<button class="btn_blg_secondary sendButton" type="button" onclick="javascript:location.href='<%=cp %>/admin/productAdminList.action';">제품리스트</button>
+				<button class="btn_blg_secondary sendButton" type="reset" onclick="document.myForm.productId.focus();">다시입력</button>
 			</td>
 		</tr>
 		</table>
 		</form>
 	</div>
+</div>
 
 <%@include file="../layout/footer.jsp"  %>

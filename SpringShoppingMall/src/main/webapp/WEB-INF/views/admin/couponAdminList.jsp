@@ -43,7 +43,7 @@
 		<div id="bbsList_header" style="height:30px;">
 			<div style="float:right;width:600px;text-align:right;" >
 				<button type="button" onclick="javascript:location.href='<%=cp %>/admin/couponAdminCreated.action';" class="insertButton">
-				상품등록
+				쿠폰등록
 				</button>
 			</div>
 		</div>
@@ -85,7 +85,7 @@
 							<td>${dto.couponGrade }</td>
 							<td>${dto.couponStartDate}~${dto.couponEndDate }</td>	
 							<td><a href="${updateUrl}?couponKey=${dto.couponKey }" class="buttonStyle">수정</a></td>
-							<td ><a href="${deleteUrl}?couponKey=${dto.couponKey }" class="buttonStyle">삭제</a></td>
+							<td ><a href="<%=cp %>/admin/couponAdminDeleted.action?couponKey=${dto.couponKey }&pageNum=${pageNum}" class="buttonStyle">삭제</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
