@@ -17,6 +17,8 @@ public class CommunityDTO {
 	private int heartCount;
 	private int replyCount;
 	
+	private List<ReplyDTO> replydto;
+	
 	private String mImage;
 	private String mMessage;
 	
@@ -25,6 +27,13 @@ public class CommunityDTO {
 	private String myId;
 	private String myFriendId;
 	
+	
+	public List<ReplyDTO> getReplydto() {
+		return replydto;
+	}
+	public void setReplydto(List<ReplyDTO> replydto) {
+		this.replydto = replydto;
+	}
 	public String getMyId() {
 		return myId;
 	}

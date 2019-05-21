@@ -56,6 +56,14 @@ $(function(){
 
 		var iNum = $(this).attr('value');
         
+
+		var chk='${sessionScope.customInfo.userId}';
+		
+		if(chk==""){
+        	alert("로그인이 필요합니다.");
+        	return;
+        }    
+		
         $.ajax({
             async: true,
             type : 'POST',
@@ -72,7 +80,7 @@ $(function(){
                 
             },
             error : function(error) {
-            	alert("로그인이 필요합니다.");
+            	alert(error);
             }
         });
 			
@@ -82,6 +90,13 @@ $(function(){
 	$(".followButton").click(function(){
 
 
+		var chk='${sessionScope.customInfo.userId}';
+		
+		if(chk==""){
+        	alert("로그인이 필요합니다.");
+        	return;
+        }    
+		
 		var dtoId = $(this).attr('value');
         
         $.ajax({
@@ -95,30 +110,7 @@ $(function(){
             	$(".followDiv" + dtoId).html(data.str);
             },
             error : function(jqXHR, exception) {
-                if (jqXHR.status === 0) {
-                    alert('Not connect.\n Verify Network.');
-                }else if (jqXHR.status == 400) {
-                    alert('Server understood the request, but request content was invalid. [400]');
-                }else if (jqXHR.status == 401) {
-                    alert('Unauthorized access. [401]');
-                }else if (jqXHR.status == 403) {
-                    alert('Forbidden resource can not be accessed. [403]');
-               	}else if (jqXHR.status == 404) {
-                    alert('Requested page not found. [404]');
-                }else if (jqXHR.status == 500) {
-                	alert("로그인이 필요합니다.");
-                }else if (jqXHR.status == 503) {
-                    alert('Service unavailable. [503]');
-                }else if (exception === 'parsererror') {
-                    alert('Requested JSON parse failed. [Failed]');
-                }else if (exception === 'timeout') {
-                    alert('Time out error. [Timeout]');
-                }else if (exception === 'abort') {
-                    alert('Ajax request aborted. [Aborted]');
-                }else {
-                    alert('Uncaught Error.n' + jqXHR.responseText);
-                }
-
+            	alert(error);
             }
         });
 			
@@ -141,7 +133,7 @@ $(function(){
 	<c:set var="j" value="0" />
 </c:if>
 
-<div style="width: 280px; height: 450px; display: inline-block;">
+<div style="width: 280px; height: 530px; display: inline-block;  vertical-align: top;">
 <div style="position: relative;  text-align: left;">
 	<a href="/users/2324110">
 		<img style="border:1px solid #F6F6F6; width: 36px; height: 36px; border-radius: 18px; display: inline-block;" src="../upload/profile/${dto.mImage }"/>
@@ -152,7 +144,7 @@ $(function(){
 		</a>
 		
 		<strong>&nbsp;・&nbsp;</strong>
-		<button class="followButton" value="${dto.userId}"style="color: #C98AFF; padding: 0; font-weight: 700; padding-bottom: 4px;" type="button">
+		<button class="followButton" value="${dto.userId}"style="color: #8080FF; padding: 0; font-weight: 550; padding-bottom: 4px;" type="button">
 			<div class="followDiv${dto.userId}">
 				<c:set var="k" value="0" />
 				<c:forEach var="follow" items="${follow }">
@@ -172,16 +164,54 @@ $(function(){
 		</a>
 	</p>
 	
-	<div style="width: 260px;" >
-	<a href="<%=cp%>/pr/codiDetailList.action?iNum=${dto.iNum}">
-		<img style="border:1px solid #C2C2C2; border-radius:15px; width: 256px; height: 236px; margin-left:2px; margin-top:5px; margin-bottom:5px; display: inline-block;" src="../upload/makecodi/${dto.iImage }.png"/>
-	</a>
+	<div style="width: 260px; position: relative;" >
+		<a href="<%=cp%>/pr/codiDetailList.action?iNum=${dto.iNum}">
+			<img style="border:1px solid #C2C2C2; width: 256px; border-bottom: none; height: 236px; margin-top:5px; display: inline-block;" src="../upload/makecodi/${dto.iImage }.png"/>
+		</a>
 	</div>
 
+	<div style="border:1px solid #C2C2C2;  width: 256px;" >
+		<div style="margin: 10px 5px 10px 5px; line-height: 20px;">
+			<strong>${dto.userId }</strong>&nbsp;&nbsp; <span style="color: #8080FF">${dto.iHashTag}</span>&nbsp;${dto.iContent}
+		</div> 
+	</div>
 	
-	<div style="display: flex; border:1px solid #C2C2C2; width: 260px; border-bottom: none; border-top-left-radius: 15px; border-top-right-radius: 15px;">
-		<button class="goodButton" value="${dto.iNum}" style="margin-left: 5px; height: 40px;">
-			<div class="goodDiv${dto.iNum}">
+	<div style="border:1px solid #C2C2C2;  width: 256px; border-top:none;  "  >
+		<div style="margin: 0px 5px 10px 5px; line-height: 20px; padding-top: 10px;">
+			<c:choose>
+				<c:when test="${empty dto.replydto }">
+					<a href="<%=cp%>/pr/codiDetailList.action?iNum=${dto.iNum}" style="color:#C2C2C2;">
+						댓글 달기..
+					</a>
+				</c:when>
+				<c:otherwise>
+					<div style="margin-bottom: 5px;">
+						<a href="<%=cp%>/pr/codiDetailList.action?iNum=${dto.iNum}">
+							댓글 ${dto.replyCount }개 모두 보기
+						</a>
+					</div>
+					<c:set var="cnt" value="0" />
+					<c:forEach var="replydto" items="${dto.replydto }">
+							<c:if test="${cnt!=2}">
+								<div style="vertical-align:middle; ">
+									<img style="border:1px solid #F6F6F6; width: 20px; height: 20px; border-radius: 18px; display: inline-block;" src="../upload/profile/${dto.mImage }"/>
+									<strong>${replydto.userId }</strong>
+									<div style=" display:inline-block; vertical-align:middle; width:150px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis">&nbsp;&nbsp; ${replydto.content}</div>
+									<c:set var="cnt" value="${cnt+1 }" />
+								</div>	
+							</c:if>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+		</div> 
+	</div>
+	
+	<div style="display: flex; border:1px solid #C2C2C2; width: 256px; border-top :none;">
+		<button class="goodButton" value="${dto.iNum}" style="height: 40px;">
+			<div  style="display: inline-block; margin-left: 5px; ">
+			받은 좋아요 수 ${dto.heartCount }
+			</div>
+			<div class="goodDiv${dto.iNum}" style="margin-left: 120px; display: inline-block;">
 				<c:set var="k" value="0" />
 				<c:forEach var="good" items="${good }">
 					<c:if test="${dto.iNum eq good}">
@@ -192,21 +222,11 @@ $(function(){
 				<c:if test="${k==0 }">
 					<img src="../resources/image/heart1.PNG" style="height: 25px;"/>
 				</c:if>
-				${dto.heartCount }
 			</div>
 		</button>
-		
-		<a href="<%=cp%>/pr/codiDetailList.action?iNum=${dto.iNum}" style="text-align: left; margin-left: 10px; height: 38px; margin-top: 6px;">
-		<img src="../resources/image/reply.PNG" style="width: 30px;"/>
-			${dto.replyCount }
-		</a>
 	</div>
 	
-	<div class="text_overflow" style="border:1px solid #C2C2C2;  width: 260px; border-top:none; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; " >
-		<span style="margin: 5px;">
-		${dto.iContent}
-		</span>
-	</div>
+	
 </div>
 </div>
 <!-- end 하나 이미지 -->

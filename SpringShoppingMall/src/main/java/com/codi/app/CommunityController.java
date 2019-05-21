@@ -21,6 +21,7 @@ import com.codi.dao.CommunityDAO;
 import com.codi.dto.CommunityDTO;
 import com.codi.dto.MemberDTO;
 import com.codi.dto.ProductDTO;
+import com.codi.dto.ReplyDTO;
 import com.codi.util.MyUtil;
 
 
@@ -76,7 +77,9 @@ public class CommunityController {
 			
 			int heartCount =  dao.heartCount(vo.getiNum());
 			int replyCount = dao.replyCount(vo.getiNum());
+			List<ReplyDTO> replydto = dao.replyLists(vo.getiNum());
 			
+			vo.setReplydto(replydto);
 			vo.setReplyCount(replyCount);
 			vo.setHeartCount(heartCount);
 		}
