@@ -35,13 +35,13 @@ select {
 	width: 350px;
 	height: 40px;
 	line-height: 40px;
-	/* background: url('arrow.jpg') no-repeat 80% 50%; */
+ 	background: url('arrow.jpg') no-repeat 80% 50%;
 }
-/* 
+
 select::-ms-expand {
 	display: none;
 }
- */
+
 form {
 	display: block;
 	margin-top: 0em;
@@ -133,6 +133,7 @@ input[type=file] {
 	width: 350px;
 	height: 40px;
 	line-height: 40px;
+	display: inline-block;
 }
 
 .review_showImg {
@@ -151,6 +152,20 @@ input[type=file] {
 
 .detail_img {
 	width: 700px;
+}
+
+.deleteButton {
+	display: inline-block;
+	height: 40px;
+	width : 9%;
+	background-color: #000000;
+	border: none;
+	color: #ffffff;
+	font-size: 18px;
+	font-weight: 500;
+	text-align: center;
+	cursor: pointer;
+	line-height: 40px;
 }
 
 </style>
@@ -273,6 +288,13 @@ input[type=file] {
 		}
 		
 	}
+	
+	function deleteImg(img) {
+		$(eval("'#" +img + "'")).attr('src','');		
+		$(eval("'#input_" +img + "'")).val("");
+		$(eval("'#" +img + "_div'")).css('display', 'none');
+
+	}
 </script>
 
 
@@ -285,7 +307,7 @@ input[type=file] {
 		<table  width="900" align="center">
 		
 		<tr>
-			<td width="100" height="50">상품id</td>
+			<td width="150" height="50">상품id</td>
 			<td style="padding-left: 20px;">
 				<input type="text" name="productId" size="30" maxlength="20" placeholder="상품ID를 입력해 주세요" 
 					class="input_wrap w100p">
@@ -293,7 +315,7 @@ input[type=file] {
 		</tr>
 
 		<tr>
-			<td width="100" height="50">상위상품id (superProduct)</td>
+			<td width="150" height="50">상위상품id (superProduct)</td>
 			<td style="padding-left: 20px;">
 				<input type="text" name="superProduct" size="30" maxlength="20" placeholder="상위상품ID를 입력해 주세요" 
 					class="input_wrap w100p">
@@ -301,7 +323,7 @@ input[type=file] {
 		</tr>
 		
 		<tr>
-			<td width="100" height="50">상품카테고리</td>
+			<td width="150" height="50">상품카테고리</td>
 			<td style="padding-left: 20px;">
 				<select name="productCategory" class="input_wrap w100p">
 	  				<option value="">카테고리 선택</option>
@@ -313,7 +335,7 @@ input[type=file] {
 		</tr>
 		
 		<tr>
-			<td width="100" height="50">상품명</td>
+			<td width="150" height="50">상품명</td>
 			<td style="padding-left: 20px;">
 				<input type="text" name="productName" size="30" maxlength="100" placeholder="상품명 입력해 주세요" 
 					class="input_wrap w100p">
@@ -321,7 +343,7 @@ input[type=file] {
 		</tr>
 		
 		<tr>
-			<td width="100" height="50">상품사이즈</td>
+			<td width="150" height="50">상품사이즈</td>
 			<td style="padding-left: 20px;">
 			<input type="text" name="productSize" size="30" maxlength="100" placeholder="상품사이즈를 입력해 주세요" 
 					class="input_wrap w100p">
@@ -329,7 +351,7 @@ input[type=file] {
 		</tr>
 		
 		<tr>
-			<td width="100" height="50">색상</td>
+			<td width="150" height="50">색상</td>
 			<td style="padding-left: 20px;">
 				<select name="color" class="input_wrap w100p">
 					<option value="">색상 선택</option>
@@ -341,7 +363,7 @@ input[type=file] {
 		</tr>
 		
 		<tr>
-			<td width="100" height="50">판매처</td>
+			<td width="150" height="50">판매처</td>
 			<td style="padding-left: 20px;">
 				<input type="text" name="storeName" size="30" maxlength="100" placeholder="판매처를 입력해 주세요" 
 					class="input_wrap w100p">
@@ -349,7 +371,7 @@ input[type=file] {
 		</tr>
 		
 		<tr>
-			<td width="100" height="50">판매처Url</td>
+			<td width="150" height="50">판매처Url</td>
 			<td style="padding-left: 20px;">
 			<input type="text" name="storeUrl" size="30" maxlength="100" placeholder="판매처url을 입력해 주세요" 
 					class="input_wrap w100p">
@@ -357,7 +379,7 @@ input[type=file] {
 		</tr>
 		
 		<tr>
-			<td width="100" height="50">판매상태</td>
+			<td width="150" height="50">판매상태</td>
 			<td style="padding-left: 20px;">
 				<select name="state" class="input_wrap w100p">
 					<option value="">판매상태 선택</option>
@@ -369,7 +391,7 @@ input[type=file] {
 		</tr>
 		
 		<tr>
-			<td width="100" height="50">상품가격</td>
+			<td width="150" height="50">상품가격</td>
 			<td style="padding-left: 20px;">
 				<input type="text" name="price" size="30" maxlength="100" placeholder="상품가격을 입력해 주세요" 
 					class="input_wrap w100p">
@@ -377,61 +399,65 @@ input[type=file] {
 		</tr>
 		
 		<tr>
-			<td height="10" colspan="2" style="padding-left: 120px;">
+			<td height="10" colspan="2" style="padding-left: 170px;">
 				<div class="notice">금액은 원을 제외한 숫자만 입력가능합니다.</div>
 			</td>
 		</tr>
 		
 		<tr><td colspan="2" height="1" bgcolor="#dbdbdb" align="center"></td></tr>
 		<tr>
-			<td width="100" height="50">리스트사진</td>
+			<td width="150" height="50">리스트사진</td>
 			<td style="padding-left: 20px;">
-				<input type="file" name="productListImage" onchange="showImg(this,'showImage')" class="input_wrap w100p attach_file">		
+				<input type="file" name="productListImage" id="input_showImage" onchange="showImg(this,'showImage')" class="input_wrap w90p attach_file">		
+				<button class="deleteButton" type="button" onclick="deleteImg('showImage');">삭제</button>
 			</td>
 		</tr>
 		<tr>
-			<td height="10" colspan="2" style="padding-left: 120px;">
+			<td height="10" colspan="2" style="padding-left: 170px;">
 				<div class="review_showImg" style="display: none;" id="showImage_div"><img class="review_img" id="showImage"></div>	
 			</td>
 		</tr>
 		<tr>
-			<td height="10" colspan="2" style="padding-left: 120px;">
-				<div style="margin: 10px 0px; font-size: 17px;">메인 이미지&nbsp;&nbsp;<input type="checkbox" name="fileCategory" value="" />
+			<td height="10" colspan="2" style="padding-left: 170px;">
+				<div style="margin: 10px 0px; font-size: 17px;">메인 이미지&nbsp;&nbsp;<input type="checkbox" name="fileCategory" value="" /></div>
 			</td>
 		</tr>
 		
 		<tr><td colspan="2" height="1" bgcolor="#dbdbdb" align="center"></td></tr>
 		<tr>
-			<td width="100" height="50">상세사진1</td>
+			<td width="150" height="50">상세사진1</td>
 			<td style="padding-left: 20px;">
-				<input type="file" name="productDetailImage1" onchange="showImg(this,'detail1')" class="input_wrap w100p detailImg">		
+				<input type="file" name="productDetailImage1" id="input_detail1" onchange="showImg(this,'detail1')" class="input_wrap w90p detailImg">		
+				<button class="deleteButton" type="button" onclick="deleteImg('detail1');">삭제</button>
 			</td>
 		</tr>
 		<tr>
-			<td width="100" height="50">상세사진2</td>
+			<td width="150" height="50">상세사진2</td>
 			<td style="padding-left: 20px;">
-				<input type="file" name="productDetailImage2" onchange="showImg(this,'detail2')" class="input_wrap w100p detailImg">		
+				<input type="file" name="productDetailImage2" id="input_detail2" onchange="showImg(this,'detail2')" class="input_wrap w90p detailImg">		
+				<button class="deleteButton" type="button" onclick="deleteImg('detail2');">삭제</button>
 			</td>
 		</tr>
 		<tr>
-			<td width="100" height="50">상세사진3</td>
+			<td width="150" height="50">상세사진3</td>
 			<td style="padding-left: 20px;">
-				<input type="file" name="productDetailImage3" onchange="showImg(this,'detail3')" class="input_wrap w100p detailImg">		
+				<input type="file" name="productDetailImage3" id="input_detail3" onchange="showImg(this,'detail3')" class="input_wrap w90p detailImg">	
+				<button class="deleteButton" type="button" onclick="deleteImg('detail3');">삭제</button>	
 			</td>
 		</tr>
 		
 		<tr>
-			<td height="10" colspan="2" style="padding-left: 120px;">
+			<td height="10" colspan="2" style="padding-left: 170px;">
 				<div class="review_detail" style="display: none;" id="detail1_div"><img class="detail_img" id="detail1"></div>	
 			</td>
 		</tr>
 		<tr>
-			<td height="10" colspan="2" style="padding-left: 120px;">
+			<td height="10" colspan="2" style="padding-left: 170px;">
 				<div class="review_detail" style="display: none;" id="detail2_div"><img class="detail_img" id="detail2"></div>	
 			</td>
 		</tr>		
 		<tr>
-			<td height="10" colspan="2" style="padding-left: 120px;">
+			<td height="10" colspan="2" style="padding-left: 170px;">
 				<div class="review_detail" style="display: none;" id="detail3_div"><img class="detail_img" id="detail3"></div>	
 			</td>
 		</tr>
