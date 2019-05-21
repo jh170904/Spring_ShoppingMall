@@ -510,6 +510,7 @@ public class QuestionController {
 		request.setAttribute("following", following);
 		request.setAttribute("dto", dto);
 		request.setAttribute("lists", lists);
+		request.setAttribute("dataCount", dataCount);
 		request.setAttribute("loginUserInfo", loginUserInfo);
 		request.setAttribute("imagePath", "../upload/qna");
 		request.setAttribute("memberPath", "../upload/profile");

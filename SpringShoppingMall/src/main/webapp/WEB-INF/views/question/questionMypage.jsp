@@ -83,14 +83,9 @@
 #filter>a.on{
 	color: #8080ff;
 }
-.questions-item__link:last-child>.questions-item {
-	border-bottom: 1px solid #C6C6C6;
-}
 </style>
-<link rel="stylesheet" type="text/css"
-	href="<%=cp%>/resources/css/bucket.css?ver=1">
-<script type="text/javascript"
-	src="<%=cp%>/resources/js/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=cp%>/resources/css/bucket.css?ver=2">
+<script type="text/javascript" src="<%=cp%>/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	$(function() {
 		var on='${on}';
@@ -185,11 +180,11 @@
 			<a href="<%=cp%>/myPage/questionMypage.action?on=me" style="margin-right: 5px;" class="on" id="me">내가 한 질문</a>
 			<a href="<%=cp%>/myPage/questionMypage.action?status=reply&on=other" id="other">내가 한 답변</a>
 		</div>
+		
+		<section id="questions-list" class="container">
 		<c:forEach var="dto" items="${lists}" varStatus="status">
-
 			<a class="questions-item__link"
 				href="<%=cp%>/qna/questionAticle.action?qNum=${dto.qNum}">
-
 				<article class="questions-item">
 					<div class="questions-item__image">
 						<div class="image-wrap square">
@@ -229,10 +224,14 @@
 				</article>
 			</a>
 		</c:forEach>
-		<div
-			style="text-align: center; margin-top: 25px; margin-bottom: 50px;"">
+		</section>
+		
+		<div style="text-align: center; margin-top: 25px; margin-bottom: 50px;"">
 			<c:if test="${dataCount!=0 }">
 				<font style="font-size: 20px">${pageIndexList}</font>
+			</c:if>
+			<c:if test="${dataCount==0 }">
+				<font style="font-size: 20px" ><br>게시물이 없습니다.</font>
 			</c:if>
 		</div>
 	</div>
