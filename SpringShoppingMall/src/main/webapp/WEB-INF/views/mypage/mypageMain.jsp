@@ -83,8 +83,8 @@
 	position: absolute; 
 	width: 170px; 
 	height: 146px; 
-	top: 52px; 
-	left: 539px; 
+	top: 34px; 
+	left: 531px; 
 	border-radius: 7px; 
 	background-color: rgba( 0, 0, 0, 0.3 );
 }
@@ -180,8 +180,8 @@
 <div style="width: 750px; display: inline-block; vertical-align: top;">
 
 <div style="margin-bottom: 60px; position: relative;">
-<h5 class="post__title" style="width: 700px;">관심코디 <strong>${userCodiHeartCount }</strong>
-<c:if test="${userCodiHeartCount != 0 }"><a href="<%=cp%>/myPage/myCodiHeartists.action" style="text-align: right; margin-left: 630px; color: #8080ff;">전체보기</a></c:if>
+<h5 class="post__title" style="width: 750px;">관심코디 <strong>${userCodiHeartCount }</strong>
+<c:if test="${userCodiHeartCount != 0 }"><a href="<%=cp%>/myPage/myCodiHeartists.action" style="text-align: right; margin-left: 600px; color: #8080ff;">전체보기</a></c:if>
 </h5>
 
 <c:if test="${userCodiHeartCount != 0 }">
@@ -208,8 +208,8 @@
 </div>
 
 <div style="margin-bottom: 60px; position: relative;">
-<h5 class="post__title" style="width: 700px;">내코디 <strong>${userInstarCount }</strong>
-<c:if test="${userInstarCount != 0 }"><a href="<%=cp%>/myPage/myInstarLists.action" style="text-align: right; margin-left: 630px; color: #8080ff;">전체보기</a></c:if>
+<h5 class="post__title" style="width: 750px;">내코디&nbsp;&nbsp;<strong>${userInstarCount }</strong>
+<c:if test="${userInstarCount != 0 }"><a href="<%=cp%>/myPage/myInstarLists.action" style="text-align: right; margin-left: 600px; color: #8080ff;">&nbsp;&nbsp;전체보기</a></c:if>
 </h5>
 
 <c:if test="${userInstarCount != 0 }">
