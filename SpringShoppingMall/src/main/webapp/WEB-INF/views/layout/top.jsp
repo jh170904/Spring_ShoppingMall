@@ -119,14 +119,23 @@ $(function(){
 	
 	var currentURL = $(location).attr('href');
 	var arrayStoreURL =new Array("/pr/storeMain.action", "/pr/listNew.action", "/pr/listBest.action", "/pr/listCodiBest.action" ,"/couponA/couponAllList.action");
-
+	var menuFlag = false;
+	
 	for(var i in arrayStoreURL){
+		
 		if(currentURL.indexOf(arrayStoreURL[i]) != -1){
-			$(".menuLink").removeClass("active");
-			$("#store").addClass("active");	
-			$('#smallMenu2').attr('style','display:none');
-			$("#smallMenu1").attr('style','display:block');
+			menuFlag=true;
 		}
+	}
+	
+	if(menuFlag){
+		$(".menuLink").removeClass("active");
+		$("#store").addClass("active");	
+		$('#smallMenu2').attr('style','display:none');
+		$("#smallMenu1").attr('style','display:block');
+	}else{
+		$('#smallMenu1').attr('style','display:none');
+		$("#smallMenu2").attr('style','display:block');
 	}
 
 	$('.menuLink').mouseenter(function(){
@@ -144,8 +153,6 @@ $(function(){
 			$("#smallMenu1").attr('style','display:block');
 		}
 	});
-	
-	
 
 });
 
@@ -227,7 +234,7 @@ $(function(){
 		</table>
 		
 		<!-- 커뮤니티메인 -->
-		<table id="smallMenu2">
+		<table style="display: none;"  id="smallMenu2">
 			<tr>
 			<td>
 				<div class="gnb_area">

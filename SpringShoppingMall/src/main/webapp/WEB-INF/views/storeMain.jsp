@@ -140,6 +140,7 @@ $(function(){
 }
 
 .featured-banner__item__content-wrap{
+    color:#333;
 	width: 100%;
 	height: 300px;
 	margin: 0 0 200px 200px;
@@ -153,6 +154,7 @@ $(function(){
     color: #fff;
 }
 
+
 .featured-banner__scroller__item {
     display: flex;
     height: 76px;
@@ -165,7 +167,6 @@ $(function(){
 .featured-banner__scroller__item__text {
 	width :100px;
     font-size: 11px;
-    color:#333;
     padding: 5px 5px;
 	align-self: center;
     text-align: left;
@@ -421,7 +422,7 @@ p {
 		</div>
 	</div>
 </a>
-<div class="featured-banner__scroller" style="transform: translateY(0px); transition: none 0s ease 0s;">
+<div class="featured-banner__scroller" style="color: #333;">
 	<button class="featured-banner__scroller__item active" type="button">
 		<div class="featured-banner__scroller__item__image">
 		<img src="<%=cp %>/resources/image/mainImage/830822023.jpg" >
