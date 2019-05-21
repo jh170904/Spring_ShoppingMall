@@ -93,8 +93,8 @@
 	position: absolute; 
 	width: 170px; 
 	height: 146px; 
-	top: 52px; 
-	left: 539px; 
+	top: 35px; 
+	left: 531px; 
 	border-radius: 7px; 
 	background-color: rgba( 0, 0, 0, 0.3 );
 }
