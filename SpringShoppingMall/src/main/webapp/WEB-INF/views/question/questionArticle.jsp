@@ -23,8 +23,6 @@ form {
 }
 
 table {
-    border-collapse: separate;
-    border-spacing: 2px;
     padding-left: 3px;
 }
 
