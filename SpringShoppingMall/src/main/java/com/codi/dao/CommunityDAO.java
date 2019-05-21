@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.codi.dto.CommunityDTO;
 import com.codi.dto.ProductDTO;
+import com.codi.dto.ReplyDTO;
 
 @Component("communityDAO")
 public class CommunityDAO {	@Autowired
@@ -111,10 +112,18 @@ public class CommunityDAO {	@Autowired
 	//replyCount
 	public int replyCount(int iNum){
 	
-		int heartCount = 
+		int replyCount = 
 				sessionTemplate.selectOne("commuMapper.replyCount",iNum);
 	
-		return heartCount;
+		return replyCount;
+	}
+	
+	public List<ReplyDTO> replyLists(int iNum){
+
+		List<ReplyDTO> lists =
+				sessionTemplate.selectList("commuMapper.replyLists",iNum);
+		
+		return lists;
 	}
 	
 	//commuHome.jsp ºÎºÐ
