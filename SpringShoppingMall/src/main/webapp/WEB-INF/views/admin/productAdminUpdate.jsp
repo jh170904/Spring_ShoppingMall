@@ -35,11 +35,13 @@ select {
 	width: 350px;
 	height: 40px;
 	line-height: 40px;
- 	background: url('arrow.jpg') no-repeat 80% 50%;
 }
 
 select::-ms-expand {
-	display: none;
+	margin-right : -15px;
+	width: 40px;
+	height: 40px;
+	
 }
 
 form {
@@ -75,20 +77,6 @@ label {
 	font-weight: bold;
 }
 
-#sendButton {
-	margin-top: 15px;
-	width: 50%;
-	height: 40px;
-	background-color: #8080ff;
-	border: none;
-	border-radius: 4px;
-	color: #ffffff;
-	font-size: 18px;
-	font-weight: 700;
-	text-align: center;
-	cursor: pointer;
-}
-
 input {
 	font-family: inherit;
 	font-size: inherit;
@@ -99,7 +87,7 @@ input {
 .sendButton {
 	display : inline-block;
     margin-top: 15px;
-    width: 195px;
+    width: 295px;;
     height: 40px;
     border: none;
     border-radius: 4px;
@@ -418,7 +406,7 @@ input[type=file] {
 		</tr>
 		<tr>
 			<td height="10" colspan="2" style="padding-left: 170px;">
-				<div style="margin: 10px 0px; font-size: 17px;">메인 이미지&nbsp;&nbsp;<input type="checkbox" name="fileCategory" value="" /></div>
+				<div style="margin: 10px 0px; font-size: 15px;">메인 이미지&nbsp;&nbsp;<input type="checkbox" name="fileCategory" value="" /></div>
 			</td>
 		</tr>
 		
@@ -465,7 +453,7 @@ input[type=file] {
 		<table width="900" align="center" style="margin-top: 20px;">
 		<tr align="center">
 			<td  align="center">
-				<button class="btn_blg_primary sendButton" type="button" onclick="sendIt();">수정등록</button>
+				<button class="btn_blg_primary sendButton" type="button" onclick="sendIt();">상품수정</button>
 				<button class="btn_blg_secondary sendButton" type="button" onclick="javascript:location.href='<%=cp %>/admin/productAdminList.action';">제품리스트</button>
 				<button class="btn_blg_secondary sendButton" type="reset" onclick="document.myForm.productId.focus();">다시입력</button>
 			</td>
