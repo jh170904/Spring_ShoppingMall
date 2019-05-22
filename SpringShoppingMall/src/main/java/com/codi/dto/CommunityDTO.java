@@ -1,6 +1,7 @@
 package com.codi.dto;
 
 import java.util.List;
+import java.util.Map;
 
 public class CommunityDTO {
 
@@ -18,7 +19,7 @@ public class CommunityDTO {
 	private int replyCount;
 
 
-	private String[] arrHashTag;
+	private Map<String, String> arrHashTag;
 	
 	private List<ReplyDTO> replydto;
 	
@@ -32,10 +33,12 @@ public class CommunityDTO {
 	
 	
 	
-	public String[] getArrHashTag() {
+
+
+	public Map<String, String> getArrHashTag() {
 		return arrHashTag;
 	}
-	public void setArrHashTag(String[] arrHashTag) {
+	public void setArrHashTag(Map<String, String> arrHashTag) {
 		this.arrHashTag = arrHashTag;
 	}
 	public List<ReplyDTO> getReplydto() {

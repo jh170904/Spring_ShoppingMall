@@ -1,6 +1,9 @@
 package com.codi.app;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +41,7 @@ public class CommunityController {
 	MyUtil myUtil;
 	
 	@RequestMapping(value = "pr/commuList.action", method = RequestMethod.GET)
-	public String commuMain(HttpServletRequest req,HttpSession session) {
+	public String commuMain(HttpServletRequest req,HttpSession session) throws IOException {
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo"); 
 
@@ -83,13 +86,19 @@ public class CommunityController {
 			
 
 			String[] arrHashTag = vo.getiHashTag().split("#");
+			Map<String, String> map = new HashMap<String, String>();
+			
+			//map의 갯수만큼 돌리기
+			//list만큼 돌려라
+			//vo.key, vo.value
 			
 			for(String str: arrHashTag) {
 				if(str!=null && !str.equals("")) {
+					map.put(str,URLEncoder.encode(str,"UTF-8"));
 				}
 			}
-			
-			vo.setArrHashTag(arrHashTag);
+
+			vo.setArrHashTag(map);
 			vo.setReplydto(replydto);
 			vo.setReplyCount(replyCount);
 			vo.setHeartCount(heartCount);

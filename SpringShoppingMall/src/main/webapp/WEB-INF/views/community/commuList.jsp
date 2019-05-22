@@ -192,7 +192,7 @@ $(function(){
 			<strong>${dto.userId }</strong>&nbsp;&nbsp;
 			<c:forEach var="hashArr" items="${dto.arrHashTag }">
 				<c:if test="${!empty hashArr}">
-					<a href="<%=cp%>/pr/codiHashTagList.action?iHashtag=${hashArr}"><span style="color: #8080FF">#${hashArr}</span></a>&nbsp;
+					<a href="<%=cp%>/pr/codiHashTagList.action?iHashtag=${hashArr.value}"><span style="color: #8080FF">#${hashArr.key}</span></a>&nbsp;
 				</c:if>
 			</c:forEach>
 			${dto.iContent}
