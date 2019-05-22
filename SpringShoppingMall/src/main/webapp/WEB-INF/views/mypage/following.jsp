@@ -174,8 +174,8 @@
 
 <div style="width: 100%; overflow: visible; border-bottom: solid 1px #dbdbdb; text-align: center;">
 	<ul>
-		<li class="page-navigation__item" style=" color: #8080FF"><a href="<%=cp %>/myPage/following.action">팔로잉<div style="height: 4px; background-color: #8080FF"/></div></a></li>
 		<li class="page-navigation__item"><a href="<%=cp %>/myPage/follower.action">팔로워</a></li>
+		<li class="page-navigation__item" style=" color: #8080FF"><a href="<%=cp %>/myPage/following.action">팔로잉<div style="height: 4px; background-color: #8080FF"/></div></a></li>
 	</ul>
 </div>
 
@@ -188,8 +188,10 @@
 		
 		<c:forEach var="dto" items="${lists }">
 		<div class="user">
-			<img style="border:1px solid #F6F6F6; width: 36px; height: 36px; border-radius: 18px; display: inline-block;" src="../upload/profile/${dto.mImage}"/>
-			<span class="name">${dto.userId}</span>
+			<a href="<%=cp %>/pr/userPage.action?userId=${dto.userId}">
+				<img style="border:1px solid #F6F6F6; width: 36px; height: 36px; border-radius: 18px; display: inline-block;" src="../upload/profile/${dto.mImage}"/>
+				<span class="name">${dto.userId}</span>	
+			</a>
 		</div>
 		</c:forEach>
 

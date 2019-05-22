@@ -77,6 +77,37 @@ public class MyPageController {
 		return "mypage/mypageMain";
 	}
 	
+	@RequestMapping(value = "pr/userPage.action", method = RequestMethod.GET)
+	public String userPage(HttpServletRequest req,HttpSession session,String userId) {
+				
+		int userInstarCount = instardao.countUserInstar(userId);
+		int userCodiHeartCount = instardao.getUserCodiHeartCount(userId);
+
+		MemberDTO memberInfo = instardao.getUserInfo(userId);		
+		
+		List<CommunityDTO> instarList = instardao.selectUserInstar(userId, 1, 4);
+		List<CommunityDTO> codiHeartList = instardao.getUserCodiHeart(userId, 1, 4);
+		
+		//나를 팔루우한 사람
+		int follower = dao.follower(userId);
+		//내가 팔로우한 사람
+		int following = dao.following(userId);
+
+		req.setAttribute("follower", follower);
+		req.setAttribute("following", following);
+		req.setAttribute("userId", userId);
+		req.setAttribute("userInstarCount", userInstarCount);
+		req.setAttribute("memberPath", "../upload/profile");
+		req.setAttribute("memberInfo", memberInfo);
+		req.setAttribute("instarList", instarList);
+		req.setAttribute("userCodiHeartCount", userCodiHeartCount);
+		req.setAttribute("codiHeartList", codiHeartList);
+		req.setAttribute("imagePath", "../upload/makecodi");
+
+		
+		return "mypage/userPage";
+	}
+	
 	@RequestMapping(value = "myPage/storeGood.action", method = RequestMethod.GET)
 	public String storeGood(HttpServletRequest req,HttpSession session) {
 		
@@ -198,6 +229,8 @@ public class MyPageController {
 		return "mypage/following";
 	}
 	
+
+	
 	@RequestMapping(value = "myPage/follower.action", method = RequestMethod.GET)
 	public String follower(HttpServletRequest req,HttpSession session) {
 		
@@ -252,6 +285,107 @@ public class MyPageController {
 		req.setAttribute("pageNum", pageNum);
 		
 		return "mypage/follower";
+	}
+	
+	@RequestMapping(value = "pr/userFollower.action", method = RequestMethod.GET)
+	public String userFollower(HttpServletRequest req,HttpSession session,String userId) {
+	
+		
+		String cp = req.getContextPath();
+
+		String pageNum = req.getParameter("pageNum");
+
+		int currentPage = 1;
+
+		if (pageNum != null)
+			currentPage = Integer.parseInt(pageNum);
+
+		int dataCount = dao.follower(userId);
+
+		int numPerPage = 2;
+		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+
+		if (currentPage > totalPage)
+			currentPage = totalPage;
+
+		int start = (currentPage - 1) * numPerPage + 1;
+		int end = currentPage * numPerPage;
+
+		//팔로잉들의 프로필과 아이디
+		List<MemberDTO> lists = dao.followerList(start, end,userId);
+		//내프로필과 상메
+		MemberDTO userInfo = instardao.getUserInfo(userId);
+		//나를 팔루우한 사람
+		int follower = dao.follower(userId);
+		//내가 팔로우한 사람
+		int following = dao.following(userId);
+		
+		// 페이징을 위한 값들 보내주기
+		String listUrl = cp + "/pr/userFollower.action";
+
+		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+
+		req.setAttribute("listUrl", listUrl);
+		req.setAttribute("lists", lists);
+		req.setAttribute("follower", follower);
+		req.setAttribute("following", following);
+		req.setAttribute("userInfo", userInfo);
+		req.setAttribute("pageIndexList", pageIndexList);
+		req.setAttribute("pageNum", pageNum);
+		req.setAttribute("userId", userId);
+		
+		return "mypage/userFollower";
+	}
+	
+
+	@RequestMapping(value = "pr/userFollowing.action", method = RequestMethod.GET)
+	public String userFollowing(HttpServletRequest req,HttpSession session,String userId) {
+		
+		
+		String cp = req.getContextPath();
+
+		String pageNum = req.getParameter("pageNum");
+
+		int currentPage = 1;
+
+		if (pageNum != null)
+			currentPage = Integer.parseInt(pageNum);
+
+		int dataCount = dao.following(userId);
+
+		int numPerPage = 2;
+		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+
+		if (currentPage > totalPage)
+			currentPage = totalPage;
+
+		int start = (currentPage - 1) * numPerPage + 1;
+		int end = currentPage * numPerPage;
+
+		//팔로잉들의 프로필과 아이디
+		List<MemberDTO> lists = dao.followingList(start, end,userId);
+		//내프로필과 상메
+		MemberDTO userInfo = instardao.getUserInfo(userId);
+		//나를 팔루우한 사람
+		int follower = dao.follower(userId);
+		//내가 팔로우한 사람
+		int following = dao.following(userId);
+		
+		// 페이징을 위한 값들 보내주기
+		String listUrl = cp + "/pr/userFollowing.action";
+
+		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		
+		req.setAttribute("listUrl", listUrl);
+		req.setAttribute("lists", lists);
+		req.setAttribute("follower", follower);
+		req.setAttribute("following", following);
+		req.setAttribute("userInfo", userInfo);
+		req.setAttribute("pageIndexList", pageIndexList);
+		req.setAttribute("pageNum", pageNum);
+		req.setAttribute("userId", userId);
+		
+		return "mypage/userFollowing";
 	}
 	
 }

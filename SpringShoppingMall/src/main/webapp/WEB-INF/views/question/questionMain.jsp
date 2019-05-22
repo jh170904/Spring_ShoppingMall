@@ -11,7 +11,7 @@ border-radius: 0px;
 }
 </style>
 
-<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/bucket.css?ver=2">
+<link rel="stylesheet" type="text/css" href="<%=cp %>/resources/css/bucket.css?ver=1">
 <script type="text/javascript" src="<%=cp%>/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 
