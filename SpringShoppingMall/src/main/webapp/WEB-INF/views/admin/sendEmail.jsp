@@ -280,7 +280,7 @@ dd {
 					</div>
 				</div>
 
-				<div class="divStyle" style="width:15%; margin: 0px 0px 0px 20px; position: absolute; top: 475px; left: 610px; z-index: 1">
+				<div class="divStyle" style="width:15%; margin: 0px 0px 0px 20px; position: realtive; top: 475px; left: 660px; z-index: 1">
 					<div id="color" style="display: none; border: 1px solid #5D5D5D; width: 225px; height: 100%;">
 						<dl>
 							<dd style="background-color: #FF0000;" onclick="changeColor('#FF0000')"></dd>

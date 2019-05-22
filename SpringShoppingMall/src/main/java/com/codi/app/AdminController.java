@@ -75,6 +75,7 @@ public class AdminController {
 	@Autowired
 	MyUtil myUtil;
 	
+	@Autowired
 	private JavaMailSender mailSender;
 	private String from = "codi@codi.com"; 	
 	
@@ -674,7 +675,7 @@ public class AdminController {
 		style += "color:" + dto.getColor() + "\"";
 		
 		String email = dto.getEmail();
-		System.out.println("메일 확인 : " + email);
+		String content = dto.getContent().replaceAll("\n", "<br/>"); 
 		
 		//메일
 		try {
@@ -684,11 +685,13 @@ public class AdminController {
 			messageHelper.setTo(email);
 
 	        
-			String html = "<div " + style + ">";
+			String html = "<div>";
 			
-	        html+="<br/>안녕하세요. <strong>내일의 코디북</strong> 입니다. ";
+	        html+="<br/>안녕하세요. <strong>내일의 코디북</strong> 입니다.<br/><br/> ";   
 	        html+="안내사항 알려드립니다.<br/><br/>";
-	        html+= dto.getContent().replaceAll("\n", "</br>"); 
+	        html+="<p style="+ style +">";
+	        html+= content;
+	        html+="</p>";
 	        html+="<br/><br/>더 궁금하신 내용은 yerin2407@gmail.com으로 메일 부탁드립니다.";
 	        html+="</div>";
 
@@ -703,7 +706,7 @@ public class AdminController {
 
 
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			System.out.println("ㅅㅂ");
 		}
 			
 		return "redirect:/admin/memberList.action";
