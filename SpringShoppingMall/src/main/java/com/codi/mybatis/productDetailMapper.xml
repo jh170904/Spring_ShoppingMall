@@ -52,8 +52,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- Admin 상세이미지 등록 -->
 <insert id="insertData" parameterType="com.codi.dto.ProductDetailDTO" >
-	insert into productDetail(detailNum,productId,productName,originalName,saveFileName,superProduct,codiImage)
-	values (#{detailNum},#{productId},#{productName},#{originalName},#{saveFileName},#{superProduct},'0')
+	insert into productDetail(detailNum,productId,productName,originalName,saveFileName,superProduct)
+	values (#{detailNum},#{productId},#{productName},#{originalName},#{saveFileName},#{superProduct})
 </insert>
 
 <!-- 상위상품 검색 -->
@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 상세 이미지 -->
 <select id="getDetailImageList" parameterType="String" resultType="com.codi.dto.ProductDetailDTO" >
-	select detailNum, productId, productName, originalName, saveFileName, superProduct,codiImage 
+	select detailNum, productId, productName, originalName, saveFileName, superProduct 
 	from productDetail where superProduct=#{superProduct}
 </select>
 
