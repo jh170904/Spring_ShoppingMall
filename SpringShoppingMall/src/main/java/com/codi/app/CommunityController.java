@@ -1,6 +1,7 @@
 package com.codi.app;
 
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -21,6 +22,7 @@ import com.codi.dao.CommunityDAO;
 import com.codi.dto.CommunityDTO;
 import com.codi.dto.MemberDTO;
 import com.codi.dto.ProductDTO;
+import com.codi.dto.ProductDetailDTO;
 import com.codi.dto.ReplyDTO;
 import com.codi.util.MyUtil;
 
@@ -79,9 +81,19 @@ public class CommunityController {
 			int replyCount = dao.replyCount(vo.getiNum());
 			List<ReplyDTO> replydto = dao.replyLists(vo.getiNum());
 			
+
+			String[] arrHashTag = vo.getiHashTag().split("#");
+			
+			for(String str: arrHashTag) {
+				if(str!=null && !str.equals("")) {
+				}
+			}
+			
+			vo.setArrHashTag(arrHashTag);
 			vo.setReplydto(replydto);
 			vo.setReplyCount(replyCount);
 			vo.setHeartCount(heartCount);
+			
 		}
 		
 		//각각의 dto에 reviewCount 와 reviewRate 추가

@@ -42,6 +42,23 @@
   height: 45px;
 }
 
+.target {
+	display: inline-block; 
+	white-space: nowrap; 
+	overflow: hidden; 
+	text-overflow: ellipsis;
+	
+	/* 여러 줄 자르기 추가 스타일 */ 
+	white-space: normal; 
+	line-height: 1.2; 
+	max-height: 5.9em; 
+	text-align: left; 
+	word-wrap: break-word; 
+	display: -webkit-box; 
+	-webkit-line-clamp: 3; 
+	-webkit-box-orient: vertical; 
+}
+
 
 </style>
 
@@ -171,8 +188,14 @@ $(function(){
 	</div>
 
 	<div style="border:1px solid #C2C2C2;  width: 256px;" >
-		<div style="margin: 10px 5px 10px 5px; line-height: 20px;">
-			<strong>${dto.userId }</strong>&nbsp;&nbsp; <span style="color: #8080FF">${dto.iHashTag}</span>&nbsp;${dto.iContent}
+		<div style="margin: 10px 5px 10px 5px; line-height: 20px;" class="target">
+			<strong>${dto.userId }</strong>&nbsp;&nbsp;
+			<c:forEach var="hashArr" items="${dto.arrHashTag }">
+				<c:if test="${!empty hashArr}">
+					<a href="<%=cp%>/pr/codiHashTagList.action?iHashtag=${hashArr}"><span style="color: #8080FF">#${hashArr}</span></a>&nbsp;
+				</c:if>
+			</c:forEach>
+			${dto.iContent}
 		</div> 
 	</div>
 	

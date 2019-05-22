@@ -16,6 +16,9 @@ public class CommunityDTO {
 	private int iComment;
 	private int heartCount;
 	private int replyCount;
+
+
+	private String[] arrHashTag;
 	
 	private List<ReplyDTO> replydto;
 	
@@ -28,6 +31,13 @@ public class CommunityDTO {
 	private String myFriendId;
 	
 	
+	
+	public String[] getArrHashTag() {
+		return arrHashTag;
+	}
+	public void setArrHashTag(String[] arrHashTag) {
+		this.arrHashTag = arrHashTag;
+	}
 	public List<ReplyDTO> getReplydto() {
 		return replydto;
 	}

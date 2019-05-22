@@ -9,6 +9,7 @@ public class CodiHashTagDTO {
 	private String productId;
 	private String iDate;
 	private String iHashTag;
+	private String Decoding_HashTag;
 	
 	//코디 좋아요
 	private int heartCount;
@@ -16,6 +17,14 @@ public class CodiHashTagDTO {
 	//코디 구성 상품
 	public List<ProductDetailDTO> itemLists;
 
+	
+	public String getDecoding_HashTag() {
+		return Decoding_HashTag;
+	}
+
+	public void setDecoding_HashTag(String decoding_HashTag) {
+		Decoding_HashTag = decoding_HashTag;
+	}
 	public int getiNum() {
 		return iNum;
 	}

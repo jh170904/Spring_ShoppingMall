@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="replyLists" parameterType="int" resultType="com.codi.dto.ReplyDTO">
 	select a.userId,content,b.mImage
 	from REPLY a, member b
-	where iNum=#{iNum} and a.userid=b.userid order by replydate
+	where iNum=#{iNum} and a.userid=b.userid order by replydate desc
 </select>
 
 <!-- commuHome.jsp 부분 -->
