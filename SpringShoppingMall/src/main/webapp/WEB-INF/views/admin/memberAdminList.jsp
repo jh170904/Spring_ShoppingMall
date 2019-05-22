@@ -2,6 +2,22 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../layout/adminNav.jsp"  %>
 
+<style>
+
+.insertButton {
+	padding:5px 10px; 
+	color:#000000; 
+	border:1px solid #000000;
+	font-size: 15px;
+}
+
+.insertButton:hover {
+	color:#ffffff; 
+	background-color: #000000;	
+}
+
+</style>
+
 <script>
 	function showOrder(order) {
 
@@ -24,10 +40,10 @@
 	}
 </script>
 
-<div class="ap_contents product detail" style="padding-left: 70px;">
+<div class="ap_contents product detail">
 
-	<div style="width:1200px;margin:30px auto;text-align:left;">
-		<div style="width: 1100px; height:100px; text-align:center; line-height:50px; font-size: 30px; color:#000000; border: none">
+	<div style="width:1200px;margin:30px auto;text-align:center;">
+		<div style="width: 1200px; height:100px; text-align:center; line-height:50px; font-size: 30px; color:#000000; border: none">
 			회원 관리
 		</div>
 		
@@ -37,18 +53,19 @@
 			<button class="btn_sm_bordered" onclick="searchOrderName()">검색</button>
 			</form>
 		</div>
-		
+
 		<div style="width: 1200px;">
 			<table class="ui_table_striped data_table thead_colored align_center @table-striped-apply" >
 			
 				<colgroup>
 					<col width="5%">
-					<col width="30%">
-					<col width="15%">
+					<col width="25%">
+					<col width="10%">
 					<col width="10%">
 					<col width="15%">
 					<col width="10%">
 					<col width="15%">
+					<col width="10%">
 				</colgroup>
 				
 				<thread>
@@ -59,10 +76,12 @@
 					<th scope="col" bgcolor="#F2F2F2">이름</th>
 					<th scope="col" bgcolor="#F2F2F2">이메일</th>
 					<th scope="col" bgcolor="#F2F2F2">포인트</th>
-					<th scope="col" bgcolor="#F2F2F2">등급</th>				
+					<th scope="col" bgcolor="#F2F2F2">등급</th>		
+					<th scope="col" bgcolor="#F2F2F2">메일발송</th>				
 				</tr>
 				</thread>
-				
+				<div id="bbsList_header" style="height:30px;">
+		</div>
 				<tbody id="paging">
 					<c:forEach var="dto" items="${memberList }">
 						<tr align="center">
@@ -73,6 +92,9 @@
 							<td style="text-align: left;">${dto.email }</td>
 							<td>${dto.point }</td>
 							<td>${dto.userGrade }</td>
+							<td>
+								<button type="button" class="insertButton" onclick="javascript:location.href='<%=cp %>/admin/sendEmail.action?email=${dto.email }&userName=${dto.userId }';">메일발송</button>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>

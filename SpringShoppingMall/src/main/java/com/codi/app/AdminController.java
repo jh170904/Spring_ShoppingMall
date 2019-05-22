@@ -36,6 +36,7 @@ import com.codi.dao.ReviewDAO;
 import com.codi.dto.AdminPaymentDTO;
 import com.codi.dto.CouponDTO;
 import com.codi.dto.DestinationDTO;
+import com.codi.dto.EmailDTO;
 import com.codi.dto.MemberDTO;
 import com.codi.dto.OrderDTO;
 import com.codi.dto.OrderListDTO;
@@ -73,7 +74,9 @@ public class AdminController {
 	
 	@Autowired
 	MyUtil myUtil;
-
+	
+	private JavaMailSender mailSender;
+	private String from = "codi@codi.com"; 	
 	
 	//상품등록
 	@RequestMapping(value = "/admin/productAdminCreate.action", method = {RequestMethod.GET, RequestMethod.POST})
@@ -638,6 +641,72 @@ public class AdminController {
 		request.setAttribute("memberList", memberList);
 			
 		return "admin/memberAdminList";
+	}
+	
+	@RequestMapping(value = "/admin/sendEmail.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String sendEmail(MemberDTO dto, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		request.setAttribute("dto", dto);
+			
+		return "admin/sendEmail";
+	}
+	
+	@RequestMapping(value = "/admin/sendEmali_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String sendEmali_ok(EmailDTO dto, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		String style="\"";
+		
+		if(dto.getBold()!=null && dto.getBold().equals("")) {
+			style += "font-weight: bold;";
+		}
+		if(dto.getUnderline()!=null && dto.getUnderline().equals("")) {
+			style += "text-decoration:underline;";
+		}
+		if(dto.getItalic()!=null && dto.getItalic().equals("")) {
+			style += "font-style: italic;";
+		}
+		if(dto.getLineThrough()!=null && dto.getLineThrough().equals("")) {
+			style += "text-decoration: line-through;";
+		}
+		
+		style += "font-size:" + dto.getFontsize() + ";";
+		style += "font-family:verdana;";
+		style += "color:" + dto.getColor() + "\"";
+		
+		String email = dto.getEmail();
+		System.out.println("메일 확인 : " + email);
+		
+		//메일
+		try {
+        	
+			MimeMessage message = mailSender.createMimeMessage(); 
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+			messageHelper.setTo(email);
+
+	        
+			String html = "<div " + style + ">";
+			
+	        html+="<br/>안녕하세요. <strong>내일의 코디북</strong> 입니다. ";
+	        html+="안내사항 알려드립니다.<br/><br/>";
+	        html+= dto.getContent().replaceAll("\n", "</br>"); 
+	        html+="<br/><br/>더 궁금하신 내용은 yerin2407@gmail.com으로 메일 부탁드립니다.";
+	        html+="</div>";
+
+	        messageHelper.setText(html, true);
+
+			messageHelper.setFrom(from); 
+			messageHelper.setSubject(dto.getSubject());
+
+			System.out.println(from);
+			
+			mailSender.send(message);
+
+
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+			
+		return "redirect:/admin/memberList.action";
 	}
 	
 }

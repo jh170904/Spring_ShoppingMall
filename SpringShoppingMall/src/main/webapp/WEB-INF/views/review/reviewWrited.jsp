@@ -368,7 +368,7 @@ input[type=radio] {
 					<p style="color:#333333; font-size: 13px; margin-top: 10px;" id="counter"></p>
 				</dt>
 				<dt style="display: inline-block;">
-					<textarea rows="20" cols="75" name="content" id="content" maxlength="1000" style="padding: 10px; line-height: 1.5em;"></textarea>
+					<textarea rows="20" cols="40" name="content" id="content" maxlength="1000" style="padding: 10px; line-height: 1.5em;"></textarea>
 				</dt>
 			</dl>
 		</div>
