@@ -421,7 +421,7 @@ input[type=file] {
 		</tr>
 		<tr>
 			<td height="10" colspan="2" style="padding-left: 170px;">
-				<div style="margin: 10px 0px; font-size: 15px;">메인 이미지&nbsp;&nbsp;<input type="checkbox" name="fileCategory" value="" /></div>
+				<div style="margin: 10px 0px; font-size: 15px;">메인 이미지&nbsp;&nbsp;<input type="checkbox" name="fileCategory" value="" checked="checked"/></div>
 			</td>
 		</tr>
 		
