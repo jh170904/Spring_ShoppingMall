@@ -185,6 +185,7 @@ dd {
 
  	function fontSize(size) {
 		$('#content').css('fontSize',size);
+		$('#content').css('lineHeight',size);
 		$("input[name=fontsize]").val(size);		
 	}
 	
@@ -338,6 +339,7 @@ dd {
 		<table width="900" align="center" style="margin-top: 20px;">
 		<tr align="center">
 			<td  align="center">
+				<input type="hidden" name="userName" value="${dto.userName }">
 				<input type="hidden" name="bold" value=""><input type="hidden" name="italic" value=""><input type="hidden" name="fontsize" value="10pt">
 				<input type="hidden" name="underline" value=""><input type="hidden" name="lineThrough" value=""><input type="hidden" name="color" value="#000000">
 				<button class="btn_blg_primary sendButton" type="button" onclick="sendIt();">보내기</button>

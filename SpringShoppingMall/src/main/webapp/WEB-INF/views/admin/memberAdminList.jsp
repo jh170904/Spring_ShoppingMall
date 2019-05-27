@@ -16,6 +16,19 @@
 	background-color: #000000;	
 }
 
+.allButton {
+	float:right;
+	padding:10px 10px; 
+	color:#000000; 
+	border:1px solid #000000;
+	font-size: 15px;
+}
+
+.allButton:hover {
+	color:#ffffff; 
+	background-color: #000000;	
+}
+
 </style>
 
 <script>
@@ -47,13 +60,21 @@
 			회원 관리
 		</div>
 		
-		<div style="padding: 10px 0px; float: right;">
-			<form action="" method="post" name="search">
-			<input type="text" style="width: 200px; text-align: left;" class="btn_sm_bordered" name="searchOrderName">
-			<button class="btn_sm_bordered" onclick="searchOrderName()">검색</button>
-			</form>
+		<div style="padding: 10px 0px; margin-bottom: 15px;">
+			
+			<div style="float: left;">
+			<!-- <form action="" method="post" name="search">
+				<input type="text" style="width: 200px; text-align: left;" class="btn_sm_bordered" name="searchUserId">
+				<button class="btn_sm_bordered" onclick="searchOrderName()">검색</button>
+			</form> -->
+			</div>
+			
+			<div style="padding-right: 20px;">
+				<button type="button" class="allButton" onclick="javascript:location.href='<%=cp %>/admin/sendEmail.action?email=all&userName=all';">전체발송</button>						
+			</div>
+			
 		</div>
-
+		
 		<div style="width: 1200px;">
 			<table class="ui_table_striped data_table thead_colored align_center @table-striped-apply" >
 			

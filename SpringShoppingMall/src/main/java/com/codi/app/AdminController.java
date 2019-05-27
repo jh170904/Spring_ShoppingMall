@@ -646,7 +646,11 @@ public class AdminController {
 	
 	@RequestMapping(value = "/admin/sendEmail.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String sendEmail(MemberDTO dto, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+			
+		if(dto.getUserName()=="all" || dto.getUserName().equals("all")) {
+			dto.setEmail("전체발송");
+		}
+		
 		request.setAttribute("dto", dto);
 			
 		return "admin/sendEmail";
@@ -654,7 +658,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/admin/sendEmali_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String sendEmali_ok(EmailDTO dto, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+		
 		String style="\"";
 		
 		if(dto.getBold()!=null && dto.getBold().equals("")) {
@@ -673,8 +677,8 @@ public class AdminController {
 		style += "font-size:" + dto.getFontsize() + ";";
 		style += "font-family:verdana;";
 		style += "color:" + dto.getColor() + "\"";
-		
-		String email = dto.getEmail();
+
+		 
 		String content = dto.getContent().replaceAll("\n", "<br/>"); 
 		
 		//메일
@@ -682,7 +686,6 @@ public class AdminController {
         	
 			MimeMessage message = mailSender.createMimeMessage(); 
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-			messageHelper.setTo(email);
 
 	        
 			String html = "<div>";
@@ -702,8 +705,21 @@ public class AdminController {
 
 			System.out.println(from);
 			
-			mailSender.send(message);
-
+			
+			if(dto.getUserName()=="all" || dto.getUserName().equals("all")) {
+				Iterator<String> emailList = memberDAO.allEmail().iterator();
+				
+				String email ="";
+				while(emailList.hasNext()) {
+					 email = emailList.next();
+					 messageHelper.setTo(email);
+					 mailSender.send(message);
+				}
+				
+			} else {
+				messageHelper.setTo(dto.getEmail());
+				mailSender.send(message);
+			}
 
 		} catch (Exception e) {
 			System.out.println("ㅅㅂ");

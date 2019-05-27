@@ -3,6 +3,7 @@ package com.codi.dto;
 public class EmailDTO {
 	
 	private String email;
+	private String userName;
 	private String subject;
 	private String content;
 	
@@ -13,11 +14,18 @@ public class EmailDTO {
 	private String color;
 	private String fontsize;
 	
+	
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public String getSubject() {
 		return subject;

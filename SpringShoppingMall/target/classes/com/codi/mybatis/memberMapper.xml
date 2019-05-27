@@ -74,4 +74,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	from member
 </select>
 
+<!-- 전체 메일 확인 -->
+<select id="allEmail" resultType="String">
+	select distinct email from member
+</select>
+
 </mapper>

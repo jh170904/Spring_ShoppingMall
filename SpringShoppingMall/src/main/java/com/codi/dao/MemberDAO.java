@@ -137,6 +137,14 @@ public class MemberDAO {
 		
 		return lists;
 	}
+	
+	//전체 메일 발송시 필요
+	public List<String> allEmail(){
+		
+		List<String> lists = sessionTemplate.selectList("memberMapper.allEmail");
+	
+		return lists;
+	}
 
 
 }
