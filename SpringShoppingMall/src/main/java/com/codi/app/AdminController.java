@@ -240,14 +240,18 @@ public class AdminController {
 
 		// 2. DB에 넣기
 		if(file != null && file.getSize() > 0) {
+			
 			//수정등록 파일이 있는 경우
 			dto.setOriginalName(file.getOriginalFilename());
 			dto.setSaveFileName(file.getOriginalFilename());
-		}else {
+			
+		}else if(dto.getFileCategory()!=null){
 			//수정등록 파일이 없는 경우 기존데이터 그대로 사용
 			ProductDetailDTO beforedto = productDetailDAO.getReadData(dto.getProductId());
-			dto.setOriginalName(beforedto.getOriginalName());
-			dto.setSaveFileName(beforedto.getSaveFileName());
+			if(beforedto.getFileCategory()!=null) {
+				dto.setOriginalName(beforedto.getOriginalName());
+				dto.setSaveFileName(beforedto.getSaveFileName());
+			}
 		}
 		
 		//product테이블 수정

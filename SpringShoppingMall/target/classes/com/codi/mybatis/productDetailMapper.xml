@@ -32,8 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	color=#{color},
 	state=#{state},
 	fileCategory=#{fileCategory,jdbcType=VARCHAR},
-	originalName=#{originalName},
-	saveFileName=#{saveFileName},
+	originalName=#{originalName,jdbcType=VARCHAR},
+	saveFileName=#{saveFileName,jdbcType=VARCHAR},
 	superProduct=#{superProduct},
 	storeName=#{storeName},
 	storeUrl=#{storeUrl}
