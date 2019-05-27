@@ -144,11 +144,11 @@
 								<button onclick="showOrderList('${orderNum}')" class="btn_sm_bordered_review">상품보기</button>
 							</td>
 							<td style="vertical-align: top;">
-								<c:if test="${userOrderlist[number].payment eq 'no'}">
+								<c:if test="${userOrderlist[productNum-1].payment eq 'no'}">
 									<button class="button_payment">입금대기</button>
 								</c:if>
 								
-								<c:if test="${userOrderlist[number].payment eq 'yes'}">
+								<c:if test="${userOrderlist[productNum-1].payment eq 'yes'}">
 									<button class="btn_sm_bordered_review">결제완료</button>
 								</c:if>				
 							</td>

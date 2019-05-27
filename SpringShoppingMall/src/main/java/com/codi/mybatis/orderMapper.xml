@@ -110,7 +110,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 리뷰 총 개수 -->
 <select id="reviewCount" resultType="int">
-	select nvl(count(*),0) from review
+	select nvl(max(reviewNum),0) from review
 </select>
 
 <!-- 리뷰 추가 -->
@@ -173,12 +173,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="adminPaymentCheck" parameterType="hashMap" resultType="com.codi.dto.AdminPaymentDTO">
 	select * from (
 	select rownum rnum, data.* from (
-	select orderNum, userName, nvl(sum(orderTable.amount),0) amount,nvl(sum(orderTable.price),0) price
+	select orderNum, orderTable.userId userId, userName, nvl(sum(orderTable.amount),0) amount,nvl(sum(orderTable.price),0) price
 	from orderTable,member,product where orderTable.productId=product.productId and orderTable.userId=member.userId and payment='no'
-	group by orderNum,userName having userName like '%' || #{searchOrderName} || '%'
+	group by orderNum,orderTable.userId,userName having userName like '%' || #{searchOrderName} || '%'
 	order by orderNum desc) data)
 <![CDATA[
-	where rnum>=#{start} and rnum<=#{end}
+	where rnum>=#{start} and rnum<=#{end} order by rnum desc
 ]]>
 </select>
 

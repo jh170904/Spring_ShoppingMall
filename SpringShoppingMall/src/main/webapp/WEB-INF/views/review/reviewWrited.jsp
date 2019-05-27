@@ -332,7 +332,7 @@ input[type=radio] {
 <div class="ap_contents mypage">
 	<div id="review_form">
 		
-		<div class="title">${dto.productName }리뷰 작성</div>
+		<div class="title">${dto.productName } 리뷰 작성</div>
 		
 		<div class="rate_text">
 			<img class="rate_span" src="../resources/image/heart1.PNG" width="55px" onclick="changeHeart('1')" id="img_1">

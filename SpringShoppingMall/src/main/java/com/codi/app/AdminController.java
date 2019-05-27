@@ -497,13 +497,11 @@ public class AdminController {
 	
 	@RequestMapping(value = "/admin/without_bankbook_paymentYes.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String without_bankbook_paymentYes(OrderDTO orderDTO, OrderListDTO orderListDTO, DestinationDTO destinationDTO, ReviewDTO reviewDTO,
-			HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
-		
-		String orderNum = request.getParameter("orderNum");
-		int price = Integer.parseInt(request.getParameter("price"));
-		String userId = orderDAO.searchUserId(orderNum);
+		String orderNum = orderDTO.getOrderNum();
+		int price = orderDTO.getPrice();
+		String userId = orderDTO.getUserId();
 		
 		//리뷰 입력
 		int reviewCount = orderDAO.reviewCount()+1;
@@ -665,16 +663,16 @@ public class AdminController {
 		
 		String style="\"";
 		
-		if(dto.getBold()!=null && dto.getBold().equals("")) {
+		if(dto.getBold()!=null && !dto.getBold().equals("")) {
 			style += "font-weight: bold;";
 		}
-		if(dto.getUnderline()!=null && dto.getUnderline().equals("")) {
+		if(dto.getUnderline()!=null && !dto.getUnderline().equals("")) {
 			style += "text-decoration:underline;";
 		}
-		if(dto.getItalic()!=null && dto.getItalic().equals("")) {
+		if(dto.getItalic()!=null && !dto.getItalic().equals("")) {
 			style += "font-style: italic;";
 		}
-		if(dto.getLineThrough()!=null && dto.getLineThrough().equals("")) {
+		if(dto.getLineThrough()!=null && !dto.getLineThrough().equals("")) {
 			style += "text-decoration: line-through;";
 		}
 		
@@ -695,11 +693,9 @@ public class AdminController {
 			String html = "<div>";
 			
 	        html+="<br/>안녕하세요. <strong>내일의 코디북</strong> 입니다.<br/><br/> ";   
-	        html+="안내사항 알려드립니다.<br/><br/>";
 	        html+="<p style="+ style +">";
 	        html+= content;
 	        html+="</p>";
-	        html+="<br/><br/>더 궁금하신 내용은 yerin2407@gmail.com으로 메일 부탁드립니다.";
 	        html+="</div>";
 
 	        messageHelper.setText(html, true);

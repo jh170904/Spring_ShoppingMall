@@ -1,13 +1,22 @@
 package com.codi.dto;
 
 public class AdminPaymentDTO {
-
+	
+	private String userId;
 	private String orderNum;
 	private String userName;
 	private String productName;
 	private int amount;
 	private int price;
 	private int orderCount;
+	
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	
 	public String getOrderNum() {
 		return orderNum;
