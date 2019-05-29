@@ -28,10 +28,11 @@
 	margin-right: 5px;
 }
 #save{
-	width: 100px;
+	width: 200px;
 	background: #8080ff;
 	color: #fff;
-	height: 30px;
+	height: 50px;
+	font-size:19px;
 	border:0;
 }
 
