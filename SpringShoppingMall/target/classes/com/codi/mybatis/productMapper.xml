@@ -179,7 +179,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 하나의 상품이 받은 하트 수 -->
 <select id="storeHeartCount2" parameterType="String" resultType="int">
-	select nvl(count(*),0) From storeHeart where superProduct=#{superProduct} GROUP by superProduct
+	select nvl(count(*),0) From storeHeart where superProduct=#{superProduct}
 </select>
 	
 

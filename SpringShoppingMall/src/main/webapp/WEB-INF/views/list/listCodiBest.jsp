@@ -28,10 +28,12 @@ $(function(){
             dataType : "json",
             contentType: "application/json; charset=UTF-8",
             success : function(data) {
-            	if(data.cnt > 0) {
+            	if(data.result > 0) {
             		$(".goodDiv" + superProduct).html('<img src="../resources/image/heart1.PNG" style="height: 25px;"/> ');
+            		$(".goodDiv2" + superProduct).html(data.cnt);
                 } else {
             		$(".goodDiv" + superProduct).html('<img src="../resources/image/heart2.PNG" style="height: 25px;"/> ');
+            		$(".goodDiv2" + superProduct).html(data.cnt);
                 }
                 
             },
@@ -101,7 +103,7 @@ $(function(){
 						<c:set var="j" value="0" />
 					</c:if>
 					
-					<td align="center" style="border: 1px solid #ededed; padding: 5px;" >
+					<td align="center" style="border: 1px solid #ededed; padding: 8px; width: 25%" >
 						<table>
 							<tr>
 								<td style="position: relative;">
@@ -139,12 +141,14 @@ $(function(){
 							</tr>
 							<tr>
 								<td>
-									<p align="left" style="margin: 0px 10px 10px 0px; height: 20px">
-									<span style="font-size: 14pt;  color: #8080FF" >★</span>
-									<span>평점 ${dto.reviewRate}</span>
-									<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;${dto.reviewCount}</span>
-									
-									<span style="font-size: 14pt;  color: #8080FF; margin-left: 98px;">
+									<p align="left" style="margin: 0px 10px 10px 0px;">
+									<div style="display: inline-block; width: 220px; ">
+										<span style="font-size: 14pt;  color: #8080FF" >★</span>
+										<span>평점 ${dto.reviewRate}</span>
+										<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;${dto.reviewCount}</span>
+										<span>&nbsp;&nbsp;&nbsp;좋아요&nbsp;<div style="display: inline-block;" class="goodDiv2${dto.superProduct}">${dto.heartCount}</div></span>
+									</div>	
+									<span style="font-size: 14pt;  color: #8080FF;">
 										<input type="hidden" id="superProduct" value="${dto.superProduct}" >
 										<button class="goodButton" value="${dto.superProduct}">
 											<div class="goodDiv${dto.superProduct}">

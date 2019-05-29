@@ -79,30 +79,54 @@ public class MyPageController {
 	
 	@RequestMapping(value = "pr/userPage.action", method = RequestMethod.GET)
 	public String userPage(HttpServletRequest req,HttpSession session,String userId) {
-				
+		
+		String cp = req.getContextPath();
+		String pageNum = req.getParameter("pageNum");
+		
+		int currentPage = 1;
+		
+		if(pageNum!=null)
+			currentPage = Integer.parseInt(pageNum);
+		
+		int dataCount = instardao.countUserInstar(userId);
+		
+		int numPerPage = 6;
+		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
+		
+		if(currentPage>totalPage)
+			currentPage = totalPage;
+		
+		int start = (currentPage-1)*numPerPage+1;
+		int end = currentPage*numPerPage;
+		
 		int userInstarCount = instardao.countUserInstar(userId);
 		int userCodiHeartCount = instardao.getUserCodiHeartCount(userId);
 
 		MemberDTO memberInfo = instardao.getUserInfo(userId);		
-		
-		List<CommunityDTO> instarList = instardao.selectUserInstar(userId, 1, 4);
-		List<CommunityDTO> codiHeartList = instardao.getUserCodiHeart(userId, 1, 4);
+
+		List<CommunityDTO> lists = instardao.selectUserInstar(userId, start, end);
 		
 		//나를 팔루우한 사람
 		int follower = dao.follower(userId);
 		//내가 팔로우한 사람
 		int following = dao.following(userId);
 
+
+		String listUrl = cp + "/pr/userPage.action?userId="+userId;
+		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		
 		req.setAttribute("follower", follower);
 		req.setAttribute("following", following);
 		req.setAttribute("userId", userId);
-		req.setAttribute("userInstarCount", userInstarCount);
-		req.setAttribute("memberPath", "../upload/profile");
 		req.setAttribute("memberInfo", memberInfo);
-		req.setAttribute("instarList", instarList);
+		req.setAttribute("instarList", lists);
+		req.setAttribute("userInstarCount", userInstarCount);
 		req.setAttribute("userCodiHeartCount", userCodiHeartCount);
-		req.setAttribute("codiHeartList", codiHeartList);
 		req.setAttribute("imagePath", "../upload/makecodi");
+		req.setAttribute("memberPath", "../upload/profile");
+		req.setAttribute("pageIndexList", pageIndexList);
+		req.setAttribute("dataCount", dataCount);
+		req.setAttribute("pageNum", pageNum);
 
 		
 		return "mypage/userPage";
@@ -321,7 +345,7 @@ public class MyPageController {
 		int following = dao.following(userId);
 		
 		// 페이징을 위한 값들 보내주기
-		String listUrl = cp + "/pr/userFollower.action";
+		String listUrl = cp + "/pr/userFollower.action?userId=" + userId;
 
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 
@@ -372,7 +396,7 @@ public class MyPageController {
 		int following = dao.following(userId);
 		
 		// 페이징을 위한 값들 보내주기
-		String listUrl = cp + "/pr/userFollowing.action";
+		String listUrl = cp + "/pr/userFollowing.action?userId=" + userId;
 
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
