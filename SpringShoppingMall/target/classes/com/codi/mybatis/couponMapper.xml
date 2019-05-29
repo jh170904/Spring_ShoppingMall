@@ -56,9 +56,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	update issue set used='Y' where userId=#{userId} and couponKey=#{couponKey} and used='N'
 </update>
 
-<select id="canUseCoupon" parameterType="String" resultType="com.codi.dto.MyCouponDTO">
-	select b.couponKey couponKey,to_char(a.ISSUEDATE,'YYYY-MM-DD') ISSUEDATE,b.DISCOUNT DISCOUNT,b.COUPONNAME COUPONNAME,to_char(b.COUPONENDDATE,'YYYY-MM-DD') COUPONENDDATE,a.used used 
-	from issue a, coupon b where a.couponKey = b.couponKey and a.userid=#{userId} and used='N'
+<select id="canUseCoupon" parameterType="hashMap" resultType="com.codi.dto.MyCouponDTO">
+	select b.couponKey couponKey,to_char(a.ISSUEDATE,'YYYY-MM-DD') ISSUEDATE,b.DISCOUNT DISCOUNT,COUPONSCORE,b.COUPONNAME COUPONNAME,to_char(b.COUPONENDDATE,'YYYY-MM-DD') COUPONENDDATE,a.used used 
+	from issue a, coupon b where a.couponKey = b.couponKey and a.userid=#{userId} 
+<![CDATA[	
+	and used='N' and COUPONSCORE<=#{totalPrice}
+]]>
 </select>
 
 <delete id="deleteCoupon" parameterType="int">

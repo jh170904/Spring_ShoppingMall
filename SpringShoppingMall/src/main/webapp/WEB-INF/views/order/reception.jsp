@@ -189,8 +189,6 @@
 		document.getElementById('couponLayer').style.display = 'none';
 		document.orderForm.couponDiscount.value = couponPrice;
 		
-		alert(couponPrice);
-		
 		var total1 = ${totalPrice} + ${deliveryFee} - point - couponPrice ;
 		document.orderForm.discount.value = point;
 		document.orderForm.couponName.value = couponName;		
@@ -694,19 +692,7 @@
 								<input type="hidden" name="totalPoint" id="totalPoint" value="${totalPrice * 0.01}">
 								</span>
 							</td>
-						</tr><%-- 
-						<c:forEach var="orderListDto" items="${orderList }">
-						<tr>
-							<td style="padding: 10px 50px;">
-								<font style="font-size: 17px; color: gray;">${orderListDto.productName}</font>
-							</td>
-							<td style="padding: 10px 40px;" align="right">
-								<span style="font-size: 17px; color: gray; text-align: right;" >
-									<fmt:formatNumber value="${orderListDto.amount * orderListDto.price * 0.01}" type="number"/>P
-								</span>					
-							</td>
-						</tr>	
-						</c:forEach>	 --%>				
+						</tr>
 					</table>
 				</div>
 			</dd>	

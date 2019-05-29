@@ -121,7 +121,7 @@ public class OrderController {
 	        }
         }
 		
-		List<MyCouponDTO> couponLists = couponDAO.canUseCoupon(info.getUserId());
+		List<MyCouponDTO> couponLists = couponDAO.canUseCoupon(info.getUserId(),totalPrice);
 		
 		String imagePath = "../upload/list";
 		request.setAttribute("destDto", destDto);

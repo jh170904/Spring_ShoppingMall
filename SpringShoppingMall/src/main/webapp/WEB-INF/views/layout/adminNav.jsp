@@ -34,7 +34,7 @@
 .myPageCategory .menuLink {
 	text-decoration:none;
 	display:block; 
-	width:130px;
+	width:160px;
 	font-size:16px;
 }
 
@@ -81,12 +81,7 @@
 			
 			<li>
 				<a class="menuLink" href="<%=cp1%>/admin/bankbookPaymentAdmin.action" id="bankbookPaymentAdmin.action">주문관리</a>
-			</li>
-			
-			<li>
-				<a class="menuLink" href="#" id="con">이벤트관리</a>
-			</li> 
-			 
+			</li>			 
 		</ul> 
 	</nav>
 </div>
