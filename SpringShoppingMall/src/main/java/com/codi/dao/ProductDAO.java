@@ -164,10 +164,10 @@ public class ProductDAO {
 	
 	//storeHeartCount2 : 하나의 상품이 받은 하트수
 	public int storeHeartCount2(String superProduct){
-
+		
 		int result = 
 				sessionTemplate.selectOne("productMapper.storeHeartCount2",superProduct);
-
+		
 		return result;
 	}
 	

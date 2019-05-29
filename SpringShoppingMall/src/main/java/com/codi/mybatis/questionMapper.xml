@@ -129,9 +129,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 글 수정 -->
 <update id="updateData" parameterType="com.codi.dto.QuestionDTO">
-	update questionBoard set qSubject=#{qSubject},qContent=#{qContent},qHashTag=#{qHashTag} 
+	update questionBoard set qSubject=#{qSubject},qContent=#{qContent},qHashTag=#{qHashTag},originalName=#{originalName},saveFileName=#{saveFileName}
 	where qNum=#{qNum}
 </update>
+
+<!-- qnum따라 dto 가져오기 -->
+<select id="getDtoQnum" parameterType="int" resultType="com.codi.dto.QuestionDTO">
+	select * from questionBoard where qnum=#{qnum}
+</select>
 
 <!-- 글 삭제 -->
 <delete id="deleteData" parameterType="int">

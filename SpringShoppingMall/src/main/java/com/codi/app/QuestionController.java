@@ -313,8 +313,44 @@ public class QuestionController {
 			//request.setAttribute("pageNum", pageNum);
 			request.setAttribute("mode", "updated");
 			request.setAttribute("dto",dto);
-			
-			return "question/questionCreated";
+		}
+		
+		return "question/questionCreated";
+	}
+		
+	@RequestMapping(value = "/qna/updated_ok.action", method = {RequestMethod.POST, RequestMethod.GET})
+	public String updated_ok(QuestionDTO dto,MultipartHttpServletRequest request) throws IOException{
+
+		Date date = new Date();
+		SimpleDateFormat today = new SimpleDateFormat("yyyymmdd24hhmmss");
+		String time = today.format(date);
+
+		//파일이 존재한다면 업로드 하기
+		String path = request.getSession().getServletContext().getRealPath("/upload/qna");
+
+		MultipartFile file = request.getFile("qnaUpload");
+
+		if(file!=null && file.getSize()>0) {
+
+			try {
+
+				String saveName = time + file.getOriginalFilename();
+
+				File saveFile = new File(path,saveName); 
+				file.transferTo(saveFile);
+
+				dto.setOriginalName(saveName);
+				dto.setSaveFileName(saveName);
+
+			} catch (Exception e) {
+				System.out.println(e.toString());
+			}
+
+		}
+		else {
+			dto.setOriginalName("");
+			dto.setSaveFileName("");
+
 		}
 		
 		//수정한 내용 update
@@ -325,9 +361,28 @@ public class QuestionController {
 		return "redirect:/qna/questionAticle.action?qNum="+dto.getqNum();
 	}
 	
+	
+	
 	@RequestMapping(value = "/qna/deleted.action", method = {RequestMethod.POST, RequestMethod.GET})
 	public String deleted(QuestionDTO dto,HttpServletRequest request) throws IOException{
 		
+		//qnum으로 DB에서 savefile가져옴
+		dto=dao.getDtoQnum(dto.getqNum());
+		
+		//파일이 존재한다면 실제 서버에서도 삭제
+		String path = request.getSession().getServletContext().getRealPath("/upload/qna")+File.separator+dto.getSaveFileName();
+		
+		File delFile=new File(path);
+		
+		if(dto.getSaveFileName()!=null) {
+		
+			System.out.println(path);
+
+			delFile.delete();
+			
+		}
+		
+		//DB에서도 삭제
 		dao.deleteData(dto);
 		
 		return "redirect:/qna/questionMain.action";
