@@ -48,7 +48,6 @@ table {
 .reply_content_wrapper {
     text-align: left;
     padding: 6px;
-    padding-right: 20px;
     position: relative;
     font-size: 14px;
     font-family: 'Noto Sans Regular','Spoqa Han Sans JP','맑은 고딕',Dotum,'Apple SD Gothic Neo',Sans-serif;
@@ -60,10 +59,10 @@ table {
 .reply_content_wrapper_date {
     float: right;
     vertical-align: bottom;
+    width: 18%;
 }
 .reply_content_wrapper_date a {
     padding: 1px 6px;
-    margin-left: 10px;
     color: #999;
     font-size: 11pt;
     font-weight: 700;
@@ -87,6 +86,7 @@ table {
 pre{
 	display: inline-block;
 	height: 100%;
+	width: 82%;
 }
 
 .pf{
@@ -370,7 +370,7 @@ pre{
 				<c:if test="${hashArray!=null }">
 				<c:forEach var="hash" items="${hashArray}">
 				<li><a class="keyword-item"
-					href="/questions?query=%EA%B2%AC%EC%A0%81">${hash}</a></li>
+					href="#">${hash}</a></li>
 				</c:forEach>
 				</c:if>
 			</ul>
