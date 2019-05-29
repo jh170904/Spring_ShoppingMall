@@ -67,7 +67,7 @@
 						$("#userName").focus();
 	                    	                
 	                } else {
-	                    alert("회원정보 조회 성공");
+	                    //alert("회원정보 조회 성공");
 
 	                    //아이디가 중복하지 않으면  idck = 1 
 	                    pwdck = 1;

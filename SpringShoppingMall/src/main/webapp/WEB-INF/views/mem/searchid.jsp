@@ -69,7 +69,7 @@
 						$("#userName").focus();
 	                    	                
 	                } else {
-	                    alert("아이디 조회 성공");
+	                    //alert("아이디 조회 성공");
 	                    //아이디가 중복하지 않으면  idck = 1 
 	                    idck = 1;
 

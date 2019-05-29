@@ -169,7 +169,7 @@ $(function(){
 				
 				<li style="margin-left: 0;">
 				<div onclick="location.href='<%=cp %>/pr/commuMain.action'" style="width: 230px; text-align: center; float: left;">
-					<img style="width: 230px;" alt="" src="<%=cp %>/resources/image/logo3.png"/>
+					<img style="width: 230px; height: 55px;" alt="" src="<%=cp %>/resources/image/logo3.png"/>
 				</div>
 				</li>
 				<li style="margin-left: 5px;">
