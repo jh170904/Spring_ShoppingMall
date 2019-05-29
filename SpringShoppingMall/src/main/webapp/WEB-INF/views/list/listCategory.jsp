@@ -3,7 +3,7 @@
 <%@page import="java.net.URLDecoder"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@include file="../layout/top.jsp"  %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript">
 
 
@@ -11,7 +11,7 @@ $(function(){
 	
 	
 	$(".goodButton").click(function(){
-
+		var superProduct = $(this).attr('value');
 		var chk='${sessionScope.customInfo.userId}';
 		
 		if(chk==""){
@@ -28,9 +28,9 @@ $(function(){
             contentType: "application/json; charset=UTF-8",
             success : function(data) {
             	if(data.cnt > 0) {
-            		$(".goodDiv" + superProduct).html('♡');
+            		$(".goodDiv" + superProduct).html('<img src="../resources/image/heart1.PNG" style="height: 25px;"/> ');
                 } else {
-            		$(".goodDiv" + superProduct).html('♥');
+            		$(".goodDiv" + superProduct).html('<img src="../resources/image/heart2.PNG" style="height: 25px;"/> ');
                 }
                 
             },
@@ -161,7 +161,9 @@ $(function(){
 							</tr>
 							<tr height="25px">
 								<td>
-									<p align="left" style="border-top: 1px solid #ededed; padding-top:5px; width:250px; font-size: 17pt; margin-bottom: 10px; color: black;">${dto.price}원</p>
+									<p align="left" style="border-top: 1px solid #ededed; padding-top:5px; width:250px; font-size: 17pt; margin-bottom: 10px; color: black;">
+									<fmt:formatNumber value="${dto.price}" groupingUsed="true"/>원
+									</p>
 								</td>
 							</tr>
 							<tr>
@@ -178,12 +180,12 @@ $(function(){
 												<c:set var="k" value="0" />
 												<c:forEach var="good" items="${good }">
 													<c:if test="${dto.superProduct eq good}">
-														♥
+														<img src="../resources/image/heart2.PNG" style="height: 25px;"/>
 														<c:set var="k" value="1" />
 													</c:if>
 												</c:forEach>
 												<c:if test="${k==0 }">
-													♡
+													<img src="../resources/image/heart1.PNG" style="height: 25px;"/>
 												</c:if>
 											</div>
 										</button>

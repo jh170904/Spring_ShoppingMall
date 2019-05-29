@@ -22,15 +22,15 @@ $(function(){
         $.ajax({
             async: true,
             type : 'POST',
-            data : {superProduct:superProduct},
+            data : superProduct,
             url : "../storeGood.action",
             dataType : "json",
             contentType: "application/json; charset=UTF-8",
             success : function(data) {
             	if(data.cnt > 0) {
-            		$(".goodDiv" + superProduct).html('♡');
+            		$(".goodDiv" + superProduct).html('<img src="../resources/image/heart1.PNG" style="height: 25px;"/> ');
                 } else {
-            		$(".goodDiv" + superProduct).html('♥');
+                	$(".goodDiv" + superProduct).html('<img src="../resources/image/heart2.PNG" style="height: 25px;"/> ');
                 }
                 
             },
@@ -60,6 +60,7 @@ $(function(){
     line-height: 1;
     border-radius: 0;
 }
+
 </style>
 
 <div id="ap_container" class="ap_container">
@@ -113,7 +114,7 @@ $(function(){
 										</div>
 									</c:if>
 									<a href="<%=cp%>/pr/detail.action?superProduct=${dto.superProduct}">
-										<img style="max-width: 250px;" src="../upload/list/${dto.originalName}" />
+										<img style="width: 250px; height: 250px;" src="../upload/list/${dto.originalName}" />
 									</a>
 								</td>
 							</tr>
@@ -131,7 +132,9 @@ $(function(){
 							</tr>
 							<tr height="25px">
 								<td>
-									<p align="left" style="border-top: 1px solid #ededed; padding-top:5px; width:250px; font-size: 17pt; margin-bottom: 10px; color: black;">${dto.price}원</p>
+									<p align="left" style="border-top: 1px solid #ededed; padding-top:5px; width:250px; font-size: 17pt; margin-bottom: 10px; color: black;">
+									<fmt:formatNumber value="${dto.price}" groupingUsed="true"/>원
+									</p>
 								</td>
 							</tr>
 							<tr>
@@ -141,19 +144,19 @@ $(function(){
 									<span>평점 ${dto.reviewRate}</span>
 									<span>&nbsp;&nbsp;&nbsp;리뷰&nbsp;${dto.reviewCount}</span>
 									
-									<span style="font-size: 14pt;  color: #8080FF; margin-left: 98px;">
+									<span style="font-size: 14pt;  color: #8080FF; margin-left: 90px;">
 										<input type="hidden" id="superProduct" value="${dto.superProduct}" >
 										<button class="goodButton" value="${dto.superProduct}">
 											<div class="goodDiv${dto.superProduct}">
 												<c:set var="k" value="0" />
 												<c:forEach var="good" items="${good }">
 													<c:if test="${dto.superProduct eq good}">
-														♥
+														<img src="../resources/image/heart2.PNG" style="height: 25px;"/>
 														<c:set var="k" value="1" />
 													</c:if>
 												</c:forEach>
 												<c:if test="${k==0 }">
-													♡
+													<img src="../resources/image/heart1.PNG" style="height: 25px;"/>
 												</c:if>
 											</div>
 										</button>

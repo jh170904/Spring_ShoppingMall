@@ -162,7 +162,7 @@ $(function(){
 <body>
 	<div class="ap_wrapper">
 	
-		<div id="header" class="ap_header" style="height: 146px;">
+		<div id="header" class="ap_header" style="height: 142px;">
 
 		<div class="inner_wrap">
 			<ul class="header_menu">
