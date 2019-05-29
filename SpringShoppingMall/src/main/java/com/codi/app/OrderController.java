@@ -75,6 +75,9 @@ public class OrderController {
 			totalAmount += dto.getAmount();
 		}
 		
+		int deliveryFee = 2500;
+		if(totalPrice>=50000)
+			deliveryFee = 0;
 		
 		//만표쿠폰 변경하기---------------------------------------------------------------------------
 		List<MyCouponDTO> lists = couponDAO.couponGetList(info.getUserId());
@@ -121,7 +124,6 @@ public class OrderController {
 		List<MyCouponDTO> couponLists = couponDAO.canUseCoupon(info.getUserId());
 		
 		String imagePath = "../upload/list";
-		int deliveryFee = 2500;
 		request.setAttribute("destDto", destDto);
 		request.setAttribute("destAllList", destAllList);
 		request.setAttribute("orderList", orderList);

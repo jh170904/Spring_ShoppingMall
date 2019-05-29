@@ -84,7 +84,7 @@
 							<td>${dto.couponScore }</td>
 							<td>${dto.couponGrade }</td>
 							<td>${dto.couponStartDate}~${dto.couponEndDate }</td>	
-							<td><a href="${updateUrl}?couponKey=${dto.couponKey }" class="buttonStyle">수정</a></td>
+							<td><a href="<%=cp %>/admin/couponAdminUpdate.action?couponKey=${dto.couponKey }" class="buttonStyle">수정</a></td>
 							<td ><a href="<%=cp %>/admin/couponAdminDeleted.action?couponKey=${dto.couponKey }&pageNum=${pageNum}" class="buttonStyle">삭제</a></td>
 						</tr>
 					</c:forEach>

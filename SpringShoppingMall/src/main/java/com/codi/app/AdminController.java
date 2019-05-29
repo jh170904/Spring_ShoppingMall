@@ -379,6 +379,23 @@ public class AdminController {
 		return "admin/couponAdminCreate";
 	}
 	
+	@RequestMapping(value = "/admin/couponAdminUpdate.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String couponAdminUpdate(int couponKey, HttpServletRequest req) {
+		
+		CouponDTO dto = couponDAO.getCoupontInfo(couponKey);
+		req.setAttribute("dto", dto);
+		
+		return "admin/couponAdminUpdate";
+	}
+	
+	@RequestMapping(value = "/admin/couponAdminUpdate_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String couponAdminUpdate_ok(CouponDTO dto, HttpServletRequest req) {
+		
+		couponDAO.updateCoupon(dto);
+		
+		return "redirect:/admin/couponAdminList.action";
+	}
+	
 	@RequestMapping(value = "/admin/couponAdminList.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String couponAdminList(HttpServletRequest req, HttpSession session) {
 		

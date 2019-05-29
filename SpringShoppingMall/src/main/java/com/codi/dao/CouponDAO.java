@@ -118,4 +118,15 @@ public class CouponDAO {
 		sessionTemplate.delete("couponMapper.deleteCoupon",couponKey);
 	}
 	
+	
+	public CouponDTO getCoupontInfo(int couponKey) {
+		
+		CouponDTO dto = sessionTemplate.selectOne("couponMapper.getCoupontInfo",couponKey);
+		return dto;
+	}
+	
+	public void updateCoupon(CouponDTO dto) {
+		sessionTemplate.update("couponMapper.updateCoupon",dto);
+	}
+	
 }

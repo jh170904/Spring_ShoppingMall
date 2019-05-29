@@ -65,4 +65,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	delete coupon where couponKey=#{couponKey}
 </delete>
 
+<!-- 쿠폰 수정 -->
+<select id="getCoupontInfo" parameterType="int" resultType="com.codi.dto.CouponDTO">
+	select couponKey,couponName,couponScore,discount,couponStartDate,ceil(couponEndDate-couponStartDate) couponEndDate,couponGrade 
+	from coupon 
+	where couponKey=#{couponKey}
+</select>
+
+<update id="updateCoupon" parameterType="com.codi.dto.CouponDTO">
+	update coupon set couponName=#{couponName},discount=#{discount},couponScore=#{couponScore}
+	where couponKey=#{couponKey}
+</update>
+
+
 </mapper>
