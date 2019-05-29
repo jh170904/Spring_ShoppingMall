@@ -448,7 +448,7 @@ pre{
 			data-sticky-enabled="false" data-offset="131.979166"
 			style="position: relative;">
 			<address class="question__sidebar__author question__author">
-				<a class="question__author__link" href="/users/4183264">
+				<a class="question__author__link" href="<%=cp %>/pr/userPage.action?userId=${dto.userId }">
 					<div class="question__author__image">
 						<img
 							src="${memberPath}/${dto.mImage}"

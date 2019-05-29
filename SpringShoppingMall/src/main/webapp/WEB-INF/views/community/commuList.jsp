@@ -152,11 +152,11 @@ $(function(){
 
 <div style="width: 280px; height: 530px; display: inline-block;  vertical-align: top;">
 <div style="position: relative;  text-align: left;">
-	<a href="/users/2324110">
+	<a href="<%=cp %>/pr/userPage.action?userId=${dto.userId}">
 		<img style="border:1px solid #F6F6F6; width: 36px; height: 36px; border-radius: 18px; display: inline-block;" src="../upload/profile/${dto.mImage }"/>
 	</a>
 	<p style="margin-left:10px; margin-bottom:5px; display: inline-block; vertical-align:bottom;">
-		<a href="#">
+		<a href="<%=cp %>/pr/userPage.action?userId=${dto.userId}">
 			<strong>${dto.userId }</strong>
 		</a>
 		
@@ -176,7 +176,7 @@ $(function(){
 			</div>
 		</button>
 		
-		<a href="/users/820291"><br>
+		<a href="<%=cp %>/pr/userPage.action?userId=${dto.userId}"><br>
 			<small>${dto.mMessage }</small>
 		</a>
 	</p>
@@ -189,7 +189,9 @@ $(function(){
 
 	<div style="border:1px solid #C2C2C2;  width: 256px;" >
 		<div style="margin: 10px 5px 10px 5px; line-height: 20px;" class="target">
-			<strong>${dto.userId }</strong>&nbsp;&nbsp;
+			<a href="<%=cp %>/pr/userPage.action?userId=${dto.userId}">
+				<strong>${dto.userId }</strong>&nbsp;&nbsp;
+			</a>
 			<c:forEach var="hashArr" items="${dto.arrHashTag }">
 				<c:if test="${!empty hashArr}">
 					<a href="<%=cp%>/pr/codiHashTagList.action?iHashtag=${hashArr.value}"><span style="color: #8080FF">#${hashArr.key}</span></a>&nbsp;
@@ -217,10 +219,12 @@ $(function(){
 					<c:forEach var="replydto" items="${dto.replydto }">
 							<c:if test="${cnt!=2}">
 								<div style="vertical-align:middle; ">
-									<img style="border:1px solid #F6F6F6; width: 20px; height: 20px; border-radius: 18px; display: inline-block;" src="../upload/profile/${dto.mImage }"/>
-									<strong>${replydto.userId }</strong>
-									<div style=" display:inline-block; vertical-align:middle; width:150px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis">&nbsp;&nbsp; ${replydto.content}</div>
-									<c:set var="cnt" value="${cnt+1 }" />
+									<a href="<%=cp %>/pr/userPage.action?userId=${replydto.userId }">
+										<img style="border:1px solid #F6F6F6; width: 20px; height: 20px; border-radius: 18px; display: inline-block;" src="../upload/profile/${replydto.mImage }"/>
+										<strong>${replydto.userId }</strong>
+									</a>
+										<div style=" display:inline-block; vertical-align:middle; width:150px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis">&nbsp;&nbsp; ${replydto.content}</div>
+										<c:set var="cnt" value="${cnt+1 }" />
 								</div>	
 							</c:if>
 					</c:forEach>
