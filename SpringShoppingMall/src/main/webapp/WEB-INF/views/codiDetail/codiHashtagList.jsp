@@ -297,7 +297,7 @@ button {
 <div id="content" style="position: relative; float: left;
 	<c:choose>
 		<c:when test="${totalCodiHashTagDataCount < 5}">height: 600px;</c:when>
-		<c:when test="${totalCodiHashTagDataCount > 5}">height: 1160px;</c:when>
+		<c:when test="${totalCodiHashTagDataCount >= 5}">height: 1160px;</c:when>
 	</c:choose> 
 ">
 	
