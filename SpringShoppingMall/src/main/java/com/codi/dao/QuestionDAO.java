@@ -197,6 +197,13 @@ public class QuestionDAO {
 	public void deleteData(QuestionDTO dto){	
 		sessionTemplate.update("questionMapper.deleteData",dto);
 	}
+	
+	//qNum 정보
+	public QuestionDTO getDtoQnum(int qNum){
+		QuestionDTO dto = sessionTemplate.selectOne("questionMapper.getDtoQnum",qNum);
+		
+		return dto;
+	}
 
 	//작성자 팔로우 여부 확인
 	public int followCheck(String followerId, String followingId) {

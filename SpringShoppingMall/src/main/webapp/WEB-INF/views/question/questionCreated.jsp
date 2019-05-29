@@ -202,7 +202,7 @@ textarea {
 		if(f.mode.value=="created"){
 			f.action = "questionCreated_ok.action" ;
 		}else if(f.mode.value=="updated"){
-			f.action = "updated.action" ;
+			f.action = "updated_ok.action" ;
 		}
 		
 		f.submit();
