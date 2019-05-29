@@ -231,7 +231,7 @@ public class CodiDetailController {
 	@RequestMapping(value = "pr/codiHashTagList.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String codiHashTaglList(String iHashtag, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 		
-		System.out.println(iHashtag);
+		//System.out.println(iHashtag);
 		
 		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
 		List<String> good = null;

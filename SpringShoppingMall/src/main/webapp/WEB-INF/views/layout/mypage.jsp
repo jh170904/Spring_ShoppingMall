@@ -54,6 +54,7 @@
 	display:block; 
 	width:130px;
 	font-size:16px;
+	border-bottom: 1px solid #ebebeb;
 }
 
 .myPageCategory .menuLink:hover { 
