@@ -90,9 +90,9 @@ $(function(){
             contentType: "application/json; charset=UTF-8",
             success : function(data) {
             	if(data.temp > 0) {
-            		$(".goodDiv" + iNum).html('<img src="../resources/image/heart1.PNG" style="height: 25px;"/> ' + data.count);
+            		$(".goodDiv" + iNum).html('<img src="../resources/image/heart1.PNG" style="height: 25px;"/> ');
                 } else {
-            		$(".goodDiv" + iNum).html('<img src="../resources/image/heart2.PNG" style="height: 25px;"/> ' + data.count);
+            		$(".goodDiv" + iNum).html('<img src="../resources/image/heart2.PNG" style="height: 25px;"/> ');
                 }
                 
             },
