@@ -43,12 +43,12 @@
 		}
 	}
 	
-	function searchOrderName() {
+	function searchUserName() {
 		
-		var searchOrderName = document.search.searchOrderName.value.trim();
+		var searchUserName = document.search.searchUserName.value.trim();
 		
-		searchOrderName.action = "<%=cp%>/admin/bankbookPaymentAdmin.action";
-		searchOrderName.submit();
+		search.action = "<%=cp%>/admin/memberList.action";
+		search.submit();
 		
 	}
 </script>
@@ -63,10 +63,10 @@
 		<div style="padding: 10px 0px; margin-bottom: 15px;">
 			
 			<div style="float: left;">
-			<!-- <form action="" method="post" name="search">
-				<input type="text" style="width: 200px; text-align: left;" class="btn_sm_bordered" name="searchUserId">
-				<button class="btn_sm_bordered" onclick="searchOrderName()">검색</button>
-			</form> -->
+				<form action="" method="post" name="search">
+					<input type="text" style="width: 200px; text-align: left;" class="btn_sm_bordered" name="searchUserName">
+					<button class="btn_sm_bordered" onclick="searchUserName()" id="searchUserName">검색</button>
+				</form>
 			</div>
 			
 			<div style="padding-right: 20px;">
@@ -120,6 +120,17 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			
+			<div style="font-size:12pt; clear:both;	height:32px;line-height:32px;margin-top:50px;text-align:center;">
+				<p>
+					<c:if test="${totalPage!=0 }">
+						<font style="font-size: 20px">${pageIndexList}</font>
+					</c:if>
+					<c:if test="${dataCount==0 }">
+						아직 회원이 없습니다.
+					</c:if>
+				</p>
+			</div>
 
 		</div>
 	</div>

@@ -69,9 +69,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	delete follow where myId=#{myId} and myFriendId=#{myFriendId}
 </delete>
 
-<select id="getAllData" resultType="com.codi.dto.MemberDTO">
+<select id="countMember" parameterType="String" resultType="int">
+	select nvl(count(*),0)
+	from member where userName like '%' || #{searchUserName} || '%'
+</select>
+
+<select id="getAllData" parameterType="hashMap" resultType="com.codi.dto.MemberDTO">
+	select * from (
+	select rownum rnum, data.* from (
 	select userId,userPwd,userName,email,point,userGrade,mImage,mMessage
-	from member
+	from member where userName like '%' || #{searchUserName} || '%') data)
+<![CDATA[
+	where rnum>=#{start} and rnum<=#{end} order by rnum desc
+]]>
 </select>
 
 <!-- 전체 메일 확인 -->

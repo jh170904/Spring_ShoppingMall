@@ -131,9 +131,21 @@ public class MemberDAO {
 		
 	}
 	
-	public List<MemberDTO> getAllData(){
-
-		List<MemberDTO> lists = sessionTemplate.selectList("memberMapper.getAllData");
+	public int countMember(String searchUserName) {
+		
+		int count=sessionTemplate.selectOne("memberMapper.countMember",searchUserName);
+		
+		return count;
+	}
+	
+	public List<MemberDTO> getAllData(String searchUserName,int start, int end){
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("searchUserName", searchUserName);
+		params.put("start",start);
+		params.put("end",end);
+		
+		List<MemberDTO> lists = sessionTemplate.selectList("memberMapper.getAllData",params);
 		
 		return lists;
 	}

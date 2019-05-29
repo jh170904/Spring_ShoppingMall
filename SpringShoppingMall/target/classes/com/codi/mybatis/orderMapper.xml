@@ -197,7 +197,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 <!-- 무통장입금 총 주문번호 개수 -->
-<select id="adminPaymentCheckCountAll" resultType="int">
+<select id="adminPaymentCheckCountAll" parameterType="String" resultType="int">
 	select nvl(count(distinct orderNum),0)
 	from orderTable,product,member where orderTable.productId=product.productId and orderTable.userId=member.userId 
 	and payment='no' and userName like '%' || #{searchOrderName} || '%'

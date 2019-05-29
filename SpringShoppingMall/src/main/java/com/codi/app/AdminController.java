@@ -622,14 +622,20 @@ public class AdminController {
 		String cp = request.getContextPath();
 				
 		String pageNum = request.getParameter("pageNum");
+		
+		String searchUserName = request.getParameter("searchUserName");
+		
+		if(searchUserName==null || searchUserName.equals("")) {
+			searchUserName="";
+		}
 			
 		int currentPage = 1;
 			
 		if(pageNum!=null)
 			currentPage = Integer.parseInt(pageNum);
 		
-		int numPerPage = 3;
-		int totalPage = myUtil.getPageCount(numPerPage, reviewDAO.countReportReview());
+		int numPerPage = 10;
+		int totalPage = myUtil.getPageCount(numPerPage, memberDAO.countMember(searchUserName));
 
 		if(currentPage>totalPage)
 			currentPage = totalPage;
@@ -637,11 +643,16 @@ public class AdminController {
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
 		
-		List<MemberDTO> memberList = (List<MemberDTO>) memberDAO.getAllData();
+		List<MemberDTO> memberList = (List<MemberDTO>) memberDAO.getAllData(searchUserName,start,end);
 		
-		String listUrl = cp + "/admin/memberList.action";
+		searchUserName = URLEncoder.encode(searchUserName, "UTF-8");
+		
+		String listUrl = cp + "/admin/memberList.action"+ searchUserName;
+		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, listUrl);
 		
 		request.setAttribute("memberList", memberList);
+		request.setAttribute("pageIndexList", pageIndexList);
+		request.setAttribute("totalPage", totalPage);
 			
 		return "admin/memberAdminList";
 	}
