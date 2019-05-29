@@ -136,7 +136,7 @@ public class OrderDAO {
 		sessionTemplate.insert("orderMapper.insertReview",reviewDTO);
 	}
 	
-	public List<OrderDTO> getUserOrderLists(String userId, int num, String searchPeriod,int start, int end){
+	public List<OrderDTO> getUserOrderLists(String userId, int num, String searchPeriod, int start, int end){
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("userId", userId);
 		params.put("num", num);

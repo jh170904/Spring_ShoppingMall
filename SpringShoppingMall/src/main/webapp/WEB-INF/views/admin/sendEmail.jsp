@@ -259,8 +259,8 @@ dd {
 		<tr>
 			<td colspan="2">
 				<div class="divStyle" style="width: 25%;">
-					<div style="display: inline-block; width: 45%; vertical-align: middle;">
-						<select name="font-size" style="width: 100%">
+					<div style="display: inline-block; width: 45%; vertical-align: middle; height: 40px;">
+						<select name="font-size" style="width: 100%; height: 100%">
 			  				<option value="">크기</option>
 			  				<c:forTokens var='item' items="8pt,9pt,10pt,11pt,12pt,13pt,14pt,18pt,24pt,36pt" delims="," >
 								<option value="${item}" onclick="fontSize('${item}')">${item}</option>
@@ -274,7 +274,7 @@ dd {
 								<td><p class="fontPStyle" id="bold" style="font-weight: bold;" onclick="fontStyle('bold')">가</p></td>
 								<td><p class="fontPStyle" id="underline" style="text-decoration: underline;" onclick="fontStyle('underline')">가</p></td>
 								<td><p class="fontPStyle" id="italic" style="font-style: italic;" onclick="fontStyle('italic')">가</p></td>
-								<td><p class="fontPStyle" id="linethrough" style="text-decoration: line-through;" onclick="fontStyle('lineThrough')">가</p></td>
+								<td><p class="fontPStyle" id="lineThrough" style="text-decoration: line-through;" onclick="fontStyle('lineThrough')">가</p></td>
 								<td><p id="fontColor" class="fontPStyle" style="color: #000000;" onclick="openColor()">가</p></td>
 							</tr>
 						</table>

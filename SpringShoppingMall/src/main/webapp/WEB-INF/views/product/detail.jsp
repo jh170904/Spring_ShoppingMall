@@ -740,8 +740,8 @@ a {
 				<div class="prd_detail_wrap">
 					<div class="contenteditor-root">
 						<div class="contenteditor-image">
-							<img src="<%=cp%>/project/image/deliveryImage1.PNG" /><br>
-							<img src="<%=cp%>/project/image/deliveryImage2.PNG" />
+							<img src="<%=cp%>/resources/image/deliveryImage1.PNG" /><br>
+							<img src="<%=cp%>/resources/image/deliveryImage2.PNG" />
 						</div>
 					</div>
 				</div>

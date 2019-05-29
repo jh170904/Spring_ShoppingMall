@@ -176,6 +176,7 @@ public class ProductDetailController {
 			while(it.hasNext()) {
 				ReviewDTO reviewdto = it.next();
 				reviewdto.setGoodCount(reviewDAO.reviewAllCount(reviewdto.getReviewNum()));
+				reviewdto.setContent(reviewdto.getContent().replaceAll("\n", "<br/>"));
 			}
 			
 

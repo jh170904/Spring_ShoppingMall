@@ -722,7 +722,7 @@ public class AdminController {
 			}
 
 		} catch (Exception e) {
-			System.out.println("¤µ¤²");
+			System.out.println(e.toString());
 		}
 			
 		return "redirect:/admin/memberList.action";

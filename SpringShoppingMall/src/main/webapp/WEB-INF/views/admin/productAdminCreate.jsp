@@ -275,6 +275,22 @@ input[type=file] {
 	}
 </script>
 
+<script>
+
+	function Re_enter(){
+		
+		$("img").attr('src', '');		
+		$("#showImage_div").css('display', 'none');
+		$("#detail1_div").css('display', 'none');
+		$("#detail2_div").css('display', 'none');
+		$("#detail3_div").css('display', 'none');
+		
+		document.myForm.productId.focus();
+		
+	}
+
+</script>
+
 <!-- 이미지 미리보기 -->
 <script type="text/javascript">
 	function showImg(value,img) {
@@ -470,7 +486,8 @@ input[type=file] {
 			<td  align="center">
 				<button class="btn_blg_primary sendButton" type="button" onclick="sendIt();">상품등록</button>
 				<button class="btn_blg_secondary sendButton" type="button" onclick="javascript:location.href='<%=cp %>/admin/productAdminList.action';">제품리스트</button>
-				<button class="btn_blg_secondary sendButton" type="reset" onclick="document.myForm.productId.focus();">다시입력</button>
+				<button class="btn_blg_secondary sendButton" type="reset" onclick="Re_enter();">다시입력</button>
+				
 			</td>
 		</tr>
 		</table>

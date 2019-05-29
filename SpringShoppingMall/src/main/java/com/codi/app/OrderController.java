@@ -391,22 +391,23 @@ public class OrderController {
 		//사용자 주문리스트 기간별 가져오기		
 		
 		List<OrderDTO> userOrderlist;
-		int num=3;
-		String searchPeriod = "month";
+		int num=-3;
+		String searchPeriod = "ADD_MONTHS(sysdate,";
+		
 		if(period=="week" || period.equals("week")) {
-			num=7; searchPeriod="day";
+			num=-7; searchPeriod="(sysdate";
 			
 		}else if(period=="month" || period.equals("month")) {
-			num=1; searchPeriod="month";
+			num=-1; searchPeriod="ADD_MONTHS(sysdate,";
 			
 		}else if(period=="3month" || period.equals("3month")) {
-			num=3; searchPeriod="month";
+			num=-3; searchPeriod="ADD_MONTHS(sysdate,";
 			
 		}else if(period=="6month" || period.equals("6month")) {
-			num=6; searchPeriod="month";
+			num=-6; searchPeriod="ADD_MONTHS(sysdate,"; 
 			
 		}else {
-			num=1; searchPeriod="year";
+			num=-12; searchPeriod="ADD_MONTHS(sysdate,";
 			
 		}
 		
