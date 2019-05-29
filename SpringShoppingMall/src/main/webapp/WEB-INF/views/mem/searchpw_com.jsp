@@ -16,7 +16,7 @@
 		
         <div id="ap_container" class="ap_container">
 	<div class="page_title_area">
-		<h1>나만의 코디북 통합 회원 비밀번호 찾기</h1>
+		<h1>내일의 코디북 통합 회원 비밀번호 찾기</h1>
 	</div>
 
 	<div class="ap_contents find_id_pwd">

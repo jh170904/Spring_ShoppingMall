@@ -16,7 +16,7 @@
 
 		<div id="ap_container" class="ap_container">
 			<div class="page_title_area">
-				<h1>내일의 코디 통합 회원가입</h1>
+				<h1>내일의 코디북 통합 회원가입</h1>
 			</div>
 
 			<div class="ap_contents member_join">

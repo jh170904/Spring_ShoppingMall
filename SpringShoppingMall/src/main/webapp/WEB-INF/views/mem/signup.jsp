@@ -9,7 +9,8 @@
 <head>
 <title>회원가입</title>
 <script type="text/javascript" src="<%=cp%>/resources/js/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="<%=cp%>/resources/css/member-join.css">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/resources/css/member-join.css?ver=1">
+<link rel="stylesheet" type="text/css" href="<%=cp%>/resources/css/font.css">
 <script type="text/javascript">
 
 //아이디의 유효성 검사
