@@ -6,14 +6,14 @@
 	<div>
 		<div class="clear inner_wrap">
 			<ul class="footer_menu">
-				<li><a href="/kr/ko/common/servicePolicy">이용약관</a></li>
-				<li><a href="/kr/ko/common/personalInfoPolicy"><b>개인정보처리방침</b></a></li>
-				<li><a href="/kr/ko/common/imageryIntelliPolicy">영상정보처리기기
+				<li><a href="#none">이용약관</a></li>
+				<li><a href="#none"><b>개인정보처리방침</b></a></li>
+				<li><a href="#none">영상정보처리기기
 						운영&middot;관리 방침</a></li>
-				<li><a href="/kr/ko/common/emailCollecting">이메일 무단수집 거부</a></li>
-				<li><a href="/kr/ko/common/enotice">전자공고</a></li>
-				<li><a href="/kr/ko/display/store_opening">매장개설문의</a></li>
-				<li><a href="/kr/ko/cs/customerCenter">고객센터</a></li>
+				<li><a href="#none">이메일 무단수집 거부</a></li>
+				<li><a href="#none">전자공고</a></li>
+				<li><a href="#none">매장개설문의</a></li>
+				<li><a href="#none">고객센터</a></li>
 
 			</ul>
 		</div>
@@ -22,15 +22,15 @@
 		<div class="clear company_info_wrap">
 			<div>
 				<p class="text">
-					(주)내일의 코디북 │ 대표이사: 이정희, 서울특별시 마포구 삼개로38 2동<br> 
-					사업자등록번호: 165-71-054487 │ 통신판매업신고번호: 제2019-서울마포-1302<br> 
-					개인정보보호책임자: 양민주 │호스팅제공자: (주)에뛰드 │ etudemall@tomorrow.co.kr<br> 
-					고객상담: 1544-5418(쇼핑몰) │ 080-022-2285(제품 및 매장 외)<br> 
+					(주)내일의 코디북 │ 대표이사: 홍길동, 서울 강남구 테헤란로 123 (역삼동) 여삼빌딩 15층 <br> 
+					사업자등록번호: 165-71-054487 │ 통신판매업신고번호: 제2019-서울강남-1302<br> 
+					개인정보보호책임자: 홍판서 │호스팅제공자: (주)내일의 코디북 │ codi@tomorrow.co.kr<br> 
+					고객상담: 1544-5418(쇼핑몰) │ 080-022-3387(제품 및 매장 외)<br> 
 					상담시간: 평일9시~18시(토/일/공휴일 휴무)
 				</p>
 				<div>
 					<a
-						href="http://www.ftc.go.kr/bizCommPop.do?wrkr_no=1358105033&apv_perm_no="
+						href="#none"
 						class="link" target="_blank" title="새창열림">사업자 정보확인</a> <a
 						href="#none" class="link btn_find_map">찾아오시는 길</a>
 				</div>
