@@ -98,8 +98,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="getListNotyet" parameterType="hashMap" resultType="com.codi.dto.QuestionDTO">
 	select * from (
 	select rownum rnum, data.* from(
-	select * from questionBoard where qnum
-	not in (select distinct qNum from qreply) order by ${order})data)
+	select A.*,mImage from questionBoard A,Member B
+	where A.userId=B.userId and
+	qnum not in (select distinct qNum from qreply) order by ${order})data)
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
