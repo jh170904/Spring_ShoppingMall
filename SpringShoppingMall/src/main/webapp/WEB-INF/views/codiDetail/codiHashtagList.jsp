@@ -32,8 +32,22 @@
 	        });
 		});
 	});
+	
+	$(function(){
+		
+		var iHashtag='${iHashtag}';
+		
+		iHashtag=decodeURI(iHashtag);
+		
+		if(iHashtag!=null){
+			$("#"+iHashtag).css('outline','2px solid #8080ff');
+		}
+
+	}); 
 
 </script>
+
+
 
 <style type="text/css">
 #container {
@@ -279,7 +293,7 @@ button {
  				<c:url value="codiHashTagList.action" var="toURL">
 		        	<c:param name="iHashtag" value="${item}"/>
 				</c:url>
-				<a class="tagger" href="${toURL}">#${item }</a>
+				<a class="tagger" href="${toURL}" id="${item }">#${item }</a>
  			</c:forEach>
 			</div>
 				
