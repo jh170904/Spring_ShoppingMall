@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.codi.dto.CouponDTO;
 import com.codi.dto.IssueDTO;
+import com.codi.dto.MyCouponDTO;
 
 
 @Component("couponDAO")
@@ -76,5 +77,22 @@ public class CouponDAO {
 		
 		sessionTemplate.insert("couponMapper.couponInsertData",dto);
 		
+	}
+	
+	public List<MyCouponDTO> couponGetList(String userId){
+		List<MyCouponDTO> lists = 
+				sessionTemplate.selectList("couponMapper.couponGetList",userId);
+
+		return lists;
+	}
+	
+	public void couponInsertM(int couponKey,String userId){
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("couponKey", couponKey);
+		params.put("userId",userId);
+		
+		sessionTemplate.update("couponMapper.couponInsertM",params);
 	}
 }

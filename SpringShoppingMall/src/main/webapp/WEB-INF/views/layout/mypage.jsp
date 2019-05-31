@@ -7,7 +7,7 @@
 <style>
 
 .myPageCategory{ 
-	width : 700px;
+	width : 840px;
 	margin-left: auto; 
 	margin-right: auto;
 	margin-top: 20px;
@@ -137,6 +137,10 @@
 			
 			<li>
 				<a class="menuLink" href="<%=cp1%>/review/reviewList.action" id="review">나의 리뷰</a>
+			</li> 
+			
+			<li>
+				<a class="menuLink" href="<%=cp1%>/coupon/myCouponList.action" id="coupon">나의 쿠폰</a>
 			</li> 
 			
 			<li>

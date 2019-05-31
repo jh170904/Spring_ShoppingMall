@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,6 +27,7 @@ import com.codi.dao.CouponDAO;
 import com.codi.dto.CouponDTO;
 import com.codi.dto.IssueDTO;
 import com.codi.dto.MemberDTO;
+import com.codi.dto.MyCouponDTO;
 import com.codi.dto.ProductDTO;
 import com.codi.util.MyUtil;
 
@@ -176,12 +178,78 @@ public class CouponController {
 	}
 	
 	@RequestMapping(value = "/coupon/couponMyList.action", method = RequestMethod.GET)
-	public String myCouponList(HttpServletRequest req,HttpServletResponse response,HttpSession session,CouponDTO coupondto) throws IOException{
+	public String couponMyList(HttpServletRequest req,HttpServletResponse response,HttpSession session,CouponDTO coupondto) throws IOException{
 		
 		List<CouponDTO> lists = dao.getList();
 
 		req.setAttribute("lists", lists);
 		
 		return "coupon/couponMyList";
+	}
+	
+	@RequestMapping(value = "/coupon/myCouponList.action", method = RequestMethod.GET)
+	public String myCouponList(HttpServletRequest req,HttpServletResponse response,HttpSession session){
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo"); 
+		
+		List<MyCouponDTO> lists = dao.couponGetList(info.getUserId());
+		
+		req.setAttribute("lists", lists);
+		
+		return "coupon/myCouponList";
+	}
+	
+	@RequestMapping(value = "/coupon/myUsedCouponList.action", method = RequestMethod.GET)
+	public String myUsedCouponList(HttpServletRequest req,HttpServletResponse response,HttpSession session){
+		
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo"); 
+		
+		List<MyCouponDTO> lists = dao.couponGetList(info.getUserId());
+		
+		//날짜비교
+		SimpleDateFormat dateFormat = new  SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
+		long now = System.currentTimeMillis();
+		Date date = new Date(now);
+		//현재날짜
+	    String strDate = dateFormat.format(date);
+	    Date date1 = null;
+	    
+	    //날짜확인해서 만기인지 아닌지 넣어주기(만기이면 used에 'M'넣기)
+	    //date1이 만기날짜
+	    //date2가 현재날짜
+	    //만기날짜가 현재날짜보다 이후이면 true = 아직 만기가 안됨
+		Iterator<MyCouponDTO> it = lists.iterator();
+		
+        while (it.hasNext()){
+
+        	MyCouponDTO dto = it.next();
+
+	        try {
+				date1 = dateFormat.parse(dto.getCouponEndDate());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        
+	        Date date2 = null;
+			try {
+				date2 = dateFormat.parse(strDate);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        boolean re = date1.after(date2);
+	        
+	        if(re!=true){
+	        	dao.couponInsertM(dto.getCouponKey(),info.getUserId());
+	        }
+        }
+		
+
+		List<MyCouponDTO> lists2 = dao.couponGetList(info.getUserId());
+		
+		req.setAttribute("lists", lists2);
+		
+		return "coupon/myUsedCouponList";
 	}
 }

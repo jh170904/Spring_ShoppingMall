@@ -31,16 +31,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 <select id="getList" resultType="com.codi.dto.CouponDTO">
-select couponKey,couponName,discount,couponGrade,couponScore,couponEndDate,couponStartDate from coupon
+	select couponKey,couponName,discount,couponGrade,couponScore,couponEndDate,couponStartDate from coupon
 </select>
 
 <select id="couponGetLists" resultType="com.codi.dto.IssueDTO">
-select couponKey,userId from issue
+	select couponKey,userId from issue
 </select>
 
 <insert id="couponInsertData" parameterType="com.codi.dto.IssueDTO">
 	insert into issue (userId,couponKey,issueDate)
 	values (#{userId},#{couponKey},sysdate)
 </insert>
+
+<select id="couponGetList" parameterType="String" resultType="com.codi.dto.MyCouponDTO">
+	select b.couponKey couponKey,to_char(a.ISSUEDATE,'YYYY-MM-DD') ISSUEDATE,b.DISCOUNT DISCOUNT,b.COUPONNAME COUPONNAME,to_char(b.COUPONENDDATE,'YYYY-MM-DD') COUPONENDDATE,a.used used 
+	from issue a, coupon b where a.couponKey = b.couponKey and a.userid=#{userId}
+</select>
+
+<update id="couponInsertM" parameterType="hashMap">
+	update issue set used='M' where userId=#{userId} and couponKey=#{couponKey} and used='N'
+</update>
 
 </mapper>
