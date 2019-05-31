@@ -131,6 +131,10 @@ public class MemberController {
 			System.out.println(e.toString());
 		}
         
+        if(userId=="admin" || userId.equals("admin")) {
+        	return "redirect:/admin/memberList.action";
+        }
+        
         String redirectUrl = (String) session.getAttribute("prevPage");
         //System.out.println(redirectUrl);
         

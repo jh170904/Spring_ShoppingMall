@@ -89,11 +89,6 @@
 		<div class="inner_wrap">
 			<ul class="header_menu">
 				<li>
-					<form name="searchForm" onsubmit="return false">
-					<input class="searchHeader" name="searchHeader" placeholder="검색어를 입력하세요" autocomplete="off" value="" onkeypress="if( event.keyCode==13 ){goSearch();}" >
-					</form>
-				</li>
-				<li>
 					<c:choose>
 						<c:when test="${empty sessionScope.customInfo.userId }">
 						<a href="<%=cp %>/mem/login.action"  class="log">로그인</a>
@@ -103,26 +98,9 @@
 						</c:otherwise>
 					</c:choose>
 				</li>
-				<li>
-				<c:choose>
-						<c:when test="${empty sessionScope.customInfo.userId }">
-						<a href="<%=cp %>/mem/signup.action" class="join">회원가입</a>
-						</c:when>
-						<c:otherwise>
-						<a href="<%=cp %>/myPage/myPageMain.action" class="join">마이페이지</a>
-						</c:otherwise>
-				</c:choose>
-				</li>
-				<li><a href="<%=cp%>/order/myOrderLists.action" class="order">주문조회
-					<span class="num" style="display: none;"></span>
-					</a>
-				</li>
-				<li><a href="<%=cp %>/cart/cartList.action" class="cart">장바구니
-					<span class="num" style="display: none;"></span>
-					</a></li>
 			</ul>
 			<h1 class="logo">
-				<a href="<%=cp %>/pr/commuMain.action">
+				<a href="<%=cp %>/admin/memberList.action">
 					<img style="padding-top:12px;  width: 230px;" alt="" src="<%=cp %>/resources/image/logo3.png"/>
 				</a>
 			</h1>
