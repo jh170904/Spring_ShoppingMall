@@ -314,6 +314,7 @@ public class CodiDetailController {
 			vo.setItemLists(usedProductLists);
 		}	
 		
+		request.setAttribute("iHashtag", iHashtag);
 		request.setAttribute("good", good);
 		request.setAttribute("hashTagLists",hashTagLists);
 		request.setAttribute("codiHashTagLists", codiHashTagLists);
