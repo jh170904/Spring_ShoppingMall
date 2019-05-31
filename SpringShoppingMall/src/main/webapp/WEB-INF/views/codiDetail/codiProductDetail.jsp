@@ -217,7 +217,7 @@
 	            async: true,
 	            type : 'POST',
 	            data : superProduct,
-	            url : "../storeGood.action",
+	            url : "../storeGoodOneItem.action",
 	            dataType : "json",
 	            contentType: "application/json; charset=UTF-8",
 	            success : function(data) {

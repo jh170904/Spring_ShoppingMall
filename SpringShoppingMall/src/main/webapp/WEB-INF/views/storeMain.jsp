@@ -16,7 +16,6 @@ $(function(){
         
         if(info=="" || info==null){
         	alert("로그인이 필요합니다.");
-           	alert(id);
         	return;
         }
         
@@ -24,7 +23,7 @@ $(function(){
             async: true,
             type : 'POST',
             data : superProduct,
-            url : "../storeGood.action",
+            url : "../storeGoodOneItem.action",
             dataType : "json",
             contentType: "application/json; charset=UTF-8",
             success : function(data) {

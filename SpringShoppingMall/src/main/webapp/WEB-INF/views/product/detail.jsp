@@ -170,7 +170,7 @@ tr {
 
 .modal {
     position: fixed;
-    top: 20%;
+    top: 10%;
     right: 0;
     left: 35%;
     z-index: 1050;

@@ -555,6 +555,36 @@ public class ProductController {
 
 		return "list/listSearch";
 	}
+	
+	
+	@RequestMapping(value = "/storeGoodOneItem.action", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map<Object, Object> goodOneItem(@RequestBody String superProduct, HttpSession session) {
+
+		MemberDTO info = (MemberDTO) session.getAttribute("customInfo");
+
+		// if storeHeart테이블에서 userId랑 superProduct가 같은게 있으면 입력 : 테이블에서 입력하고 cnt = 0
+
+		// 현재 클릭한 상품이 현재 로그인한 아이디가 좋아요 누른 상품이면 1 아니면 0
+		int result = dao.storeHeartCount(superProduct, info.getUserId());
+		int count = 0;
+
+		if (result == 0) {
+			dao.insertHeart(superProduct, info.getUserId());
+			count = 0;
+		} else {
+			dao.deleteHeart(superProduct, info.getUserId());
+			count = 1;
+		}
+
+		Map<Object, Object> map = new HashMap<Object, Object>();
+
+		map.put("cnt", count);
+
+		return map;
+	}
+
+	
 
 	@RequestMapping(value = "/storeGood.action", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
@@ -566,7 +596,7 @@ public class ProductController {
 
 		// 현재 클릭한 상품이 현재 로그인한 아이디가 좋아요 누른 상품이면 1 아니면 0
 		int result = dao.storeHeartCount(superProduct, info.getUserId());
-
+		
 		if (result == 0) {
 			dao.insertHeart(superProduct, info.getUserId());
 		} else {
