@@ -126,7 +126,7 @@ public class ProductController {
 
 		int dataCount = dao.getDataCount();
 
-		int numPerPage = 3;
+		int numPerPage = 9;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
 
 		if (currentPage > totalPage)
@@ -219,7 +219,7 @@ public class ProductController {
 
 		int dataCount = dao.getDataCountCategory(productCategory);
 
-		int numPerPage = 3;
+		int numPerPage = 9;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
 
 		if (currentPage > totalPage)
@@ -306,7 +306,7 @@ public class ProductController {
 
 		int dataCount = dao.getDataCount();
 
-		int numPerPage = 3;
+		int numPerPage = 9;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
 
 		if (currentPage > totalPage)
@@ -416,7 +416,7 @@ public class ProductController {
 		
 		int dataCount = dao.getDataCountSearch(searchHeader, searchCategory);
 
-		int numPerPage = 3;
+		int numPerPage = 9;
 		int totalPage = myUtil.getPageCount(numPerPage, dataCount);
 
 		if (currentPage > totalPage)

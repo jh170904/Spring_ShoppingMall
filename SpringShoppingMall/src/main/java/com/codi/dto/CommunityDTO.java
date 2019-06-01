@@ -15,6 +15,7 @@ public class CommunityDTO {
 	private int iHeart;
 	private int iComment;
 	private int heartCount;
+	private int replyCount;
 	
 	private String mImage;
 	private String mMessage;
@@ -62,6 +63,12 @@ public class CommunityDTO {
 	}
 	public void setHeartCount(int heartCount) {
 		this.heartCount = heartCount;
+	}
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
 	}
 	public int getiNum() {
 		return iNum;

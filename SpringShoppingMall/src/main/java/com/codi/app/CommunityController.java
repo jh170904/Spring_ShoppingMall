@@ -75,7 +75,9 @@ public class CommunityController {
 			CommunityDTO vo = (CommunityDTO)it.next();
 			
 			int heartCount =  dao.heartCount(vo.getiNum());
+			int replyCount = dao.replyCount(vo.getiNum());
 			
+			vo.setReplyCount(replyCount);
 			vo.setHeartCount(heartCount);
 		}
 		

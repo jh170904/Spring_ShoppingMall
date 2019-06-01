@@ -66,7 +66,7 @@ public class CommunityDAO {	@Autowired
 		return lists;
 	}
 	
-	//myCodiHeartList
+	//heartCount
 	public int heartCount(int iNum){
 	
 		int heartCount = 
@@ -106,6 +106,15 @@ public class CommunityDAO {	@Autowired
 				sessionTemplate.selectList("commuMapper.myFollowList",userId);
 		
 		return lists;
+	}
+	
+	//replyCount
+	public int replyCount(int iNum){
+	
+		int heartCount = 
+				sessionTemplate.selectOne("commuMapper.replyCount",iNum);
+	
+		return heartCount;
 	}
 	
 	//commuHome.jsp ºÎºÐ

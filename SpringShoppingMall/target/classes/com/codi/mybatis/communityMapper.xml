@@ -59,6 +59,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	delete codiHeart where iNum=#{iNum} and userId = #{userId}
 </delete>
 
+<!-- reply count -->
+<select id="replyCount" parameterType="int" resultType="int">
+	select nvl(count(*),0) from REPLY
+	where iNum=#{iNum}
+</select>
+
+
 
 <!-- commuHome.jsp 부분 -->
 

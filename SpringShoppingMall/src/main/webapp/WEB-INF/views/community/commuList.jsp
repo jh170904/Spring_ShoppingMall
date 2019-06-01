@@ -196,10 +196,10 @@ $(function(){
 			</div>
 		</button>
 		
-		<button class="card__action__btn" type="button" style="text-align: left; margin-left: 10px; height: 40px;">
+		<a href="<%=cp%>/pr/codiDetailList.action?iNum=${dto.iNum}" style="text-align: left; margin-left: 10px; height: 38px; margin-top: 6px;">
 		<img src="../resources/image/reply.PNG" style="width: 30px;"/>
-		3
-		</button>
+			${dto.replyCount }
+		</a>
 	</div>
 	
 	<div class="text_overflow" style="border:1px solid #C2C2C2;  width: 260px; border-top:none; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; " >
